@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivez-nous</title>
+    <!-- Nou ajoute lyen pou ikon FontAwesome yo ka parèt byen -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        width: 100%;
+        text-align: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        display: flex;
+        flex-direction: column; /* Pèmèt tit la ak kat yo separe vètikal */
+        justify-content: center;
+        align-items: center;
+        color: white;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        color: #cbd5e1;
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    /* Modifikasyon pou rann li orizontal ak slide */
+    .cards {
+        display: flex;
+        flex-direction: row;
+        gap: 25px;
+        width: 100%;
+        overflow-x: auto; /* Pèmèt glise de dwat a gòch */
+        scroll-snap-type: x mandatory; /* Fè chak kat bloke byen lè w ap glise */
+        padding: 20px 10px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch; /* Slide pi dous sou iOS */
+    }
+
+    /* Kache ba scrollbar la pou ekran yo ka pi bèl */
+    .cards::-webkit-scrollbar {
+        display: none;
+    }
+    .cards {
+        scrollbar-width: none; /* Pou Firefox */
+    }
+
+    /* Santre kat yo si ekran an laj ase pou yo tout antre */
+    @media (min-width: 950px) {
+        .cards {
+            justify-content: center;
+        }
+    }
+
+    .card {
+        flex: 0 0 280px; /* Anpeche kat yo rasi, yo chak ap kenbe 280px lajè */
+        scroll-snap-align: center; /* Kat la ap santre lè w fin glise */
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        transition: 0.3s;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: center;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .whatsapp {
+        color: #25D366;
+    }
+
+    .tiktok {
+        color: #ffffff; /* Mete l an blan pou l ka parèt pi byen sou fon nwa a */
+    }
+
+    .youtube {
+        color: #ff0000;
+    }
+
+    .card h2 {
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    .card p {
+        color: #d1d5db;
+        margin-bottom: 20px;
+        font-size: 0.95rem;
+        min-height: 45px; /* Aliyen tèks yo pou yo gen menm wotè */
+    }
+
+    .btn {
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        background: #2563eb;
+        padding: 12px 24px;
+        border-radius: 10px;
+        transition: 0.3s;
+        width: 100%; /* Bouton an ap pran tout lajè kat la */
+    }
+
+    .btn:hover {
+        background: #1d4ed8;
+    }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Imaj kache a -->
+    <div class="separator" style="clear: both;">
+        <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGGbXYkESi1DjIExcWU4rt-qb4qbVANU6bLjrv2IE7uqE54z_wcd8Tdpz_h6UdlHLkypXNvLlN_EA_jHKJ0Kxptr08QZ1bzF69-IYYVbPnCMhqmSpzLuRGBYZvDeDsQG9PlJEi0u8wzt7s6If4_LdYUXHzvxJxsb1-T_BPx0d4Ku6-Qs0gh31Zu4S2M2j/s1280/20260613_075026.jpg" style="display: none; padding:0; text-align: center; ">
+            <img style="display: none; padding:0; text-align: center; " alt="" border="0" width="400" data-original-height="1264" data-original-width="1280" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGGbXYkESi1DjIExcWU4rt-qb4qbVANU6bLjrv2IE7uqE54z_wcd8Tdpz_h6UdlHLkypXNvLlN_EA_jHKJ0Kxptr08QZ1bzF69-IYYVbPnCMhqmSpzLuRGBYZvDeDsQG9PlJEi0u8wzt7s6If4_LdYUXHzvxJxsb1-T_BPx0d4Ku6-Qs0gh31Zu4S2M2j/s400/20260613_075026.jpg"/>
+        </a>
+    </div>
+
+    <h1>Suivez-nous</h1>
+    <p class="subtitle">Rejoignez nos différentes plateformes pour plus de contenu.</p>
+
+    <!-- Kat yo mete an orizontal kounye a -->
+    <div class="cards">
+        
+        <div class="card">
+            <div class="icon whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <h2>WhatsApp</h2>
+            <p>Recevez nos nouveautés directement sur WhatsApp.</p>
+            <a href="https://whatsapp.com/channel/0029VbCLrFm2v1Irbwtq8n2Z" class="btn">Rejoindre</a>
+        </div>
+
+        <div class="card">
+            <div class="icon tiktok">
+                <i class="fa-brands fa-tiktok"></i>
+            </div>
+            <h2>TikTok</h2>
+            <p>Découvrez nos vidéos courtes et tendances.</p>
+            <a href="https://tiktok.com/@clickhaiti" class="btn">Suivre</a>
+        </div>
+
+        <div class="card">
+            <div class="icon youtube">
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+            <h2>YouTube</h2>
+            <p>Regardez nos vidéos et tutoriels exclusifs.</p>
+            <a href="https://www.youtube.com/@clickhaiti" class="btn">S'abonner</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', () => {
+        card.style.transform = 'scale(1.05)';
+        setTimeout(() => {
+            card.style.transform = '';
+        }, 200);
+    });
+});
+</script>
+
+</body>
+</html>
