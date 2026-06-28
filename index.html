@@ -1,194 +1,582 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suivez-nous</title>
-    <!-- Nou ajoute lyen pou ikon FontAwesome yo ka parèt byen -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+  <title>Suivez-nous • Bentoul</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset & Core Styles */
     * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .container {
-        max-width: 1200px;
-        width: 100%;
-        text-align: center;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #0f172a, #1e293b);
-        display: flex;
-        flex-direction: column; /* Pèmèt tit la ak kat yo separe vètikal */
-        justify-content: center;
-        align-items: center;
-        color: white;
-        padding: 20px;
-        overflow: hidden;
+    body {
+      background-color: #f4f6f9;
+      color: #1a1a1a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
+    /* Simulateur de conteneur d'application Mobile */
+    .app-container {
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 481px) {
+      .app-container {
+        height: 850px;
+        border-radius: 30px;
+        border: 8px solid #1a1a1a;
+      }
+    }
+
+    /* Écrans / Onglets */
+    .tab-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1;
+    }
+
+    .tab-screen.active {
+      transform: translateX(0);
+      z-index: 2;
+    }
+
+    .tab-screen.home-active {
+      transform: translateX(0);
+      z-index: 1;
+    }
+
+    /* En-têtes d'application (Général) */
+    .app-header {
+      background: #ffffff;
+      padding: 16px 20px;
+      border-bottom: 1px solid #edf2f7;
+      display: flex;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      transition: background-color 0.3s ease;
+    }
+
+    .app-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+      flex: 1;
+    }
+
+    .btn-back {
+      background: none;
+      border: none;
+      font-size: 18px;
+      color: #4f46e5;
+      cursor: pointer;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transition: background 0.2s;
+    }
+
+    /* Personalisation Headers */
+    #whatsappScreen .app-header { background: #25D366; border-bottom: none; }
+    #whatsappScreen .app-header h1, #whatsappScreen .btn-back { color: #ffffff; }
+
+    #tiktokScreen .app-header { background: #000000; border-bottom: none; }
+    #tiktokScreen .app-header h1, #tiktokScreen .btn-back { color: #ffffff; }
+
+    #youtubeScreen .app-header { background: #FF0000; border-bottom: none; }
+    #youtubeScreen .app-header h1, #youtubeScreen .btn-back { color: #ffffff; }
+
+    .tab-screen:not(#homeScreen) .btn-back:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Bouton d'abonnement header */
+    .btn-subscribe {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .btn-subscribe:active {
+      transform: scale(0.92);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #whatsappScreen .btn-subscribe { background: #ffffff; color: #25D366; }
+    #tiktokScreen .btn-subscribe { background: #ffffff; color: #000000; }
+    #youtubeScreen .btn-subscribe { background: #ffffff; color: #FF0000; }
+
+    /* Contenu des écrans */
+    .screen-content {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
     }
 
     .subtitle {
-        color: #cbd5e1;
-        font-size: 1.2rem;
-        margin-bottom: 30px;
+      font-size: 14px;
+      color: #64748b;
+      margin-top: -10px;
+      margin-bottom: 25px;
+      line-height: 1.5;
     }
 
-    /* Modifikasyon pou rann li orizontal ak slide */
-    .cards {
-        display: flex;
-        flex-direction: row;
-        gap: 25px;
-        width: 100%;
-        overflow-x: auto; /* Pèmèt glise de dwat a gòch */
-        scroll-snap-type: x mandatory; /* Fè chak kat bloke byen lè w ap glise */
-        padding: 20px 10px;
-        scroll-behavior: smooth;
-        -webkit-overflow-scrolling: touch; /* Slide pi dous sou iOS */
+    /* DESIGN PREMIUM : TAB HOME (BENTOUL) */
+    .home-header {
+      border-bottom: 1px solid #f1f5f9;
+      justify-content: center;
     }
 
-    /* Kache ba scrollbar la pou ekran yo ka pi bèl */
-    .cards::-webkit-scrollbar {
-        display: none;
-    }
-    .cards {
-        scrollbar-width: none; /* Pou Firefox */
+    .brand-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    /* Santre kat yo si ekran an laj ase pou yo tout antre */
-    @media (min-width: 950px) {
-        .cards {
-            justify-content: center;
-        }
+    .brand-logo-small {
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
     }
 
-    .card {
-        flex: 0 0 280px; /* Anpeche kat yo rasi, yo chak ap kenbe 280px lajè */
-        scroll-snap-align: center; /* Kat la ap santre lè w fin glise */
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 30px;
-        transition: 0.3s;
-        cursor: pointer;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
+    .brand-name-small {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #0f172a;
     }
 
-    .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    /* Hero Branding Section */
+    .hero-section {
+      text-align: center;
+      padding: 30px 10px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at top, rgba(79, 70, 229, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+      border-radius: 24px;
     }
 
-    .icon {
-        font-size: 50px;
-        margin-bottom: 15px;
+    .hero-logo-box {
+      width: 90px;
+      height: 90px;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 12px 24px rgba(79, 70, 229, 0.25));
     }
 
-    .whatsapp {
-        color: #25D366;
+    .svg-logo {
+      width: 100%;
+      height: 100%;
     }
 
-    .tiktok {
-        color: #ffffff; /* Mete l an blan pou l ka parèt pi byen sou fon nwa a */
+    .hero-title {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #0f172a 30%, #4f46e5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .youtube {
-        color: #ff0000;
+    .hero-subtitle {
+      font-size: 13.5px;
+      color: #64748b;
+      line-height: 1.6;
+      max-width: 340px;
     }
 
-    .card h2 {
-        margin-bottom: 10px;
-        font-size: 1.3rem;
+    /* MODIFICATION : Grille des cartes Home (Orizontal pou Android) */
+    .cards-grid {
+      display: flex;
+      flex-direction: row; /* Mete eleman yo orizontal */
+      gap: 10px;           /* Ti espas pou yo ka antre byen sou ekran yo */
+      width: 100%;
     }
 
-    .card p {
-        color: #d1d5db;
-        margin-bottom: 20px;
-        font-size: 0.95rem;
-        min-height: 45px; /* Aliyen tèks yo pou yo gen menm wotè */
+    .card-item {
+      position: relative;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 14px 8px;   /* Ajiste espas anndan an */
+      display: flex;
+      flex-direction: column; /* Kontni anndan kat yo ap vètikal */
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex: 1;             /* Chak kat ap pran menm gwosè egal nan lajè a */
+      min-width: 0;        /* Evite debòdeman sou ekran Android */
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02), 0 8px 16px -6px rgba(0, 0, 0, 0.01);
+      border: 1px solid #f1f5f9;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .btn {
-        display: inline-block;
-        text-decoration: none;
-        color: white;
-        background: #2563eb;
-        padding: 12px 24px;
-        border-radius: 10px;
-        transition: 0.3s;
-        width: 100%; /* Bouton an ap pran tout lajè kat la */
+    .card-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.06), 0 8px 20px -6px rgba(0, 0, 0, 0.02);
     }
 
-    .btn:hover {
-        background: #1d4ed8;
+    .card-item:active { transform: scale(0.97); }
+
+    /* Liy koulè anlè kat yo olye de bò gòch la paske layout la orizontal kounye a */
+    .card-item::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      border-bottom-left-radius: 0;
     }
-    </style>
+
+    .card-item.card-whatsapp::after { background: #25D366; }
+    .card-item.card-tiktok::after { background: #000000; }
+    .card-item.card-youtube::after { background: #FF0000; }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .card-item:hover .card-icon {
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    .bg-whatsapp { background: #25D366; }
+    .bg-tiktok { background: #000000; }
+    .bg-youtube { background: #FF0000; }
+
+    .card-info { 
+      width: 100%; 
+    }
+    
+    .card-info h2 { 
+      font-size: 13px; /* Ti lajè tèks pou l ka antre nèt */
+      color: #0f172a; 
+      margin-bottom: 0; 
+      font-weight: 700; 
+    }
+
+    /* Kache ti deskripsyon an ak bouton flèch la pou layout horizontal la ka pwòp sou Android */
+    .card-info p { 
+      display: none; 
+    }
+
+    .btn-action {
+      display: none;
+    }
+
+    /* Dizay mesaj ak bouton lyen yo */
+    .message-item {
+      background: white;
+      padding: 18px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid #4f46e5;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .message-item h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .message-item p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #475569;
+      white-space: pre-wrap;
+    }
+
+    /* Bouton pou ale sou videyo a */
+    .btn-post-link {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 6px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .btn-post-link:active { transform: scale(0.95); }
+
+    /* Koulè dinamik pou bouton lyen yo selon rezo a */
+    #whatsappScreen .message-item { border-left-color: #25D366; }
+    #whatsappScreen .btn-post-link { background: #25D366; }
+
+    #tiktokScreen .message-item { border-left-color: #000000; }
+    #tiktokScreen .btn-post-link { background: #000000; }
+
+    #youtubeScreen .message-item { border-left-color: #FF0000; }
+    #youtubeScreen .btn-post-link { background: #FF0000; }
+
+    .empty-message {
+      text-align: center;
+      color: #94a3b8;
+      padding: 40px 20px;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="container">
+  <div class="app-container">
     
-    <!-- Imaj kache a -->
-    <div class="separator" style="clear: both;">
-        <a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGGbXYkESi1DjIExcWU4rt-qb4qbVANU6bLjrv2IE7uqE54z_wcd8Tdpz_h6UdlHLkypXNvLlN_EA_jHKJ0Kxptr08QZ1bzF69-IYYVbPnCMhqmSpzLuRGBYZvDeDsQG9PlJEi0u8wzt7s6If4_LdYUXHzvxJxsb1-T_BPx0d4Ku6-Qs0gh31Zu4S2M2j/s1280/20260613_075026.jpg" style="display: none; padding:0; text-align: center; ">
-            <img style="display: none; padding:0; text-align: center; " alt="" border="0" width="400" data-original-height="1264" data-original-width="1280" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgcGGbXYkESi1DjIExcWU4rt-qb4qbVANU6bLjrv2IE7uqE54z_wcd8Tdpz_h6UdlHLkypXNvLlN_EA_jHKJ0Kxptr08QZ1bzF69-IYYVbPnCMhqmSpzLuRGBYZvDeDsQG9PlJEi0u8wzt7s6If4_LdYUXHzvxJxsb1-T_BPx0d4Ku6-Qs0gh31Zu4S2M2j/s400/20260613_075026.jpg"/>
-        </a>
-    </div>
-
-    <h1>Suivez-nous</h1>
-    <p class="subtitle">Rejoignez nos différentes plateformes pour plus de contenu.</p>
-
-    <!-- Kat yo mete an orizontal kounye a -->
-    <div class="cards">
+    <!-- ÉCRAN ACCUEIL (HOME) -->
+    <div id="homeScreen" class="tab-screen home-active">
+      <div class="app-header home-header">
+        <div class="brand-header">
+          <div class="brand-logo-small">B</div>
+          <span class="brand-name-small">BENTOUL</span>
+        </div>
+      </div>
+      <div class="screen-content">
         
-        <div class="card">
-            <div class="icon whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-            </div>
-            <h2>WhatsApp</h2>
-            <p>Recevez nos nouveautés directement sur WhatsApp.</p>
-            <a href="https://whatsapp.com/channel/0029VbCLrFm2v1Irbwtq8n2Z" class="btn">Rejoindre</a>
+        <!-- Hero Section avec Logo Pro BENTOUL -->
+        <div class="hero-section">
+          <h1 class="hero-title">BENTOUL</h1>
+          <p class="hero-subtitle">Swiv nou sou platfòm nou yo pou w ka jwenn dènye enfòmasyon ak kontni nou yo an tan reyèl.</p>
         </div>
-
-        <div class="card">
-            <div class="icon tiktok">
-                <i class="fa-brands fa-tiktok"></i>
+        
+        <div class="cards-grid">
+          <!-- WhatsApp Card -->
+          <div class="card-item card-whatsapp" onclick="navigateTo('whatsappScreen')">
+            <div class="card-icon bg-whatsapp">
+              <i class="fab fa-whatsapp"></i>
             </div>
-            <h2>TikTok</h2>
-            <p>Découvrez nos vidéos courtes et tendances.</p>
-            <a href="https://tiktok.com/@clickhaiti" class="btn">Suivre</a>
-        </div>
-
-        <div class="card">
-            <div class="icon youtube">
-                <i class="fa-brands fa-youtube"></i>
+            <div class="card-info">
+              <h2>WhatsApp</h2>
+              <p>Suivez-nous et recevez toutes nos mises à jour instantanées.</p>
             </div>
-            <h2>YouTube</h2>
-            <p>Regardez nos vidéos et tutoriels exclusifs.</p>
-            <a href="https://www.youtube.com/@clickhaiti" class="btn">S'abonner</a>
-        </div>
+            <button class="btn-action"><i class="fas fa-chevron-right"></i></button>
+          </div>
 
+          <!-- TikTok Card -->
+          <div class="card-item card-tiktok" onclick="navigateTo('tiktokScreen')">
+            <div class="card-icon bg-tiktok">
+              <i class="fab fa-tiktok"></i>
+            </div>
+            <div class="card-info">
+              <h2>TikTok</h2>
+              <p>Découvrez nos contenus exclusifs en courtes vidéos dynamiques.</p>
+            </div>
+            <button class="btn-action"><i class="fas fa-chevron-right"></i></button>
+          </div>
+
+          <!-- YouTube Card -->
+          <div class="card-item card-youtube" onclick="navigateTo('youtubeScreen')">
+            <div class="card-icon bg-youtube">
+              <i class="fab fa-youtube"></i>
+            </div>
+            <div class="card-info">
+              <h2>YouTube</h2>
+              <p>Regardez toutes nos vidéos longues formats et tutoriels.</p>
+            </div>
+            <button class="btn-action"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
 
-<script>
-document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', () => {
-        card.style.transform = 'scale(1.05)';
-        setTimeout(() => {
-            card.style.transform = '';
-        }, 200);
-    });
-});
-</script>
+    <!-- ÉCRAN ONGLETS : FLUX WHATSAPP -->
+    <div id="whatsappScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Flux WhatsApp</h1>
+        <a href="https://whatsapp.com/channel/0029VbCLrFm2v1Irbwtq8n2Z" target="_blank" class="btn-subscribe">Suivre</a>
+      </div>
+      <div class="screen-content">
+        <div id="listPostWhatsapp"></div>
+      </div>
+    </div>
 
+    <!-- ÉCRAN ONGLETS : FLUX TIKTOK -->
+    <div id="tiktokScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Flux TikTok</h1>
+        <a href="https://tiktok.com/@clickhaiti" target="_blank" class="btn-subscribe">Suivre</a>
+      </div>
+      <div class="screen-content">
+        <div id="listPostTiktok"></div>
+      </div>
+    </div>
+
+    <!-- ÉCRAN ONGLETS : FLUX YOUTUBE -->
+    <div id="youtubeScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Flux YouTube</h1>
+        <a href="https://www.youtube.com/@clickhaiti" target="_blank" class="btn-subscribe">S'abonner</a>
+      </div>
+      <div class="screen-content">
+        <div id="listPostYoutube"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Intégration Logique JavaScript / Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAQeHWr_vUiQmVVgJJ_cOF9qrCCLd7IJNc",
+      authDomain: "ayiweb.firebaseapp.com",
+      databaseURL: "https://ayiweb-default-rtdb.firebaseio.com",
+      projectId: "ayiweb",
+      storageBucket: "ayiweb.appspot.com",
+      messagingSenderId: "115054504556",
+      appId: "1:115054504556:web:ccd713ba01dd8f02830649"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const refs = {
+      whatsapp: ref(db, 'BENTOUL/WHATSAPP'),
+      tiktok: ref(db, 'BENTOUL/TIKTOK'),
+      youtube: ref(db, 'BENTOUL/YOUTUBE')
+    };
+
+    // Fonksyon pou netwaye karaktè espesyal HTML pou sekirite
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, (s) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[s]));
+    }
+
+    function renderList(containerId, snapshot) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      
+      const data = snapshot.val();
+      container.innerHTML = '';
+      
+      if (!data) {
+        container.innerHTML = '<div class="empty-message">Aucun message pour le moment.</div>';
+        return;
+      }
+      
+      const entries = Object.entries(data).reverse();
+      entries.forEach(([key, value]) => {
+        let title = "Nouveauté Bentoul";
+        let text = "";
+        let url = "";
+
+        // Tcheke si se yon objè (nouvo fòma) oubyen yon senp string (ansyen fòma)
+        if (typeof value === 'object' && value !== null) {
+          title = value.title || "Nouvo Post";
+          text = value.text || value.message || "";
+          url = value.url || value.link || "";
+        } else {
+          text = value; // Sipò pou ansyen posts yo
+        }
+
+        const div = document.createElement('div');
+        div.className = 'message-item';
+
+        // Estrikti HTML anndan kat mesaj la
+        let cardHTML = `<h3>${escapeHtml(title)}</h3>`;
+        if (text) {
+          cardHTML += `<p>${escapeHtml(text)}</p>`;
+        }
+        
+        // Si gen lyen, nou mete bouton an
+        if (url) {
+          cardHTML += `<a href="${url}" target="_blank" class="btn-post-link"><i
+          class="fas fa-play"></i> Regarder la suite</a>`;
+        }
+
+        div.innerHTML = cardHTML;
+        container.appendChild(div);
+      });
+    }
+
+    onValue(refs.whatsapp, (snap) => renderList('listPostWhatsapp', snap));
+    onValue(refs.tiktok, (snap) => renderList('listPostTiktok', snap));
+    onValue(refs.youtube, (snap) => renderList('listPostYoutube', snap));
+
+    window.navigateTo = function(screenId) {
+      document.getElementById(screenId).classList.add('active');
+    };
+
+    window.navigateBack = function() {
+      document.querySelectorAll('.tab-screen:not(#homeScreen)').forEach(screen => {
+        screen.classList.remove('active');
+      });
+    };
+  </script>
 </body>
 </html>
