@@ -4,6 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
   <title>Suivez-nous • Bentoul</title>
+  
+  Conversation avec Gemini
+Meta seo konple en html pou ma page
+
+
+
+BENTOUL
+
+Formation et astuce informatique sur android pour tout, veuillez ous visiter et suiver nos differente platforme pour mieu apprendre avec nous sur whatsapp
+
+Men yon kòd HTML konplè avèk tout baliz SEO ak Open Graph (pou lè w pataje lyen an sou WhatsApp, Facebook, elatriye) ki optimize nèt pou paj BENTOUL la.
+
+Ou ka jis kopye kòd sa a epi ranplase lyen anba yo ak lyen WhatsApp ak GitHub ou yo:
+
+HTML
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Baliz Prensipal -->
+    <title>BENTOUL - Formation et Astuces Informatiques sur Android</title>
+    <meta name="description" content="BENTOUL vous propose des formations et astuces informatiques sur Android. Visitez et suivez nos différentes plateformes pour mieux apprendre avec nous sur WhatsApp et plus.">
+    <meta name="keywords" content="BENTOUL, formation android, astuce informatique, apprendre informatique, cours android, whatsapp informatique, bentoul github">
+    <meta name="author" content="BENTOUL">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / WhatsApp (Pou bèl afichaj lè w pataje lyen an) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://bentoul.github.io/">
+    <meta property="og:title" content="BENTOUL - Formation et Astuces Informatiques sur Android">
+    <meta property="og:description" content="Formations et astuces informatiques sur Android pour tous ! Rejoignez-nous sur nos différentes plateformes, notamment WhatsApp, pour progresser ensemble.">
+    <meta property="og:image" content="https://bentoul.github.io/assets/img/logo.png"> <!-- Ranplase ak lyen logo ou a -->
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="BENTOUL - Formation et Astuces Informatiques sur Android">
+    <meta name="twitter:description" content="Formations et astuces informatiques sur Android pour tous ! Rejoignez-nous sur nos différentes plateformes, notamment WhatsApp, pour progresser ensemble.">
+    <meta name="twitter:image" content="https://bentoul.github.io/assets/img/logo.png"> <!-- Ranplase ak lyen logo ou a -->
+
+    <!-- Favicon (Ti ikòn paj la) -->
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Reset & Core Styles */
@@ -425,6 +469,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
+      transition: border-left-width 0.3s ease;
     }
 
     .message-item h3 {
@@ -708,26 +753,82 @@
       if (placeholder) placeholder.style.display = 'flex';
     };
 
-    // Fonksyon global pou pataje yon pòs ak yon lyen inik
+    // Fonksyon global pou pataje yon pòs ak yon lyen inik avèk bèl fòma
     window.sharePost = function(title, text, url) {
+      // Konstwi mesaj la jan yo mande l la
+      const formattedText = `${title}\n${text ? text + '\n' : ''}clicker sur le lien pour voir la suite...\n${url}`;
+
       if (navigator.share) {
         navigator.share({
           title: title,
-          text: text ? text.substring(0, 100) + '...' : title,
-          url: url
+          text: formattedText
         }).catch((err) => console.log("Erreur de partage:", err));
       } else {
-        navigator.clipboard.writeText(url).then(() => {
-          alert("Lyen inik pòs sa a kopye byen nan clipboard ou!");
+        // Fallback lè navigator.share pa disponib (Kopye tèks la nèt nan Clipboard)
+        navigator.clipboard.writeText(formattedText).then(() => {
+          alert("Kopiye! Tèks pataje a kopye byen nan clipboard ou.");
         }).catch(() => {
-          const dummy = document.createElement('input');
+          const dummy = document.createElement('textarea');
           document.body.appendChild(dummy);
-          dummy.value = url;
+          dummy.value = formattedText;
           dummy.select();
           document.execCommand('copy');
           document.body.removeChild(dummy);
-          alert("Lyen pòs la kopye!");
+          alert("Lyen ak mesaj la kopye!");
         });
+      }
+    };
+
+    // Fonksyon pou koute bouton pataje a soti nan element yo dirèkteman (san pwoblèm quotes)
+    window.shareFromElement = function(button) {
+      const parent = button.closest('.message-item');
+      if (!parent) return;
+      const title = parent.dataset.title || "";
+      const text = parent.dataset.text || "";
+      const url = parent.dataset.url || "";
+      window.sharePost(title, text, url);
+    };
+
+    // Fonksyon pou jere navigasyon otomatik ak bèl efè (Deep Linking)
+    window.handleDeepLink = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const platform = urlParams.get('platform');
+      const postId = urlParams.get('id');
+      if (!platform) return;
+
+      const screenMap = {
+        whatsapp: 'whatsappScreen',
+        tiktok: 'tiktokScreen',
+        youtube: 'youtubeScreen',
+        apps: 'AppdScreen'
+      };
+
+      const targetScreen = screenMap[platform];
+      if (targetScreen) {
+        // Ouvri ekran an otomatikman
+        window.navigateTo(targetScreen);
+
+        // Chache pòs la epi konsantre sou li lè lis la fin chaje
+        if (postId) {
+          let attempts = 0;
+          const interval = setInterval(() => {
+            const postElement = document.getElementById(`post-${postId}`);
+            if (postElement) {
+              // Glise paj la dousman jiskaske pòs la parèt nan mitan ekran an
+              postElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              
+              // Ba li yon bèl ti animasyon kout pou moun lan ka wè kote l ye
+              postElement.style.borderLeftWidth = '10px';
+              setTimeout(() => {
+                postElement.style.borderLeftWidth = '4px';
+              }, 2000);
+
+              clearInterval(interval);
+            }
+            attempts++;
+            if (attempts > 20) clearInterval(interval); // sispann apre 2 segonn
+          }, 100);
+        }
       }
     };
 
@@ -803,6 +904,11 @@
 
         const div = document.createElement('div');
         div.className = 'message-item';
+        div.id = `post-${key}`; // ID pou Deep Linking
+
+        // Sove done yo nan dataset pou evite erè karaktè espesyal lè w pataje
+        div.dataset.title = title;
+        div.dataset.text = text;
 
         const firstLetter = title ? title.trim().charAt(0).toUpperCase() : "B";
         let mediaHTML = "";
@@ -825,7 +931,7 @@
 
         // Prepare lyen inik la pou bouton pataje a
         const uniqueUrl = window.location.origin + window.location.pathname + "?platform=" + platformName + "&id=" + key;
-        const textForShare = text ? text.replace(/'/g, "\\'") : "";
+        div.dataset.url = uniqueUrl;
 
         // Estrikti HTML anndan kat mesaj la
         let cardHTML = mediaHTML;
@@ -840,7 +946,7 @@
           cardHTML += `<a href="${url}" target="_blank" class="btn-post-link" style="margin-top: 0; flex: 1.2; justify-content: center;"><i class="fas fa-play"></i> Regarder</a>`;
         }
         cardHTML += `
-          <button onclick="sharePost('${escapeHtml(title)}', '${escapeHtml(textForShare)}', '${uniqueUrl}')" class="btn-share">
+          <button onclick="shareFromElement(this)" class="btn-share">
             <i class="fas fa-share-alt"></i> Partager
           </button>
         </div>`;
@@ -854,6 +960,9 @@
     onValue(refs.tiktok, (snap) => renderList('listPostTiktok', snap));
     onValue(refs.youtube, (snap) => renderList('listPostYoutube', snap));
     onValue(refs.apps, (snap) => renderList('listPostApps', snap));
+
+    // Kòmanse chache si gen yon lyen pataje ki ouvri paj la
+    window.handleDeepLink();
 
     window.navigateTo = function(screenId) {
       document.getElementById(screenId).classList.add('active');
