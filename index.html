@@ -88,6 +88,8 @@
       font-weight: 700;
       color: #0f172a;
       flex: 1;
+      display: flex;
+      align-items: center;
     }
 
     .btn-back {
@@ -116,6 +118,9 @@
     #youtubeScreen .app-header { background: #FF0000; border-bottom: none; }
     #youtubeScreen .app-header h1, #youtubeScreen .btn-back { color: #ffffff; }
 
+    #AppdScreen .app-header { background: #3DDC84; border-bottom: none; }
+    #AppdScreen .app-header h1, #AppdScreen .btn-back { color: #ffffff; }
+
     .tab-screen:not(#homeScreen) .btn-back:active {
       background: rgba(255, 255, 255, 0.2);
     }
@@ -142,6 +147,7 @@
     #whatsappScreen .btn-subscribe { background: #ffffff; color: #25D366; }
     #tiktokScreen .btn-subscribe { background: #ffffff; color: #000000; }
     #youtubeScreen .btn-subscribe { background: #ffffff; color: #FF0000; }
+    #AppdScreen .btn-subscribe { background: #ffffff; color: #3DDC84; }
 
     /* Contenu des écrans */
     .screen-content {
@@ -189,6 +195,24 @@
       font-weight: 800;
       letter-spacing: 2px;
       color: #0f172a;
+    }
+
+    /* Style pou afisaj kontè vizit yo */
+    .views, .views-count {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-left: 8px;
+    }
+
+    #whatsappScreen .views-count,
+    #tiktokScreen .views-count,
+    #youtubeScreen .views-count,
+    #AppdScreen .views-count {
+      color: rgba(255, 255, 255, 0.85);
     }
 
     /* Hero Branding Section */
@@ -284,6 +308,71 @@
     .card-item.card-tiktok::after { background: #000000; }
     .card-item.card-youtube::after { background: #FF0000; }
 
+    /* Stylizasyon espesyal pou kat aplikasyon an (card-Appd) pou l parèt an long */
+    .card-item.card-Appd {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 16px;
+      padding: 16px 20px;
+      text-align: left;
+    }
+
+    .card-item.card-Appd::after {
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      border-top-right-radius: 0;
+      background: #3DDC84;
+    }
+
+    .card-Appd .card-info {
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .card-Appd .card-info h2 {
+      font-size: 15px;
+      text-align: left;
+    }
+
+    .card-Appd .card-info p {
+      display: block;
+      font-size: 13px;
+      color: #64748b;
+      text-align: left;
+    }
+
+    /* Bouton anba tèks la pou kat aplikasyon an */
+    .btn-app-action {
+      background: #3DDC84;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      box-shadow: 0 4px 10px rgba(61, 220, 132, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .btn-app-action:active {
+      transform: scale(0.95);
+    }
+
     .card-icon {
       width: 48px;
       height: 48px;
@@ -303,6 +392,7 @@
     .bg-whatsapp { background: #25D366; }
     .bg-tiktok { background: #000000; }
     .bg-youtube { background: #FF0000; }
+    .bg-Apps { background: #3DDC84; }
 
     .card-info { 
       width: 100%; 
@@ -350,6 +440,52 @@
       white-space: pre-wrap;
     }
 
+    /* Estil imaj ak placeholder nan pòs yo */
+    .post-media-container {
+      width: 100%;
+      position: relative;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .post-image {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+    }
+
+    .post-placeholder {
+      width: 100%;
+      height: 120px;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 800;
+      text-transform: uppercase;
+      border-radius: 12px;
+      user-select: none;
+    }
+
+    #whatsappScreen .post-placeholder { background: linear-gradient(135deg, #25D366, #128C7E); }
+    #tiktokScreen .post-placeholder { background: linear-gradient(135deg, #000000, #333333); }
+    #youtubeScreen .post-placeholder { background: linear-gradient(135deg, #FF0000, #b30000); }
+    #AppdScreen .post-placeholder { background: linear-gradient(135deg, #3DDC84, #2fa362); }
+
+    /* Liy bouton pou chak pòs */
+    .post-actions-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      width: 100%;
+    }
+
     /* Bouton pou ale sou videyo a */
     .btn-post-link {
       align-self: flex-start;
@@ -369,6 +505,30 @@
 
     .btn-post-link:active { transform: scale(0.95); }
 
+    /* Bouton pataje a */
+    .btn-share {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #e2e8f0;
+      color: #334155;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex: 1;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn-share:active {
+      transform: scale(0.95);
+      background: #cbd5e1;
+    }
+
     /* Koulè dinamik pou bouton lyen yo selon rezo a */
     #whatsappScreen .message-item { border-left-color: #25D366; }
     #whatsappScreen .btn-post-link { background: #25D366; }
@@ -378,6 +538,9 @@
 
     #youtubeScreen .message-item { border-left-color: #FF0000; }
     #youtubeScreen .btn-post-link { background: #FF0000; }
+
+    #AppdScreen .message-item { border-left-color: #3DDC84; }
+    #AppdScreen .btn-post-link { background: #3DDC84; }
 
     .empty-message {
       text-align: center;
@@ -397,6 +560,7 @@
         <div class="brand-header">
           <div class="brand-logo-small">B</div>
           <span class="brand-name-small">BENTOUL</span>
+          <span class="views" id="nbViews"></span>
         </div>
       </div>
       <div class="screen-content">
@@ -444,6 +608,19 @@
             <button class="btn-action"><i class="fas fa-chevron-right"></i></button>
           </div>
         </div>
+
+        <!-- Kat Aplikasyon yo (Mes applications - Afiche an long ak foto adwat) -->
+        <div class="card-item card-Appd" onclick="navigateTo('AppdScreen')">
+          <div class="card-info">
+            <h2>Mes applications gratuites</h2>
+            <p>Télécharger mes applications pour votre android</p>
+            <button class="btn-app-action">Télécharger <i class="fas fa-arrow-right"></i></button>
+          </div>
+          <div class="card-icon bg-Apps">
+            <i class="fab fa-android"></i>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -451,7 +628,7 @@
     <div id="whatsappScreen" class="tab-screen">
       <div class="app-header">
         <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
-        <h1>Flux WhatsApp</h1>
+        <h1>Flux WhatsApp <span class="views-count"></span></h1>
         <a href="https://whatsapp.com/channel/0029VbCLrFm2v1Irbwtq8n2Z" target="_blank" class="btn-subscribe">Suivre</a>
       </div>
       <div class="screen-content">
@@ -463,7 +640,7 @@
     <div id="tiktokScreen" class="tab-screen">
       <div class="app-header">
         <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
-        <h1>Flux TikTok</h1>
+        <h1>Flux TikTok <span class="views-count"></span></h1>
         <a href="https://tiktok.com/@clickhaiti" target="_blank" class="btn-subscribe">Suivre</a>
       </div>
       <div class="screen-content">
@@ -475,11 +652,23 @@
     <div id="youtubeScreen" class="tab-screen">
       <div class="app-header">
         <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
-        <h1>Flux YouTube</h1>
+        <h1>Flux YouTube <span class="views-count"></span></h1>
         <a href="https://www.youtube.com/@clickhaiti" target="_blank" class="btn-subscribe">S'abonner</a>
       </div>
       <div class="screen-content">
         <div id="listPostYoutube"></div>
+      </div>
+    </div>
+
+    <!-- ÉCRAN ONGLETS : FLUX APPS (NEW) -->
+    <div id="AppdScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Applications <span class="views-count"></span></h1>
+        <a href="#" target="_blank" class="btn-subscribe">Télécharger</a>
+      </div>
+      <div class="screen-content">
+        <div id="listPostApps"></div>
       </div>
     </div>
 
@@ -488,7 +677,7 @@
   <!-- Intégration Logique JavaScript / Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAQeHWr_vUiQmVVgJJ_cOF9qrCCLd7IJNc",
@@ -506,8 +695,72 @@
     const refs = {
       whatsapp: ref(db, 'BENTOUL/WHATSAPP'),
       tiktok: ref(db, 'BENTOUL/TIKTOK'),
-      youtube: ref(db, 'BENTOUL/YOUTUBE')
+      youtube: ref(db, 'BENTOUL/YOUTUBE'),
+      apps: ref(db, 'BENTOUL/APPS'),
+      views: ref(db, 'BENTOUL/views')
     };
+
+    // Fonksyon global pou jere imaj ki gen erè (Drive oswa lòt)
+    window.handleImageError = function(key) {
+      const img = document.getElementById('img-' + key);
+      const placeholder = document.getElementById('placeholder-' + key);
+      if (img) img.style.display = 'none';
+      if (placeholder) placeholder.style.display = 'flex';
+    };
+
+    // Fonksyon global pou pataje yon pòs ak yon lyen inik
+    window.sharePost = function(title, text, url) {
+      if (navigator.share) {
+        navigator.share({
+          title: title,
+          text: text ? text.substring(0, 100) + '...' : title,
+          url: url
+        }).catch((err) => console.log("Erreur de partage:", err));
+      } else {
+        navigator.clipboard.writeText(url).then(() => {
+          alert("Lyen inik pòs sa a kopye byen nan clipboard ou!");
+        }).catch(() => {
+          const dummy = document.createElement('input');
+          document.body.appendChild(dummy);
+          dummy.value = url;
+          dummy.select();
+          document.execCommand('copy');
+          document.body.removeChild(dummy);
+          alert("Lyen pòs la kopye!");
+        });
+      }
+    };
+
+    // Fonksyon pou ogmante ak koute vizit yo (sèlman yon fwa pa navigatè)
+    try {
+      if (!localStorage.getItem('bentoul_visited')) {
+        runTransaction(refs.views, (currentValue) => {
+          return (currentValue || 0) + 1;
+        }).then(() => {
+          localStorage.setItem('bentoul_visited', 'true');
+        }).catch((err) => {
+          console.warn("Erreur nan ogmante vizit la nan database la:", err);
+        });
+      }
+    } catch (e) {
+      console.warn("Storage la pa aksesib (mòd navigasyon prive petèt):", e);
+    }
+
+    // Swiv chanjman sou kantite vizit yo pou mete l ajou sou tout ekran yo an tan reyèl
+    onValue(refs.views, (snapshot) => {
+      const count = snapshot.val() || 0;
+      
+      // Afiche nan header Home la
+      const nbViewsElement = document.getElementById('nbViews');
+      if (nbViewsElement) {
+        nbViewsElement.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
+      }
+      
+      // Afiche nan lòt header yo tou
+      document.querySelectorAll('.views-count').forEach((el) => {
+        el.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
+      });
+    });
 
     // Fonksyon pou netwaye karaktè espesyal HTML pou sekirite
     function escapeHtml(str) {
@@ -529,17 +782,21 @@
         return;
       }
       
+      const platformName = containerId.replace('listPost', '').toLowerCase();
       const entries = Object.entries(data).reverse();
+      
       entries.forEach(([key, value]) => {
         let title = "Nouveauté Bentoul";
         let text = "";
         let url = "";
+        let image = "";
 
         // Tcheke si se yon objè (nouvo fòma) oubyen yon senp string (ansyen fòma)
         if (typeof value === 'object' && value !== null) {
           title = value.title || "Nouvo Post";
           text = value.text || value.message || "";
           url = value.url || value.link || "";
+          image = value.image || "";
         } else {
           text = value; // Sipò pou ansyen posts yo
         }
@@ -547,17 +804,46 @@
         const div = document.createElement('div');
         div.className = 'message-item';
 
+        const firstLetter = title ? title.trim().charAt(0).toUpperCase() : "B";
+        let mediaHTML = "";
+
+        // Si gen imaj, n ap prepare l ak yon sekirite onerror
+        if (image) {
+          mediaHTML = `
+            <div class="post-media-container">
+              <img src="${escapeHtml(image)}" class="post-image" id="img-${key}" alt="Imaj Pòs" onerror="handleImageError('${key}')">
+              <div class="post-placeholder" id="placeholder-${key}" style="display: none;">${escapeHtml(firstLetter)}</div>
+            </div>
+          `;
+        } else {
+          mediaHTML = `
+            <div class="post-media-container">
+              <div class="post-placeholder">${escapeHtml(firstLetter)}</div>
+            </div>
+          `;
+        }
+
+        // Prepare lyen inik la pou bouton pataje a
+        const uniqueUrl = window.location.origin + window.location.pathname + "?platform=" + platformName + "&id=" + key;
+        const textForShare = text ? text.replace(/'/g, "\\'") : "";
+
         // Estrikti HTML anndan kat mesaj la
-        let cardHTML = `<h3>${escapeHtml(title)}</h3>`;
+        let cardHTML = mediaHTML;
+        cardHTML += `<h3>${escapeHtml(title)}</h3>`;
         if (text) {
           cardHTML += `<p>${escapeHtml(text)}</p>`;
         }
         
-        // Si gen lyen, nou mete bouton an
+        // Liy bouton yo
+        cardHTML += `<div class="post-actions-row">`;
         if (url) {
-          cardHTML += `<a href="${url}" target="_blank" class="btn-post-link"><i
-          class="fas fa-play"></i> Regarder la suite</a>`;
+          cardHTML += `<a href="${url}" target="_blank" class="btn-post-link" style="margin-top: 0; flex: 1.2; justify-content: center;"><i class="fas fa-play"></i> Regarder</a>`;
         }
+        cardHTML += `
+          <button onclick="sharePost('${escapeHtml(title)}', '${escapeHtml(textForShare)}', '${uniqueUrl}')" class="btn-share">
+            <i class="fas fa-share-alt"></i> Partager
+          </button>
+        </div>`;
 
         div.innerHTML = cardHTML;
         container.appendChild(div);
@@ -567,6 +853,7 @@
     onValue(refs.whatsapp, (snap) => renderList('listPostWhatsapp', snap));
     onValue(refs.tiktok, (snap) => renderList('listPostTiktok', snap));
     onValue(refs.youtube, (snap) => renderList('listPostYoutube', snap));
+    onValue(refs.apps, (snap) => renderList('listPostApps', snap));
 
     window.navigateTo = function(screenId) {
       document.getElementById(screenId).classList.add('active');
