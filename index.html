@@ -774,7 +774,6 @@
       const urlParams = new URLSearchParams(window.location.search);
       const platform = urlParams.get('platform');
       const postId = urlParams.get('id');
-      if (!platform) return;
 
       const screenMap = {
         whatsapp: 'whatsappScreen',
@@ -783,10 +782,17 @@
         apps: 'AppdScreen'
       };
 
+      // Fèmen lòt onglet yo an premye pou evite sipozisyon
+      document.querySelectorAll('.tab-screen:not(#homeScreen)').forEach(screen => {
+        screen.classList.remove('active');
+      });
+
+      if (!platform) return;
+
       const targetScreen = screenMap[platform];
       if (targetScreen) {
         // Ouvri ekran an otomatikman
-        window.navigateTo(targetScreen);
+        document.getElementById(targetScreen).classList.add('active');
 
         // Chache pòs la epi konsantre sou li lè lis la fin chaje
         if (postId) {
@@ -806,11 +812,16 @@
               clearInterval(interval);
             }
             attempts++;
-            if (attempts > 20) clearInterval(interval); // sispann apre 2 segonn
-          }, 100);
+            if (attempts > 30) clearInterval(interval); // sispann apre 4.5 segonn
+          }, 150);
         }
       }
     };
+
+    // Jere lè moun klike sou bouton "Back" nan navigatè a oswa nan telefòn lan
+    window.addEventListener('popstate', () => {
+      window.handleDeepLink();
+    });
 
     // Fonksyon pou ogmante ak koute vizit yo (sèlman yon fwa pa navigatè)
     try {
@@ -831,7 +842,7 @@
     onValue(refs.views, (snapshot) => {
       const count = snapshot.val() || 0;
       
-      // Afiche nan header Home la
+      // Afiche dans header Home la
       const nbViewsElement = document.getElementById('nbViews');
       if (nbViewsElement) {
         nbViewsElement.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
@@ -944,11 +955,25 @@
     // Kòmanse chache si gen yon lyen pataje ki ouvri paj la
     window.handleDeepLink();
 
+    // Modifikasyon fonksyon navigasyon yo pou mete lyen bar navigatè a ajou san rechaje paj la
     window.navigateTo = function(screenId) {
+      const reverseMap = {
+        whatsappScreen: 'whatsapp',
+        tiktokScreen: 'tiktok',
+        youtubeScreen: 'youtube',
+        AppdScreen: 'apps'
+      };
+      const platform = reverseMap[screenId];
+      if (platform) {
+        const newUrl = window.location.pathname + `?platform=${platform}`;
+        history.pushState({ platform }, '', newUrl);
+      }
       document.getElementById(screenId).classList.add('active');
     };
 
     window.navigateBack = function() {
+      // Netwaye paramèt nan URL la lè nou tounen sou akèy
+      history.pushState(null, '', window.location.pathname);
       document.querySelectorAll('.tab-screen:not(#homeScreen)').forEach(screen => {
         screen.classList.remove('active');
       });
