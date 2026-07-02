@@ -17,13 +17,13 @@
     <meta property="og:url" content="https://bentoul.github.io/">
     <meta property="og:title" content="BENTOUL - Formation et Astuces Informatiques sur Android">
     <meta property="og:description" content="Formations et astuces informatiques sur Android pour tous ! Rejoignez-nous sur nos différentes plateformes, notamment WhatsApp, pour progresser ensemble.">
-    <meta property="og:image" content="https://bentoul.github.io/assets/img/logo.png"> <!-- Ranplase ak lyen logo ou a -->
+    <meta property="og:image" content="min.png"> <!-- Ranplase ak lyen logo ou a -->
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="BENTOUL - Formation et Astuces Informatiques sur Android">
     <meta name="twitter:description" content="Formations et astuces informatiques sur Android pour tous ! Rejoignez-nous sur nos différentes plateformes, notamment WhatsApp, pour progresser ensemble.">
-    <meta name="twitter:image" content="https://bentoul.github.io/assets/img/logo.png"> <!-- Ranplase ak lyen logo ou a -->
+    <meta name="twitter:image" content="min.png"> <!-- Ranplase ak lyen logo ou a -->
 
     <!-- Favicon (Ti ikòn paj la) -->
     <link rel="icon" type="image/x-icon" href="logo.png">
@@ -145,6 +145,9 @@
     #AppdScreen .app-header { background: #3DDC84; border-bottom: none; }
     #AppdScreen .app-header h1, #AppdScreen .btn-back { color: #ffffff; }
 
+    #authScreen .app-header { background: #4f46e5; border-bottom: none; }
+    #authScreen .app-header h1, #authScreen .btn-back { color: #ffffff; }
+
     .tab-screen:not(#homeScreen) .btn-back:active {
       background: rgba(255, 255, 255, 0.2);
     }
@@ -235,7 +238,8 @@
     #whatsappScreen .views-count,
     #tiktokScreen .views-count,
     #youtubeScreen .views-count,
-    #AppdScreen .views-count {
+    #AppdScreen .views-count,
+    #authScreen .views-count {
       color: rgba(255, 255, 255, 0.85);
     }
 
@@ -275,7 +279,7 @@
     }
 
     .hero-subtitle {
-      font-size: 13.5px;
+      font-size: 14px;
       color: #64748b;
       line-height: 1.6;
       max-width: 340px;
@@ -293,7 +297,7 @@
       position: relative;
       background: #ffffff;
       border-radius: 16px;
-      padding: 14px 8px;   /* Ajiste espas anndan an */
+      padding: 10px 4px;   /* Ajiste espas anndan an */
       display: flex;
       flex-direction: column; /* Kontni anndan kat yo ap vètikal */
       align-items: center;
@@ -339,7 +343,7 @@
       align-items: center;
       width: 100%;
       margin-top: 16px;
-      padding: 16px 20px;
+      padding: 12px 16px;
       text-align: left;
     }
 
@@ -364,13 +368,13 @@
     }
 
     .card-Appd .card-info h2 {
-      font-size: 15px;
+      font-size: 16px;
       text-align: left;
     }
 
     .card-Appd .card-info p {
       display: block;
-      font-size: 13px;
+      font-size: 14px;
       color: #64748b;
       text-align: left;
     }
@@ -438,38 +442,61 @@
       display: none;
     }
 
-    /* Dizay mesaj ak bouton lyen yo */
+    /* DIZAY MESAJ KOUYEA : DIREKSYON HORIZONTAL (IMAG SOU GÒCH, TÈKS SOU DWA) */
     .message-item {
       background: white;
-      padding: 18px;
+      padding: 1px;
       border-radius: 16px;
       margin-bottom: 16px;
       border-left: 4px solid #4f46e5;
       box-shadow: 0 4px 10px rgba(0,0,0,0.03);
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      flex-direction: row; /* Ranje eleman yo kòt a kòt */
+      gap: 14px;           /* Distans ant imaj gòch ak kontni dwa */
+      align-items: flex-start;
       transition: border-left-width 0.3s ease;
     }
 
+    /* LIMIT TIT SOU YON LÒT LIY AVÈK TI PWEN (...) */
     .message-item h3 {
       font-size: 15px;
       font-weight: 700;
       color: #0f172a;
+      display: -webkit-box;
+      -webkit-line-clamp: 1; /* Limit ak 1 liy */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
+    /* LIMIT DESKRIPSYON SOU 3 LIY AVÈK TI PWEN (...) */
     .message-item p {
       font-size: 14px;
       line-height: 1.5;
       color: #475569;
       white-space: pre-wrap;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* Limit ak 3 liy */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* Estil imaj ak placeholder nan pòs yo */
+    /* Veso pou kontni bò dwat la (Tit, deskripsyon ak bouton yo) */
+    .post-content-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+      min-width: 0; /* Evite tèks la debòde */
+    }
+
+    /* Estil imaj ak placeholder fiks sou bò gòch kòm yon bèl kare */
     .post-media-container {
-      width: 100%;
+      width: 110px;       /* Lajè fiks pou imaj bò gòch la */
+      height: 110px;      /* Wotè fiks pou l fòme yon kare */
+      flex-shrink: 0;     /* Evite imaj la retresi */
       position: relative;
-      margin-bottom: 10px;
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
@@ -477,7 +504,7 @@
 
     .post-image {
       width: 100%;
-      max-height: 200px;
+      height: 100%;
       object-fit: cover;
       border-radius: 12px;
       display: block;
@@ -485,13 +512,13 @@
 
     .post-placeholder {
       width: 100%;
-      height: 120px;
+      height: 100%;
       background: linear-gradient(135deg, #4f46e5, #06b6d4);
       color: white;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 42px;
+      font-size: 32px; /* Gwosè font ajiste pou kare a */
       font-weight: 800;
       text-transform: uppercase;
       border-radius: 12px;
@@ -503,11 +530,11 @@
     #youtubeScreen .post-placeholder { background: linear-gradient(135deg, #FF0000, #b30000); }
     #AppdScreen .post-placeholder { background: linear-gradient(135deg, #3DDC84, #2fa362); }
 
-    /* Liy bouton pou chak pòs */
+    /* Liy bouton pou cada pòs */
     .post-actions-row {
       display: flex;
       gap: 10px;
-      margin-top: 12px;
+      margin-top: 4px; /* Ti espas anlè bouton yo */
       width: 100%;
     }
 
@@ -573,6 +600,92 @@
       padding: 40px 20px;
       font-size: 14px;
     }
+
+    /* --- STYLE NOUVO POU TAB KONEKSYON AK ENSKRIPSYON --- */
+    .auth-toggle {
+      display: flex;
+      background: #edf2f7;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 24px;
+    }
+
+    .auth-toggle-btn {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .auth-toggle-btn.active {
+      background: #ffffff;
+      color: #4f46e5;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .auth-form {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      border: 1px solid #f1f5f9;
+    }
+
+    .auth-form.active {
+      display: flex;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .form-group input {
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: #4f46e5;
+    }
+
+    .btn-auth-submit {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-auth-submit:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
@@ -583,8 +696,8 @@
     <div id="homeScreen" class="tab-screen home-active">
       <div class="app-header home-header">
         <div class="brand-header">
-          <div class="brand-logo-small">B</div>
-          <span class="brand-name-small">BENTOUL</span>
+          <div class="brand-logo-small" id="headerLogo">B</div>
+          <span class="brand-name-small" id="headerTitle">BENTOUL</span>
           <span class="views" id="nbViews"></span>
         </div>
       </div>
@@ -593,7 +706,15 @@
         <!-- Hero Section avec Logo Pro BENTOUL -->
         <div class="hero-section">
           <h1 class="hero-title">BENTOUL</h1>
-          <p class="hero-subtitle">Swiv nou sou platfòm nou yo pou w ka jwenn dènye enfòmasyon ak kontni nou yo an tan reyèl.</p>
+          <p class="hero-subtitle">
+            Apprenez l'informatique sur votre smartphone.
+Suivez-nous sur nos plateformes.
+Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
+          
+          <!-- BOUTON LOGIN / ENSKRI AJOUTE LADA N -->
+          <button id="authButton" class="btn-app-action" style="background: #4f46e5; margin-top: 15px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);">
+            <i class="fas fa-user-circle"></i> Se connecter / S'inscrire
+          </button>
         </div>
         
         <div class="cards-grid">
@@ -697,12 +818,60 @@
       </div>
     </div>
 
+    <!-- ÉCRAN ONGLETS : KONEKSYON AK ENSKRIPSYON (NEW) -->
+    <div id="authScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Compte Bentoul <span class="views-count"></span></h1>
+      </div>
+      <div class="screen-content">
+        <div class="auth-toggle">
+          <button id="toggleLoginBtn" class="auth-toggle-btn active" onclick="switchAuthTab('login')">Connection</button>
+          <button id="toggleSignupBtn" class="auth-toggle-btn" onclick="switchAuthTab('signup')">Inscription</button>
+        </div>
+
+        <!-- Fòm Koneksyon (Connection) -->
+        <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="loginIdentifier">Téléphone / Nom d'utilisateur</label>
+            <input type="text" id="loginIdentifier" placeholder="Ex: +5093xxx oswa nonitilizatè" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-auth-submit">Se connecter</button>
+        </form>
+
+        <!-- Fòm Enskripsyon (Inscription) -->
+        <form id="signupForm" class="auth-form" onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label for="signupUsername">Nom d'utilisateur</label>
+            <input type="text" id="signupUsername" placeholder="Ex: Jan123" required>
+          </div>
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input type="email" id="signupEmail" placeholder="Ex: jan@gmail.com" required>
+          </div>
+          <div class="form-group">
+            <label for="signupPhone">Phone</label>
+            <input type="tel" id="signupPhone" placeholder="Ex: +5093xxxxxxx" required>
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input type="password" id="signupPassword" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-auth-submit">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+
   </div>
 
   <!-- Intégration Logique JavaScript / Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, runTransaction, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAQeHWr_vUiQmVVgJJ_cOF9qrCCLd7IJNc",
@@ -725,6 +894,198 @@
       views: ref(db, 'BENTOUL/views')
     };
 
+    // Switche ant koneksyon ak enskripsyon nan UI a
+    window.switchAuthTab = function(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const signupForm = document.getElementById('signupForm');
+      const btnLogin = document.getElementById('toggleLoginBtn');
+      const btnSignup = document.getElementById('toggleSignupBtn');
+
+      if (tab === 'login') {
+        loginForm.classList.add('active');
+        signupForm.classList.remove('active');
+        btnLogin.classList.add('active');
+        btnSignup.classList.remove('active');
+      } else {
+        loginForm.classList.remove('active');
+        signupForm.classList.add('active');
+        btnLogin.classList.remove('active');
+        btnSignup.classList.add('active');
+      }
+    };
+
+    // Jere lè itilizatè a ap enskri (Enregistre nan BENTOUL/USERS)
+    window.handleSignup = function(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('signupUsername').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const phone = document.getElementById('signupPhone').value.trim();
+      const password = document.getElementById('signupPassword').value;
+
+      if (!username || !email || !phone || !password) {
+        alert("Ranpli tout jaden yo!");
+        return;
+      }
+
+      // Sove enfòmasyon yo anba non itilizatè a
+      const newUserRef = ref(db, `BENTOUL/USERS/${username}`);
+      
+      // Tcheke an premye si non sa a deja pran
+      get(newUserRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          alert("Non itilizatè sa a deja pran. Chwazi yon lòt.");
+        } else {
+          set(newUserRef, {
+            username: username,
+            email: email,
+            phone: phone,
+            password: password
+          }).then(() => {
+            alert("Enskripsyon an fèt ak siksè!");
+            document.getElementById('signupForm').reset();
+            window.switchAuthTab('login');
+          }).catch((err) => {
+            alert("Erè: " + err.message);
+          });
+        }
+      });
+    };
+
+    // Jere lè itilizatè a ap konekte (Verification)
+    window.handleLogin = function(event) {
+      event.preventDefault();
+      
+      const identifier = document.getElementById('loginIdentifier').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      if (!identifier || !password) {
+        alert("Ranpli tout jaden yo!");
+        return;
+      }
+
+      const usersRef = ref(db, 'BENTOUL/USERS');
+      get(usersRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          const users = snapshot.val();
+          let userFound = null;
+
+          // Chèche nan lis la si gen non itilizatè oswa nimewo telefòn lan
+          for (let key in users) {
+            if (users[key].username === identifier || users[key].phone === identifier) {
+              userFound = users[key];
+              break;
+            }
+          }
+
+          if (userFound) {
+            if (userFound.password === password) {
+              alert(`Byenvini, ou konekte kòm ${userFound.username}!`);
+              // Sove sesyon koneksyon an pou l ka toujou rete konekte
+              localStorage.setItem('bentoul_user', userFound.username);
+              window.updateAuthUI();
+              document.getElementById('loginForm').reset();
+              window.navigateBack();
+            } else {
+              alert("Modpas la pa kòrèk.");
+            }
+          } else {
+            alert("Pa gen okenn kont ki gen non oswa nimewo sa a.");
+          }
+        } else {
+          alert("Pa gen okenn kont ki enskri nan sistèm nan ankò.");
+        }
+      }).catch((err) => {
+        alert("Erè koneksyon: " + err.message);
+      });
+    };
+
+    // Fonksyon dekonekte epi siye localStorage
+    window.handleLogout = function() {
+      if (confirm("Èske ou vle dekonekte vrèman nan kont ou an?")) {
+        localStorage.removeItem('bentoul_user');
+        window.updateAuthUI();
+        alert("Ou dekonekte avèk siksè!");
+      }
+    };
+
+    // Mizajou Header ak bouton koneksyon selon si itilizatè a konekte oswa non
+    window.updateAuthUI = function() {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      const headerLogo = document.getElementById('headerLogo');
+      const headerTitle = document.getElementById('headerTitle');
+      const authButton = document.getElementById('authButton');
+
+      if (loggedInUser) {
+        // Lè itilizatè a konekte
+        if (headerLogo) {
+          headerLogo.textContent = loggedInUser.charAt(0).toUpperCase();
+          headerLogo.style.background = 'linear-gradient(135deg, #10b981, #059669)'; // background vèt pou avatar
+        }
+        if (headerTitle) {
+          headerTitle.textContent = loggedInUser;
+        }
+        if (authButton) {
+          authButton.innerHTML = `<i class="fas fa-sign-out-alt"></i> Se déconnecter`;
+          authButton.style.background = '#ef4444'; // Wouj pou dekonekte
+          authButton.style.boxShadow = '0 4px 10px rgba(239, 68, 68, 0.2)';
+          authButton.onclick = function() {
+            window.handleLogout();
+          };
+        }
+      } else {
+        // Lè pa gen moun ki konekte
+        if (headerLogo) {
+          headerLogo.textContent = 'B';
+          headerLogo.style.background = 'linear-gradient(135deg, #4f46e5, #06b6d4)';
+        }
+        if (headerTitle) {
+          headerTitle.textContent = 'BENTOUL';
+        }
+        if (authButton) {
+          authButton.innerHTML = `<i class="fas fa-user-circle"></i> Se connecter / S'inscrire`;
+          authButton.style.background = '#4f46e5';
+          authButton.style.boxShadow = '0 4px 10px rgba(79, 70, 229, 0.2)';
+          authButton.onclick = function() {
+            window.navigateTo('authScreen');
+          };
+        }
+      }
+    };
+
+    // Fonksyon pou ekstrè ID imaj Google Drive epi kreye yon bèl Thumbnail
+    function getDisplayImageUrl(image) {
+      if (!image) return "";
+      
+      let driveId = "";
+      
+      // Detekte estrikti lyen pataje Drive /file/d/ID/...
+      const dMatch = image.match(/\/file\/d\/([a-zA-Z0-9_-]{25,50})/);
+      if (dMatch) {
+        driveId = dMatch[1];
+      } else {
+        // Detekte paramèt ?id=ID oswa &id=ID
+        const idMatch = image.match(/[?&]id=([a-zA-Z0-9_-]{25,50})/);
+        if (idMatch) {
+          driveId = idMatch[1];
+        } else {
+          // Detekte si yo jis pase ID a sèlman (ID Google Drive yo konn gen ant 28 ak 45 karaktè)
+          const rawIdMatch = image.trim().match(/^([a-zA-Z0-9_-]{28,45})$/);
+          if (rawIdMatch) {
+            driveId = rawIdMatch[1];
+          }
+        }
+      }
+      
+      // Si nou jwenn yon ID, nou kreye lyen thumbnail ki efikas la
+      if (driveId) {
+        return `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+      }
+      
+      // Si se yon lyen imaj nòmal (PNG, JPG, elatriye), nou kite l jan l te ye a
+      return image;
+    }
+
     // Fonksyon global pou jere imaj ki gen erè (Drive oswa lòt)
     window.handleImageError = function(key) {
       const img = document.getElementById('img-' + key);
@@ -735,7 +1096,6 @@
 
     // Fonksyon global pou pataje yon pòs ak yon lyen inik avèk bèl fòma
     window.sharePost = function(title, text, url) {
-      // Konstwi mesaj la jan yo mande l la
       const formattedText = `${title}\n${text ? text + '\n' : ''}clicker sur le lien pour voir la suite...\n${url}`;
 
       if (navigator.share) {
@@ -744,7 +1104,6 @@
           text: formattedText
         }).catch((err) => console.log("Erreur de partage:", err));
       } else {
-        // Fallback lè navigator.share pa disponib (Kopye tèks la nèt nan Clipboard)
         navigator.clipboard.writeText(formattedText).then(() => {
           alert("Kopiye! Tèks pataje a kopye byen nan clipboard ou.");
         }).catch(() => {
@@ -759,7 +1118,7 @@
       }
     };
 
-    // Fonksyon pou koute bouton pataje a soti nan element yo dirèkteman (san pwoblèm quotes)
+    // Fonksyon pou koute bouton pataje a soti nan element yo dirèkteman
     window.shareFromElement = function(button) {
       const parent = button.closest('.message-item');
       if (!parent) return;
@@ -779,7 +1138,8 @@
         whatsapp: 'whatsappScreen',
         tiktok: 'tiktokScreen',
         youtube: 'youtubeScreen',
-        apps: 'AppdScreen'
+        apps: 'AppdScreen',
+        auth: 'authScreen'
       };
 
       // Fèmen lòt onglet yo an premye pou evite sipozisyon
@@ -904,11 +1264,13 @@
         const firstLetter = title ? title.trim().charAt(0).toUpperCase() : "B";
         let mediaHTML = "";
 
-        // Si gen imaj, n ap prepare l ak yon sekirite onerror
-        if (image) {
+        // Nou verifye si se yon imaj Google Drive epi nou konvèti l an Thumbnail
+        const displayImage = image ? getDisplayImageUrl(image) : "";
+
+        if (displayImage) {
           mediaHTML = `
             <div class="post-media-container">
-              <img src="${escapeHtml(image)}" class="post-image" id="img-${key}" alt="Imaj Pòs" onerror="handleImageError('${key}')">
+              <img src="${escapeHtml(displayImage)}" class="post-image" id="img-${key}" alt="Imaj Pòs" onerror="handleImageError('${key}')">
               <div class="post-placeholder" id="placeholder-${key}" style="display: none;">${escapeHtml(firstLetter)}</div>
             </div>
           `;
@@ -924,8 +1286,11 @@
         const uniqueUrl = window.location.origin + window.location.pathname + "?platform=" + platformName + "&id=" + key;
         div.dataset.url = uniqueUrl;
 
-        // Estrikti HTML anndan kat mesaj la
+        // KREYE ESTRIKTI SIDE-BY-SIDE:
+        // 1. mediaHTML la bò gòch.
+        // 2. Tèks yo ak bouton yo vlope nan yon ".post-content-container" bò dwat.
         let cardHTML = mediaHTML;
+        cardHTML += `<div class="post-content-container">`;
         cardHTML += `<h3>${escapeHtml(title)}</h3>`;
         if (text) {
           cardHTML += `<p>${escapeHtml(text)}</p>`;
@@ -941,6 +1306,7 @@
             <i class="fas fa-share-alt"></i> Partager
           </button>
         </div>`;
+        cardHTML += `</div>`; // Fèmen .post-content-container
 
         div.innerHTML = cardHTML;
         container.appendChild(div);
@@ -955,13 +1321,17 @@
     // Kòmanse chache si gen yon lyen pataje ki ouvri paj la
     window.handleDeepLink();
 
+    // Tcheke si gen yon itilizatè ki deja konekte nan sistèm lan
+    window.updateAuthUI();
+
     // Modifikasyon fonksyon navigasyon yo pou mete lyen bar navigatè a ajou san rechaje paj la
     window.navigateTo = function(screenId) {
       const reverseMap = {
         whatsappScreen: 'whatsapp',
         tiktokScreen: 'tiktok',
         youtubeScreen: 'youtube',
-        AppdScreen: 'apps'
+        AppdScreen: 'apps',
+        authScreen: 'auth'
       };
       const platform = reverseMap[screenId];
       if (platform) {
