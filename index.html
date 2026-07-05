@@ -148,6 +148,9 @@
     #authScreen .app-header { background: #4f46e5; border-bottom: none; }
     #authScreen .app-header h1, #authScreen .btn-back { color: #ffffff; }
 
+    #sondageScreen .app-header { background: #f59e0b; border-bottom: none; }
+    #sondageScreen .app-header h1, #sondageScreen .btn-back { color: #ffffff; }
+
     .tab-screen:not(#homeScreen) .btn-back:active {
       background: rgba(255, 255, 255, 0.2);
     }
@@ -175,6 +178,7 @@
     #tiktokScreen .btn-subscribe { background: #ffffff; color: #000000; }
     #youtubeScreen .btn-subscribe { background: #ffffff; color: #FF0000; }
     #AppdScreen .btn-subscribe { background: #ffffff; color: #3DDC84; }
+    #sondageScreen .btn-subscribe { background: #ffffff; color: #f59e0b; }
 
     /* Contenu des écrans */
     .screen-content {
@@ -239,7 +243,8 @@
     #tiktokScreen .views-count,
     #youtubeScreen .views-count,
     #AppdScreen .views-count,
-    #authScreen .views-count {
+    #authScreen .views-count,
+    #sondageScreen .views-count {
       color: rgba(255, 255, 255, 0.85);
     }
 
@@ -373,6 +378,49 @@
     }
 
     .card-Appd .card-info p {
+      display: block;
+      font-size: 14px;
+      color: #64748b;
+      text-align: left;
+    }
+
+    /* Stylizasyon espesyal pou kat sondaj la (card-sondage) */
+    .card-item.card-sondage {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .card-item.card-sondage::after {
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      border-top-right-radius: 0;
+      background: #f59e0b;
+    }
+
+    .card-sondage .card-info {
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .card-sondage .card-info h2 {
+      font-size: 16px;
+      text-align: left;
+    }
+
+    .card-sondage .card-info p {
       display: block;
       font-size: 14px;
       color: #64748b;
@@ -686,6 +734,91 @@
     .btn-auth-submit:active {
       transform: scale(0.98);
     }
+
+    /* --- STYLE SONDAGES ETA WHATSAPP --- */
+    .sondage-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid #f59e0b;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sondage-question {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .sondage-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sondage-option {
+      position: relative;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      cursor: pointer;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+      z-index: 1;
+    }
+
+    .sondage-option:not(.voted-mode):hover {
+      border-color: #f59e0b;
+      background: #fffdf5;
+    }
+
+    .sondage-option-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: rgba(245, 158, 11, 0.15);
+      z-index: -1;
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sondage-option.voted {
+      border-color: #f59e0b;
+      background: #fffdf5;
+    }
+
+    .sondage-option.voted .sondage-option-fill {
+      background: rgba(245, 158, 11, 0.3);
+    }
+
+    .sondage-option-percent {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .sondage-footer {
+      font-size: 11px;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
   </style>
 </head>
 <body>
@@ -755,6 +888,18 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           </div>
         </div>
 
+        <!-- Kat Sondaj yo (Sondages / Votes - horizontal tankou mes applications) -->
+        <div class="card-item card-sondage" onclick="navigateTo('sondageScreen')">
+          <div class="card-info">
+            <h2>Sondages & Votes</h2>
+            <p>Participez à nos sondages et donnez votre avis !</p>
+            <button class="btn-app-action" style="background: #f59e0b; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);">Répondre <i class="fas fa-vote-yea"></i></button>
+          </div>
+          <div class="card-icon" style="background: #f59e0b;">
+            <i class="fas fa-poll"></i>
+          </div>
+        </div>
+
         <!-- Kat Aplikasyon yo (Mes applications - Afiche an long ak foto adwat) -->
         <div class="card-item card-Appd" onclick="navigateTo('AppdScreen')">
           <div class="card-info">
@@ -815,6 +960,17 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       </div>
       <div class="screen-content">
         <div id="listPostApps"></div>
+      </div>
+    </div>
+
+    <!-- ÉCRAN ONGLETS : FLUX SONDAGES (NEW) -->
+    <div id="sondageScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Sondages <span class="views-count"></span></h1>
+      </div>
+      <div class="screen-content">
+        <div id="listSondages"></div>
       </div>
     </div>
 
@@ -891,6 +1047,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       tiktok: ref(db, 'BENTOUL/TIKTOK'),
       youtube: ref(db, 'BENTOUL/YOUTUBE'),
       apps: ref(db, 'BENTOUL/APPS'),
+      sondages: ref(db, 'BENTOUL/SONDAGES'),
       views: ref(db, 'BENTOUL/views')
     };
 
@@ -1105,7 +1262,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         }).catch((err) => console.log("Erreur de partage:", err));
       } else {
         navigator.clipboard.writeText(formattedText).then(() => {
-          alert("Kopiye! Tèks pataje a kopye byen nan clipboard ou.");
+          alert("Kopiye! Tèks pataje a kopye byen dans clipboard ou.");
         }).catch(() => {
           const dummy = document.createElement('textarea');
           document.body.appendChild(dummy);
@@ -1139,6 +1296,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         tiktok: 'tiktokScreen',
         youtube: 'youtubeScreen',
         apps: 'AppdScreen',
+        sondages: 'sondageScreen',
         auth: 'authScreen'
       };
 
@@ -1313,10 +1471,134 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       });
     }
 
+    // --- LOJIK RENDERING ETA REZILTA SONDAGES ---
+    function renderSondages(snapshot) {
+      const container = document.getElementById('listSondages');
+      if (!container) return;
+
+      const data = snapshot.val();
+      container.innerHTML = '';
+
+      if (!data) {
+        container.innerHTML = '<div class="empty-message">Aucun sondage pour le moment.</div>';
+        return;
+      }
+
+      // Detèmine id inik moun k ap vote a (non itilizatè oswa yon uuid tanporè)
+      let voterId = localStorage.getItem('bentoul_user');
+      if (!voterId) {
+        voterId = localStorage.getItem('bentoul_uuid');
+        if (!voterId) {
+          voterId = 'anon_' + Math.random().toString(36).substring(2, 11);
+          localStorage.setItem('bentoul_uuid', voterId);
+        }
+      }
+
+      const entries = Object.entries(data).reverse();
+
+      entries.forEach(([key, value]) => {
+        const question = value.question || "Sondage";
+        const options = value.options || {};
+        const votes = value.votes || {};
+
+        const totalVotes = Object.keys(votes).length;
+        const userVote = votes[voterId]; // verifye si moun nan te deja vote
+
+        const card = document.createElement('div');
+        card.className = 'sondage-card';
+
+        const qEl = document.createElement('div');
+        qEl.className = 'sondage-question';
+        qEl.textContent = question;
+        card.appendChild(qEl);
+
+        const optionsContainer = document.createElement('div');
+        optionsContainer.className = 'sondage-options';
+
+        Object.entries(options).forEach(([optKey, optVal]) => {
+          const optionVotes = Object.values(votes).filter(v => v === optKey).length;
+          const percent = totalVotes > 0 ? Math.round((optionVotes / totalVotes) * 100) : 0;
+
+          const optEl = document.createElement('div');
+          optEl.className = 'sondage-option';
+          if (userVote) {
+            optEl.classList.add('voted-mode');
+          }
+          if (userVote === optKey) {
+            optEl.classList.add('voted');
+          }
+
+          // Kouch koulè background pou pousantaj la (Barre de progression)
+          const fill = document.createElement('div');
+          fill.className = 'sondage-option-fill';
+          if (userVote) {
+            fill.style.width = `${percent}%`;
+          } else {
+            fill.style.width = `0%`;
+          }
+          optEl.appendChild(fill);
+
+          // Tèks opsyon an
+          const labelSpan = document.createElement('span');
+          labelSpan.textContent = optVal;
+          optEl.appendChild(labelSpan);
+
+          // Pousantaj ak ikòn si moun lan te deja vote
+          if (userVote) {
+            const pctSpan = document.createElement('span');
+            pctSpan.className = 'sondage-option-percent';
+            pctSpan.textContent = `${optionVotes} vote(s) (${percent}%)`;
+            if (userVote === optKey) {
+              pctSpan.innerHTML += ` <i class="fas fa-check-circle" style="color: #f59e0b;"></i>`;
+            }
+            optEl.appendChild(pctSpan);
+          } else {
+            // Si moun nan poko vote, li ka klike sou opsyon an pou l vote
+            optEl.onclick = function() {
+              window.voteSondage(key, optKey);
+            };
+          }
+
+          optionsContainer.appendChild(optEl);
+        });
+
+        card.appendChild(optionsContainer);
+
+        // Footer sondaj la
+        const footer = document.createElement('div');
+        footer.className = 'sondage-footer';
+        footer.innerHTML = `
+          <span><i class="fas fa-users"></i> ${totalVotes} participation(s)</span>
+          <span>${userVote ? "✓ Choix enregistré" : "Choisissez une option pour voter"}</span>
+        `;
+        card.appendChild(footer);
+
+        container.appendChild(card);
+      });
+    }
+
+    // Fonksyon pou sove vòt la nan database la
+    window.voteSondage = function(pollId, optionKey) {
+      let voterId = localStorage.getItem('bentoul_user');
+      if (!voterId) {
+        voterId = localStorage.getItem('bentoul_uuid');
+        if (!voterId) {
+          voterId = 'anon_' + Math.random().toString(36).substring(2, 11);
+          localStorage.setItem('bentoul_uuid', voterId);
+        }
+      }
+
+      const voteRef = ref(db, `BENTOUL/SONDAGES/${pollId}/votes/${voterId}`);
+      set(voteRef, optionKey).catch((err) => {
+        alert("Erreur: " + err.message);
+      });
+    };
+
     onValue(refs.whatsapp, (snap) => renderList('listPostWhatsapp', snap));
     onValue(refs.tiktok, (snap) => renderList('listPostTiktok', snap));
     onValue(refs.youtube, (snap) => renderList('listPostYoutube', snap));
     onValue(refs.apps, (snap) => renderList('listPostApps', snap));
+    onValue(refs.sondages, (snap) => renderSondages(snap));
 
     // Kòmanse chache si gen yon lyen pataje ki ouvri paj la
     window.handleDeepLink();
@@ -1331,6 +1613,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         tiktokScreen: 'tiktok',
         youtubeScreen: 'youtube',
         AppdScreen: 'apps',
+        sondageScreen: 'sondages',
         authScreen: 'auth'
       };
       const platform = reverseMap[screenId];
