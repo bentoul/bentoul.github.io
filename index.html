@@ -7,26 +7,26 @@
     
     <!-- SEO Baliz Prensipal -->
     <title>BENTOUL - Formation et Astuces Informatiques sur Android</title>
-    <meta name="description" content="BENTOUL vous propose des formations et astuces informatiques sur Android. Visitez et suivez nos différentes plateformes pour mieux apprendre avec nous sur WhatsApp et plus.">
+    <meta name="description" content="BENTOUL vous propose des formations et astuces informatiques sur Android. Visitez et suivez nos différentes plateformes pour mieux apprendre avec nous on WhatsApp et plus.">
     <meta name="keywords" content="BENTOUL, formation android, astuce informatique, apprendre informatique, cours android, whatsapp informatique, bentoul github">
     <meta name="author" content="BENTOUL">
     <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Facebook / WhatsApp (Pou bèl afichaj lè w pataje lyen an) -->
+    <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://bentoul.github.io/">
     <meta property="og:title" content="BENTOUL - Formation et Astuces Informatiques sur Android">
     <meta property="og:description" content="Formations et astuces informatiques sur Android pour tous ! Rejoignez-nous sur nos différentes plateformes, notamment WhatsApp, pour progresser ensemble.">
-    <meta property="og:image" content="min.png"> <!-- Ranplase ak lyen logo ou a -->
+    <meta property="og:image" content="min.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="BENTOUL - Formation et Astuces Informatiques sur Android">
     <meta name="twitter:description" content="Formations et astuces informatiques sur Android pour tous ! Rejoignez-nous sur nos différentes plateformes, notamment WhatsApp, pour progresser ensemble.">
-    <meta name="twitter:image" content="min.png"> <!-- Ranplase ak lyen logo ou a -->
+    <meta name="twitter:image" content="min.png">
 
-    <!-- Favicon (Ti ikòn paj la) -->
-    <link rel="icon" type="image/x-icon" href="logo.png">
+    <!-- Favicon -->
+    <link class="round-fav" rel="icon" type="image/x-icon" href="logo.png">
     
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -145,6 +145,9 @@
     #AppdScreen .app-header { background: #3DDC84; border-bottom: none; }
     #AppdScreen .app-header h1, #AppdScreen .btn-back { color: #ffffff; }
 
+    #courseScreen .app-header { background: #2563eb; border-bottom: none; }
+    #courseScreen .app-header h1, #courseScreen .btn-back { color: #ffffff; }
+
     #authScreen .app-header { background: #4f46e5; border-bottom: none; }
     #authScreen .app-header h1, #authScreen .btn-back { color: #ffffff; }
 
@@ -198,7 +201,7 @@
     /* DESIGN PREMIUM : TAB HOME (BENTOUL) */
     .home-header {
       border-bottom: 1px solid #f1f5f9;
-      justify-content: center;
+      justify-content: space-between;
     }
 
     .brand-header {
@@ -208,10 +211,10 @@
     }
 
     .brand-logo-small {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       background: linear-gradient(135deg, #4f46e5, #06b6d4);
-      border-radius: 8px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -219,6 +222,9 @@
       font-weight: 900;
       font-size: 16px;
       box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
     }
 
     .brand-name-small {
@@ -243,6 +249,7 @@
     #tiktokScreen .views-count,
     #youtubeScreen .views-count,
     #AppdScreen .views-count,
+    #courseScreen .views-count,
     #authScreen .views-count,
     #sondageScreen .views-count {
       color: rgba(255, 255, 255, 0.85);
@@ -290,11 +297,11 @@
       max-width: 340px;
     }
 
-    /* MODIFICATION : Grille des cartes Home (Orizontal pou Android) */
+    /* Grille des cartes Home (Orizontal pou Android) */
     .cards-grid {
       display: flex;
-      flex-direction: row; /* Mete eleman yo orizontal */
-      gap: 10px;           /* Ti espas pou yo ka antre byen sou ekran yo */
+      flex-direction: row;
+      gap: 10px;
       width: 100%;
     }
 
@@ -302,14 +309,14 @@
       position: relative;
       background: #ffffff;
       border-radius: 16px;
-      padding: 10px 4px;   /* Ajiste espas anndan an */
+      padding: 10px 4px;
       display: flex;
-      flex-direction: column; /* Kontni anndan kat yo ap vètikal */
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      flex: 1;             /* Chak kat ap pran menm gwosè egal nan lajè a */
-      min-width: 0;        /* Evite debòdeman sou ekran Android */
+      flex: 1;
+      min-width: 0;
       text-align: center;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02), 0 8px 16px -6px rgba(0, 0, 0, 0.01);
       border: 1px solid #f1f5f9;
@@ -324,7 +331,6 @@
 
     .card-item:active { transform: scale(0.97); }
 
-    /* Liy koulè anlè kat yo olye de bò gòch la paske layout la orizontal kounye a */
     .card-item::after {
       content: '';
       position: absolute;
@@ -341,7 +347,7 @@
     .card-item.card-tiktok::after { background: #000000; }
     .card-item.card-youtube::after { background: #FF0000; }
 
-    /* Stylizasyon espesyal pou kat aplikasyon an (card-Appd) pou l parèt an long */
+    /* Kat aplikasyon (card-Appd) */
     .card-item.card-Appd {
       flex-direction: row;
       justify-content: space-between;
@@ -384,7 +390,7 @@
       text-align: left;
     }
 
-    /* Stylizasyon espesyal pou kat sondaj la (card-sondage) */
+    /* Kat sondaj (card-sondage) */
     .card-item.card-sondage {
       flex-direction: row;
       justify-content: space-between;
@@ -427,7 +433,50 @@
       text-align: left;
     }
 
-    /* Bouton anba tèks la pou kat aplikasyon an */
+    /* Kat kou (card-course) */
+    .card-item.card-course {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .card-item.card-course::after {
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      border-top-right-radius: 0;
+      background: #2563eb;
+    }
+
+    .card-course .card-info {
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .card-course .card-info h2 {
+      font-size: 16px;
+      text-align: left;
+    }
+
+    .card-course .card-info p {
+      display: block;
+      font-size: 14px;
+      color: #64748b;
+      text-align: left;
+    }
+
+    /* Bouton d'action */
     .btn-app-action {
       background: #3DDC84;
       color: white;
@@ -475,13 +524,12 @@
     }
     
     .card-info h2 { 
-      font-size: 13px; /* Ti lajè tèks pou l ka antre nèt */
+      font-size: 13px;
       color: #0f172a; 
       margin-bottom: 0; 
       font-weight: 700; 
     }
 
-    /* Kache ti deskripsyon an ak bouton flèch la pou layout horizontal la ka pwòp sou Android */
     .card-info p { 
       display: none; 
     }
@@ -490,7 +538,7 @@
       display: none;
     }
 
-    /* DIZAY MESAJ KOUYEA : DIREKSYON HORIZONTAL (IMAG SOU GÒCH, TÈKS SOU DWA) */
+    /* Style message-item */
     .message-item {
       background: white;
       padding: 1px;
@@ -499,51 +547,47 @@
       border-left: 4px solid #4f46e5;
       box-shadow: 0 4px 10px rgba(0,0,0,0.03);
       display: flex;
-      flex-direction: row; /* Ranje eleman yo kòt a kòt */
-      gap: 14px;           /* Distans ant imaj gòch ak kontni dwa */
+      flex-direction: row;
+      gap: 14px;
       align-items: flex-start;
       transition: border-left-width 0.3s ease;
     }
 
-    /* LIMIT TIT SOU YON LÒT LIY AVÈK TI PWEN (...) */
     .message-item h3 {
       font-size: 15px;
       font-weight: 700;
       color: #0f172a;
       display: -webkit-box;
-      -webkit-line-clamp: 1; /* Limit ak 1 liy */
+      -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* LIMIT DESKRIPSYON SOU 3 LIY AVÈK TI PWEN (...) */
     .message-item p {
       font-size: 14px;
       line-height: 1.5;
       color: #475569;
       white-space: pre-wrap;
       display: -webkit-box;
-      -webkit-line-clamp: 3; /* Limit ak 3 liy */
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* Veso pou kontni bò dwat la (Tit, deskripsyon ak bouton yo) */
     .post-content-container {
       display: flex;
       flex-direction: column;
       gap: 6px;
       flex: 1;
-      min-width: 0; /* Evite tèks la debòde */
+      min-width: 0;
     }
 
-    /* Estil imaj ak placeholder fiks sou bò gòch kòm yon bèl kare */
     .post-media-container {
-      width: 110px;       /* Lajè fiks pou imaj bò gòch la */
-      height: 110px;      /* Wotè fiks pou l fòme yon kare */
-      flex-shrink: 0;     /* Evite imaj la retresi */
+      width: 110px;
+      height: 110px;
+      flex-shrink: 0;
       position: relative;
       border-radius: 12px;
       overflow: hidden;
@@ -566,7 +610,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 32px; /* Gwosè font ajiste pou kare a */
+      font-size: 32px;
       font-weight: 800;
       text-transform: uppercase;
       border-radius: 12px;
@@ -578,15 +622,13 @@
     #youtubeScreen .post-placeholder { background: linear-gradient(135deg, #FF0000, #b30000); }
     #AppdScreen .post-placeholder { background: linear-gradient(135deg, #3DDC84, #2fa362); }
 
-    /* Liy bouton pou cada pòs */
     .post-actions-row {
       display: flex;
       gap: 10px;
-      margin-top: 4px; /* Ti espas anlè bouton yo */
+      margin-top: 4px;
       width: 100%;
     }
 
-    /* Bouton pou ale sou videyo a */
     .btn-post-link {
       align-self: flex-start;
       display: inline-flex;
@@ -605,7 +647,6 @@
 
     .btn-post-link:active { transform: scale(0.95); }
 
-    /* Bouton pataje a */
     .btn-share {
       display: inline-flex;
       align-items: center;
@@ -629,7 +670,6 @@
       background: #cbd5e1;
     }
 
-    /* Koulè dinamik pou bouton lyen yo selon rezo a */
     #whatsappScreen .message-item { border-left-color: #25D366; }
     #whatsappScreen .btn-post-link { background: #25D366; }
 
@@ -649,7 +689,88 @@
       font-size: 14px;
     }
 
-    /* --- STYLE NOUVO POU TAB KONEKSYON AK ENSKRIPSYON --- */
+    /* Style Cours */
+    .lesson-item {
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .lesson-item:active {
+      background-color: #f1f5f9 !important;
+      transform: scale(0.98);
+    }
+    
+    .lesson-num {
+      flex-shrink: 0;
+    }
+
+    .lesson-rich-content {
+      font-size: 15px;
+      color: #334155;
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
+    .lesson-rich-content p {
+      margin-bottom: 12px;
+    }
+    .lesson-rich-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      margin: 15px auto;
+    }
+    .lesson-rich-content table {
+      border-collapse: collapse !important;
+      width: 100% !important;
+      margin: 15px 0 !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+    .lesson-rich-content th, .lesson-rich-content td {
+      border: 1px solid #cbd5e1 !important;
+      padding: 8px !important;
+      vertical-align: top;
+      word-break: break-word !important;
+    }
+    .lesson-rich-content th {
+      background-color: #f8fafc;
+      font-weight: bold;
+    }
+    .lesson-rich-content pre {
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      margin: 15px 0;
+      border: 1px solid #cbd5e1;
+    }
+    .lesson-rich-content code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+    }
+    .lesson-rich-content ul, .lesson-rich-content ol {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+    .lesson-rich-content blockquote {
+      border-left: 4px solid #cbd5e1;
+      padding-left: 15px;
+      margin-left: 0;
+      color: #64748b;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+    .lesson-rich-content h1, .lesson-rich-content h2, .lesson-rich-content h3, .lesson-rich-content h4 {
+      color: #0f172a;
+      margin-top: 20px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    /* Style Connexion / Inscription */
     .auth-toggle {
       display: flex;
       background: #edf2f7;
@@ -735,7 +856,7 @@
       transform: scale(0.98);
     }
 
-    /* --- STYLE SONDAGES ETA WHATSAPP --- */
+    /* Style Sondages */
     .sondage-card {
       background: #ffffff;
       border-radius: 16px;
@@ -819,16 +940,338 @@
       align-items: center;
       margin-top: 4px;
     }
+
+    /* ==========================================================================
+       SIDEBAR & MULTIPLES AVATARS 3D STYLES
+       ========================================================================== */
+    .sidebar-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 99;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar-overlay.open {
+      display: block;
+      opacity: 1;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 80%;
+      max-width: 320px;
+      height: 100%;
+      background: #ffffff;
+      z-index: 100;
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+    }
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid #edf2f7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+    }
+
+    .user-profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sidebar-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.6);
+      object-fit: cover;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .sidebar-avatar:active {
+      transform: scale(0.95);
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .btn-close-sidebar {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .btn-close-sidebar:active {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .avatar-selection-box {
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .avatar-selection-box h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .avatar-banner-grid {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-behavior: smooth;
+    }
+
+    .avatar-banner-grid::-webkit-scrollbar {
+      height: 6px;
+    }
+    .avatar-banner-grid::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+
+    .avatar-option {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid transparent;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .avatar-option:hover {
+      transform: scale(1.08);
+    }
+    .avatar-option.selected {
+      border-color: #4f46e5;
+      box-shadow: 0 0 8px rgba(79, 70, 229, 0.4);
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      color: #334155;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .sidebar-nav a:active, .sidebar-nav a.active {
+      background: #f1f5f9;
+      color: #4f46e5;
+    }
+
+    .sidebar-nav a i {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+      color: #64748b;
+    }
+    .sidebar-nav a:active i, .sidebar-nav a.active i {
+      color: #4f46e5;
+    }
+
+    .sidebar-footer {
+      padding: 20px;
+      border-top: 1px solid #edf2f7;
+      text-align: center;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* ==========================================================================
+       MODAL CUSTOM POPUP STYLES
+       ========================================================================== */
+    .popup-modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .popup-modal-card {
+      background: #ffffff;
+      border-radius: 24px;
+      width: 100%;
+      max-width: 340px;
+      padding: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      animation: popupScale 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes popupScale {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-modal-icon {
+      width: 56px;
+      height: 56px;
+      background: #e0e7ff;
+      color: #4f46e5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .popup-modal-message {
+      font-size: 14px;
+      color: #334155;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .popup-modal-btn {
+      width: 100%;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+      transition: all 0.2s;
+    }
+
+    .popup-modal-btn:active {
+      transform: scale(0.98);
+    }
   </style>
 </head>
 <body>
 
   <div class="app-container">
+
+    <!-- OVERLAY AK SIDEBAR DE GOCH A DWAT -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar(false)"></div>
+    <div id="appSidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="user-profile-section">
+          <img id="sidebarUserAvatar" src="https://avatar.iran.liara.run/public/11" alt="Avatar" class="sidebar-avatar">
+          <div class="user-info-text">
+            <h3 id="sidebarUsername" style="font-weight: 800; color: #ffffff; font-size: 16px;">Vizitè</h3>
+            <p id="sidebarUserPhone" style="color: rgba(255, 255, 255, 0.8); font-size: 12px;">Konekte pou kòmanse</p>
+            <p id="sidebarCredits" style="color: #3DDC84; font-size: 13px; font-weight: bold; margin-top: 4px; display: none;">
+              <i class="fas fa-coins"></i> <span id="sidebarCreditsCount">0</span> kredi
+            </p>
+          </div>
+        </div>
+        <button class="btn-close-sidebar" onclick="toggleSidebar(false)"><i class="fas fa-times"></i></button>
+      </div>
+      
+      <div class="sidebar-content">
+        <!-- Bann 3D Avatars -->
+        <div class="avatar-selection-box">
+          <h4>Chwazi yon Avatar 3D</h4>
+          <div class="avatar-banner-grid">
+            <img src="https://avatar.iran.liara.run/public/11" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/11')">
+            <img src="https://avatar.iran.liara.run/public/22" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/22')">
+            <img src="https://avatar.iran.liara.run/public/33" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/33')">
+            <img src="https://avatar.iran.liara.run/public/44" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/44')">
+            <img src="https://avatar.iran.liara.run/public/55" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/55')">
+            <img src="https://avatar.iran.liara.run/public/66" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/66')">
+            <img src="https://avatar.iran.liara.run/public/77" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/77')">
+            <img src="https://avatar.iran.liara.run/public/88" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/88')">
+            <img src="https://avatar.iran.liara.run/public/99" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/99')">
+            <img src="https://avatar.iran.liara.run/public/15" class="avatar-option" onclick="changeUserAvatar('https://avatar.iran.liara.run/public/15')">
+          </div>
+        </div>
+        
+        <!-- Meni Navigasyon nan Sidebar -->
+        <div class="sidebar-nav">
+          <a href="#" onclick="navigateToSidebarScreen('courseScreen')"><i class="fas fa-graduation-cap"></i> Cours & Formations</a>
+          <a href="#" onclick="navigateToSidebarScreen('sondageScreen')"><i class="fas fa-poll"></i> Sondages & Votes</a>
+          <a href="#" onclick="navigateToSidebarScreen('AppdScreen')"><i class="fas fa-android"></i> Applications gratuites</a>
+          <a href="#" onclick="toggleAuthFromSidebar()"><i class="fas fa-user-circle"></i> <span id="sidebarAuthText">Connexion / Inscription</span></a>
+        </div>
+      </div>
+      
+      <div class="sidebar-footer">
+        <p>© BENTOUL • Tout dwa rezève</p>
+      </div>
+    </div>
     
     <!-- ÉCRAN ACCUEIL (HOME) -->
     <div id="homeScreen" class="tab-screen home-active">
       <div class="app-header home-header">
-        <div class="brand-header">
+        <button onclick="toggleSidebar(true)" style="background: none; border: none; font-size: 20px; color: #0f172a; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px;"><i class="fas fa-bars"></i></button>
+        <div class="brand-header" style="flex: 1; justify-content: center; margin-right: 36px;">
           <div class="brand-logo-small" id="headerLogo">B</div>
           <span class="brand-name-small" id="headerTitle">BENTOUL</span>
           <span class="views" id="nbViews"></span>
@@ -844,7 +1287,7 @@
 Suivez-nous sur nos plateformes.
 Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           
-          <!-- BOUTON LOGIN / ENSKRI AJOUTE LADA N -->
+          <!-- BOUTON LOGIN / ENSKRI -->
           <button id="authButton" class="btn-app-action" style="background: #4f46e5; margin-top: 15px; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);">
             <i class="fas fa-user-circle"></i> Se connecter / S'inscrire
           </button>
@@ -888,7 +1331,19 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           </div>
         </div>
 
-        <!-- Kat Sondaj yo (Sondages / Votes - horizontal tankou mes applications) -->
+        <!-- Kat Seksyon Cours -->
+        <div class="card-item card-course" onclick="navigateTo('courseScreen')">
+          <div class="card-info">
+            <h2>Cours & Formations</h2>
+            <p>Apprenez pas à pas avec nos formations structurées.</p>
+            <button class="btn-app-action" style="background: #2563eb; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);">Commencer à apprendre <i class="fas fa-book-reader"></i></button>
+          </div>
+          <div class="card-icon" style="background: #2563eb;">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+        </div>
+
+        <!-- Kat Sondaj yo (Sondages / Votes) -->
         <div class="card-item card-sondage" onclick="navigateTo('sondageScreen')">
           <div class="card-info">
             <h2>Sondages & Votes</h2>
@@ -900,7 +1355,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           </div>
         </div>
 
-        <!-- Kat Aplikasyon yo (Mes applications - Afiche an long ak foto adwat) -->
+        <!-- Kat Aplikasyon yo (Mes applications) -->
         <div class="card-item card-Appd" onclick="navigateTo('AppdScreen')">
           <div class="card-info">
             <h2>Mes applications gratuites</h2>
@@ -912,6 +1367,86 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- ÉCRAN ONGLETS : COURS & LEÇONS -->
+    <div id="courseScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBackCourse()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Cours <span class="views-count"></span></h1>
+      </div>
+      <div class="screen-content">
+        <!-- 1. Lis Kou yo (Avèk Pwogrè, J'aime, Dislike, Pataje) -->
+        <div id="courseListContainer">
+          <div id="listCourses"></div>
+        </div>
+        
+        <!-- 2. Detay yon Kou (Afiche sèlman lis leson yo ak kadna) -->
+        <div id="courseDetailContainer" style="display: none;">
+          <div class="course-detail-header" style="margin-bottom: 15px;">
+            <h2 id="courseDetailTitle" style="font-size: 18px; color: #0f172a; margin-bottom: 8px; border-bottom: 2px solid #edf2f7; padding-bottom: 8px;"></h2>
+          </div>
+          <div id="listLessons" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+
+        <!-- 3. Detay yon Leson (Rich Text render, Audio, Google Drive) -->
+        <div id="lessonDetailContainer" style="display: none;">
+          <div class="lesson-detail-header" style="margin-bottom: 20px;">
+            <span id="lessonDetailNum" style="background: #2563eb; color: white; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold;">Leçon 1</span>
+            <h2 id="lessonDetailTitle" style="font-size: 22px; color: #0f172a; margin-top: 10px; margin-bottom: 15px;"></h2>
+            
+            <!-- Audio Player -->
+            <div id="lessonAudioContainer" style="margin-bottom: 15px; display: none;">
+              <p style="font-size: 12px; font-weight: 600; color: #475569; margin-bottom: 5px;"><i class="fas fa-volume-up"></i> Version Audio :</p>
+              <audio id="lessonAudioPlayer" controls style="width: 100%; border-radius: 8px;"></audio>
+            </div>
+
+            <!-- Google Drive / PDF Link -->
+            <div id="lessonDriveContainer" style="margin-bottom: 20px; display: none;">
+              <a id="lessonDriveBtn" href="" target="_blank" class="btn-app-action" style="background: #db4437; box-shadow: 0 4px 10px rgba(219, 68, 55, 0.2); width: 100%; justify-content: center; padding: 10px 14px; font-size: 13px;">
+                <i class="fab fa-google-drive"></i> Consulter le document / Support
+              </a>
+            </div>
+          </div>
+          
+          <!-- Zòn kontni Blogger / TipTap -->
+          <div id="lessonDetailContent" class="lesson-rich-content"></div>
+
+          <!-- SEKSYON QUIZ ANNDAN LESON AN (KACHE PA DEFO) -->
+          <div id="lessonQuizContainer" style="display: none; margin-top: 25px; padding: 15px; border-radius: 16px; background: #ffffff; border: 1px solid #edf2f7; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+              <h3 style="font-size: 16px; font-weight: 700; color: #0f172a; margin-bottom: 12px; border-bottom: 2px solid #edf2f7; padding-bottom: 8px;">
+                <i class="fas fa-question-circle" style="color: #4f46e5; margin-right: 6px;"></i> Quiz de la Leçon
+              </h3>
+              <div id="lessonQuizQuestionsList" style="display: flex; flex-direction: column; gap: 12px;"></div>
+              <button id="btnSubmitLessonQuiz" class="btn-app-action" style="background: #4f46e5; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); width: 100%; justify-content: center; padding: 12px; font-size: 14px; margin-top: 15px;">
+                  Valider mes réponses <i class="fas fa-check" style="margin-left: 6px;"></i>
+              </button>
+          </div>
+
+          <!-- Bouton pou konplete leson an an tan reyèl -->
+          <button id="btnCompleteLesson" class="btn-app-action" style="background: #10b981; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2); width: 100%; justify-content: center; margin-top: 25px; padding: 12px; font-size: 14px;">
+            <i class="fas fa-check-circle"></i> Marquer cette leçon comme complétée
+          </button>
+
+          <!-- Bouton pou pase nan pwochen leson an -->
+          <button id="btnNextLesson" class="btn-app-action" style="background: #2563eb; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2); width: 100%; justify-content: center; margin-top: 12px; padding: 12px; font-size: 14px; display: none;">
+            Leçon suivante <i class="fas fa-arrow-right" style="margin-left: 6px;"></i>
+          </button>
+
+          <!-- Boutons j'aime, dislike, pataje ak kontè -->
+          <div class="lesson-feedback-row" style="display: flex; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid #edf2f7; width: 100%;">
+            <button id="btnLessonLike" class="btn-share" onclick="handleLessonLike()" style="background: #f1f5f9; color: #334155; flex: 1; padding: 10px; font-size: 12px; font-weight: bold; border-radius: 12px;">
+              <i class="far fa-thumbs-up"></i> J'aime (<span id="lessonLikeCount">0</span>)
+            </button>
+            <button id="btnLessonDislike" class="btn-share" onclick="handleLessonDislike()" style="background: #f1f5f9; color: #334155; flex: 1; padding: 10px; font-size: 12px; font-weight: bold; border-radius: 12px;">
+              <i class="far fa-thumbs-down"></i> Je n'aime pas (<span id="lessonDislikeCount">0</span>)
+            </button>
+            <button id="btnLessonShare" class="btn-share" onclick="handleLessonShare()" style="background: #f1f5f9; color: #334155; flex: 1; padding: 10px; font-size: 12px; font-weight: bold; border-radius: 12px;">
+              <i class="fas fa-share-alt"></i> Partager (<span id="lessonShareCount">0</span>)
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -951,7 +1486,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       </div>
     </div>
 
-    <!-- ÉCRAN ONGLETS : FLUX APPS (NEW) -->
+    <!-- ÉCRAN ONGLETS : FLUX APPS -->
     <div id="AppdScreen" class="tab-screen">
       <div class="app-header">
         <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
@@ -963,7 +1498,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       </div>
     </div>
 
-    <!-- ÉCRAN ONGLETS : FLUX SONDAGES (NEW) -->
+    <!-- ÉCRAN ONGLETS : FLUX SONDAGES -->
     <div id="sondageScreen" class="tab-screen">
       <div class="app-header">
         <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
@@ -974,7 +1509,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       </div>
     </div>
 
-    <!-- ÉCRAN ONGLETS : KONEKSYON AK ENSKRIPSYON (NEW) -->
+    <!-- ÉCRAN ONGLETS : KONEKSYON AK ENSKRIPSYON -->
     <div id="authScreen" class="tab-screen">
       <div class="app-header">
         <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
@@ -1022,6 +1557,28 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       </div>
     </div>
 
+    <!-- ==========================================================================
+         ELEMENTS MODAL CUSTOM (REPLACES NATIVE ALERTS)
+         ========================================================================== -->
+    <div id="popupModal" class="popup-modal-backdrop" style="display: none;">
+      <div class="popup-modal-card">
+        <div class="popup-modal-icon"><i class="fas fa-info-circle"></i></div>
+        <p id="popupModalMessage" class="popup-modal-message"></p>
+        <button id="popupModalBtn" class="popup-modal-btn">OK</button>
+      </div>
+    </div>
+
+    <div id="confirmModal" class="popup-modal-backdrop" style="display: none;">
+      <div class="popup-modal-card">
+        <div class="popup-modal-icon" style="color: #f59e0b; background: #fef3c7;"><i class="fas fa-question-circle"></i></div>
+        <p id="confirmModalMessage" class="popup-modal-message"></p>
+        <div style="display: flex; gap: 10px; width: 100%;">
+          <button id="confirmCancelBtn" class="popup-modal-btn" style="background: #e2e8f0; color: #334155; box-shadow: none;">Annuler</button>
+          <button id="confirmOkBtn" class="popup-modal-btn" style="flex: 1;">Confirmer</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Intégration Logique JavaScript / Firebase -->
@@ -1048,10 +1605,93 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       youtube: ref(db, 'BENTOUL/YOUTUBE'),
       apps: ref(db, 'BENTOUL/APPS'),
       sondages: ref(db, 'BENTOUL/SONDAGES'),
+      courses: ref(db, 'BENTOUL/COURE'),
       views: ref(db, 'BENTOUL/views')
     };
 
-    // Switche ant koneksyon ak enskripsyon nan UI a
+    // SYSTEM POPUP REPLACEMENT
+    window.showAlert = function(message, callback) {
+      const modal = document.getElementById('popupModal');
+      const msgEl = document.getElementById('popupModalMessage');
+      const btn = document.getElementById('popupModalBtn');
+      msgEl.textContent = message;
+      modal.style.display = 'flex';
+      btn.onclick = function() {
+        modal.style.display = 'none';
+        if (callback) callback();
+      };
+    };
+
+    window.showConfirm = function(message, onConfirm, onCancel) {
+      const modal = document.getElementById('confirmModal');
+      const msgEl = document.getElementById('confirmModalMessage');
+      const okBtn = document.getElementById('confirmOkBtn');
+      const cancelBtn = document.getElementById('confirmCancelBtn');
+      msgEl.textContent = message;
+      modal.style.display = 'flex';
+      
+      okBtn.onclick = function() {
+        modal.style.display = 'none';
+        if (onConfirm) onConfirm();
+      };
+      cancelBtn.onclick = function() {
+        modal.style.display = 'none';
+        if (onCancel) onCancel();
+      };
+    };
+
+    // SIDEBAR SLIDE FUNCTION
+    window.toggleSidebar = function(open) {
+      const sidebar = document.getElementById('appSidebar');
+      const overlay = document.getElementById('sidebarOverlay');
+      if (open) {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+      } else {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      }
+    };
+
+    window.navigateToSidebarScreen = function(screenId) {
+      window.toggleSidebar(false);
+      window.navigateTo(screenId);
+    };
+
+    window.toggleAuthFromSidebar = function() {
+      window.toggleSidebar(false);
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (loggedInUser) {
+        window.handleLogout();
+      } else {
+        window.navigateTo('authScreen');
+      }
+    };
+
+    // AVATAR CHANGE SYSTEM
+    window.changeUserAvatar = function(avatarUrl) {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Konekte oswa enskri nan kont ou anvan pou w ka chanje foto avatar ou!");
+        return;
+      }
+      
+      const avatarRef = ref(db, `BENTOUL/USERS/${loggedInUser}/avatarUrl`);
+      set(avatarRef, avatarUrl).then(() => {
+        window.showAlert("Avatar ou mete ajou ak siksè!");
+        document.querySelectorAll('.avatar-option').forEach(img => {
+          if (img.src === avatarUrl) {
+            img.classList.add('selected');
+          } else {
+            img.classList.remove('selected');
+          }
+        });
+      }).catch((err) => {
+        window.showAlert("Erè: " + err.message);
+      });
+    };
+
+    // Switche ant koneksyon ak enskripsyon nan UI
     window.switchAuthTab = function(tab) {
       const loginForm = document.getElementById('loginForm');
       const signupForm = document.getElementById('signupForm');
@@ -1071,7 +1711,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       }
     };
 
-    // Jere lè itilizatè a ap enskri (Enregistre nan BENTOUL/USERS)
+    // Jere lè itilizatè a ap enskri (Enregistre nan BENTOUL/USERS avèk 100 kredi byenvini)
     window.handleSignup = function(event) {
       event.preventDefault();
       
@@ -1081,29 +1721,30 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       const password = document.getElementById('signupPassword').value;
 
       if (!username || !email || !phone || !password) {
-        alert("Ranpli tout jaden yo!");
+        window.showAlert("Ranpli tout jaden yo!");
         return;
       }
 
-      // Sove enfòmasyon yo anba non itilizatè a
       const newUserRef = ref(db, `BENTOUL/USERS/${username}`);
       
-      // Tcheke an premye si non sa a deja pran
       get(newUserRef).then((snapshot) => {
         if (snapshot.exists()) {
-          alert("Non itilizatè sa a deja pran. Chwazi yon lòt.");
+          window.showAlert("Non itilizatè sa a deja pran. Chwazi yon lòt.");
         } else {
           set(newUserRef, {
             username: username,
             email: email,
             phone: phone,
-            password: password
+            password: password,
+            credits: 100,
+            avatarUrl: "https://avatar.iran.liara.run/public/11"
           }).then(() => {
-            alert("Enskripsyon an fèt ak siksè!");
-            document.getElementById('signupForm').reset();
-            window.switchAuthTab('login');
+            window.showAlert("Enskripsyon an fèt ak siksè! Nou ba ou 100 kredi kado byenvini!", () => {
+              document.getElementById('signupForm').reset();
+              window.switchAuthTab('login');
+            });
           }).catch((err) => {
-            alert("Erè: " + err.message);
+            window.showAlert("Erè: " + err.message);
           });
         }
       });
@@ -1117,7 +1758,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       const password = document.getElementById('loginPassword').value;
 
       if (!identifier || !password) {
-        alert("Ranpli tout jaden yo!");
+        window.showAlert("Ranpli tout jaden yo!");
         return;
       }
 
@@ -1127,7 +1768,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           const users = snapshot.val();
           let userFound = null;
 
-          // Chèche nan lis la si gen non itilizatè oswa nimewo telefòn lan
           for (let key in users) {
             if (users[key].username === identifier || users[key].phone === identifier) {
               userFound = users[key];
@@ -1137,63 +1777,112 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
 
           if (userFound) {
             if (userFound.password === password) {
-              alert(`Byenvini, ou konekte kòm ${userFound.username}!`);
-              // Sove sesyon koneksyon an pou l ka toujou rete konekte
-              localStorage.setItem('bentoul_user', userFound.username);
-              window.updateAuthUI();
-              document.getElementById('loginForm').reset();
-              window.navigateBack();
+              window.showAlert(`Byenvini, ou konekte kòm ${userFound.username}!`, () => {
+                localStorage.setItem('bentoul_user', userFound.username);
+                window.updateAuthUI();
+                document.getElementById('loginForm').reset();
+                window.navigateBack();
+              });
             } else {
-              alert("Modpas la pa kòrèk.");
+              window.showAlert("Modpas la pa kòrèk.");
             }
           } else {
-            alert("Pa gen okenn kont ki gen non oswa nimewo sa a.");
+            window.showAlert("Pa gen okenn kont ki gen non oswa nimewo sa a.");
           }
         } else {
-          alert("Pa gen okenn kont ki enskri nan sistèm nan ankò.");
+          window.showAlert("Pa gen okenn kont ki enskri nan sistèm nan ankò.");
         }
       }).catch((err) => {
-        alert("Erè koneksyon: " + err.message);
+        window.showAlert("Erè koneksyon: " + err.message);
       });
     };
 
     // Fonksyon dekonekte epi siye localStorage
     window.handleLogout = function() {
-      if (confirm("Èske ou vle dekonekte vrèman nan kont ou an?")) {
+      window.showConfirm("Èske ou vle dekonekte vrèman nan kont ou an?", () => {
         localStorage.removeItem('bentoul_user');
         window.updateAuthUI();
-        alert("Ou dekonekte avèk siksè!");
-      }
+        window.showAlert("Ou dekonekte avèk siksè!");
+      });
     };
 
-    // Mizajou Header ak bouton koneksyon selon si itilizatè a konekte oswa non
+    // Mizajou Header ak bouton koneksyon an tan reyèl avèk kredi
+    let unsubscribeUser = null;
+    window.currentUserCredits = 0;
+
     window.updateAuthUI = function() {
       const loggedInUser = localStorage.getItem('bentoul_user');
       const headerLogo = document.getElementById('headerLogo');
       const headerTitle = document.getElementById('headerTitle');
       const authButton = document.getElementById('authButton');
 
+      // Elements sidebar
+      const sidebarUserAvatar = document.getElementById('sidebarUserAvatar');
+      const sidebarUsername = document.getElementById('sidebarUsername');
+      const sidebarUserPhone = document.getElementById('sidebarUserPhone');
+      const sidebarCredits = document.getElementById('sidebarCredits');
+      const sidebarCreditsCount = document.getElementById('sidebarCreditsCount');
+      const sidebarAuthText = document.getElementById('sidebarAuthText');
+
+      if (unsubscribeUser) {
+        unsubscribeUser();
+        unsubscribeUser = null;
+      }
+
       if (loggedInUser) {
-        // Lè itilizatè a konekte
-        if (headerLogo) {
-          headerLogo.textContent = loggedInUser.charAt(0).toUpperCase();
-          headerLogo.style.background = 'linear-gradient(135deg, #10b981, #059669)'; // background vèt pou avatar
-        }
-        if (headerTitle) {
-          headerTitle.textContent = loggedInUser;
-        }
+        if (sidebarUsername) sidebarUsername.textContent = loggedInUser;
+        if (sidebarAuthText) sidebarAuthText.textContent = "Se déconnecter";
+
+        const userRef = ref(db, `BENTOUL/USERS/${loggedInUser}`);
+        unsubscribeUser = onValue(userRef, (snap) => {
+          const userData = snap.val();
+          if (userData) {
+            window.currentUserCredits = userData.credits || 0;
+            if (sidebarCreditsCount) sidebarCreditsCount.textContent = window.currentUserCredits;
+            if (sidebarCredits) sidebarCredits.style.display = 'block';
+            if (sidebarUserPhone) sidebarUserPhone.textContent = userData.phone || userData.email || "";
+
+            const finalAvatar = userData.avatarUrl || "https://avatar.iran.liara.run/public/11";
+            if (sidebarUserAvatar) sidebarUserAvatar.src = finalAvatar;
+
+            document.querySelectorAll('.avatar-option').forEach(img => {
+              if (img.src === finalAvatar) {
+                img.classList.add('selected');
+              } else {
+                img.classList.remove('selected');
+              }
+            });
+
+            if (headerLogo) {
+              headerLogo.textContent = '';
+              headerLogo.style.backgroundImage = `url(${finalAvatar})`;
+            }
+
+            if (headerTitle) {
+              headerTitle.innerHTML = `${escapeHtml(loggedInUser)} <span style="font-size: 11px; font-weight: bold; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 2px 6px; border-radius: 10px; margin-left: 5px;"><i class="fas fa-coins"></i> ${window.currentUserCredits}</span>`;
+            }
+          }
+        });
+
         if (authButton) {
           authButton.innerHTML = `<i class="fas fa-sign-out-alt"></i> Se déconnecter`;
-          authButton.style.background = '#ef4444'; // Wouj pou dekonekte
+          authButton.style.background = '#ef4444';
           authButton.style.boxShadow = '0 4px 10px rgba(239, 68, 68, 0.2)';
           authButton.onclick = function() {
             window.handleLogout();
           };
         }
       } else {
-        // Lè pa gen moun ki konekte
+        window.currentUserCredits = 0;
+        if (sidebarUsername) sidebarUsername.textContent = "Vizitè";
+        if (sidebarUserPhone) sidebarUserPhone.textContent = "Konekte pou kòmanse aprann";
+        if (sidebarCredits) sidebarCredits.style.display = 'none';
+        if (sidebarUserAvatar) sidebarUserAvatar.src = "https://avatar.iran.liara.run/public/11";
+        if (sidebarAuthText) sidebarAuthText.textContent = "Se connecter / S'inscrire";
+
         if (headerLogo) {
           headerLogo.textContent = 'B';
+          headerLogo.style.backgroundImage = 'none';
           headerLogo.style.background = 'linear-gradient(135deg, #4f46e5, #06b6d4)';
         }
         if (headerTitle) {
@@ -1210,23 +1899,19 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       }
     };
 
-    // Fonksyon pou ekstrè ID imaj Google Drive epi kreye yon bèl Thumbnail
+    // Fonksyon pou ekstrè ID imaj Google Drive epi kreye Thumbnail
     function getDisplayImageUrl(image) {
       if (!image) return "";
       
       let driveId = "";
-      
-      // Detekte estrikti lyen pataje Drive /file/d/ID/...
       const dMatch = image.match(/\/file\/d\/([a-zA-Z0-9_-]{25,50})/);
       if (dMatch) {
         driveId = dMatch[1];
       } else {
-        // Detekte paramèt ?id=ID oswa &id=ID
         const idMatch = image.match(/[?&]id=([a-zA-Z0-9_-]{25,50})/);
         if (idMatch) {
           driveId = idMatch[1];
         } else {
-          // Detekte si yo jis pase ID a sèlman (ID Google Drive yo konn gen ant 28 ak 45 karaktè)
           const rawIdMatch = image.trim().match(/^([a-zA-Z0-9_-]{28,45})$/);
           if (rawIdMatch) {
             driveId = rawIdMatch[1];
@@ -1234,16 +1919,13 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         }
       }
       
-      // Si nou jwenn yon ID, nou kreye lyen thumbnail ki efikas la
       if (driveId) {
         return `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
       }
       
-      // Si se yon lyen imaj nòmal (PNG, JPG, elatriye), nou kite l jan l te ye a
       return image;
     }
 
-    // Fonksyon global pou jere imaj ki gen erè (Drive oswa lòt)
     window.handleImageError = function(key) {
       const img = document.getElementById('img-' + key);
       const placeholder = document.getElementById('placeholder-' + key);
@@ -1251,9 +1933,8 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       if (placeholder) placeholder.style.display = 'flex';
     };
 
-    // Fonksyon global pou pataje yon pòs ak yon lyen inik avèk bèl fòma
     window.sharePost = function(title, text, url) {
-      const formattedText = `${title}\n${text ? text + '\n' : ''}clicker sur le lien pour voir la suite...\n${url}`;
+      const formattedText = `${title}\n${text ? text + '\n' : ''}cliquez sur le lien pour voir la suite...\n${url}`;
 
       if (navigator.share) {
         navigator.share({
@@ -1262,7 +1943,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         }).catch((err) => console.log("Erreur de partage:", err));
       } else {
         navigator.clipboard.writeText(formattedText).then(() => {
-          alert("Kopiye! Tèks pataje a kopye byen dans clipboard ou.");
+          window.showAlert("Lien et message copiés dans le presse-papiers.");
         }).catch(() => {
           const dummy = document.createElement('textarea');
           document.body.appendChild(dummy);
@@ -1270,12 +1951,11 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           dummy.select();
           document.execCommand('copy');
           document.body.removeChild(dummy);
-          alert("Lyen ak mesaj la kopye!");
+          window.showAlert("Lien et message copiés !");
         });
       }
     };
 
-    // Fonksyon pou koute bouton pataje a soti nan element yo dirèkteman
     window.shareFromElement = function(button) {
       const parent = button.closest('.message-item');
       if (!parent) return;
@@ -1285,7 +1965,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       window.sharePost(title, text, url);
     };
 
-    // Fonksyon pou jere navigasyon otomatik ak bèl efè (Deep Linking)
+    // Fonksyon pou jere navigasyon otomatik (Deep Linking)
     window.handleDeepLink = function() {
       const urlParams = new URLSearchParams(window.location.search);
       const platform = urlParams.get('platform');
@@ -1297,10 +1977,10 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         youtube: 'youtubeScreen',
         apps: 'AppdScreen',
         sondages: 'sondageScreen',
+        courses: 'courseScreen',
         auth: 'authScreen'
       };
 
-      // Fèmen lòt onglet yo an premye pou evite sipozisyon
       document.querySelectorAll('.tab-screen:not(#homeScreen)').forEach(screen => {
         screen.classList.remove('active');
       });
@@ -1309,39 +1989,93 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
 
       const targetScreen = screenMap[platform];
       if (targetScreen) {
-        // Ouvri ekran an otomatikman
         document.getElementById(targetScreen).classList.add('active');
 
-        // Chache pòs la epi konsantre sou li lè lis la fin chaje
         if (postId) {
-          let attempts = 0;
-          const interval = setInterval(() => {
-            const postElement = document.getElementById(`post-${postId}`);
-            if (postElement) {
-              // Glise paj la dousman jiskaske pòs la parèt nan mitan ekran an
-              postElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-              
-              // Ba li yon bèl ti animasyon kout pou moun lan ka wè kote l ye
-              postElement.style.borderLeftWidth = '10px';
-              setTimeout(() => {
-                postElement.style.borderLeftWidth = '4px';
-              }, 2000);
+          if (platform === 'courses') {
+            const lessonId = urlParams.get('lesson');
+            let attempts = 0;
+            const interval = setInterval(() => {
+              const courseRef = ref(db, `BENTOUL/COURE/${postId}`);
+              get(courseRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                  const courseVal = snapshot.val();
+                  const loggedInUser = localStorage.getItem('bentoul_user');
+                  
+                  if (!loggedInUser) {
+                    window.showAlert("Ou dwe konekte oswa enskri pou w ka wè kous sa a!", () => {
+                      window.navigateTo('authScreen');
+                    });
+                    clearInterval(interval);
+                    return;
+                  }
 
-              clearInterval(interval);
-            }
-            attempts++;
-            if (attempts > 30) clearInterval(interval); // sispann apre 4.5 segonn
-          }, 150);
+                  const unlockedRef = ref(db, `BENTOUL/USERS/${loggedInUser}/unlocked/${postId}`);
+                  get(unlockedRef).then((unlockedSnap) => {
+                    if (unlockedSnap.val() === true) {
+                      window.actualShowCourseDetail(postId, courseVal);
+                      if (lessonId && courseVal.lessons && courseVal.lessons[lessonId]) {
+                        // verify locks before deep linking
+                        const lessonsKeys = Object.keys(courseVal.lessons);
+                        const sortedLessons = lessonsKeys.sort((a, b) => {
+                          const numA = courseVal.lessons[a].numero || 0;
+                          const numB = courseVal.lessons[b].numero || 0;
+                          return numA - numB;
+                        });
+                        const currentIndex = sortedLessons.indexOf(lessonId);
+
+                        const checkUpdateRef = ref(db, `BENTOUL/USERS/${loggedInUser}/progress/${postId}`);
+                        get(checkUpdateRef).then((checkSnap) => {
+                          const completedData = checkSnap.val() || {};
+                          let isLocked = false;
+                          if (currentIndex > 0) {
+                            const prevLessonKey = sortedLessons[currentIndex - 1];
+                            if (completedData[prevLessonKey] !== true) {
+                              isLocked = true;
+                            }
+                          }
+                          if (isLocked) {
+                            window.showAlert("Ou dwe fini leson anvan an anvan pou debloke leson sa a !");
+                          } else {
+                            window.showLessonDetail(lessonId, courseVal.lessons[lessonId], sortedLessons, currentIndex);
+                          }
+                        });
+                      }
+                    } else {
+                      window.showCourseDetail(postId, courseVal);
+                    }
+                  });
+
+                  clearInterval(interval);
+                }
+              });
+              attempts++;
+              if (attempts > 20) clearInterval(interval);
+            }, 200);
+          } else {
+            let attempts = 0;
+            const interval = setInterval(() => {
+              const postElement = document.getElementById(`post-${postId}`);
+              if (postElement) {
+                postElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                postElement.style.borderLeftWidth = '10px';
+                setTimeout(() => {
+                  postElement.style.borderLeftWidth = '4px';
+                }, 2000);
+                clearInterval(interval);
+              }
+              attempts++;
+              if (attempts > 30) clearInterval(interval);
+            }, 150);
+          }
         }
       }
     };
 
-    // Jere lè moun klike sou bouton "Back" nan navigatè a oswa nan telefòn lan
     window.addEventListener('popstate', () => {
       window.handleDeepLink();
     });
 
-    // Fonksyon pou ogmante ak koute vizit yo (sèlman yon fwa pa navigatè)
     try {
       if (!localStorage.getItem('bentoul_visited')) {
         runTransaction(refs.views, (currentValue) => {
@@ -1349,30 +2083,895 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         }).then(() => {
           localStorage.setItem('bentoul_visited', 'true');
         }).catch((err) => {
-          console.warn("Erreur nan ogmante vizit la nan database la:", err);
+          console.warn("Erreur de compteur de vues :", err);
         });
       }
     } catch (e) {
-      console.warn("Storage la pa aksesib (mòd navigasyon prive petèt):", e);
+      console.warn("Storage inaccessible :", e);
     }
 
-    // Swiv chanjman sou kantite vizit yo pou mete l ajou sou tout ekran yo an tan reyèl
     onValue(refs.views, (snapshot) => {
       const count = snapshot.val() || 0;
-      
-      // Afiche dans header Home la
       const nbViewsElement = document.getElementById('nbViews');
       if (nbViewsElement) {
         nbViewsElement.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
       }
-      
-      // Afiche nan lòt header yo tou
       document.querySelectorAll('.views-count').forEach((el) => {
         el.innerHTML = `<i class="fas fa-eye"></i> ${count}`;
       });
     });
 
-    // Fonksyon pou netwaye karaktè espesyal HTML pou sekirite
+    // --- REWARD FUNCTIONS SYSTEM ---
+    // Distribye Kredi pou j'aime (Like) - Yon sèl fwa pa eleman
+    function rewardLike(loggedInUser, itemId) {
+      const rewardedRef = ref(db, `BENTOUL/USERS/${loggedInUser}/rewarded_likes/${itemId}`);
+      get(rewardedRef).then((snap) => {
+        if (!snap.exists()) {
+          const userCreditsRef = ref(db, `BENTOUL/USERS/${loggedInUser}/credits`);
+          get(userCreditsRef).then((creditsSnap) => {
+            const currentCredits = creditsSnap.val() || 0;
+            const newCredits = currentCredits + 2;
+            
+            set(userCreditsRef, newCredits).then(() => {
+              set(rewardedRef, true).then(() => {
+                window.showAlert("Mèsi pou Like la ! Ou jwenn +2 kredi kòm rekonpans !");
+              });
+            });
+          });
+        }
+      });
+    }
+
+    // Distribye Kredi pou Pataj (Share) - 10 pou premye a, 5 pou lòt yo
+    function rewardShare(loggedInUser) {
+      const userSharesCountRef = ref(db, `BENTOUL/USERS/${loggedInUser}/sharesCount`);
+      const userCreditsRef = ref(db, `BENTOUL/USERS/${loggedInUser}/credits`);
+
+      get(userSharesCountRef).then((sharesCountSnap) => {
+        const count = sharesCountSnap.val() || 0;
+        let addedCredits = count === 0 ? 5 : 2;
+
+        get(userCreditsRef).then((creditsSnap) => {
+          const currentCredits = creditsSnap.val() || 0;
+          const newCredits = currentCredits + addedCredits;
+
+          set(userCreditsRef, newCredits).then(() => {
+            set(userSharesCountRef, count + 1).then(() => {
+              window.showAlert(`Mèsi pou pataj la ! Ou jwenn +${addedCredits} kredi nan kont ou !`);
+            });
+          });
+        });
+      });
+    }
+
+    // --- RENDERING LIS KOURS YO ---
+    function renderCourses(snapshot) {
+      const container = document.getElementById('listCourses');
+      if (!container) return;
+      
+      const courses = snapshot.val();
+      container.innerHTML = '';
+      
+      if (!courses || Object.keys(courses).length === 0) {
+        container.innerHTML = '<div class="empty-message">Aucun cours disponible pour le moment.</div>';
+        return;
+      }
+      
+      const loggedInUser = localStorage.getItem('bentoul_user');
+
+      Object.keys(courses).forEach((courseId) => {
+        const course = courses[courseId];
+        const isComplet = (course.complet === true || course.complet === "true");
+        const firstLetter = course.NomCours ? course.NomCours.trim().charAt(0).toUpperCase() : "C";
+        
+        // Netwaye deskripsyon an anba fòma plain tèks
+        const cleanDesc = course.DesCours ? course.DesCours.replace(/<[^>]*>/g, '') : '';
+        
+        const courseCard = document.createElement('div');
+        courseCard.className = 'message-item';
+        courseCard.style.flexDirection = 'column';
+        courseCard.style.padding = '16px';
+        courseCard.style.borderLeftColor = '#2563eb';
+        courseCard.style.gap = '12px';
+        courseCard.style.marginBottom = '16px';
+        courseCard.style.background = '#ffffff';
+        courseCard.style.borderRadius = '16px';
+        courseCard.style.boxShadow = '0 4px 10px rgba(0,0,0,0.03)';
+        
+        courseCard.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 12px;">
+            <div class="post-content-container" style="gap: 4px;">
+              <h3 style="font-size: 16px; font-weight: bold; color: #0f172a; -webkit-line-clamp: unset; display: block;">${escapeHtml(course.NomCours || courseId)}</h3>
+              
+              <!-- Afisaj Deskripsyon Kou a -->
+              ${cleanDesc ? `<p style="font-size: 13px; color: #475569; margin-top: 4px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(cleanDesc)}</p>` : ''}
+              
+              <div style="font-size: 12px; color: #64748b; display: flex; gap: 10px; margin-top: 4px;">
+                <span><i class="fas fa-award"></i> ${course.credits || 0} debloke</span>
+                <span style="color: ${isComplet ? '#10b981' : '#f59e0b'}; font-weight: bold;">
+                  <i class="fas ${isComplet ? 'fa-check-circle' : 'fa-hourglass-half'}"></i> ${isComplet ? 'Complet' : 'En cours'}
+                </span>
+              </div>
+            </div>
+            <div class="post-media-container" style="width: 50px; height: 50px; background: linear-gradient(135deg, #2563eb, #1d4ed8); display: flex; align-items: center; justify-content: center; border-radius: 10px; flex-shrink: 0;">
+              <div class="post-placeholder" style="background: transparent; font-size: 20px; box-shadow: none; font-weight: bold;">${escapeHtml(firstLetter)}</div>
+            </div>
+          </div>
+
+          <!-- Progress Bar direkteman sou kat la -->
+          <div id="progress-wrapper-${courseId}" style="width: 100%; background: #edf2f7; border-radius: 12px; height: 16px; position: relative; overflow: hidden; border: 1px solid #cbd5e1; display: none;">
+            <div id="progress-bar-${courseId}" style="background: #10b981; height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+            <span id="progress-text-${courseId}" style="position: absolute; width: 100%; text-align: center; font-size: 10px; font-weight: 800; color: #1e293b; line-height: 16px; top: 0; left: 0;">0%</span>
+          </div>
+
+          <!-- feedback bouton yo direkteman sou kat la -->
+          <div style="display: flex; gap: 8px; width: 100%;">
+            <button id="like-btn-${courseId}" class="btn-share" style="padding: 8px; font-size: 11px; border-radius: 10px; flex: 1; background: #f1f5f9; color: #334155;">
+              <i class="far fa-thumbs-up"></i> (<span id="like-count-${courseId}">0</span>)
+            </button>
+            <button id="dislike-btn-${courseId}" class="btn-share" style="padding: 8px; font-size: 11px; border-radius: 10px; flex: 1; background: #f1f5f9; color: #334155;">
+              <i class="far fa-thumbs-down"></i>(<span id="dislike-count-${courseId}">0</span>)
+            </button>
+            <button id="share-btn-${courseId}" class="btn-share" style="padding: 8px; font-size: 11px; border-radius: 10px; flex: 1; background: #f1f5f9; color: #334155;">
+              <i class="fas fa-share-alt"></i> (<span id="share-count-${courseId}">0</span>)
+            </button>
+          </div>
+
+          <button class="btn-app-action" style="background: #2563eb; width: 100%; justify-content: center; margin-top: 4px; border-radius: 10px; padding: 10px 14px; font-size: 13px; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);" id="open-lessons-btn-${courseId}">
+            Étudier les leçons <i class="fas fa-graduation-cap" style="margin-left: 6px;"></i>
+          </button>
+        `;
+
+        container.appendChild(courseCard);
+
+        const openBtn = document.getElementById(`open-lessons-btn-${courseId}`);
+        if (openBtn) {
+          openBtn.onclick = function() {
+            window.showCourseDetail(courseId, course);
+          };
+        }
+
+        const likeBtn = document.getElementById(`like-btn-${courseId}`);
+        const dislikeBtn = document.getElementById(`dislike-btn-${courseId}`);
+        const shareBtn = document.getElementById(`share-btn-${courseId}`);
+
+        if (likeBtn) {
+          likeBtn.onclick = function(e) {
+            e.stopPropagation();
+            window.handleCourseLikeInList(courseId);
+          };
+        }
+        if (dislikeBtn) {
+          dislikeBtn.onclick = function(e) {
+            e.stopPropagation();
+            window.handleCourseDislikeInList(courseId);
+          };
+        }
+        if (shareBtn) {
+          shareBtn.onclick = function(e) {
+            e.stopPropagation();
+            window.handleCourseShareInList(courseId, course);
+          };
+        }
+
+        // Koute pwogresyon an tan reyèl pou chak kous
+        if (loggedInUser) {
+          const pRef = ref(db, `BENTOUL/USERS/${loggedInUser}/progress/${courseId}`);
+          onValue(pRef, (pSnap) => {
+            const progressData = pSnap.val() || {};
+            const totalLessons = course.lessons ? Object.keys(course.lessons).length : 0;
+            const completedLessons = Object.values(progressData).filter(v => v === true).length;
+            
+            const pWrapper = document.getElementById(`progress-wrapper-${courseId}`);
+            const pBar = document.getElementById(`progress-bar-${courseId}`);
+            const pText = document.getElementById(`progress-text-${courseId}`);
+
+            if (totalLessons > 0 && pWrapper && pBar && pText) {
+              const percent = Math.round((completedLessons / totalLessons) * 100);
+              pWrapper.style.display = 'block';
+              pBar.style.width = `${percent}%`;
+              pText.textContent = `${percent}% complété (${completedLessons}/${totalLessons} leçons)`;
+            } else if (pWrapper) {
+              pWrapper.style.display = 'none';
+            }
+          });
+
+          // Koute feedback sou kou a an tan reyèl
+          const fbRef = ref(db, `BENTOUL/COURE/${courseId}`);
+          onValue(fbRef, (fbSnap) => {
+            const courseData = fbSnap.val() || {};
+            const likes = courseData.likes || {};
+            const dislikes = courseData.dislikes || {};
+            const sharesCount = courseData.sharesCount || 0;
+
+            const likesNum = Object.keys(likes).length;
+            const dislikesNum = Object.keys(dislikes).length;
+
+            const lCountSpan = document.getElementById(`like-count-${courseId}`);
+            const dlCountSpan = document.getElementById(`dislike-count-${courseId}`);
+            const sCountSpan = document.getElementById(`share-count-${courseId}`);
+
+            if (lCountSpan) lCountSpan.textContent = likesNum;
+            if (dlCountSpan) dlCountSpan.textContent = dislikesNum;
+            if (sCountSpan) sCountSpan.textContent = sharesCount;
+
+            if (likeBtn) {
+              if (likes[loggedInUser]) {
+                likeBtn.style.background = '#d1fae5';
+                likeBtn.style.color = '#065f46';
+                likeBtn.innerHTML = `<i class="fas fa-thumbs-up"></i>(<span id="like-count-${courseId}">${likesNum}</span>)`;
+              } else {
+                likeBtn.style.background = '#f1f5f9';
+                likeBtn.style.color = '#334155';
+                likeBtn.innerHTML = `<i class="far fa-thumbs-up"></i> (<span id="like-count-${courseId}">${likesNum}</span>)`;
+              }
+            }
+
+            if (dislikeBtn) {
+              if (dislikes[loggedInUser]) {
+                dislikeBtn.style.background = '#fee2e2';
+                dislikeBtn.style.color = '#991b1b';
+                dislikeBtn.innerHTML = `<i class="fas fa-thumbs-down"></i>
+                (<span
+                id="dislike-count-${courseId}">${dislikesNum}</span>)`;
+              } else {
+                dislikeBtn.style.background = '#f1f5f9';
+                dislikeBtn.style.color = '#334155';
+                dislikeBtn.innerHTML = `<i class="far fa-thumbs-down"></i>(<span id="dislike-count-${courseId}">${dislikesNum}</span>)`;
+              }
+            }
+          });
+        }
+      });
+    }
+
+    // Tcheke deblokaj kous ak Kredi anvan nou louvri l
+    window.showCourseDetail = function(courseId, course) {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Ou dwe konekte oswa enskri anvan pou w ka wè kous sa a!", () => {
+          window.navigateTo('authScreen');
+        });
+        return;
+      }
+
+      const unlockedRef = ref(db, `BENTOUL/USERS/${loggedInUser}/unlocked/${courseId}`);
+      get(unlockedRef).then((unlockedSnap) => {
+        const isUnlocked = unlockedSnap.val();
+        if (isUnlocked === true) {
+          window.actualShowCourseDetail(courseId, course);
+        } else {
+          const cost = course.credits || 0;
+          window.showConfirm(`Kou sa a fèmen. Li koute ${cost} kredi pou w debloke l. Èske ou vle debloke l kounye a? (Ou gen ${window.currentUserCredits} kredi)`, () => {
+            if (window.currentUserCredits >= cost) {
+              const userCreditsRef = ref(db, `BENTOUL/USERS/${loggedInUser}/credits`);
+              set(userCreditsRef, window.currentUserCredits - cost).then(() => {
+                set(unlockedRef, true).then(() => {
+                  window.showAlert("Felisitasyon ! Ou debloke kous sa a avèk siksè.");
+                  window.actualShowCourseDetail(courseId, course);
+                });
+              }).catch((err) => {
+                window.showAlert("Erè: " + err.message);
+              });
+            } else {
+              window.showAlert(`Ou pa gen ase kredi ! Kou sa a koute ${cost} kredi, men ou gen sèlman ${window.currentUserCredits} kredi. Pataje leson yo pou w jwenn plis kredi gratis !`);
+            }
+          });
+        }
+      });
+    };
+
+    // Afiche detay yon kou (Lis leson yo ak kadna pou anpeche sote leson)
+    window.currentActiveCourseId = null;
+    window.currentActiveCourseData = null;
+
+    window.actualShowCourseDetail = function(courseId, course) {
+      window.currentActiveCourseId = courseId;
+      window.currentActiveCourseData = course;
+
+      document.getElementById('courseListContainer').style.display = 'none';
+      document.getElementById('courseDetailContainer').style.display = 'block';
+      document.getElementById('lessonDetailContainer').style.display = 'none';
+      
+      document.getElementById('courseDetailTitle').textContent = `Leçons: ${course.NomCours || courseId}`;
+      
+      const lessonsContainer = document.getElementById('listLessons');
+      lessonsContainer.innerHTML = '';
+      
+      if (!course.lessons || Object.keys(course.lessons).length === 0) {
+        lessonsContainer.innerHTML = '<div class="empty-message">Aucune leçon disponible pour ce cours.</div>';
+        return;
+      }
+      
+      const lessonsKeys = Object.keys(course.lessons);
+      const sortedLessons = lessonsKeys.sort((a, b) => {
+        const numA = course.lessons[a].numero || 0;
+        const numB = course.lessons[b].numero || 0;
+        return numA - numB;
+      });
+
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      const checkUpdateRef = ref(db, `BENTOUL/USERS/${loggedInUser}/progress/${courseId}`);
+      
+      onValue(checkUpdateRef, (checkSnap) => {
+        const completedData = checkSnap.val() || {};
+        lessonsContainer.innerHTML = '';
+
+        sortedLessons.forEach((lessonKey, index) => {
+          const lesson = course.lessons[lessonKey];
+          
+          // Sèlman premye leson an ki debloke otomatikman. Rès yo bezwen leson avan an fini.
+          let isLocked = false;
+          if (index > 0) {
+            const prevLessonKey = sortedLessons[index - 1];
+            if (completedData[prevLessonKey] !== true) {
+              isLocked = true;
+            }
+          }
+
+          const lessonItem = document.createElement('div');
+          lessonItem.className = 'lesson-item';
+          lessonItem.style.padding = '12px';
+          lessonItem.style.background = '#ffffff';
+          lessonItem.style.borderRadius = '10px';
+          lessonItem.style.border = '1px solid #edf2f7';
+          lessonItem.style.display = 'flex';
+          lessonItem.style.alignItems = 'center';
+          lessonItem.style.justifyContent = 'space-between';
+          
+          if (isLocked) {
+            lessonItem.style.opacity = '0.6';
+            lessonItem.style.cursor = 'not-allowed';
+          } else {
+            lessonItem.style.opacity = '1';
+            lessonItem.style.cursor = 'pointer';
+          }
+          
+          const leftDiv = document.createElement('div');
+          leftDiv.style.display = 'flex';
+          leftDiv.style.alignItems = 'center';
+          leftDiv.style.gap = '12px';
+          
+          const numIcon = document.createElement('div');
+          numIcon.className = 'lesson-num';
+          numIcon.style.background = isLocked ? '#94a3b8' : '#2563eb';
+          numIcon.style.color = '#ffffff';
+          numIcon.style.width = '30px';
+          numIcon.style.height = '30px';
+          numIcon.style.borderRadius = '50%';
+          numIcon.style.display = 'flex';
+          numIcon.style.alignItems = 'center';
+          numIcon.style.justifyContent = 'center';
+          numIcon.style.fontWeight = 'bold';
+          numIcon.style.fontSize = '12px';
+          numIcon.textContent = lesson.numero || 0;
+          
+          const titleSpan = document.createElement('span');
+          titleSpan.style.fontWeight = '600';
+          titleSpan.style.color = isLocked ? '#64748b' : '#1e293b';
+          titleSpan.style.fontSize = '14px';
+          titleSpan.textContent = lesson.titre || 'Sans titre';
+          
+          leftDiv.appendChild(numIcon);
+          leftDiv.appendChild(titleSpan);
+          
+          const rightDiv = document.createElement('div');
+          rightDiv.style.display = 'flex';
+          rightDiv.style.alignItems = 'center';
+          rightDiv.style.gap = '8px';
+          rightDiv.style.color = '#94a3b8';
+          
+          const statusSpan = document.createElement('span');
+          statusSpan.id = `lesson-status-icon-${lessonKey}`;
+          
+          if (isLocked) {
+            statusSpan.innerHTML = `<i class="fas fa-lock" style="color: #94a3b8;"></i>`;
+          } else if (completedData[lessonKey] === true) {
+            statusSpan.innerHTML = `<i class="fas fa-check-circle" style="color: #10b981; font-size: 16px;"></i>`;
+          } else {
+            statusSpan.innerHTML = `<i class="fas fa-chevron-right" style="color: #2563eb;"></i>`;
+          }
+          rightDiv.appendChild(statusSpan);
+          
+          lessonItem.appendChild(leftDiv);
+          lessonItem.appendChild(rightDiv);
+          
+          lessonItem.onclick = function() {
+            if (isLocked) {
+              window.showAlert("Ou dwe fini leson anvan an anvan pou w ka debloke leson sa a !");
+              return;
+            }
+            window.showLessonDetail(lessonKey, lesson, sortedLessons, index);
+          };
+          
+          lessonsContainer.appendChild(lessonItem);
+        });
+      });
+    };
+
+    // Jere j'aime (Like) sou yon Cours nan lis la
+    window.handleCourseLikeInList = function(courseId) {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Ou dwe konekte pou w ka jwenn dwa pou w Like!", () => {
+          window.navigateTo('authScreen');
+        });
+        return;
+      }
+      const likeRef = ref(db, `BENTOUL/COURE/${courseId}/likes/${loggedInUser}`);
+      const dislikeRef = ref(db, `BENTOUL/COURE/${courseId}/dislikes/${loggedInUser}`);
+
+      get(likeRef).then((snap) => {
+        if (snap.exists()) {
+          set(likeRef, null);
+        } else {
+          set(likeRef, true);
+          set(dislikeRef, null);
+          rewardLike(loggedInUser, `course_${courseId}`);
+        }
+      });
+    };
+
+    // Jere dislike sou yon Cours nan lis la
+    window.handleCourseDislikeInList = function(courseId) {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Ou dwe konekte pou w ka jwenn dwa pou w vote!", () => {
+          window.navigateTo('authScreen');
+        });
+        return;
+      }
+      const likeRef = ref(db, `BENTOUL/COURE/${courseId}/likes/${loggedInUser}`);
+      const dislikeRef = ref(db, `BENTOUL/COURE/${courseId}/dislikes/${loggedInUser}`);
+
+      get(dislikeRef).then((snap) => {
+        if (snap.exists()) {
+          set(dislikeRef, null);
+        } else {
+          set(dislikeRef, true);
+          set(likeRef, null);
+        }
+      });
+    };
+
+    // Jere pataj yon Cours (Reward Kredi) nan lis la
+    window.handleCourseShareInList = function(courseId, courseData) {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      const courseTitle = courseData.NomCours || "Cours";
+
+      const uniqueUrl = window.location.origin + window.location.pathname + "?platform=courses&id=" + courseId;
+      const shareTitle = `Kou: ${courseTitle}`;
+      const shareText = `Vini aprann avèk nou sou Bentoul !`;
+
+      window.sharePost(shareTitle, shareText, uniqueUrl);
+
+      const sharesCountRef = ref(db, `BENTOUL/COURE/${courseId}/sharesCount`);
+      runTransaction(sharesCountRef, (currentValue) => {
+        return (currentValue || 0) + 1;
+      });
+
+      if (!loggedInUser) {
+        window.showAlert("Si ou te konekte nan sistèm nan, nou ta ba ou kredi kòm rekonpans pou pataj sa a !");
+      } else {
+        rewardShare(loggedInUser);
+      }
+    };
+
+    // --- FONKSYON RANN LIS KEKSYON QUIZ YO (Mete ajou fòma a men kache kiz la pa defo) ---
+    function renderLessonQuiz(quiz) {
+      const container = document.getElementById('lessonQuizContainer');
+      const listContainer = document.getElementById('lessonQuizQuestionsList');
+      
+      if (!quiz || !quiz.questions || Object.keys(quiz.questions).length === 0) {
+        container.style.display = 'none';
+        return false;
+      }
+      
+      container.style.display = 'none'; // Kache pa defo lè leson an chaje
+      listContainer.innerHTML = '';
+      
+      const questions = quiz.questions;
+      Object.entries(questions).forEach(([qId, qData], index) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'quiz-q-card';
+        qCard.dataset.qid = qId;
+        qCard.dataset.correct = qData.correctAnswer;
+        qCard.style.marginBottom = '12px';
+        qCard.style.padding = '12px';
+        qCard.style.borderRadius = '12px';
+        qCard.style.background = '#f8fafc';
+        qCard.style.border = '1px solid #e2e8f0';
+        
+        let html = `<p style="font-weight: 700; font-size: 14px; color: #0f172a; margin-bottom: 8px;">${index + 1}. ${escapeHtml(qData.question)}</p>`;
+        html += `<div style="display: flex; flex-direction: column; gap: 8px;">`;
+        
+        qData.options.forEach((optText, optIdx) => {
+          html += `
+            <label class="quiz-option-label" style="display: flex; align-items: center; gap: 8px; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; cursor: pointer; transition: all 0.2s;">
+              <input type="radio" name="quiz_opt_${qId}" value="${optIdx}" style="transform: scale(1.1); accent-color: #4f46e5;">
+              <span style="font-size: 13px; font-weight: 600; color: #334155;">${escapeHtml(optText)}</span>
+            </label>
+          `;
+        });
+        
+        html += `</div>`;
+        qCard.innerHTML = html;
+        listContainer.appendChild(qCard);
+      });
+      
+      listContainer.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const name = e.target.name;
+          const labels = listContainer.querySelectorAll(`input[name="${name}"]`);
+          labels.forEach(l => {
+            l.parentElement.style.borderColor = '#cbd5e1';
+            l.parentElement.style.background = 'white';
+          });
+          if (e.target.checked) {
+            e.target.parentElement.style.borderColor = '#4f46e5';
+            e.target.parentElement.style.background = '#f5f3ff';
+          }
+        });
+      });
+
+      return true;
+    }
+
+    // --- FONKSYON POU SÈVI SÈLMAN KIZ LA NAN EKRAN AN (QUIZ MODE) ---
+    window.startLessonQuizMode = function(lesson, sortedLessons, currentIndex, progressCheckRef) {
+      // Kache tout kontni estanda nan leson an
+      document.querySelector('.lesson-detail-header').style.display = 'none';
+      document.getElementById('lessonDetailContent').style.display = 'none';
+      document.getElementById('btnCompleteLesson').style.display = 'none';
+      document.getElementById('btnNextLesson').style.display = 'none';
+      document.querySelector('.lesson-feedback-row').style.display = 'none';
+      
+      // Afiche sèlman kiz la
+      const quizContainer = document.getElementById('lessonQuizContainer');
+      quizContainer.style.display = 'block';
+      
+      // Chanje aksyon bouton validasyon an pou l fè tranzisyon otomatik lè elèv la fin reponn kòrèkteman
+      document.getElementById('btnSubmitLessonQuiz').onclick = function() {
+        const listContainer = document.getElementById('lessonQuizQuestionsList');
+        const qCards = listContainer.querySelectorAll('.quiz-q-card');
+        
+        let allCorrect = true;
+        let unanswered = false;
+
+        qCards.forEach(card => {
+          const qId = card.dataset.qid;
+          const correctIdx = Number(card.dataset.correct);
+          const selectedRadio = card.querySelector(`input[name="quiz_opt_${qId}"]:checked`);
+          
+          const labels = card.querySelectorAll('.quiz-option-label');
+          labels.forEach(l => {
+            l.style.borderColor = '#cbd5e1';
+            l.style.background = 'white';
+          });
+          
+          if (!selectedRadio) {
+            unanswered = true;
+            card.style.borderColor = '#ef4444';
+            card.style.background = '#fef2f2';
+          } else {
+            card.style.borderColor = '#e2e8f0';
+            card.style.background = '#f8fafc';
+            
+            const selectedIdx = Number(selectedRadio.value);
+            if (selectedIdx === correctIdx) {
+              selectedRadio.parentElement.style.borderColor = '#10b981';
+              selectedRadio.parentElement.style.background = '#ecfdf5';
+            } else {
+              allCorrect = false;
+              selectedRadio.parentElement.style.borderColor = '#ef4444';
+              selectedRadio.parentElement.style.background = '#fef2f2';
+              
+              const correctRadio = card.querySelector(`input[name="quiz_opt_${qId}"][value="${correctIdx}"]`);
+              if (correctRadio) {
+                correctRadio.parentElement.style.borderColor = '#10b981';
+                correctRadio.parentElement.style.background = '#ecfdf5';
+              }
+            }
+          }
+        });
+        
+        if (unanswered) {
+          window.showAlert("Silvouplè, reponn tout keksyon yo anvan ou valide!");
+          return;
+        }
+        
+        if (allCorrect) {
+          window.showAlert("Felisitasyon! Tout repons yo kòrèk. Ou debloke pwochen etap la!", () => {
+            window.quizPassed = true;
+            
+            // Otomatikman mete kòm konplete nan Firebase
+            set(progressCheckRef, true).then(() => {
+              // Otomatikman pase nan pwochen leson an si genyen
+              if (sortedLessons && currentIndex >= 0 && currentIndex < sortedLessons.length - 1) {
+                const nextLessonKey = sortedLessons[currentIndex + 1];
+                const nextLesson = window.currentActiveCourseData.lessons[nextLessonKey];
+                window.showLessonDetail(nextLessonKey, nextLesson, sortedLessons, currentIndex + 1);
+              } else {
+                window.showAlert("Felisitasyon! Ou fini dènye leson ak tout quiz nan kous sa a!", () => {
+                  window.navigateBackCourse();
+                });
+              }
+            });
+          });
+        } else {
+          window.showAlert("Gen kèk repons ki pa kòrèk. Tanpri verifye epi re-eseye!");
+        }
+      };
+    };
+
+    // Detay leson ak lojik bouton "Leçon suivante"
+    let unsubscribeLessonFeedback = null;
+    let unsubscribeLessonProgressCheck = null;
+    window.currentActiveLessonKey = null;
+    window.quizPassed = false;
+
+    window.showLessonDetail = function(lessonKey, lesson, sortedLessons = [], currentIndex = -1) {
+      window.currentActiveLessonKey = lessonKey;
+
+      // REYALIZE TOUT ELEMENT YO NÒMALMAN CHAK FWA LESON AN LOUVRI
+      document.querySelector('.lesson-detail-header').style.display = 'block';
+      document.getElementById('lessonDetailContent').style.display = 'block';
+      document.getElementById('btnCompleteLesson').style.display = 'block';
+      document.querySelector('.lesson-feedback-row').style.display = 'flex';
+      document.getElementById('lessonQuizContainer').style.display = 'none';
+
+      document.getElementById('courseListContainer').style.display = 'none';
+      document.getElementById('courseDetailContainer').style.display = 'none';
+      document.getElementById('lessonDetailContainer').style.display = 'block';
+      
+      document.getElementById('lessonDetailNum').textContent = `Leçon ${lesson.numero || 0}`;
+      document.getElementById('lessonDetailTitle').textContent = lesson.titre || 'Sans titre';
+      
+      const audioContainer = document.getElementById('lessonAudioContainer');
+      const audioPlayer = document.getElementById('lessonAudioPlayer');
+      if (lesson.audioUrl) {
+        audioPlayer.src = lesson.audioUrl;
+        audioContainer.style.display = 'block';
+      } else {
+        audioPlayer.src = '';
+        audioContainer.style.display = 'none';
+      }
+      
+      const driveContainer = document.getElementById('lessonDriveContainer');
+      const driveBtn = document.getElementById('lessonDriveBtn');
+      if (lesson.url) {
+        driveBtn.href = lesson.url;
+        driveContainer.style.display = 'block';
+      } else {
+        driveBtn.href = '#';
+        driveContainer.style.display = 'none';
+      }
+      
+      const lessonContentEl = document.getElementById('lessonDetailContent');
+      if (lesson.contenuHtml) {
+        lessonContentEl.innerHTML = lesson.contenuHtml;
+      } else {
+        lessonContentEl.innerHTML = '<p class="empty-message">Cette leçon n\'a aucun contenu rédigé.</p>';
+      }
+
+      // Prepare Quiz Questions in HTML background (keep hidden)
+      const quizExists = renderLessonQuiz(lesson.quiz);
+
+      if (unsubscribeLessonFeedback) {
+        unsubscribeLessonFeedback();
+        unsubscribeLessonFeedback = null;
+      }
+      if (unsubscribeLessonProgressCheck) {
+        unsubscribeLessonProgressCheck();
+        unsubscribeLessonProgressCheck = null;
+      }
+
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      const courseId = window.currentActiveCourseId;
+
+      const lessonRef = ref(db, `BENTOUL/COURE/${courseId}/lessons/${lessonKey}`);
+      unsubscribeLessonFeedback = onValue(lessonRef, (snap) => {
+        const lessonData = snap.val() || {};
+        const likes = lessonData.likes || {};
+        const dislikes = lessonData.dislikes || {};
+        const sharesCount = lessonData.sharesCount || 0;
+
+        const likesNum = Object.keys(likes).length;
+        const dislikesNum = Object.keys(dislikes).length;
+
+        document.getElementById('lessonLikeCount').textContent = likesNum;
+        document.getElementById('lessonDislikeCount').textContent = dislikesNum;
+        document.getElementById('lessonShareCount').textContent = sharesCount;
+
+        const btnLike = document.getElementById('btnLessonLike');
+        const btnDislike = document.getElementById('btnLessonDislike');
+
+        if (loggedInUser && likes[loggedInUser]) {
+          btnLike.style.background = '#d1fae5';
+          btnLike.style.color = '#065f46';
+          btnLike.innerHTML = `<i class="fas fa-thumbs-up"></i> Aimé (<span id="lessonLikeCount">${likesNum}</span>)`;
+        } else {
+          btnLike.style.background = '#f1f5f9';
+          btnLike.style.color = '#334155';
+          btnLike.innerHTML = `<i class="far fa-thumbs-up"></i> J'aime (<span id="lessonLikeCount">${likesNum}</span>)`;
+        }
+
+        if (loggedInUser && dislikes[loggedInUser]) {
+          btnDislike.style.background = '#fee2e2';
+          btnDislike.style.color = '#991b1b';
+          btnDislike.innerHTML = `<i class="fas fa-thumbs-down"></i> Désapprouvé (<span id="lessonDislikeCount">${dislikesNum}</span>)`;
+        } else {
+          btnDislike.style.background = '#f1f5f9';
+          btnDislike.style.color = '#334155';
+          btnDislike.innerHTML = `<i class="far fa-thumbs-down"></i> Je n'aime pas (<span id="lessonDislikeCount">${dislikesNum}</span>)`;
+        }
+      });
+
+      const progressCheckRef = ref(db, `BENTOUL/USERS/${loggedInUser}/progress/${courseId}/${lessonKey}`);
+      const btnComplete = document.getElementById('btnCompleteLesson');
+      const btnNext = document.getElementById('btnNextLesson');
+      
+      unsubscribeLessonProgressCheck = onValue(progressCheckRef, (snap) => {
+        const isCompleted = snap.val() === true;
+        if (isCompleted) {
+          window.quizPassed = true;
+          
+          btnComplete.style.display = 'block';
+          btnComplete.style.background = '#f97316';
+          btnComplete.innerHTML = `<i class="fas fa-times-circle"></i> Marquer comme incomplète`;
+          btnComplete.onclick = function() {
+            set(progressCheckRef, null);
+          };
+          
+          // Si leson an fini deja, klike sou pwochen leson an ap ale dirèkteman san mande keksyon yo ankò
+          if (sortedLessons && currentIndex >= 0 && currentIndex < sortedLessons.length - 1) {
+            btnNext.style.display = 'block';
+            btnNext.onclick = function() {
+              const nextLessonKey = sortedLessons[currentIndex + 1];
+              const nextLesson = window.currentActiveCourseData.lessons[nextLessonKey];
+              window.showLessonDetail(nextLessonKey, nextLesson, sortedLessons, currentIndex + 1);
+            };
+          } else {
+            btnNext.style.display = 'none';
+          }
+        } else {
+          // Si leson an poko fèt :
+          window.quizPassed = false;
+          
+          // Konpòtman bouton "Marquer cette leçon comme complétée"
+          btnComplete.style.display = 'block';
+          btnComplete.style.background = '#10b981';
+          btnComplete.innerHTML = `<i class="fas fa-check-circle"></i> Marquer cette leçon comme complétée`;
+          btnComplete.onclick = function() {
+            if (quizExists) {
+              window.startLessonQuizMode(lesson, sortedLessons, currentIndex, progressCheckRef);
+            } else {
+              set(progressCheckRef, true);
+            }
+          };
+          
+          // Konpòtman bouton "Leçon suivante"
+          if (sortedLessons && currentIndex >= 0 && currentIndex < sortedLessons.length - 1) {
+            btnNext.style.display = 'block';
+            btnNext.onclick = function() {
+              if (quizExists) {
+                // Si gen yon quiz, nou deklanche "Quiz Mode" la dirèkteman olye pou n ale
+                window.startLessonQuizMode(lesson, sortedLessons, currentIndex, progressCheckRef);
+              } else {
+                // Si pa gen quiz, nou sove kòm konplè epi ale nan pwochen leson an dirèkteman
+                set(progressCheckRef, true).then(() => {
+                  const nextLessonKey = sortedLessons[currentIndex + 1];
+                  const nextLesson = window.currentActiveCourseData.lessons[nextLessonKey];
+                  window.showLessonDetail(nextLessonKey, nextLesson, sortedLessons, currentIndex + 1);
+                });
+              }
+            };
+          } else {
+            btnNext.style.display = 'none';
+          }
+        }
+      });
+    };
+
+    // Jere j'aime (Like) sou yon Leson
+    window.handleLessonLike = function() {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Ou dwe konekte pou w ka jwenn dwa pou w Like!", () => {
+          window.navigateTo('authScreen');
+        });
+        return;
+      }
+      const courseId = window.currentActiveCourseId;
+      const lessonKey = window.currentActiveLessonKey;
+
+      const likeRef = ref(db, `BENTOUL/COURE/${courseId}/lessons/${lessonKey}/likes/${loggedInUser}`);
+      const dislikeRef = ref(db, `BENTOUL/COURE/${courseId}/lessons/${lessonKey}/dislikes/${loggedInUser}`);
+
+      get(likeRef).then((snap) => {
+        if (snap.exists()) {
+          set(likeRef, null);
+        } else {
+          set(likeRef, true);
+          set(dislikeRef, null);
+          rewardLike(loggedInUser, `lesson_${courseId}_${lessonKey}`);
+        }
+      });
+    };
+
+    // Jere dislike sou yon Leson
+    window.handleLessonDislike = function() {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Ou dwe konekte pou w ka jwenn dwa pou w vote!", () => {
+          window.navigateTo('authScreen');
+        });
+        return;
+      }
+      const courseId = window.currentActiveCourseId;
+      const lessonKey = window.currentActiveLessonKey;
+
+      const likeRef = ref(db, `BENTOUL/COURE/${courseId}/lessons/${lessonKey}/likes/${loggedInUser}`);
+      const dislikeRef = ref(db, `BENTOUL/COURE/${courseId}/lessons/${lessonKey}/dislikes/${loggedInUser}`);
+
+      get(dislikeRef).then((snap) => {
+        if (snap.exists()) {
+          set(dislikeRef, null);
+        } else {
+          set(dislikeRef, true);
+          set(likeRef, null);
+        }
+      });
+    };
+
+    // Jere pataj yon Leson (Reward Kredi)
+    window.handleLessonShare = function() {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      const courseId = window.currentActiveCourseId;
+      const lessonKey = window.currentActiveLessonKey;
+      const courseData = window.currentActiveCourseData || {};
+      const lessonTitle = document.getElementById('lessonDetailTitle').textContent || "Leçon";
+
+      const uniqueUrl = window.location.origin + window.location.pathname + "?platform=courses&id=" + courseId + "&lesson=" + lessonKey;
+      const shareTitle = `Leson: ${lessonTitle} - Nan kous: ${courseData.NomCours || ""}`;
+      const shareText = `Vini aprann avèk nou sou Bentoul !`;
+
+      window.sharePost(shareTitle, shareText, uniqueUrl);
+
+      const sharesCountRef = ref(db, `BENTOUL/COURE/${courseId}/lessons/${lessonKey}/sharesCount`);
+      runTransaction(sharesCountRef, (currentValue) => {
+        return (currentValue || 0) + 1;
+      });
+
+      if (!loggedInUser) {
+        window.showAlert("Si ou te konekte nan sistèm nan, nou ta ba ou kredi kòm rekonpans pou pataj sa a !");
+      } else {
+        rewardShare(loggedInUser);
+      }
+    };
+
+    // Bouton retou espesyal pou kous ak leson yo
+    window.navigateBackCourse = function() {
+      const courseList = document.getElementById('courseListContainer');
+      const courseDetail = document.getElementById('courseDetailContainer');
+      const lessonDetail = document.getElementById('lessonDetailContainer');
+      
+      if (lessonDetail.style.display !== 'none') {
+        const audioPlayer = document.getElementById('lessonAudioPlayer');
+        if (audioPlayer) audioPlayer.pause();
+        
+        lessonDetail.style.display = 'none';
+        courseDetail.style.display = 'block';
+        courseList.style.display = 'none';
+      } else if (courseDetail.style.display !== 'none') {
+        courseDetail.style.display = 'none';
+        courseList.style.display = 'block';
+        lessonDetail.style.display = 'none';
+      } else {
+        window.navigateBack();
+      }
+    };
+
     function escapeHtml(str) {
       if (!str) return '';
       return String(str).replace(/[&<>"']/g, (s) => ({
@@ -1380,6 +2979,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       }[s]));
     }
 
+    // Rann lis lòt eleman yo
     function renderList(containerId, snapshot) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -1401,28 +3001,25 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         let url = "";
         let image = "";
 
-        // Tcheke si se yon objè (nouvo fòma) oubyen yon senp string (ansyen fòma)
         if (typeof value === 'object' && value !== null) {
           title = value.title || "Nouvo Post";
           text = value.text || value.message || "";
           url = value.url || value.link || "";
           image = value.image || "";
         } else {
-          text = value; // Sipò pou ansyen posts yo
+          text = value;
         }
 
         const div = document.createElement('div');
         div.className = 'message-item';
-        div.id = `post-${key}`; // ID pou Deep Linking
+        div.id = `post-${key}`;
 
-        // Sove done yo nan dataset pou evite erè karaktè espesyal lè w pataje
         div.dataset.title = title;
         div.dataset.text = text;
 
         const firstLetter = title ? title.trim().charAt(0).toUpperCase() : "B";
         let mediaHTML = "";
 
-        // Nou verifye si se yon imaj Google Drive epi nou konvèti l an Thumbnail
         const displayImage = image ? getDisplayImageUrl(image) : "";
 
         if (displayImage) {
@@ -1440,13 +3037,9 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           `;
         }
 
-        // Prepare lyen inik la pou bouton pataje a
         const uniqueUrl = window.location.origin + window.location.pathname + "?platform=" + platformName + "&id=" + key;
         div.dataset.url = uniqueUrl;
 
-        // KREYE ESTRIKTI SIDE-BY-SIDE:
-        // 1. mediaHTML la bò gòch.
-        // 2. Tèks yo ak bouton yo vlope nan yon ".post-content-container" bò dwat.
         let cardHTML = mediaHTML;
         cardHTML += `<div class="post-content-container">`;
         cardHTML += `<h3>${escapeHtml(title)}</h3>`;
@@ -1454,7 +3047,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           cardHTML += `<p>${escapeHtml(text)}</p>`;
         }
         
-        // Liy bouton yo
         cardHTML += `<div class="post-actions-row">`;
         if (url) {
           cardHTML += `<a href="${url}" target="_blank" class="btn-post-link" style="margin-top: 0; flex: 1.2; justify-content: center;"><i class="fas fa-play"></i> Regarder</a>`;
@@ -1464,14 +3056,14 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
             <i class="fas fa-share-alt"></i> Partager
           </button>
         </div>`;
-        cardHTML += `</div>`; // Fèmen .post-content-container
+        cardHTML += `</div>`;
 
         div.innerHTML = cardHTML;
         container.appendChild(div);
       });
     }
 
-    // --- LOJIK RENDERING ETA REZILTA SONDAGES ---
+    // --- RENDERING SONDAGES ---
     function renderSondages(snapshot) {
       const container = document.getElementById('listSondages');
       if (!container) return;
@@ -1484,7 +3076,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         return;
       }
 
-      // Detèmine id inik moun k ap vote a (non itilizatè oswa yon uuid tanporè)
       let voterId = localStorage.getItem('bentoul_user');
       if (!voterId) {
         voterId = localStorage.getItem('bentoul_uuid');
@@ -1502,7 +3093,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         const votes = value.votes || {};
 
         const totalVotes = Object.keys(votes).length;
-        const userVote = votes[voterId]; // verifye si moun nan te deja vote
+        const userVote = votes[voterId];
 
         const card = document.createElement('div');
         card.className = 'sondage-card';
@@ -1528,7 +3119,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
             optEl.classList.add('voted');
           }
 
-          // Kouch koulè background pou pousantaj la (Barre de progression)
           const fill = document.createElement('div');
           fill.className = 'sondage-option-fill';
           if (userVote) {
@@ -1538,12 +3128,10 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           }
           optEl.appendChild(fill);
 
-          // Tèks opsyon an
           const labelSpan = document.createElement('span');
           labelSpan.textContent = optVal;
           optEl.appendChild(labelSpan);
 
-          // Pousantaj ak ikòn si moun lan te deja vote
           if (userVote) {
             const pctSpan = document.createElement('span');
             pctSpan.className = 'sondage-option-percent';
@@ -1553,7 +3141,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
             }
             optEl.appendChild(pctSpan);
           } else {
-            // Si moun nan poko vote, li ka klike sou opsyon an pou l vote
             optEl.onclick = function() {
               window.voteSondage(key, optKey);
             };
@@ -1564,7 +3151,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
 
         card.appendChild(optionsContainer);
 
-        // Footer sondaj la
         const footer = document.createElement('div');
         footer.className = 'sondage-footer';
         footer.innerHTML = `
@@ -1577,7 +3163,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       });
     }
 
-    // Fonksyon pou sove vòt la nan database la
+    // Vòt sondaj
     window.voteSondage = function(pollId, optionKey) {
       let voterId = localStorage.getItem('bentoul_user');
       if (!voterId) {
@@ -1590,7 +3176,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
 
       const voteRef = ref(db, `BENTOUL/SONDAGES/${pollId}/votes/${voterId}`);
       set(voteRef, optionKey).catch((err) => {
-        alert("Erreur: " + err.message);
+        window.showAlert("Erreur: " + err.message);
       });
     };
 
@@ -1599,14 +3185,11 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
     onValue(refs.youtube, (snap) => renderList('listPostYoutube', snap));
     onValue(refs.apps, (snap) => renderList('listPostApps', snap));
     onValue(refs.sondages, (snap) => renderSondages(snap));
+    onValue(refs.courses, (snap) => renderCourses(snap));
 
-    // Kòmanse chache si gen yon lyen pataje ki ouvri paj la
     window.handleDeepLink();
-
-    // Tcheke si gen yon itilizatè ki deja konekte nan sistèm lan
     window.updateAuthUI();
 
-    // Modifikasyon fonksyon navigasyon yo pou mete lyen bar navigatè a ajou san rechaje paj la
     window.navigateTo = function(screenId) {
       const reverseMap = {
         whatsappScreen: 'whatsapp',
@@ -1614,6 +3197,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         youtubeScreen: 'youtube',
         AppdScreen: 'apps',
         sondageScreen: 'sondages',
+        courseScreen: 'courses',
         authScreen: 'auth'
       };
       const platform = reverseMap[screenId];
@@ -1625,7 +3209,6 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
     };
 
     window.navigateBack = function() {
-      // Netwaye paramèt nan URL la lè nou tounen sou akèy
       history.pushState(null, '', window.location.pathname);
       document.querySelectorAll('.tab-screen:not(#homeScreen)').forEach(screen => {
         screen.classList.remove('active');
