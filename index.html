@@ -7,7 +7,7 @@
     
     <!-- SEO Baliz Prensipal -->
     <title>BENTOUL - Formation et Astuces Informatiques sur Android</title>
-    <meta name="description" content="BENTOUL vous propose des formations et astuces informatiques sur Android. Visitez et suivez nos différentes plateformes pour mieux apprendre avec nous on WhatsApp et plus.">
+    <meta name="description" content="BENTOUL vous propose des formations et astuces informatiques on Android. Visitez et suivez nos différentes plateformes pour mieux apprendre avec nous on WhatsApp et plus.">
     <meta name="keywords" content="BENTOUL, formation android, astuce informatique, apprendre informatique, cours android, whatsapp informatique, bentoul github">
     <meta name="author" content="BENTOUL">
     <meta name="robots" content="index, follow">
@@ -154,8 +154,18 @@
     #sondageScreen .app-header { background: #f59e0b; border-bottom: none; }
     #sondageScreen .app-header h1, #sondageScreen .btn-back { color: #ffffff; }
 
+    #concoursScreen .app-header { background: #8b5cf6; border-bottom: none; }
+    #concoursScreen .app-header h1, #concoursScreen .btn-back { color: #ffffff; }
+
     .tab-screen:not(#homeScreen) .btn-back:active {
       background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Animation mizajou blink dot */
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
     /* Bouton d'abonnement header */
@@ -251,7 +261,8 @@
     #AppdScreen .views-count,
     #courseScreen .views-count,
     #authScreen .views-count,
-    #sondageScreen .views-count {
+    #sondageScreen .views-count,
+    #concoursScreen .views-count {
       color: rgba(255, 255, 255, 0.85);
     }
 
@@ -470,6 +481,49 @@
     }
 
     .card-course .card-info p {
+      display: block;
+      font-size: 14px;
+      color: #64748b;
+      text-align: left;
+    }
+
+    /* Kat konkou (card-concours) */
+    .card-item.card-concours {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px 16px;
+      text-align: left;
+    }
+
+    .card-item.card-concours::after {
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      border-top-left-radius: 16px;
+      border-bottom-left-radius: 16px;
+      border-top-right-radius: 0;
+      background: #8b5cf6;
+    }
+
+    .card-concours .card-info {
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .card-concours .card-info h2 {
+      font-size: 16px;
+      text-align: left;
+    }
+
+    .card-concours .card-info p {
       display: block;
       font-size: 14px;
       color: #64748b;
@@ -1256,6 +1310,7 @@
         <!-- Meni Navigasyon nan Sidebar -->
         <div class="sidebar-nav">
           <a href="#" onclick="navigateToSidebarScreen('courseScreen')"><i class="fas fa-graduation-cap"></i> Cours & Formations</a>
+          <a href="#" onclick="navigateToSidebarScreen('concoursScreen')"><i class="fas fa-trophy"></i> Concours</a>
           <a href="#" onclick="navigateToSidebarScreen('sondageScreen')"><i class="fas fa-poll"></i> Sondages & Votes</a>
           <a href="#" onclick="navigateToSidebarScreen('AppdScreen')"><i class="fas fa-android"></i> Applications gratuites</a>
           <a href="#" onclick="toggleAuthFromSidebar()"><i class="fas fa-user-circle"></i> <span id="sidebarAuthText">Connexion / Inscription</span></a>
@@ -1301,7 +1356,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
             </div>
             <div class="card-info">
               <h2>WhatsApp</h2>
-              <p>Suivez-nous et recevez toutes nos mises à jour instantanées.</p>
+              <p>Suivez-nous and recevez toutes nos mises à jour instantanées.</p>
             </div>
             <button class="btn-action"><i class="fas fa-chevron-right"></i></button>
           </div>
@@ -1343,11 +1398,23 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           </div>
         </div>
 
+        <!-- Kat Konkou (Concours) -->
+        <div class="card-item card-concours" onclick="navigateTo('concoursScreen')">
+          <div class="card-info">
+            <h2>🎉 Konkou Chak Semèn</h2>
+            <p>Reponn kesyon yo pou w gen chans genyen MonCash oswa NatCash !</p>
+            <button class="btn-app-action" style="background: #8b5cf6; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.2);">Patisipe kounye a <i class="fas fa-trophy"></i></button>
+          </div>
+          <div class="card-icon" style="background: #8b5cf6;">
+            <i class="fas fa-gift"></i>
+          </div>
+        </div>
+
         <!-- Kat Sondaj yo (Sondages / Votes) -->
         <div class="card-item card-sondage" onclick="navigateTo('sondageScreen')">
           <div class="card-info">
             <h2>Sondages & Votes</h2>
-            <p>Participez à nos sondages et donnez votre avis !</p>
+            <p>Participez à nos sondages and donnez votre avis !</p>
             <button class="btn-app-action" style="background: #f59e0b; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.2);">Répondre <i class="fas fa-vote-yea"></i></button>
           </div>
           <div class="card-icon" style="background: #f59e0b;">
@@ -1445,6 +1512,103 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
             <button id="btnLessonShare" class="btn-share" onclick="handleLessonShare()" style="background: #f1f5f9; color: #334155; flex: 1; padding: 10px; font-size: 12px; font-weight: bold; border-radius: 12px;">
               <i class="fas fa-share-alt"></i> Partager (<span id="lessonShareCount">0</span>)
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ÉCRAN ONGLETS : FLUX CONCOURS -->
+    <div id="concoursScreen" class="tab-screen">
+      <div class="app-header">
+        <button class="btn-back" onclick="navigateBack()"><i class="fas fa-arrow-left"></i></button>
+        <h1>Concours <span class="views-count"></span></h1>
+      </div>
+      <div class="screen-content" style="padding: 20px;">
+        <!-- Page 1: Présentation du Concours -->
+        <div id="concoursIntroContainer">
+          <div style="background: #ffffff; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #edf2f7; margin-bottom: 20px;">
+            <h2 style="font-size: 22px; font-weight: 800; color: #8b5cf6; text-align: center; margin-bottom: 15px;">🎉 Konkou Chak Semèn</h2>
+            <h3 style="font-size: 16px; font-weight: 700; color: #1e293b; text-align: center; margin-bottom: 10px;">Ranpli kont MonCash oswa NatCash chak dimanch</h3>
+            
+            <p style="font-size: 14px; color: #475569; line-height: 1.6; margin-bottom: 15px;">
+              <strong>Deskripsyon:</strong><br>
+              Reponn kesyon yo pandan tout semèn nan pou w gen chans genyen yon ranplisman MonCash oswa NatCash.<br><br>
+              Rezilta yo ap pibliye chak dimanch. Moun ki bay plis bon repons yo ap klase selon kantite pwen yo genyen. Si gen egalite, moun ki te reponn pi vit la ap pran avantaj.
+            </p>
+
+            <div style="border-top: 1px solid #edf2f7; padding-top: 15px; margin-bottom: 15px;">
+              <h4 style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 8px;"><i class="fas fa-list-ol"></i> Règ pou patisipe</h4>
+              <ul style="font-size: 13px; color: #475569; padding-left: 20px; line-height: 1.6; display: flex; flex-direction: column; gap: 6px;">
+                <li>Ou dwe kreye yon kont oswa konekte anvan ou patisipe.</li>
+                <li>Se yon sèl kont ki gen dwa patisipe pou chak moun.</li>
+                <li>Reponn kesyon yo chak jou jiska dimanch.</li>
+                <li>Chak repons ap anrejistre ak dat ak lè ou voye l.</li>
+                <li>Yon fwa ou voye yon repons, ou pa ka modifye li.</li>
+                <li>Y ap chwazi gayan yo selon kantite bon repons yo bay. Si gen egalite, moun ki te reponn pi vit la ap genyen.</li>
+                <li>Nenpòt moun ki itilize plizyè kont oswa ki eseye fè fwod ap diskalifye.</li>
+                <li>Rezilta ofisyèl yo ap anonse chak dimanch.</li>
+              </ul>
+            </div>
+
+            <div style="border-top: 1px solid #edf2f7; padding-top: 15px;">
+              <h4 style="font-size: 14px; font-weight: 700; color: #1e293b; margin-bottom: 8px;"><i class="fas fa-trophy" style="color: #f59e0b;"></i> Pri pou genyen</h4>
+              <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+                <div style="background: #fef3c7; color: #d97706; padding: 10px; border-radius: 10px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                  🥇 1ye pri : 200 goud sou MonCash oswa NatCash.
+                </div>
+                <div style="background: #f1f5f9; color: #475569; padding: 10px; border-radius: 10px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                  🥈 2zyèm pri : 100 goud sou MonCash oswa NatCash.
+                </div>
+                <div style="background: #fff7ed; color: #c2410c; padding: 10px; border-radius: 10px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                  🥉 3yèm pri : 50 goud sou MonCash oswa NatCash.
+                </div>
+              </div>
+            </div>
+
+            <p style="text-align: center; font-weight: bold; margin-top: 15px; color: #10b981;">Bon chans ak tout patisipan yo! 🍀</p>
+          </div>
+
+          <!-- Seksyon Dat, lè ak Kontè tan ki rete a -->
+          <div id="concoursMetaBox" style="background: #faf5ff; border: 1px solid #d8b4fe; padding: 16px; border-radius: 16px; margin-bottom: 20px; display: none; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+            <p style="font-size: 13px; color: #7e22ce; font-weight: 600; margin-bottom: 6px;">
+              <i class="far fa-calendar-alt"></i> Kesyon yo ajoute nan dat: <span id="concoursAddedTime" style="color: #581c87; font-weight: 700;">-</span>
+            </p>
+            <p id="concoursCountdownText" style="font-size: 14px; color: #dc2626; font-weight: 700; background: #fee2e2; padding: 8px 12px; border-radius: 10px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #fecaca;">
+              <i class="far fa-clock"></i> <span id="countdownTimerLabel">Tan ki rete: </span> <span id="countdownTimerValue">-</span>
+            </p>
+          </div>
+
+          <button id="btnParticiperConcours" class="btn-app-action" style="background: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); width: 100%; justify-content: center; padding: 14px; font-size: 16px;">
+            Participer <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+          </button>
+        </div>
+
+        <!-- Page 2: Questions du Concours -->
+        <div id="concoursQuestionsContainer" style="display: none;">
+          <div style="background: #ffffff; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #edf2f7; margin-bottom: 20px;">
+            <h3 style="font-size: 18px; font-weight: 800; color: #8b5cf6; margin-bottom: 15px; border-bottom: 2px solid #edf2f7; padding-bottom: 8px;">Reponn kesyon sa yo :</h3>
+            <div id="concoursQuestionsList" style="display: flex; flex-direction: column; gap: 16px;"></div>
+          </div>
+          <button id="btnSubmitConcoursAnswers" class="btn-app-action" style="background: #8b5cf6; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); width: 100%; justify-content: center; padding: 14px; font-size: 16px;">
+            Voyer repons yo <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
+          </button>
+        </div>
+
+        <!-- Page 3: Résultats et Classement -->
+        <div id="concoursLeaderboardContainer" style="display: none;">
+          <div id="concoursUserResult" style="background: #ffffff; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #edf2f7; margin-bottom: 20px; text-align: center;">
+            <div style="width: 60px; height: 60px; background: #d1fae5; color: #10b981; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 12px;">
+              <i class="fas fa-check-double"></i>
+            </div>
+            <h3 style="font-size: 18px; font-weight: 800; color: #1e293b; margin-bottom: 8px;">Ou te deja patisipe nan konkou a!</h3>
+            <p id="concoursUserScoreText" style="font-size: 15px; color: #475569; font-weight: 600;"></p>
+          </div>
+
+          <div style="background: #ffffff; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #edf2f7;">
+            <h3 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+              <i class="fas fa-medal" style="color: #f59e0b;"></i> Klasman Konkou a (Classement)
+            </h3>
+            <div id="concoursRankingList" style="display: flex; flex-direction: column; gap: 10px;"></div>
           </div>
         </div>
       </div>
@@ -1584,7 +1748,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
   <!-- Intégration Logique JavaScript / Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, runTransaction, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, runTransaction, set, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAQeHWr_vUiQmVVgJJ_cOF9qrCCLd7IJNc",
@@ -1606,8 +1770,165 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       apps: ref(db, 'BENTOUL/APPS'),
       sondages: ref(db, 'BENTOUL/SONDAGES'),
       courses: ref(db, 'BENTOUL/COURE'),
-      views: ref(db, 'BENTOUL/views')
+      views: ref(db, 'BENTOUL/views'),
+      currentContest: ref(db, 'BENTOUL/CONCOURS/CURRENT')
     };
+
+    // Kesyon yo kounye a chaje dinamikman depi nan Firebase Realtime Database.
+    let dynamicQuestions = [];
+    let countdownInterval = null;
+    let contestAddedAt = null;
+
+    // Popilasyon otomatik ak kesyon defo si Firebase la vid (pou asire tès yo fonksyonèl dirèkteman)
+    get(refs.currentContest).then((snapshot) => {
+      if (!snapshot.exists()) {
+        set(refs.currentContest, {
+          addedAt: Date.now(),
+          questions: {
+            q1: { id: "q1", question: "Kisa MonCash ye?", options: ["Yon rezo sosyal pou chat", "Yon sèvis bous elektwonik sou mobil", "Yon aplikasyon pou gade videyo"], correctAnswer: 1 },
+            q2: { id: "q2", question: "Sou ki sistèm operasyon pifò fòmasyon BENTOUL yo fèt?", options: ["iOS (iPhone)", "Windows Phone", "Android"], correctAnswer: 2 },
+            q3: { id: "q3", question: "Ki jou rezilta ofisyèl konkou BENTOUL yo pibliye?", options: ["Chak Dimanch", "Chak Vandredi", "Chak Samdi"], correctAnswer: 0 }
+          }
+        });
+      }
+    });
+
+    // ==========================================================================
+    // SISTÈM DETEKSYON AK SWIVI STATISTIK YO (TRACKING)
+    // ==========================================================================
+    const visitorId = (() => {
+      let id = localStorage.getItem('bentoul_visitor_id');
+      if (!id) {
+        id = 'vis_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+        localStorage.setItem('bentoul_visitor_id', id);
+      }
+      return id;
+    })();
+
+    function getTrafficSource() {
+      const urlParams = new URLSearchParams(window.location.search);
+      let source = urlParams.get('source') || urlParams.get('ref') || urlParams.get('utm_source');
+      
+      if (!source && document.referrer) {
+        const refUrl = document.referrer.toLowerCase();
+        if (refUrl.includes('facebook.com') || refUrl.includes('fb.me')) source = 'Facebook';
+        else if (refUrl.includes('wa.me') || refUrl.includes('whatsapp.com')) source = 'WhatsApp';
+        else if (refUrl.includes('youtube.com') || refUrl.includes('youtu.be')) source = 'YouTube';
+        else if (refUrl.includes('instagram.com')) source = 'Instagram';
+        else if (refUrl.includes('tiktok.com')) source = 'TikTok';
+        else if (refUrl.includes('twitter.com') || refUrl.includes('t.co')) source = 'Twitter';
+        else {
+          try {
+            const domain = new URL(document.referrer).hostname;
+            source = domain || 'Direct / Lòt';
+          } catch(e) {
+            source = 'Direct / Lòt';
+          }
+        }
+      }
+      return source || 'Direct / Lòt';
+    }
+
+    async function getVisitorCountry() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        return data.country_name || 'Inconnu';
+      } catch (e) {
+        return 'Inconnu';
+      }
+    }
+
+    async function initVisitorTracking() {
+      const source = getTrafficSource();
+      const country = await getVisitorCountry();
+      const loggedInUser = localStorage.getItem('bentoul_user') || 'Anonyme';
+      const visitorRef = ref(db, `BENTOUL/TRACKING/VISITORS/${visitorId}`);
+      const now = Date.now();
+
+      get(visitorRef).then((snapshot) => {
+        if (!snapshot.exists()) {
+          const initialData = {
+            uuid: visitorId,
+            username: loggedInUser,
+            country: country,
+            source: source,
+            firstVisit: now,
+            lastActive: now,
+            visitsCount: 1,
+            clicksCount: 0,
+            tabVisits: { homeScreen: 1 },
+            tabClicks: {}
+          };
+          set(visitorRef, initialData);
+          incrementAggregate(`countries/${country}`);
+          incrementAggregate(`sources/${source}`);
+          incrementAggregate(`tabs/homeScreen/visits`);
+        } else {
+          const data = snapshot.val();
+          const currentVisits = data.tabVisits || {};
+          const updates = {
+            username: loggedInUser,
+            lastActive: now,
+            visitsCount: (data.visitsCount || 0) + 1,
+            [`tabVisits/homeScreen`]: (currentVisits.homeScreen || 0) + 1
+          };
+
+          if (data.country === 'Inconnu' && country !== 'Inconnu') {
+            updates.country = country;
+            incrementAggregate(`countries/${country}`);
+          }
+          if (data.source === 'Direct / Lòt' && source !== 'Direct / Lòt') {
+            updates.source = source;
+            incrementAggregate(`sources/${source}`);
+          }
+
+          update(visitorRef, updates);
+          incrementAggregate(`tabs/homeScreen/visits`);
+        }
+      });
+    }
+
+    function incrementAggregate(path) {
+      const aggRef = ref(db, `BENTOUL/TRACKING/AGGREGATES/${path}`);
+      runTransaction(aggRef, (current) => {
+        return (current || 0) + 1;
+      });
+    }
+
+    window.trackTabVisit = function(screenId) {
+      const visitorRef = ref(db, `BENTOUL/TRACKING/VISITORS/${visitorId}/tabVisits/${screenId}`);
+      runTransaction(visitorRef, (current) => {
+        return (current || 0) + 1;
+      });
+      incrementAggregate(`tabs/${screenId}/visits`);
+    };
+
+    window.trackClick = function(screenId) {
+      const userClicksRef = ref(db, `BENTOUL/TRACKING/VISITORS/${visitorId}/clicksCount`);
+      runTransaction(userClicksRef, (current) => {
+        return (current || 0) + 1;
+      });
+
+      const userTabClicksRef = ref(db, `BENTOUL/TRACKING/VISITORS/${visitorId}/tabClicks/${screenId}`);
+      runTransaction(userTabClicksRef, (current) => {
+        return (current || 0) + 1;
+      });
+
+      incrementAggregate(`tabs/${screenId}/clicks`);
+    };
+
+    document.addEventListener('click', () => {
+      const activeScreen = document.querySelector('.tab-screen.active') || document.getElementById('homeScreen');
+      if (activeScreen) {
+        window.trackClick(activeScreen.id);
+      }
+    });
+
+    initVisitorTracking();
+
+    // ==========================================================================
 
     // SYSTEM POPUP REPLACEMENT
     window.showAlert = function(message, callback) {
@@ -1781,7 +2102,17 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
                 localStorage.setItem('bentoul_user', userFound.username);
                 window.updateAuthUI();
                 document.getElementById('loginForm').reset();
-                window.navigateBack();
+                
+                // Redirection automatique vers le concours si demandé
+                if (localStorage.getItem('redirect_to_concours') === 'true') {
+                  localStorage.removeItem('redirect_to_concours');
+                  window.navigateTo('concoursScreen');
+                  setTimeout(() => {
+                    window.checkUserContestParticipation(userFound.username);
+                  }, 300);
+                } else {
+                  window.navigateBack();
+                }
               });
             } else {
               window.showAlert("Modpas la pa kòrèk.");
@@ -1828,6 +2159,10 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         unsubscribeUser();
         unsubscribeUser = null;
       }
+
+      // Lyen non itilizatè a ak Tracker a
+      const trackingUser = loggedInUser || 'Anonyme';
+      update(ref(db, `BENTOUL/TRACKING/VISITORS/${visitorId}`), { username: trackingUser });
 
       if (loggedInUser) {
         if (sidebarUsername) sidebarUsername.textContent = loggedInUser;
@@ -1965,6 +2300,406 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       window.sharePost(title, text, url);
     };
 
+    // --- LOGIQUE DU CONCOURS BENTOUL ---
+    function lockConcoursParticipation() {
+      const btn = document.getElementById('btnParticiperConcours');
+      if (btn) {
+        btn.style.background = '#94a3b8';
+        btn.style.boxShadow = 'none';
+        btn.innerHTML = `<i class="fas fa-lock"></i> Konkou a Fèmen (Tann kesyon demen)`;
+        btn.disabled = true;
+        btn.onclick = null;
+      }
+    }
+
+    function unlockConcoursParticipation() {
+      const btn = document.getElementById('btnParticiperConcours');
+      if (btn) {
+        btn.style.background = '#8b5cf6';
+        btn.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.3)';
+        btn.innerHTML = `Participer <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>`;
+        btn.disabled = false;
+        btn.onclick = function() {
+          const loggedInUser = localStorage.getItem('bentoul_user');
+          if (!loggedInUser) {
+            window.showAlert("Vous devez vous connecter ou créer un compte pour participer au concours.", () => {
+              localStorage.setItem('redirect_to_concours', 'true');
+              window.navigateTo('authScreen');
+            });
+            return;
+          }
+          window.checkUserContestParticipation(loggedInUser);
+        };
+      }
+    }
+
+    function lockParticipationDueToTime() {
+      lockConcoursParticipation();
+      if (document.getElementById('concoursQuestionsContainer').style.display === 'block') {
+        document.getElementById('concoursQuestionsContainer').style.display = 'none';
+        document.getElementById('concoursIntroContainer').style.display = 'block';
+        window.showAlert("Konkou a fèmen pou jounen an! Ou pa ka voye repons yo ankò.");
+      }
+    }
+
+    function startCountdown(closingTimestamp) {
+      if (countdownInterval) clearInterval(countdownInterval);
+      
+      const updateDisplay = () => {
+        const now = Date.now();
+        const timeLeft = closingTimestamp - now;
+        
+        if (timeLeft <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById('countdownTimerLabel').textContent = "";
+          document.getElementById('countdownTimerValue').innerHTML = `<span style="color: #dc2626;"><i class="fas fa-lock"></i> Konkou a fèmen! Rete tann demen pou nouvo kesyon yo.</span>`;
+          lockParticipationDueToTime();
+          return;
+        }
+        
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+        
+        const zeroPad = (num) => String(num).padStart(2, '0');
+        document.getElementById('countdownTimerLabel').textContent = "Tan ki rete: ";
+        document.getElementById('countdownTimerValue').textContent = `${zeroPad(hours)}h ${zeroPad(minutes)}m ${zeroPad(seconds)}s`;
+      };
+      
+      updateDisplay();
+      countdownInterval = setInterval(updateDisplay, 1000);
+    }
+
+    // Koute keksyon yo an tan reyèl depi nan Firebase Realtime Database
+    onValue(refs.currentContest, (snap) => {
+      const data = snap.val();
+      if (data && data.questions) {
+        dynamicQuestions = Object.entries(data.questions).map(([id, q]) => ({
+          id: q.id || id,
+          question: q.question,
+          options: q.options,
+          correctAnswer: q.correctAnswer
+        }));
+
+        contestAddedAt = data.addedAt || Date.now();
+        const addedDate = new Date(contestAddedAt);
+        document.getElementById('concoursAddedTime').textContent = addedDate.toLocaleString('fr-FR', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit'
+        });
+        document.getElementById('concoursMetaBox').style.display = 'block';
+
+        // Limit tan an fikse jiska 23:00 PM nan menm dat kesyon yo te ajoute a
+        const closingTime = new Date(addedDate.getFullYear(),
+        addedDate.getMonth(), addedDate.getDate(), 23, 0, 0, 0).getTime();
+
+        const now = Date.now();
+        if (now >= closingTime) {
+          document.getElementById('countdownTimerLabel').textContent = "";
+          document.getElementById('countdownTimerValue').innerHTML = `<span style="color: #dc2626;"><i class="fas fa-lock"></i> Konkou a fèmen! Rete tann demen pou nouvo kesyon yo.</span>`;
+          lockParticipationDueToTime();
+        } else {
+          // Verifye si dat aktyèl la deja pase dat limit la menm si kesyon yo poko chanje
+          const currentLimitCheck = new Date();
+          currentLimitCheck.setHours(23, 0, 0, 0);
+          if (now >= currentLimitCheck.getTime()) {
+            document.getElementById('countdownTimerLabel').textContent = "";
+            document.getElementById('countdownTimerValue').innerHTML = `<span style="color: #dc2626;"><i class="fas fa-lock"></i> Konkou a fèmen! Rete tann demen pou nouvo kesyon yo.</span>`;
+            lockParticipationDueToTime();
+          } else {
+            unlockConcoursParticipation();
+            startCountdown(closingTime);
+          }
+        }
+      } else {
+        document.getElementById('concoursMetaBox').style.display = 'none';
+        const btn = document.getElementById('btnParticiperConcours');
+        if (btn) {
+          btn.style.background = '#94a3b8';
+          btn.innerHTML = `<i class="fas fa-info-circle"></i> Pa gen konkou aktif`;
+          btn.disabled = true;
+        }
+      }
+    });
+
+    document.getElementById('btnParticiperConcours').onclick = function() {
+      const loggedInUser = localStorage.getItem('bentoul_user');
+      if (!loggedInUser) {
+        window.showAlert("Vous devez vous connecter ou créer un compte pour participer au concours.", () => {
+          localStorage.setItem('redirect_to_concours', 'true');
+          window.navigateTo('authScreen');
+        });
+        return;
+      }
+      window.checkUserContestParticipation(loggedInUser);
+    };
+
+    window.checkUserContestParticipation = function(username) {
+      const userSubRef = ref(db, `BENTOUL/CONCOURS/SUBMISSIONS/${username}`);
+      get(userSubRef).then((snap) => {
+        if (snap.exists()) {
+          const subs = snap.val();
+          let lastSubmissionTime = 0;
+          if (subs) {
+            Object.values(subs).forEach(s => {
+              if (s.date && s.date > lastSubmissionTime) {
+                lastSubmissionTime = s.date;
+              }
+            });
+          }
+          // Si gen nouvo konkou kote dat kesyon an pi recent pase dènye soumisyon itilizatè a
+          if (contestAddedAt && contestAddedAt > lastSubmissionTime) {
+            window.showConcoursQuestions();
+          } else {
+            window.showConcoursLeaderboard(username);
+          }
+        } else {
+          window.showConcoursQuestions();
+        }
+      });
+    };
+
+    window.showConcoursQuestions = function() {
+      // Tcheke ankò si lè a poko ekspire anvan nou ouvri pati kesyon yo
+      const btn = document.getElementById('btnParticiperConcours');
+      if (btn && btn.disabled) {
+        window.showAlert("Konkou a fèmen pou jounen an!");
+        return;
+      }
+
+      document.getElementById('concoursIntroContainer').style.display = 'none';
+      document.getElementById('concoursQuestionsContainer').style.display = 'block';
+      document.getElementById('concoursLeaderboardContainer').style.display = 'none';
+
+      const container = document.getElementById('concoursQuestionsList');
+      container.innerHTML = '';
+
+      dynamicQuestions.forEach((q, idx) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'contest-q-card';
+        qCard.dataset.qid = q.id;
+        qCard.style.padding = '12px';
+        qCard.style.background = '#f8fafc';
+        qCard.style.border = '1px solid #e2e8f0';
+        qCard.style.borderRadius = '12px';
+        qCard.style.marginBottom = '12px';
+
+        let html = `<p style="font-weight: 700; font-size: 14px; color: #1e293b; margin-bottom: 8px;">Keksyon ${idx + 1}: ${escapeHtml(q.question)}</p>`;
+        html += `<div style="display: flex; flex-direction: column; gap: 8px;">`;
+
+        q.options.forEach((opt, optIdx) => {
+          html += `
+            <label class="contest-option-label" style="display: flex; align-items: center; gap: 8px; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; cursor: pointer; transition: all 0.2s;">
+              <input type="radio" name="contest_opt_${q.id}" value="${optIdx}" style="transform: scale(1.1); accent-color: #8b5cf6;">
+              <span style="font-size: 13px; font-weight: 600; color: #475569;">${escapeHtml(opt)}</span>
+            </label>
+          `;
+        });
+        html += `</div>`;
+        qCard.innerHTML = html;
+        container.appendChild(qCard);
+      });
+
+      container.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+          const name = e.target.name;
+          const labels = container.querySelectorAll(`input[name="${name}"]`);
+          labels.forEach(l => {
+            l.parentElement.style.borderColor = '#cbd5e1';
+            l.parentElement.style.background = 'white';
+          });
+          if (e.target.checked) {
+            e.target.parentElement.style.borderColor = '#8b5cf6';
+            e.target.parentElement.style.background = '#f5f3ff';
+          }
+        });
+      });
+    };
+
+    document.getElementById('btnSubmitConcoursAnswers').onclick = function() {
+      const username = localStorage.getItem('bentoul_user');
+      if (!username) return;
+
+      const btn = document.getElementById('btnParticiperConcours');
+      if (btn && btn.disabled) {
+        window.showAlert("Konkou a fèmen pou jounen an! Ou pa ka voye repons yo ankò.");
+        return;
+      }
+
+      const cards = document.querySelectorAll('.contest-q-card');
+      let unanswered = false;
+      const answers = {};
+
+      cards.forEach(card => {
+        const qId = card.dataset.qid;
+        const selected = card.querySelector(`input[name="contest_opt_${qId}"]:checked`);
+        if (!selected) {
+          unanswered = true;
+          card.style.borderColor = '#ef4444';
+          card.style.background = '#fef2f2';
+        } else {
+          card.style.borderColor = '#cbd5e1';
+          card.style.background = '#f8fafc';
+          answers[qId] = Number(selected.value);
+        }
+      });
+
+      if (unanswered) {
+        window.showAlert(`Tanpri, reponn tout ${dynamicQuestions.length} keksyon yo anvan ou voye repons ou!`);
+        return;
+      }
+
+      window.showConfirm("Èske ou vle voye repons sa yo vrèman? Yon fwa ou voye yo, ou pa ka modifye yo ankò.", async () => {
+        const submissionTime = Date.now();
+        let totalPoints = 0;
+        const submissionDetails = {};
+
+        for (let q of dynamicQuestions) {
+          const qId = q.id;
+          const userAnswer = answers[qId];
+          const isCorrect = (userAnswer === q.correctAnswer);
+          let points = 0;
+
+          if (isCorrect) {
+            const correctRespondentsRef = ref(db, `BENTOUL/CONCOURS/CORRECT_RESPONDENTS/${qId}`);
+            await runTransaction(correctRespondentsRef, (current) => {
+              const arr = current || [];
+              if (!arr.includes(username)) {
+                arr.push(username);
+              }
+              return arr;
+            }).then((result) => {
+              const committedList = result.snapshot.val() || [];
+              const userIndex = committedList.indexOf(username);
+              if (userIndex === 0) points = 10;
+              else if (userIndex === 1) points = 5;
+              else if (userIndex === 2) points = 2;
+              else points = 1;
+            });
+          } else {
+            points = 0;
+          }
+
+          totalPoints += points;
+          submissionDetails[qId] = {
+            user: username,
+            question: q.question,
+            answer: q.options[userAnswer],
+            date: submissionTime,
+            points: points,
+            correct: isCorrect
+          };
+        }
+
+        // Sove detay soubmisyon yo san efase ansyen repons yo
+        const userSubRef = ref(db, `BENTOUL/CONCOURS/SUBMISSIONS/${username}`);
+        await update(userSubRef, submissionDetails);
+
+        // Sove nòt total pou klasman an epi adisyone nouvo pwen yo sou ansyen yo
+        const scoreRef = ref(db, `BENTOUL/CONCOURS/SCORES/${username}`);
+        await runTransaction(scoreRef, (currentData) => {
+          if (currentData) {
+            return {
+              username: username,
+              totalPoints: (currentData.totalPoints || 0) + totalPoints,
+              lastUpdated: submissionTime
+            };
+          } else {
+            return {
+              username: username,
+              totalPoints: totalPoints,
+              lastUpdated: submissionTime
+            };
+          }
+        });
+
+        // Rekonpans Kredi : 10 pwen = 5 kredi, 20 pwen = 10 kredi, elatriye
+        const earnedCredits = Math.floor(totalPoints / 10) * 5;
+        if (earnedCredits > 0) {
+          const userCreditsRef = ref(db, `BENTOUL/USERS/${username}/credits`);
+          await runTransaction(userCreditsRef, (currentCredits) => {
+            return (currentCredits || 0) + earnedCredits;
+          });
+        }
+
+        let creditMsg = earnedCredits > 0 ? ` Ou genyen ${earnedCredits} kredi kado kòm rekonpans!` : "";
+        window.showAlert(`Repons ou yo voye ak siksè! Ou jwenn yon total de ${totalPoints} pwen.${creditMsg}`, () => {
+          window.showConcoursLeaderboard(username);
+        });
+      });
+    };
+
+    window.showConcoursLeaderboard = function(username) {
+      document.getElementById('concoursIntroContainer').style.display = 'none';
+      document.getElementById('concoursQuestionsContainer').style.display = 'none';
+      document.getElementById('concoursLeaderboardContainer').style.display = 'block';
+
+      // 1. Chaje nòt pa w la
+      const userSubRef = ref(db, `BENTOUL/CONCOURS/SUBMISSIONS/${username}`);
+      get(userSubRef).then((snap) => {
+        if (snap.exists()) {
+          const subs = snap.val();
+          let total = 0;
+          let correctCount = 0;
+          Object.values(subs).forEach(s => {
+            total += s.points || 0;
+            if (s.correct) correctCount++;
+          });
+          document.getElementById('concoursUserScoreText').innerHTML = `
+            Ou reponn kòrèkteman a <strong>${correctCount}/${dynamicQuestions.length}</strong> kesyon.<br>
+            Ou jwenn yon total de <span style="color: #8b5cf6; font-weight: 800; font-size: 18px;">${total} pwen</span> 🎉
+          `;
+        }
+      });
+
+      // 2. Chaje klasman jeneral an tan reyèl
+      const scoresRef = ref(db, 'BENTOUL/CONCOURS/SCORES');
+      onValue(scoresRef, (snap) => {
+        const container = document.getElementById('concoursRankingList');
+        container.innerHTML = '';
+
+        if (!snap.exists()) {
+          container.innerHTML = '<div class="empty-message">Pa gen klasman ki disponib pou kounye a.</div>';
+          return;
+        }
+
+        const scoresData = snap.val();
+        // Klase selon pwen. Si gen egalite, moun ki te reponn pi vit la pran avantaj (timestamp pli piti)
+        const sortedList = Object.values(scoresData).sort((a, b) => {
+          if (b.totalPoints !== a.totalPoints) {
+            return b.totalPoints - a.totalPoints;
+          }
+          return a.lastUpdated - b.lastUpdated;
+        });
+
+        sortedList.forEach((score, index) => {
+          const rRow = document.createElement('div');
+          rRow.style.display = 'flex';
+          rRow.style.alignItems = 'center';
+          rRow.style.justifyContent = 'space-between';
+          rRow.style.padding = '10px 14px';
+          rRow.style.background = (score.username === username) ? '#f5f3ff' : '#f8fafc';
+          rRow.style.border = (score.username === username) ? '1px solid #8b5cf6' : '1px solid #e2e8f0';
+          rRow.style.borderRadius = '10px';
+          rRow.style.fontWeight = (score.username === username) ? '700' : '500';
+
+          let medal = `${index + 1}`;
+          if (index === 0) medal = '🥇';
+          else if (index === 1) medal = '🥈';
+          else if (index === 2) medal = '🥉';
+
+          rRow.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span style="font-size: 14px; width: 24px; text-align: center; font-weight: bold; color: #64748b;">${medal}</span>
+              <span style="font-size: 14px; color: #1e293b;">${escapeHtml(score.username)}</span>
+            </div>
+            <span style="font-size: 14px; color: #8b5cf6; font-weight: bold;">${score.totalPoints} pts</span>
+          `;
+          container.appendChild(rRow);
+        });
+      });
+    };
+
     // Fonksyon pou jere navigasyon otomatik (Deep Linking)
     window.handleDeepLink = function() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -1978,7 +2713,8 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         apps: 'AppdScreen',
         sondages: 'sondageScreen',
         courses: 'courseScreen',
-        auth: 'authScreen'
+        auth: 'authScreen',
+        concours: 'concoursScreen'
       };
 
       document.querySelectorAll('.tab-screen:not(#homeScreen)').forEach(screen => {
@@ -1990,8 +2726,16 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
       const targetScreen = screenMap[platform];
       if (targetScreen) {
         document.getElementById(targetScreen).classList.add('active');
+        if (typeof window.trackTabVisit === 'function') {
+          window.trackTabVisit(targetScreen);
+        }
 
-        if (postId) {
+        if (platform === 'concours') {
+          const loggedInUser = localStorage.getItem('bentoul_user');
+          if (loggedInUser) {
+            window.checkUserContestParticipation(loggedInUser);
+          }
+        } else if (postId) {
           if (platform === 'courses') {
             const lessonId = urlParams.get('lesson');
             let attempts = 0;
@@ -2210,7 +2954,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
               <i class="far fa-thumbs-up"></i> (<span id="like-count-${courseId}">0</span>)
             </button>
             <button id="dislike-btn-${courseId}" class="btn-share" style="padding: 8px; font-size: 11px; border-radius: 10px; flex: 1; background: #f1f5f9; color: #334155;">
-              <i class="far fa-thumbs-down"></i>(<span id="dislike-count-${courseId}">0</span>)
+              <i class="far fa-thumbs-down"></i> (<span id="dislike-count-${courseId}">0</span>)
             </button>
             <button id="share-btn-${courseId}" class="btn-share" style="padding: 8px; font-size: 11px; border-radius: 10px; flex: 1; background: #f1f5f9; color: #334155;">
               <i class="fas fa-share-alt"></i> (<span id="share-count-${courseId}">0</span>)
@@ -2254,7 +2998,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
           };
         }
 
-        // Koute pwogresyon an tan reyèl pou chak kous
+        // Koute pwogresyon an tan reyèl pou cada kous
         if (loggedInUser) {
           const pRef = ref(db, `BENTOUL/USERS/${loggedInUser}/progress/${courseId}`);
           onValue(pRef, (pSnap) => {
@@ -2299,7 +3043,7 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
               if (likes[loggedInUser]) {
                 likeBtn.style.background = '#d1fae5';
                 likeBtn.style.color = '#065f46';
-                likeBtn.innerHTML = `<i class="fas fa-thumbs-up"></i>(<span id="like-count-${courseId}">${likesNum}</span>)`;
+                likeBtn.innerHTML = `<i class="fas fa-thumbs-up"></i> (<span id="like-count-${courseId}">${likesNum}</span>)`;
               } else {
                 likeBtn.style.background = '#f1f5f9';
                 likeBtn.style.color = '#334155';
@@ -2311,13 +3055,11 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
               if (dislikes[loggedInUser]) {
                 dislikeBtn.style.background = '#fee2e2';
                 dislikeBtn.style.color = '#991b1b';
-                dislikeBtn.innerHTML = `<i class="fas fa-thumbs-down"></i>
-                (<span
-                id="dislike-count-${courseId}">${dislikesNum}</span>)`;
+                dislikeBtn.innerHTML = `<i class="fas fa-thumbs-down"></i> (<span id="dislike-count-${courseId}">${dislikesNum}</span>)`;
               } else {
                 dislikeBtn.style.background = '#f1f5f9';
                 dislikeBtn.style.color = '#334155';
-                dislikeBtn.innerHTML = `<i class="far fa-thumbs-down"></i>(<span id="dislike-count-${courseId}">${dislikesNum}</span>)`;
+                dislikeBtn.innerHTML = `<i class="far fa-thumbs-down"></i> (<span id="dislike-count-${courseId}">${dislikesNum}</span>)`;
               }
             }
           });
@@ -3198,7 +3940,8 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         AppdScreen: 'apps',
         sondageScreen: 'sondages',
         courseScreen: 'courses',
-        authScreen: 'auth'
+        authScreen: 'auth',
+        concoursScreen: 'concours'
       };
       const platform = reverseMap[screenId];
       if (platform) {
@@ -3206,6 +3949,9 @@ Rejoignez-nous chaque dimanche pour notre formation hebdomadaire. </p>
         history.pushState({ platform }, '', newUrl);
       }
       document.getElementById(screenId).classList.add('active');
+      if (typeof window.trackTabVisit === 'function') {
+        window.trackTabVisit(screenId);
+      }
     };
 
     window.navigateBack = function() {
