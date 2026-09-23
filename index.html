@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BENTOUL FORMS - Création de formulaires en ligne en Haïti</title>
     
-    <!-- Meta SEO & Open Graph -->
     <meta name="description" content="BENTOUL FORMS crée des formulaires en ligne professionnels pour entreprises, commerces, écoles, associations et particuliers en Haïti.">
     <meta name="keywords" content="formulaire en ligne Haïti, création formulaire Haïti, formulaire Google Sheets, formulaire WhatsApp, BENTOUL FORMS">
     <meta property="og:title" content="BENTOUL FORMS - Formulaires en ligne simples et professionnels">
@@ -20,20 +19,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* ==========================================================================
-           1. STYLES DE BASE & VARIABLES MATERIAL DESIGN
-           ========================================================================== */
         :root {
-            --primary: #0F2C59;          /* Bleu Marine Profond */
-            --primary-light: #1E40AF;    /* Bleu Accent */
-            --primary-dark: #091E3E;     /* Bleu Sombre */
-            --accent-green: #10B981;     /* Vert WhatsApp / CTA */
+            --primary: #0F2C59;
+            --primary-light: #1E40AF;
+            --primary-dark: #091E3E;
+            --accent-green: #10B981;
             --accent-green-hover: #059669;
-            --surface: #FFFFFF;          /* Surfaces */
-            --background: #F8FAFC;       /* Fond général */
-            --text-main: #1E293B;        /* Texte sombre */
-            --text-muted: #64748B;       /* Texte secondaire */
-            --border: #E2E8F0;           /* Bordures */
+            --surface: #FFFFFF;
+            --background: #F8FAFC;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
             --shadow-sm: 0 2px 4px rgba(15, 44, 89, 0.05);
             --shadow-md: 0 6px 12px -2px rgba(15, 44, 89, 0.08), 0 3px 6px -3px rgba(15, 44, 89, 0.05);
             --shadow-lg: 0 16px 24px -4px rgba(15, 44, 89, 0.12), 0 8px 8px -4px rgba(15, 44, 89, 0.04);
@@ -52,28 +48,19 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
+        html { scroll-behavior: smooth; font-size: 16px; }
 
         body {
             background-color: var(--background);
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
-            padding-bottom: 70px; /* Espace pour la barre fixe mobile */
+            padding-bottom: 70px;
         }
 
-        @media (min-width: 992px) {
-            body { padding-bottom: 0; }
-        }
+        @media (min-width: 992px) { body { padding-bottom: 0; } }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
+        a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
         .container {
@@ -83,13 +70,8 @@
             padding: 0 1.25rem;
         }
 
-        .section-padding {
-            padding: 4rem 0;
-        }
-
-        @media (min-width: 768px) {
-            .section-padding { padding: 5.5rem 0; }
-        }
+        .section-padding { padding: 4rem 0; }
+        @media (min-width: 768px) { .section-padding { padding: 5.5rem 0; } }
 
         .section-header {
             text-align: center;
@@ -105,9 +87,7 @@
             letter-spacing: -0.02em;
         }
 
-        @media (min-width: 768px) {
-            .section-title { font-size: 2.35rem; }
-        }
+        @media (min-width: 768px) { .section-title { font-size: 2.35rem; } }
 
         .section-subtitle {
             font-size: 1.05rem;
@@ -115,7 +95,6 @@
             font-weight: 500;
         }
 
-        /* Badge Styles */
         .badge {
             display: inline-flex;
             align-items: center;
@@ -132,7 +111,6 @@
         .badge-accent { background: rgba(16, 185, 129, 0.15); color: var(--accent-green-hover); }
         .badge-orange { background: #FFEDD5; color: #C2410C; }
 
-        /* Buttons Style */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -150,52 +128,19 @@
             width: 100%;
         }
 
-        @media (min-width: 576px) {
-            .btn { width: auto; }
-        }
+        @media (min-width: 576px) { .btn { width: auto; } }
 
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--surface);
-            box-shadow: var(--shadow-md);
-        }
+        .btn-primary { background-color: var(--primary); color: var(--surface); box-shadow: var(--shadow-md); }
+        .btn-primary:hover { background-color: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
+        .btn-whatsapp { background-color: var(--accent-green); color: var(--surface); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        .btn-whatsapp:hover { background-color: var(--accent-green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4); }
 
-        .btn-whatsapp {
-            background-color: var(--accent-green);
-            color: var(--surface);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
+        .btn-outline { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-outline:hover { background-color: var(--primary); color: var(--surface); }
 
-        .btn-whatsapp:hover {
-            background-color: var(--accent-green-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-        }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: var(--radius-sm); }
 
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: var(--surface);
-        }
-
-        .btn-sm {
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
-            border-radius: var(--radius-sm);
-        }
-
-        /* Cards Base */
         .card {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -212,14 +157,9 @@
             border-color: rgba(15, 44, 89, 0.2);
         }
 
-        /* ==========================================================================
-           2. HEADER & NAVIGATION
-           ========================================================================== */
         .header {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 72px;
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
@@ -259,27 +199,17 @@
             font-size: 1.1rem;
         }
 
-        .nav-desktop {
-            display: none;
+        .nav-desktop { display: none; }
+        @media (min-width: 992px) {
+            .nav-desktop { display: flex; align-items: center; gap: 1.5rem; }
+            .nav-link { font-weight: 600; font-size: 0.95rem; color: var(--text-main); transition: var(--transition); }
+            .nav-link:hover { color: var(--primary-light); }
         }
 
-        @media (min-width: 992px) {
-            .nav-desktop {
-                display: flex;
-                align-items: center;
-                gap: 2rem;
-            }
-
-            .nav-link {
-                font-weight: 600;
-                font-size: 0.95rem;
-                color: var(--text-main);
-                transition: var(--transition);
-            }
-
-            .nav-link:hover {
-                color: var(--primary-light);
-            }
+        .auth-nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .menu-toggle {
@@ -296,17 +226,11 @@
             cursor: pointer;
         }
 
-        @media (min-width: 992px) {
-            .menu-toggle { display: none; }
-        }
+        @media (min-width: 992px) { .menu-toggle { display: none; } }
 
-        /* Drawer Mobile */
         .drawer-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(15, 44, 89, 0.4);
             backdrop-filter: blur(4px);
             z-index: 1050;
@@ -315,17 +239,12 @@
             transition: var(--transition);
         }
 
-        .drawer-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .drawer-overlay.active { opacity: 1; visibility: visible; }
 
         .drawer {
             position: fixed;
-            top: 0;
-            right: -300px;
-            width: 280px;
-            height: 100%;
+            top: 0; right: -300px;
+            width: 280px; height: 100%;
             background: var(--surface);
             z-index: 1060;
             padding: 2rem 1.5rem;
@@ -335,9 +254,7 @@
             box-shadow: var(--shadow-lg);
         }
 
-        .drawer.active {
-            right: 0;
-        }
+        .drawer.active { right: 0; }
 
         .drawer-header {
             display: flex;
@@ -348,32 +265,10 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .drawer-close {
-            background: none;
-            border: none;
-            font-size: 1.4rem;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
+        .drawer-close { background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer; }
+        .drawer-links { display: flex; flex-direction: column; gap: 1rem; }
+        .drawer-link { font-size: 1rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 0.75rem; }
 
-        .drawer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .drawer-link {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        /* ==========================================================================
-           3. HERO SECTION
-           ========================================================================== */
         .hero {
             padding-top: 8rem;
             padding-bottom: 4rem;
@@ -382,29 +277,8 @@
             overflow: hidden;
         }
 
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        @media (min-width: 992px) {
-            .hero-grid {
-                grid-template-columns: 1.1fr 0.9fr;
-            }
-        }
-
-        .hero-content {
-            text-align: left;
-        }
-
-        .hero-badge-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            margin-bottom: 1.25rem;
-        }
+        .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
+        @media (min-width: 992px) { .hero-grid { grid-template-columns: 1.1fr 0.9fr; } }
 
         .hero-title {
             font-size: 2.2rem;
@@ -415,39 +289,13 @@
             letter-spacing: -0.02em;
         }
 
-        @media (min-width: 768px) {
-            .hero-title { font-size: 3.2rem; }
-        }
+        @media (min-width: 768px) { .hero-title { font-size: 3.2rem; } }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; font-weight: 500; }
+        .hero-buttons { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+        @media (min-width: 576px) { .hero-buttons { flex-direction: row; } }
 
-        .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-weight: 500;
-        }
+        .hero-note { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
 
-        .hero-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        @media (min-width: 576px) {
-            .hero-buttons {
-                flex-direction: row;
-            }
-        }
-
-        .hero-note {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        /* Form Interactive CSS Mockup */
         .hero-mockup {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -459,191 +307,45 @@
             transition: var(--transition);
         }
 
-        .hero-mockup:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
-        }
+        .hero-mockup:hover { transform: perspective(1000px) rotateY(0deg) rotateX(0deg); }
+        .mockup-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .mockup-input-group { margin-bottom: 1.25rem; }
+        .mockup-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.35rem; }
+        .mockup-input { width: 100%; height: 38px; background: var(--background); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 0.75rem; font-size: 0.85rem; color: var(--text-main); display: flex; align-items: center; }
+        .mockup-submit { background: var(--primary); color: white; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; margin-top: 1.5rem; }
 
-        .mockup-header {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .mockup-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .mockup-input-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .mockup-label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-bottom: 0.35rem;
-        }
-
-        .mockup-input {
-            width: 100%;
-            height: 38px;
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 0 0.75rem;
-            font-size: 0.85rem;
-            color: var(--text-main);
-            display: flex;
-            align-items: center;
-        }
-
-        .mockup-submit {
-            background: var(--primary);
-            color: white;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-top: 1.5rem;
-        }
-
-        /* ==========================================================================
-           4. SERVICES & EXEMPLES GRIDS
-           ========================================================================== */
-        .services-grid, .examples-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .services-grid, .examples-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        .services-grid, .examples-grid, .products-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 768px) { .services-grid, .examples-grid, .products-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 992px) {
-            .services-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .examples-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
+            .services-grid { grid-template-columns: repeat(3, 1fr); }
+            .examples-grid, .products-grid { grid-template-columns: repeat(3, 1fr); }
         }
 
         .service-icon {
-            width: 52px;
-            height: 52px;
+            width: 52px; height: 52px;
             border-radius: var(--radius-md);
             background: rgba(15, 44, 89, 0.08);
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.35rem;
-            margin-bottom: 1.25rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.35rem; margin-bottom: 1.25rem;
         }
 
-        .service-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
+        .service-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
+        .service-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.25rem; }
 
-        .service-desc {
-            font-size: 0.92rem;
-            color: var(--text-muted);
-            margin-bottom: 1.25rem;
+        .pricing-grid, .options-grid { display: grid; grid-template-columns: 1fr; gap: 1.75rem; }
+        @media (min-width: 992px) { .pricing-grid, .options-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        }
+        .pricing-card { display: flex; flex-direction: column; justify-content: space-between; }
+        .pricing-card.popular { border: 2px solid var(--primary); box-shadow: var(--shadow-lg); }
+        .pricing-popular-badge { position: absolute; top: -14px; right: 20px; background: var(--primary); color: white; padding: 0.25rem 0.85rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 800; }
+        .pricing-price { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin: 1rem 0; display: flex; align-items: baseline; gap: 0.3rem; }
+        .pricing-price span { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
+        .pricing-features { margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.75rem; }
+        .pricing-feature { display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
+        .pricing-feature i { color: var(--accent-green); font-size: 1rem; }
 
-        /* ==========================================================================
-           5. TARIFS & OPTIONS SUPPLÉMENTAIRES
-           ========================================================================== */
-        .pricing-grid, .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.75rem;
-        }
-
-        @media (min-width: 992px) {
-            .pricing-grid, .options-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        .pricing-card {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .pricing-card.popular {
-            border: 2px solid var(--primary);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .pricing-popular-badge {
-            position: absolute;
-            top: -14px;
-            right: 20px;
-            background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.85rem;
-            border-radius: var(--radius-full);
-            font-size: 0.75rem;
-            font-weight: 800;
-        }
-
-        .pricing-price {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 1rem 0;
-            display: flex;
-            align-items: baseline;
-            gap: 0.3rem;
-        }
-
-        .pricing-price span {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .pricing-features {
-            margin: 1.5rem 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .pricing-feature {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.92rem;
-            color: var(--text-main);
-        }
-
-        .pricing-feature i {
-            color: var(--accent-green);
-            font-size: 1rem;
-        }
-
-        /* ==========================================================================
-           6. CALCULATEUR DE PRIX INTERACTIF
-           ========================================================================== */
         .calculator-container {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -654,29 +356,10 @@
             margin: 0 auto;
         }
 
-        .calc-group {
-            margin-bottom: 1.75rem;
-        }
-
-        .calc-label {
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: var(--primary);
-            margin-bottom: 0.85rem;
-            display: block;
-        }
-
-        .calc-options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 576px) {
-            .calc-options-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+        .calc-group { margin-bottom: 1.75rem; }
+        .calc-label { font-weight: 700; font-size: 1.05rem; color: var(--primary); margin-bottom: 0.85rem; display: block; }
+        .calc-options-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 576px) { .calc-options-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .calc-card-option {
             border: 2px solid var(--border);
@@ -690,203 +373,49 @@
             gap: 0.3rem;
         }
 
-        .calc-card-option:hover {
-            border-color: rgba(15, 44, 89, 0.4);
-        }
-
-        .calc-card-option.selected {
-            border-color: var(--primary);
-            background: rgba(15, 44, 89, 0.03);
-        }
-
+        .calc-card-option:hover { border-color: rgba(15, 44, 89, 0.4); }
+        .calc-card-option.selected { border-color: var(--primary); background: rgba(15, 44, 89, 0.03); }
         .calc-card-option input[type="radio"],
-        .calc-card-option input[type="checkbox"] {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            accent-color: var(--primary);
-            width: 18px;
-            height: 18px;
-        }
+        .calc-card-option input[type="checkbox"] { position: absolute; top: 1rem; right: 1rem; accent-color: var(--primary); width: 18px; height: 18px; }
 
-        .calc-summary-box {
-            background: var(--background);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin-top: 2rem;
-            border: 1px dashed var(--border);
-        }
+        .calc-summary-box { background: var(--background); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2rem; border: 1px dashed var(--border); }
+        .calc-summary-row { display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.6rem; color: var(--text-muted); }
+        .calc-summary-total { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 800; color: var(--primary); padding-top: 0.85rem; border-top: 2px solid var(--border); margin-top: 0.85rem; }
 
-        .calc-summary-row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.95rem;
-            margin-bottom: 0.6rem;
-            color: var(--text-muted);
-        }
+        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 992px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
 
-        .calc-summary-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--primary);
-            padding-top: 0.85rem;
-            border-top: 2px solid var(--border);
-            margin-top: 0.85rem;
-        }
+        .step-card { background: var(--surface); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border); }
+        .step-number { font-size: 2.5rem; font-weight: 800; color: rgba(15, 44, 89, 0.15); line-height: 1; margin-bottom: 0.75rem; }
+        .step-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; }
 
-        /* ==========================================================================
-           7. COMMENT ÇA MARCHE (TIMELINE / STEPS)
-           ========================================================================== */
-        .steps-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
+        .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        .faq-item { background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--border); overflow: hidden; transition: var(--transition); }
+        .faq-question { padding: 1.25rem 1.5rem; font-weight: 700; color: var(--primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
+        .faq-answer { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: all 0.3s cubic-bezier(0, 1, 0, 1); color: var(--text-muted); font-size: 0.95rem; }
+        .faq-item.active .faq-answer { padding-bottom: 1.25rem; max-height: 500px; transition: all 0.3s cubic-bezier(1, 0, 1, 0); }
+        .faq-icon { transition: var(--transition); }
+        .faq-item.active .faq-icon { transform: rotate(180deg); }
 
-        @media (min-width: 768px) {
-            .steps-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (min-width: 992px) {
-            .steps-grid { grid-template-columns: repeat(4, 1fr); }
-        }
-
-        .step-card {
-            background: var(--surface);
-            padding: 1.75rem;
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
-            position: relative;
-        }
-
-        .step-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: rgba(15, 44, 89, 0.15);
-            line-height: 1;
-            margin-bottom: 0.75rem;
-        }
-
-        .step-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.4rem;
-        }
-
-        /* ==========================================================================
-           8. GOOGLE SHEETS & WHATSAPP DEMO SECTIONS
-           ========================================================================== */
-        .sheet-demo-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            background: white;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            font-size: 0.85rem;
-        }
-
-        .sheet-demo-table th {
-            background: #0F5132;
-            color: white;
-            padding: 0.75rem;
-            text-align: left;
-        }
-
-        .sheet-demo-table td {
-            padding: 0.75rem;
-            border-bottom: 1px solid var(--border);
-            color: var(--text-main);
-        }
-
-        /* ==========================================================================
-           9. FAQ ACCORDEON
-           ========================================================================== */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .faq-item {
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border);
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .faq-question {
-            padding: 1.25rem 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.05rem;
-        }
-
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0, 1, 0, 1);
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .faq-item.active .faq-answer {
-            padding-bottom: 1.25rem;
-            max-height: 500px;
-            transition: all 0.3s cubic-bezier(1, 0, 1, 0);
-        }
-
-        .faq-icon {
-            transition: var(--transition);
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        /* ==========================================================================
-           10. MODAL FORMULAIRE DE COMMANDE
-           ========================================================================== */
+        /* MODALES */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(15, 44, 89, 0.6);
             backdrop-filter: blur(5px);
             z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             padding: 1rem;
-            opacity: 0;
-            visibility: hidden;
+            opacity: 0; visibility: hidden;
             transition: var(--transition);
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-container {
             background: var(--surface);
             border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 650px;
+            width: 100%; max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
@@ -895,174 +424,78 @@
         }
 
         .modal-close {
-            position: absolute;
-            top: 1.25rem;
-            right: 1.25rem;
-            background: var(--background);
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            cursor: pointer;
+            position: absolute; top: 1.25rem; right: 1.25rem;
+            background: var(--background); border: none;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--text-muted); cursor: pointer;
         }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; }
+        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.95rem; outline: none; transition: var(--transition); background: var(--background); }
+        .form-control:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(15, 44, 89, 0.1); }
+        .form-error { color: #EF4444; font-size: 0.78rem; margin-top: 0.3rem; display: none; }
+        .form-group.has-error .form-control { border-color: #EF4444; }
+        .form-group.has-error .form-error { display: block; }
 
-        .form-label {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.4rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-size: 0.95rem;
-            outline: none;
-            transition: var(--transition);
-            background: var(--background);
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            background: var(--surface);
-            box-shadow: 0 0 0 3px rgba(15, 44, 89, 0.1);
-        }
-
-        .form-error {
-            color: #EF4444;
-            font-size: 0.78rem;
-            margin-top: 0.3rem;
-            display: none;
-        }
-
-        .form-group.has-error .form-control {
-            border-color: #EF4444;
-        }
-
-        .form-group.has-error .form-error {
-            display: block;
-        }
-
-        /* ==========================================================================
-           11. FLOATING ELEMENTS & TOAST NOTIFICATIONS
-           ========================================================================== */
         .floating-whatsapp {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            width: 60px;
-            height: 60px;
-            background-color: var(--accent-green);
-            color: white;
+            position: fixed; bottom: 25px; right: 25px;
+            width: 60px; height: 60px;
+            background-color: var(--accent-green); color: white;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             font-size: 1.8rem;
             box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
             z-index: 900;
             transition: var(--transition);
         }
-
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
+        .floating-whatsapp:hover { transform: scale(1.1); }
 
         .mobile-sticky-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: fixed; bottom: 0; left: 0; right: 0;
             background: var(--surface);
             padding: 0.85rem 1.25rem;
             box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
             z-index: 890;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            display: flex; align-items: center; justify-content: space-between;
             border-top: 1px solid var(--border);
         }
+        @media (min-width: 992px) { .mobile-sticky-bar { display: none; } }
 
-        @media (min-width: 992px) {
-            .mobile-sticky-bar { display: none; }
-        }
-
-        /* Toast Container */
-        .toast-container {
-            position: fixed;
-            top: 85px;
-            right: 20px;
-            z-index: 3000;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
+        .toast-container { position: fixed; top: 85px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 0.75rem; }
         .toast {
-            background: var(--primary);
-            color: white;
-            padding: 0.85rem 1.25rem;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
+            background: var(--primary); color: white;
+            padding: 0.85rem 1.25rem; border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg); font-size: 0.9rem; font-weight: 600;
+            display: flex; align-items: center; gap: 0.6rem;
             animation: slideIn 0.3s ease forwards;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* Footer */
-        .footer {
-            background: var(--primary-dark);
-            color: white;
-            padding: 4rem 0 2rem 0;
-        }
+        .footer { background: var(--primary-dark); color: white; padding: 4rem 0 2rem 0; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+        .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.88rem; color: rgba(255,255,255,0.6); }
 
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
-        @media (min-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 2fr 1fr 1fr;
-            }
-        }
-
-        .footer-bottom {
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.6);
+        /* USER BADGE CONNECTÉ */
+        .user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(15, 44, 89, 0.08);
+            padding: 0.4rem 0.85rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================================================
-       HEADER
-       ========================================================================== -->
+    <!-- HEADER -->
     <header class="header">
         <div class="container header-content">
             <a href="#" class="logo">
@@ -1075,19 +508,19 @@
                 </div>
             </a>
 
-            <!-- Navigation Desktop -->
             <nav class="nav-desktop">
                 <a href="#accueil" class="nav-link">Accueil</a>
                 <a href="#services" class="nav-link">Services</a>
+                <a href="#produits" class="nav-link">Boutique & Modèles</a>
                 <a href="#tarifs" class="nav-link">Tarifs</a>
                 <a href="#exemples" class="nav-link">Exemples</a>
-                <a href="#faq" class="nav-link">FAQ</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </nav>
 
-            <button class="btn btn-primary btn-sm" onclick="openOrderModal()" style="display: none; @media(min-width: 992px){display: inline-flex;}">
-                <i class="fa-solid fa-paper-plane"></i> Commander
-            </button>
+            <div class="auth-nav-buttons" id="authNavContainer">
+                <button class="btn btn-outline btn-sm" onclick="openLoginModal()">Connexion</button>
+                <button class="btn btn-primary btn-sm" onclick="openSignupModal()">Inscription</button>
+            </div>
 
             <button class="menu-toggle" onclick="openMenu()" aria-label="Ouvrir le menu">
                 <i class="fa-solid fa-bars"></i>
@@ -1106,11 +539,15 @@
             <button class="drawer-close" onclick="closeMenu()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="drawer-links">
+            <div id="authMobileContainer" style="margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+                <button class="btn btn-outline btn-sm" onclick="closeMenu(); openLoginModal();">Connexion</button>
+                <button class="btn btn-primary btn-sm" onclick="closeMenu(); openSignupModal();">Inscription</button>
+            </div>
             <a href="#accueil" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-house"></i> Accueil</a>
             <a href="#services" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-list-check"></i> Services</a>
+            <a href="#produits" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-bag-shopping"></i> Modèles & Produits</a>
             <a href="#tarifs" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-tags"></i> Tarifs</a>
             <a href="#exemples" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-cubes"></i> Exemples</a>
-            <a href="#faq" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-circle-question"></i> FAQ</a>
             <a href="#contact" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-envelope"></i> Contact</a>
             <button class="btn btn-primary" onclick="closeMenu(); openOrderModal();" style="margin-top: 1rem;">
                 <i class="fa-solid fa-paper-plane"></i> Commander
@@ -1118,34 +555,32 @@
         </div>
     </div>
 
-    <!-- ==========================================================================
-       HERO SECTION
-       ========================================================================== -->
+    <!-- HERO SECTION -->
     <section class="hero" id="accueil">
         <div class="container">
             <div class="hero-grid">
                 <div class="hero-content">
-                    <div class="hero-badge-container">
+                    <div class="hero-badge-container" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
                         <span class="badge badge-accent"><i class="fa-solid fa-bolt"></i> Simple & Rapide</span>
                         <span class="badge badge-primary">À partir de 500 HTG</span>
+                        <span class="badge badge-orange"><i class="fa-solid fa-gift"></i> +10 Points offerts</span>
                     </div>
                     <h1 class="hero-title">Créez votre formulaire en ligne facilement</h1>
-                    <p class="hero-subtitle">Nous créons des formulaires professionnels pour vos inscriptions, commandes, réservations, contacts, événements et activités.</p>
+                    <p class="hero-subtitle">Nous créons des formulaires professionnels connectés à WhatsApp et Google Sheets pour vos commandes, inscriptions et activités.</p>
                     <div class="hero-buttons">
                         <button class="btn btn-primary" onclick="openOrderModal()">
                             <i class="fa-solid fa-plus-circle"></i> Créer mon formulaire
                         </button>
-                        <a href="#tarifs" class="btn btn-outline">
-                            <i class="fa-solid fa-eye"></i> Voir les tarifs
+                        <a href="#produits" class="btn btn-outline">
+                            <i class="fa-solid fa-store"></i> Voir nos modèles
                         </a>
                     </div>
                     <div class="hero-note">
                         <i class="fa-solid fa-circle-check" style="color: var(--accent-green);"></i>
-                        <span>Service adapté aux entrepreneurs et petites entreprises en Haïti.</span>
+                        <span>Service adapté aux entrepreneurs, associations et commerces en Haïti.</span>
                     </div>
                 </div>
 
-                <!-- Form Interactive CSS Mockup -->
                 <div class="hero-mockup">
                     <div class="mockup-header">
                         <div class="mockup-dot" style="background: #EF4444;"></div>
@@ -1163,7 +598,7 @@
                     </div>
                     <div class="mockup-input-group">
                         <label class="mockup-label">Numéro WhatsApp</label>
-                        <div class="mockup-input">+509 3400 0000</div>
+                        <div class="mockup-input">+509 4277 2970</div>
                     </div>
                     <div class="mockup-submit">
                         <i class="fa-solid fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer ma demande
@@ -1173,179 +608,119 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       SECTION SERVICES
-       ========================================================================== -->
+    <!-- SECTION SERVICES -->
     <section class="section-padding" id="services">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Nos services</h2>
-                <p class="section-subtitle">Des formulaires adaptés à tous vos besoins professionnels et personnels.</p>
+                <h2 class="section-title">Nos services de formulaires</h2>
+                <p class="section-subtitle">Des formulaires adaptés à tous vos besoins professionnels.</p>
             </div>
 
             <div class="services-grid">
-                <!-- Service 1 -->
                 <div class="card">
                     <div class="service-icon"><i class="fa-solid fa-user-plus"></i></div>
                     <h3 class="service-title">Formulaire d'inscription</h3>
-                    <p class="service-desc">Inscription à une formation, école, séminaire, événement ou activité.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Simple')">Demander</button>
+                    <p class="service-desc">Inscription à une formation, séminaire ou adhésion d'association.</p>
+                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Simple')">Commander</button>
                 </div>
-                <!-- Service 2 -->
                 <div class="card">
                     <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
                     <h3 class="service-title">Formulaire de commande</h3>
-                    <p class="service-desc">Permettez à vos clients d'envoyer facilement leurs commandes.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Demander</button>
+                    <p class="service-desc">Permettez à vos clients de commander vos produits en toute simplicité.</p>
+                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Commander</button>
                 </div>
-                <!-- Service 3 -->
                 <div class="card">
                     <div class="service-icon"><i class="fa-solid fa-calendar-check"></i></div>
                     <h3 class="service-title">Formulaire de réservation</h3>
-                    <p class="service-desc">Collectez les informations nécessaires pour vos réservations.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Demander</button>
-                </div>
-                <!-- Service 4 -->
-                <div class="card">
-                    <div class="service-icon"><i class="fa-solid fa-address-book"></i></div>
-                    <h3 class="service-title">Formulaire de contact</h3>
-                    <p class="service-desc">Recevez les demandes et informations de vos visiteurs.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Simple')">Demander</button>
-                </div>
-                <!-- Service 5 -->
-                <div class="card">
-                    <div class="service-icon"><i class="fa-solid fa-briefcase"></i></div>
-                    <h3 class="service-title">Formulaire professionnel</h3>
-                    <p class="service-desc">Formulaires personnalisés avec validation et design professionnel.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Demander</button>
-                </div>
-                <!-- Service 6 -->
-                <div class="card">
-                    <div class="service-icon"><i class="fa-solid fa-sliders"></i></div>
-                    <h3 class="service-title">Formulaire avancé</h3>
-                    <p class="service-desc">Formulaires avec Google Sheets, WhatsApp et fonctionnalités personnalisées.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Avancé')">Demander</button>
+                    <p class="service-desc">Prise de rendez-vous, réservations d'hôtels ou de prestations.</p>
+                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Commander</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       SECTION TARIFS
-       ========================================================================== -->
-    <section class="section-padding" id="tarifs" style="background: #F1F5F9;">
+    <!-- SECTION PRODUITS & RESSOURCES (BASE DE DONNEES) -->
+    <section class="section-padding" id="produits" style="background: #F1F5F9;">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Nos tarifs</h2>
+                <span class="badge badge-accent" style="margin-bottom: 0.5rem;">Boutique & Téléchargements</span>
+                <h2 class="section-title">Modèles prêts à l'emploi & Ressources</h2>
+                <p class="section-subtitle">Découvrez notre catalogue. Débloquez-les grâce à vos points d'affiliation ou en achat direct.</p>
+            </div>
+
+            <div class="products-grid" id="productsContainer">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-muted);">
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem;"></i>
+                    <p style="margin-top: 1rem;">Chargement du catalogue depuis votre base de données...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION TARIFS -->
+    <section class="section-padding" id="tarifs">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Nos tarifs de création</h2>
                 <p class="section-subtitle">Des prix clairs, accessibles et sans frais cachés.</p>
             </div>
 
             <div class="pricing-grid">
-                <!-- Offer Simple -->
                 <div class="card pricing-card">
                     <div>
                         <span class="badge badge-primary">Formulaire Simple</span>
                         <div class="pricing-price">500 <span>HTG</span></div>
                         <div class="pricing-features">
                             <div class="pricing-feature"><i class="fa-solid fa-check"></i> Formulaire personnalisé</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Design simple et propre</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Champs adaptés au besoin</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Compatible téléphone</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Livraison du formulaire</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Design propre et léger</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Compatible smartphone</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Livraison rapide</div>
                         </div>
                     </div>
                     <button class="btn btn-outline" onclick="selectPlan('simple')">Choisir cette offre</button>
                 </div>
 
-                <!-- Offer Pro (Popular) -->
                 <div class="card pricing-card popular">
                     <div class="pricing-popular-badge">POPULAIRE</div>
                     <div>
                         <span class="badge badge-accent">Formulaire Pro</span>
                         <div class="pricing-price">1 000 <span>HTG</span></div>
                         <div class="pricing-features">
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Design professionnel</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Plusieurs champs configurables</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Validation des informations</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Interface responsive</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Personnalisation poussée</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Livraison du formulaire</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Design professionnel avancé</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Validation automatique des entrées</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Envoi des détails sur WhatsApp</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Intégration sur mesure</div>
                         </div>
                     </div>
                     <button class="btn btn-primary" onclick="selectPlan('pro')">Choisir cette offre</button>
                 </div>
 
-                <!-- Offer Advanced -->
                 <div class="card pricing-card">
                     <div>
                         <span class="badge badge-orange">Formulaire Avancé</span>
                         <div class="pricing-price">1 500 <span>HTG</span></div>
                         <div class="pricing-features">
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Formulaire personnalisé</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Fonctionnalités avancées</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Validation des données</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Interface haute qualité</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Connexion Google Sheets possible</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Connexion WhatsApp possible</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Formulaire haute qualité</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Connexion Google Sheets incluse</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Connexion WhatsApp instantanée</div>
+                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Support prioritaire</div>
                         </div>
                     </div>
                     <button class="btn btn-outline" onclick="selectPlan('advanced')">Choisir cette offre</button>
                 </div>
             </div>
-
-            <!-- OPTIONS SUPPLÉMENTAIRES -->
-            <div style="margin-top: 4rem;">
-                <div class="section-header">
-                    <h3 style="font-size: 1.5rem; color: var(--primary); font-weight: 700;">Ajoutez une connexion à votre formulaire</h3>
-                </div>
-
-                <div class="options-grid">
-                    <!-- Option WhatsApp -->
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="badge badge-accent"><i class="fa-brands fa-whatsapp"></i> WhatsApp</span>
-                            <strong style="color: var(--primary); font-size: 1.1rem;">500 HTG</strong>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 1rem 0;">Recevez ou transmettez les informations du formulaire via WhatsApp selon la configuration choisie.</p>
-                        <button class="btn btn-outline btn-sm" onclick="selectOption('whatsapp')">Ajouter WhatsApp</button>
-                    </div>
-
-                    <!-- Option Google Sheets -->
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="badge badge-primary"><i class="fa-solid fa-table"></i> Google Sheets</span>
-                            <strong style="color: var(--primary); font-size: 1.1rem;">1 000 HTG</strong>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 1rem 0;">Enregistrez automatiquement les données de vos formulaires dans un tableau Google Sheets.</p>
-                        <button class="btn btn-outline btn-sm" onclick="selectOption('googleSheets')">Ajouter Google Sheets</button>
-                    </div>
-
-                    <!-- Option WhatsApp + Google Sheets -->
-                    <div class="card" style="border: 1px solid var(--accent-green);">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span class="badge badge-accent">PACK COMPLET</span>
-                            <strong style="color: var(--primary); font-size: 1.1rem;">1 500 HTG</strong>
-                        </div>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin: 1rem 0;">Connectez simultanément votre formulaire à WhatsApp et Google Sheets pour une efficacité maximale.</p>
-                        <button class="btn btn-whatsapp btn-sm" onclick="selectOption('whatsappSheets')">Choisir le pack</button>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- ==========================================================================
-       7. CALCULATEUR DE PRIX
-       ========================================================================== -->
-    <section class="section-padding">
+    <!-- CALCULATEUR DE PRIX -->
+    <section class="section-padding" style="background: #F8FAFC;">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Calculez le prix de votre formulaire</h2>
-                <p class="section-subtitle">Sélectionnez vos options et obtenez une estimation en temps réel.</p>
+                <p class="section-subtitle">Sélectionnez vos options et obtenez une estimation en direct.</p>
             </div>
 
             <div class="calculator-container">
-                <!-- Type de formulaire -->
                 <div class="calc-group">
                     <label class="calc-label">1. Choisissez le type de formulaire :</label>
                     <div class="calc-options-grid">
@@ -1367,9 +742,8 @@
                     </div>
                 </div>
 
-                <!-- Options -->
                 <div class="calc-group">
-                    <label class="calc-label">2. Options supplémentaires :</label>
+                    <label class="calc-label">2. Options de connexion :</label>
                     <div class="calc-options-grid">
                         <div class="calc-card-option" id="opt-chk-wa" onclick="toggleCalcOption('whatsapp')">
                             <input type="checkbox" id="chk-wa">
@@ -1389,7 +763,6 @@
                     </div>
                 </div>
 
-                <!-- Résumé -->
                 <div class="calc-summary-box">
                     <div class="calc-summary-row">
                         <span>Formulaire : <strong id="sum-plan-name">Formulaire Simple</strong></span>
@@ -1412,277 +785,33 @@
         </div>
     </section>
 
-    <!-- ==========================================================================
-       8. EXEMPLES DE FORMULAIRES
-       ========================================================================== -->
-    <section class="section-padding" id="exemples" style="background: #F8FAFC;">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Quelques exemples de formulaires</h2>
-                <p class="section-subtitle">Découvrez ce que nous pouvons réaliser pour votre activité.</p>
-            </div>
-
-            <div class="examples-grid">
-                <div class="card">
-                    <i class="fa-solid fa-graduation-cap" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Inscription séminaire</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Inscriptions et tickets d'entrée.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Inscription Séminaire')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-book-open" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Inscription formation</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Collecte des dossiers d'élèves.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Inscription Formation')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-bag-shopping" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Commande client</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Vente de produits en ligne.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Commande Client')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-hotel" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Réservation</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Hôtels, rendez-vous, prestations.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Réservation')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-envelope-open-text" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Contact général</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Demandes d'informations rapides.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Contact')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-user-check" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Inscription utilisateur</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Adhésion membres / associations.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Inscription Utilisateur')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-poll" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Sondage / Avis</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Collecte d'opinions clients.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Sondage')">Demander</button>
-                </div>
-                <div class="card">
-                    <i class="fa-solid fa-wrench" style="font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem;"></i>
-                    <h4 style="color: var(--primary); font-weight: 700;">Demande de service</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0.5rem 0;">Devis et requêtes techniques.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Demande de Service')">Demander</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-       9. COMMENT ÇA MARCHE
-       ========================================================================== -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Comment ça marche ?</h2>
-                <p class="section-subtitle">4 étapes simples pour obtenir votre formulaire en ligne.</p>
-            </div>
-
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">01</div>
-                    <h3 class="step-title">Vous nous contactez</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Choisissez votre offre et passez commande via notre formulaire.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">02</div>
-                    <h3 class="step-title">Explication du besoin</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Vous nous fournissez la liste des champs et les informations souhaitées.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">03</div>
-                    <h3 class="step-title">Création sur mesure</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Nous développons et configurons votre formulaire dans les plus brefs délais.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">04</div>
-                    <h3 class="step-title">Livraison rapide</h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">Vous recevez votre lien ou code prêt à être partagé à vos clients.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-       10. GOOGLE SHEETS & WHATSAPP EXPLANATIONS
-       ========================================================================== -->
-    <section class="section-padding" style="background: #F1F5F9;">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; @media(min-width: 992px){ grid-template-columns: 1fr 1fr; }">
-                <!-- Google Sheets -->
-                <div class="card">
-                    <span class="badge badge-primary" style="margin-bottom: 0.5rem;"><i class="fa-solid fa-database"></i> Base de données</span>
-                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.75rem;">Transformez votre formulaire en base de données</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem;">Avec Google Sheets, les informations envoyées par vos clients peuvent être enregistrées automatiquement dans un tableau consultable n'importe où.</p>
-                    
-                    <table class="sheet-demo-table">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Téléphone</th>
-                                <th>Service</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Jean Marc</td>
-                                <td>+509 3700 1122</td>
-                                <td>Formation</td>
-                            </tr>
-                            <tr>
-                                <td>Marie Luckner</td>
-                                <td>+509 4400 3344</td>
-                                <td>Commande</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <p style="font-size: 0.78rem; color: var(--text-muted); font-style: italic; margin-bottom: 1rem;">Note : Cette fonctionnalité nécessite une configuration Google Apps Script / Google Sheets.</p>
-                    <button class="btn btn-primary btn-sm" onclick="selectOption('googleSheets')">Demander Google Sheets</button>
-                </div>
-
-                <!-- WhatsApp -->
-                <div class="card" style="border: 1px solid var(--accent-green);">
-                    <span class="badge badge-accent" style="margin-bottom: 0.5rem;"><i class="fa-brands fa-whatsapp"></i> Instantané</span>
-                    <h3 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.75rem;">Recevez les demandes sur WhatsApp</h3>
-                    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">Ajoutez une connexion WhatsApp à votre formulaire afin de faciliter la réception immédiate des commandes sur votre téléphone.</p>
-                    <div style="background: #DCF8C6; padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.88rem; color: #075E54;">
-                        <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem; margin-right: 0.3rem;"></i> "Bonjour BENTOUL FORMS, je souhaite réserver une place..."
-                    </div>
-                    <button class="btn btn-whatsapp btn-sm" onclick="selectOption('whatsapp')">Ajouter WhatsApp</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-       11. FAQ ACCORDEON
-       ========================================================================== -->
-    <section class="section-padding" id="faq">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Foire aux questions</h2>
-                <p class="section-subtitle">Toutes les réponses à vos questions sur nos services.</p>
-            </div>
-
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>1. Combien coûte un formulaire ?</span>
-                        <i class="fa-solid fa-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Nos formulaires commencent à partir de 500 HTG pour une formule simple.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>2. Est-ce que le formulaire fonctionne sur téléphone ?</span>
-                        <i class="fa-solid fa-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Oui. Les formulaires sont conçus de manière responsive et s'adaptent parfaitement aux smartphones, tablettes et ordinateurs.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>3. Pouvez-vous connecter le formulaire à Google Sheets ?</span>
-                        <i class="fa-solid fa-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Oui, une option Google Sheets est disponible pour enregistrer automatiquement toutes vos données dans un tableau.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>4. Pouvez-vous connecter le formulaire à WhatsApp ?</span>
-                        <i class="fa-solid fa-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Oui, une option WhatsApp est disponible afin d'envoyer la demande du client directement sur votre messagerie.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>5. Puis-je demander un formulaire personnalisé ?</span>
-                        <i class="fa-solid fa-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Oui. Vous pouvez expliquer votre besoin précis dans le formulaire de commande et nous adapterons les champs.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFaq(this)">
-                        <span>6. Pour quels types d'activités créez-vous des formulaires ?</span>
-                        <i class="fa-solid fa-chevron-down faq-icon"></i>
-                    </div>
-                    <div class="faq-answer">
-                        Entreprises, commerces, écoles, associations, événements, formations, réservations et particuliers.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-       12. CONTACT & CTA FINAL
-       ========================================================================== -->
-    <section class="section-padding" id="contact" style="background: var(--surface);">
+    <!-- SECTION CONTACT -->
+    <section class="section-padding" id="contact">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Contactez BENTOUL FORMS</h2>
-                <p class="section-subtitle">Nous sommes à votre disposition pour concrétiser vos projets.</p>
+                <p class="section-subtitle">Notre équipe répond directement sur WhatsApp à toutes vos demandes.</p>
             </div>
 
-            <div style="max-width: 600px; margin: 0 auto;" class="card text-center">
-                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div style="max-width: 600px; margin: 0 auto;" class="card">
+                <div style="display: flex; flex-direction: column; gap: 1.25rem; text-align: center;">
                     <div>
-                        <i class="fa-brands fa-whatsapp" style="font-size: 2rem; color: var(--accent-green);"></i>
-                        <p style="font-weight: 700; margin-top: 0.3rem;" id="contact-phone-display">+509 XXXXXXXX</p>
+                        <i class="fa-brands fa-whatsapp" style="font-size: 2.2rem; color: var(--accent-green);"></i>
+                        <p style="font-weight: 800; font-size: 1.2rem; margin-top: 0.3rem;">+509 4277 2970</p>
                     </div>
                     <div>
                         <i class="fa-solid fa-envelope" style="font-size: 1.5rem; color: var(--primary);"></i>
-                        <p style="font-weight: 600;" id="contact-email-display">votreemail@gmail.com</p>
+                        <p style="font-weight: 600;">bentoulcreation@gmail.com</p>
                     </div>
-                    <div style="display: flex; justify-content: center; gap: 1.5rem; font-size: 1.2rem; margin-top: 0.5rem;">
-                        <a href="#" id="link-blog" target="_blank" style="color: var(--primary);"><i class="fa-solid fa-globe"></i> Blog</a>
-                        <a href="#" id="link-fb" target="_blank" style="color: var(--primary);"><i class="fa-brands fa-facebook"></i> Facebook</a>
-                    </div>
-                    <button class="btn btn-whatsapp" onclick="directContactWhatsApp()" style="margin-top: 1rem;">
-                        <i class="fa-brands fa-whatsapp"></i> Nous contacter sur WhatsApp
+                    <button class="btn btn-whatsapp" onclick="directContactWhatsApp()" style="margin-top: 0.5rem;">
+                        <i class="fa-brands fa-whatsapp"></i> Écrivez-nous sur WhatsApp (+509 4277 2970)
                     </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section class="section-padding" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white;">
-        <div class="container text-center" style="text-align: center;">
-            <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 1rem;">Prêt à créer votre formulaire ?</h2>
-            <p style="max-width: 600px; margin: 0 auto 2rem auto; opacity: 0.9;">Expliquez-nous votre besoin et nous vous aiderons à créer un formulaire adapté à votre activité.</p>
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <button class="btn btn-whatsapp" onclick="openOrderModal()"><i class="fa-solid fa-cart-plus"></i> Commander mon formulaire</button>
-                <button class="btn btn-outline" style="color: white; border-color: white;" onclick="directContactWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Contact WhatsApp</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- ==========================================================================
-       13. FOOTER
-       ========================================================================== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -1698,14 +827,14 @@
                     <ul style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
                         <li><a href="#accueil">Accueil</a></li>
                         <li><a href="#services">Services</a></li>
+                        <li><a href="#produits">Boutique & Modèles</a></li>
                         <li><a href="#tarifs">Tarifs</a></li>
-                        <li><a href="#faq">FAQ</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 style="margin-bottom: 1rem; font-size: 1.1rem;">Mention</h4>
-                    <p style="font-size: 0.88rem; opacity: 0.8;">Une activité de <strong>BENTOUL CREATION</strong>.</p>
+                    <p style="font-size: 0.88rem; opacity: 0.8;">Une marque de <strong>BENTOUL CREATION</strong>.</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -1714,12 +843,12 @@
         </div>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
+    <!-- BOUTON FLOTTANT WHATSAPP -->
     <a href="#" class="floating-whatsapp" onclick="directContactWhatsApp(); return false;" aria-label="WhatsApp Contact">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Mobile Fixed Bottom CTA Bar -->
+    <!-- BARRE FIXE MOBILE -->
     <div class="mobile-sticky-bar">
         <div>
             <div style="font-size: 0.75rem; color: var(--text-muted);">À partir de</div>
@@ -1730,17 +859,17 @@
         </button>
     </div>
 
-    <!-- Toast Notification Container -->
+    <!-- NOTIFICATIONS TOAST -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- ==========================================================================
-       14. MODAL COMMANDE
-       ========================================================================== -->
+    <!-- =================================================================
+       MODALE 1 : COMMANDE DE FORMULAIRE (GOOGLE SHEETS + WHATSAPP)
+       ================================================================= -->
     <div class="modal-overlay" id="orderModal">
         <div class="modal-container">
             <button class="modal-close" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></button>
             <h3 style="color: var(--primary); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Commander votre formulaire</h3>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Remplissez les informations ci-dessous pour générer votre commande.</p>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Votre demande est enregistrée dans notre tableau Google Sheets puis envoyée sur WhatsApp.</p>
 
             <form id="orderForm" onsubmit="handleOrderSubmit(event)">
                 <div class="form-group" id="group-fullname">
@@ -1758,7 +887,7 @@
                     <div class="form-group" id="group-phone">
                         <label class="form-label">Téléphone / WhatsApp *</label>
                         <input type="tel" class="form-control" id="modal-phone" placeholder="+509 3000 0000">
-                        <div class="form-error">Numéro valide requis.</div>
+                        <div class="form-error">Numéro requis.</div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
@@ -1767,7 +896,7 @@
                 </div>
 
                 <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; @media(min-width: 576px){grid-template-columns: 1fr 1fr;}">
-                    <div class="form-group" id="group-plan">
+                    <div class="form-group">
                         <label class="form-label">Type de formulaire *</label>
                         <select class="form-control" id="modal-plan" onchange="updateModalSummary()">
                             <option value="simple">Formulaire Simple (500 HTG)</option>
@@ -1775,59 +904,121 @@
                             <option value="advanced">Formulaire Avancé (1 500 HTG)</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">Option choisie</label>
                         <select class="form-control" id="modal-option" onchange="updateModalSummary()">
                             <option value="none">Aucune (0 HTG)</option>
                             <option value="whatsapp">WhatsApp (+500 HTG)</option>
                             <option value="googleSheets">Google Sheets (+1 000 HTG)</option>
-                            <option value="whatsappSheets">WhatsApp + Google Sheets (+1 500 HTG)</option>
+                            <option value="whatsappSheets" selected>WhatsApp + Google Sheets (+1 500 HTG)</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group" id="group-desc">
                     <label class="form-label">Description du projet / Besoins *</label>
-                    <textarea class="form-control" id="modal-desc" rows="3" placeholder="Décrivez-nous ce que vous souhaitez que votre formulaire fasse..."></textarea>
+                    <textarea class="form-control" id="modal-desc" rows="3" placeholder="Expliquez ce que le formulaire doit collecter..."></textarea>
                     <div class="form-error">Veuillez décrire votre projet.</div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Champs souhaités dans le formulaire</label>
-                    <input type="text" class="form-control" id="modal-fields" placeholder="Ex: Nom, Téléphone, Photo du produit, Adresse">
+                    <label class="form-label">Champs souhaités</label>
+                    <input type="text" class="form-control" id="modal-fields" placeholder="Ex: Nom, Téléphone, Photo, Pièce d'identité">
                 </div>
 
-                <!-- Live Order Summary inside Modal -->
                 <div style="background: var(--background); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.88rem;">
-                    <div style="display: flex; justify-content: space-between;"><span>Formulaire :</span> <strong id="modal-sum-plan">Formulaire Pro (1 000 HTG)</strong></div>
-                    <div style="display: flex; justify-content: space-between; margin-top: 0.3rem;"><span>Option :</span> <strong id="modal-sum-opt">Aucune (0 HTG)</strong></div>
+                    <div style="display: flex; justify-content: space-between;"><span>Formule :</span> <strong id="modal-sum-plan">Formulaire Pro (1 000 HTG)</strong></div>
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.3rem;"><span>Connexion :</span> <strong id="modal-sum-opt">WhatsApp + Sheets (+1 500 HTG)</strong></div>
                     <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border); font-size: 1rem; color: var(--primary);">
-                        <strong>TOTAL :</strong> <strong id="modal-sum-total">1 000 HTG</strong>
+                        <strong>TOTAL ESTIMÉ :</strong> <strong id="modal-sum-total">2 500 HTG</strong>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-whatsapp" style="width: 100%;">
-                    <i class="fa-brands fa-whatsapp"></i> Envoyer ma demande sur WhatsApp
+                <button type="submit" id="btn-submit-order" class="btn btn-whatsapp" style="width: 100%;">
+                    <i class="fa-brands fa-whatsapp"></i> Envoyer ma commande (Sheets & WhatsApp)
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- ==========================================================================
-       15. JAVASCRIPT APP LOGIC
-       ========================================================================== -->
+    <!-- =================================================================
+       MODALE 2 : CONNEXION (LOGIN)
+       ================================================================= -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="color: var(--primary); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Connexion à votre compte</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Accédez à vos points, téléchargements et formulaires.</p>
+
+            <form onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="login-email" required placeholder="nom@exemple.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" id="btn-login-submit" style="width: 100%;">
+                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter
+                </button>
+                <div style="text-align: center; margin-top: 1.25rem; font-size: 0.9rem;">
+                    Pas encore inscrit ? <a href="#" onclick="closeLoginModal(); openSignupModal();" style="color: var(--primary-light); font-weight: 700;">Créer un compte</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================================
+       MODALE 3 : INSCRIPTION (SIGNUP AVEC PARRAINAGE)
+       ================================================================= -->
+    <div class="modal-overlay" id="signupModal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeSignupModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="color: var(--primary); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Créer un compte client</h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Recevez immédiatement <strong>10 points bonus</strong> lors de votre inscription !</p>
+
+            <form onsubmit="handleSignupSubmit(event)">
+                <div class="form-group">
+                    <label class="form-label">Nom complet *</label>
+                    <input type="text" class="form-control" id="signup-name" required placeholder="Ex: Marc Antoine">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="signup-email" required placeholder="nom@exemple.com">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Mot de passe *</label>
+                    <input type="password" class="form-control" id="signup-password" required placeholder="Minimum 6 caractères">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Code Parrain (optionnel)</label>
+                    <input type="text" class="form-control" id="signup-ref" placeholder="Ex: BT-XXXXXX">
+                </div>
+                <button type="submit" class="btn btn-primary" id="btn-signup-submit" style="width: 100%;">
+                    <i class="fa-solid fa-user-plus"></i> S'inscrire (+10 points)
+                </button>
+                <div style="text-align: center; margin-top: 1.25rem; font-size: 0.9rem;">
+                    Déjà un compte ? <a href="#" onclick="closeSignupModal(); openLoginModal();" style="color: var(--primary-light); font-weight: 700;">Connexion</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================================================================
+       LOGIQUE JAVASCRIPT
+       ================================================================= -->
     <script>
-        // =============================
-        // CONFIGURATION BENTOUL FORMS
-        // =============================
+        // ==========================================
+        // CONFIGURATION BENTOUL FORMS & GOOGLE SHEETS
+        // ==========================================
         const CONFIG = {
-            businessName: "BENTOUL FORMS",
-            whatsapp: "509XXXXXXXX", // Remplacez par votre vrai numéro WhatsApp (ex: 50937000000)
-            email: "votreemail@gmail.com",
-            blog: "https://www.bentoulcreation.blogspot.com/",
-            facebook: "#",
-            googleScriptUrl: "" // URL de votre Web App Google Apps Script si active
+            businessName: "BENTOUL CREATION",
+            whatsapp: "50942772970",
+            email: "bentoul@gmail.com",
+            blog: "https://www.bentoul.github.io/",
+            // REMPLACEZ PAR L'URL DU DEPLOIEMENT WEB APP GOOGLE APPS SCRIPT (exec) :
+            googleScriptUrl: "https://script.google.com/macros/s/AKfycbwfbe2FQKybGPi_H-tWa9cEgGtN_4ZacDogydddzJt0X1E2YkfvEfrd0FBV43welzU3oQ/exec"
         };
 
         const PRICES = {
@@ -1839,40 +1030,27 @@
             whatsappSheets: 1500
         };
 
-        // State Calculator
-        let calcState = {
-            plan: 'simple',
-            whatsapp: false,
-            googleSheets: false,
-            whatsappSheets: false
-        };
+        let currentUser = JSON.parse(localStorage.getItem('bentoul_user') || 'null');
+        let calcState = { plan: 'simple', whatsapp: false, googleSheets: false, whatsappSheets: false };
 
-        // DOM Initialization
         document.addEventListener('DOMContentLoaded', () => {
-            // Update Contact links
-            document.getElementById('contact-phone-display').innerText = "+" + CONFIG.whatsapp;
-            document.getElementById('contact-email-display').innerText = CONFIG.email;
-            document.getElementById('link-blog').href = CONFIG.blog;
-            document.getElementById('link-fb').href = CONFIG.facebook;
-
-            // Initial calculation
+            updateUserNav();
             updateCalculatorUI();
+            updateModalSummary();
+            loadProductsFromSheets();
+            checkReferralFromUrl();
         });
 
-        // Notifications Toast System
-        function showToast(message, type = "info") {
+        function showToast(message) {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = 'toast';
-            toast.innerHTML = `<i class="fa-solid fa-circle-info"></i> ${message}`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`;
             container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.remove();
-            }, 3500);
+            setTimeout(() => toast.remove(), 4000);
         }
 
-        // Mobile Menu Controls
+        // MENU RESPONSIVE
         function openMenu() {
             document.getElementById('mobileDrawer').classList.add('active');
             document.getElementById('drawerOverlay').classList.add('active');
@@ -1883,58 +1061,35 @@
             document.getElementById('drawerOverlay').classList.remove('active');
         }
 
-        // Accordion FAQ
-        function toggleFaq(element) {
-            const item = element.parentElement;
-            item.classList.toggle('active');
-        }
-
-        // Modal Controls
+        // GESTION MODALES
         function openOrderModal(presetPlanTitle = null) {
             const modal = document.getElementById('orderModal');
             modal.classList.add('active');
-
             if (presetPlanTitle) {
                 const planSelect = document.getElementById('modal-plan');
                 if (presetPlanTitle.includes('Simple')) planSelect.value = 'simple';
                 else if (presetPlanTitle.includes('Pro')) planSelect.value = 'pro';
                 else if (presetPlanTitle.includes('Avancé')) planSelect.value = 'advanced';
             }
-
             updateModalSummary();
         }
+        function closeOrderModal() { document.getElementById('orderModal').classList.remove('active'); }
 
-        function closeOrderModal() {
-            document.getElementById('orderModal').classList.remove('active');
-        }
+        function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
+        function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
 
-        // Select Plan & Direct Order Shortcuts
-        function selectPlan(planKey) {
-            setCalcPlan(planKey);
-            document.getElementById('modal-plan').value = planKey;
-            showToast("Offre " + planKey.toUpperCase() + " sélectionnée !");
-            openOrderModal();
-        }
+        function openSignupModal() { document.getElementById('signupModal').classList.add('active'); }
+        function closeSignupModal() { document.getElementById('signupModal').classList.remove('active'); }
 
-        function selectOption(optionKey) {
-            const optionSelect = document.getElementById('modal-option');
-            optionSelect.value = optionKey;
-            showToast("Option " + optionKey + " ajoutée !");
-            openOrderModal();
-        }
-
-        // CALCULATOR ENGINE
+        // CALCULATEUR
         function setCalcPlan(planKey) {
             calcState.plan = planKey;
-            
-            // Radio UI Update
             document.getElementById('radio-simple').checked = (planKey === 'simple');
             document.getElementById('radio-pro').checked = (planKey === 'pro');
             document.getElementById('radio-advanced').checked = (planKey === 'advanced');
 
             document.querySelectorAll('.calc-card-option').forEach(el => el.classList.remove('selected'));
             document.getElementById('opt-' + planKey).classList.add('selected');
-
             updateCalculatorUI();
         }
 
@@ -1951,7 +1106,6 @@
                 if (optKey === 'googleSheets') calcState.googleSheets = !calcState.googleSheets;
             }
 
-            // Checkbox UI Update
             document.getElementById('chk-wa').checked = calcState.whatsapp;
             document.getElementById('chk-gs').checked = calcState.googleSheets;
             document.getElementById('chk-pack').checked = calcState.whatsappSheets;
@@ -1979,8 +1133,8 @@
             }
 
             const total = planPrice + optPrice;
-
             const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
+
             document.getElementById('sum-plan-name').innerText = planNames[calcState.plan];
             document.getElementById('sum-plan-price').innerText = planPrice + " HTG";
             document.getElementById('sum-opt-name').innerText = optText;
@@ -1990,7 +1144,6 @@
 
         function orderFromCalculator() {
             document.getElementById('modal-plan').value = calcState.plan;
-            
             const optSelect = document.getElementById('modal-option');
             if (calcState.whatsappSheets) optSelect.value = 'whatsappSheets';
             else if (calcState.whatsapp && calcState.googleSheets) optSelect.value = 'whatsappSheets';
@@ -2001,100 +1154,338 @@
             openOrderModal();
         }
 
-        // Modal Calculation Summary Update
         function updateModalSummary() {
             const planKey = document.getElementById('modal-plan').value;
             const optKey = document.getElementById('modal-option').value;
-
             const planPrice = PRICES[planKey];
-            let optPrice = 0;
-            if (optKey !== 'none') optPrice = PRICES[optKey];
+            const optPrice = optKey !== 'none' ? PRICES[optKey] : 0;
 
             const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
-            const optNames = { none: 'Aucune', whatsapp: 'WhatsApp', googleSheets: 'Google Sheets', whatsappSheets: 'Pack WhatsApp + Sheets' };
+            const optNames = { none: 'Aucune', whatsapp: 'WhatsApp (+500 HTG)', googleSheets: 'Google Sheets (+1 000 HTG)', whatsappSheets: 'WhatsApp + Sheets (+1 500 HTG)' };
 
             document.getElementById('modal-sum-plan').innerText = `${planNames[planKey]} (${planPrice} HTG)`;
-            document.getElementById('modal-sum-opt').innerText = `${optNames[optKey]} (${optPrice} HTG)`;
+            document.getElementById('modal-sum-opt').innerText = `${optNames[optKey]}`;
             document.getElementById('modal-sum-total').innerText = `${planPrice + optPrice} HTG`;
         }
 
-        // FORM VALIDATION & WHATSAPP GENERATION
-        function handleOrderSubmit(e) {
+        function selectPlan(planKey) {
+            setCalcPlan(planKey);
+            document.getElementById('modal-plan').value = planKey;
+            openOrderModal();
+        }
+
+        // ==========================================
+        // 1. SOUMISSION COMMANDE -> GOOGLE SHEETS & WHATSAPP
+        // ==========================================
+            // ==========================================
+// 1. SOUMISSION COMMANDE -> GOOGLE SHEETS & WHATSAPP
+// ==========================================
+
+// ==========================================
+// SOUMISSION COMMANDE -> GOOGLE SHEETS ("commande") & WHATSAPP
+// ==========================================
+async function handleOrderSubmit(e) {
+    e.preventDefault();
+    document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+
+    const fullname = document.getElementById('modal-fullname').value.trim();
+    const business = document.getElementById('modal-business').value.trim();
+    const phone = document.getElementById('modal-phone').value.trim();
+    const email = document.getElementById('modal-email').value.trim();
+    const planKey = document.getElementById('modal-plan').value;
+    const optKey = document.getElementById('modal-option').value;
+    const desc = document.getElementById('modal-desc').value.trim();
+    const fields = document.getElementById('modal-fields').value.trim();
+
+    let isValid = true;
+    if (!fullname) { document.getElementById('group-fullname').classList.add('has-error'); isValid = false; }
+    if (!phone) { document.getElementById('group-phone').classList.add('has-error'); isValid = false; }
+    if (!desc) { document.getElementById('group-desc').classList.add('has-error'); isValid = false; }
+
+    if (!isValid) {
+        showToast("Veuillez remplir les champs obligatoires.");
+        return;
+    }
+
+    const submitBtn = document.getElementById('btn-submit-order');
+    const originalBtnHtml = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Enregistrement en cours...`;
+
+    const planPrice = PRICES[planKey];
+    const optPrice = optKey !== 'none' ? PRICES[optKey] : 0;
+    const totalPrice = planPrice + optPrice;
+
+    const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
+    const optNames = { none: 'Aucune', whatsapp: 'WhatsApp', googleSheets: 'Google Sheets', whatsappSheets: 'Pack WhatsApp + Google Sheets' };
+
+    // Données structurées spécifiquement pour la feuille "commande"
+    const payload = {
+        action: "orderForm",
+        date: new Date().toLocaleString('fr-FR'),
+        fullname: fullname,
+        business: business || "Non spécifié",
+        phone: phone,
+        email: email || (typeof currentUser !== 'undefined' && currentUser ? currentUser.email : "Non spécifié"),
+        plan: planNames[planKey],
+        option: optNames[optKey],
+        totalPrice: totalPrice + " HTG",
+        desc: desc,
+        fields: fields || "Non spécifié"
+    };
+
+    // 1. Envoi sécurisé vers la feuille "commande" dans Google Sheets
+    if (CONFIG.googleScriptUrl) {
+        try {
+            await fetch(CONFIG.googleScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            });
+        } catch (err) {
+            console.warn("Notice Sheets:", err);
+        }
+    }
+
+    // 2. Préparation du message WhatsApp
+    let message = `Bonjour ${CONFIG.businessName},\n\n`;
+    message += `Je souhaite commander un formulaire :\n\n`;
+    message += `*Nom :* ${fullname}\n`;
+    if (business) message += `*Entreprise :* ${business}\n`;
+    message += `*Téléphone :* ${phone}\n`;
+    if (email) message += `*Email :* ${email}\n\n`;
+    message += `*Formule :* ${planNames[planKey]}\n`;
+    message += `*Option :* ${optNames[optKey]}\n`;
+    message += `*Prix total :* ${totalPrice} HTG\n\n`;
+    message += `*Description du besoin :*\n${desc}\n`;
+    if (fields) message += `\n*Champs souhaités :*\n${fields}\n`;
+    message += `\nMerci !`;
+
+    // 3. Redirection WhatsApp
+    const waUrl = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`;
+    showToast("Commande enregistrée dans Google Sheets ! Redirection WhatsApp...");
+
+    setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHtml;
+        closeOrderModal();
+        window.open(waUrl, '_blank');
+    }, 800);
+}
+
+// 2. AUTHENTIFICATION UTILISATEUR
+        // ==========================================
+        async function handleLoginSubmit(e) {
             e.preventDefault();
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const btn = document.getElementById('btn-login-submit');
 
-            // Clear Errors
-            document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Connexion...`;
 
-            const fullname = document.getElementById('modal-fullname').value.trim();
-            const business = document.getElementById('modal-business').value.trim();
-            const phone = document.getElementById('modal-phone').value.trim();
-            const email = document.getElementById('modal-email').value.trim();
-            const planKey = document.getElementById('modal-plan').value;
-            const optKey = document.getElementById('modal-option').value;
-            const desc = document.getElementById('modal-desc').value.trim();
-            const fields = document.getElementById('modal-fields').value.trim();
-
-            let isValid = true;
-
-            if (!fullname) { document.getElementById('group-fullname').classList.add('has-error'); isValid = false; }
-            if (!phone) { document.getElementById('group-phone').classList.add('has-error'); isValid = false; }
-            if (!desc) { document.getElementById('group-desc').classList.add('has-error'); isValid = false; }
-
-            if (!isValid) {
-                showToast("Veuillez remplir les champs obligatoires", "error");
+            if (!CONFIG.googleScriptUrl) {
+                showToast("Veuillez renseigner votre URL Apps Script dans CONFIG.googleScriptUrl");
+                btn.disabled = false;
+                btn.innerHTML = `Se connecter`;
                 return;
             }
 
-            const planPrice = PRICES[planKey];
-            const optPrice = optKey !== 'none' ? PRICES[optKey] : 0;
-            const totalPrice = planPrice + optPrice;
+            try {
+                const response = await fetch(`${CONFIG.googleScriptUrl}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
+                const res = await response.json();
 
-            const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
-            const optNames = { none: 'Aucune', whatsapp: 'WhatsApp', googleSheets: 'Google Sheets', whatsappSheets: 'Pack WhatsApp + Google Sheets' };
+                if (res.status === "success") {
+                    currentUser = res.user;
+                    localStorage.setItem('bentoul_user', JSON.stringify(currentUser));
+                    showToast(`Bienvenue, ${currentUser.name} !`);
+                    updateUserNav();
+                    closeLoginModal();
+                } else {
+                    showToast(res.message || "Erreur d'identifiants.");
+                }
+            } catch (err) {
+                showToast("Erreur de connexion au serveur.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter`;
+            }
+        }
 
-            // Construction du message WhatsApp
-            let message = `Bonjour ${CONFIG.businessName},\n\n`;
-            message += `Je souhaite commander un formulaire.\n\n`;
-            message += `*Nom :* ${fullname}\n`;
-            if (business) message += `*Entreprise :* ${business}\n`;
-            message += `*Téléphone :* ${phone}\n`;
-            if (email) message += `*Email :* ${email}\n\n`;
-            message += `*Type de formulaire :* ${planNames[planKey]}\n`;
-            message += `*Option :* ${optNames[optKey]}\n`;
-            message += `*Prix total :* ${totalPrice} HTG\n\n`;
-            message += `*Description du projet :*\n${desc}\n`;
-            if (fields) message += `\n*Champs souhaités :*\n${fields}\n`;
-            message += `\nMerci !`;
+        async function handleSignupSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            const ref = document.getElementById('signup-ref').value.trim().toUpperCase();
+            const btn = document.getElementById('btn-signup-submit');
 
-            // Google Sheets integration placeholder call
-            sendToGoogleSheets({ fullname, business, phone, email, plan: planNames[planKey], option: optNames[optKey], totalPrice, desc });
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Inscription...`;
 
-            // Redirection WhatsApp
-            const encodedMessage = encodeURIComponent(message);
-            const waUrl = `https://wa.me/${CONFIG.whatsapp}?text=${encodedMessage}`;
-            
-            showToast("Commande prête ! Redirection WhatsApp...");
-            setTimeout(() => {
-                window.open(waUrl, '_blank');
-                closeOrderModal();
-            }, 1000);
+            if (!CONFIG.googleScriptUrl) {
+                showToast("Veuillez renseigner votre URL Apps Script dans CONFIG.googleScriptUrl");
+                btn.disabled = false;
+                btn.innerHTML = `S'inscrire`;
+                return;
+            }
+
+            try {
+                const url = `${CONFIG.googleScriptUrl}?action=register&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&referredBy=${encodeURIComponent(ref)}`;
+                const response = await fetch(url);
+                const res = await response.json();
+
+                if (res.status === "success") {
+                    currentUser = res.user;
+                    localStorage.setItem('bentoul_user', JSON.stringify(currentUser));
+                    showToast(`Compte créé avec succès ! +10 points obtenus.`);
+                    updateUserNav();
+                    closeSignupModal();
+                } else {
+                    showToast(res.message || "Erreur lors de l'inscription.");
+                }
+            } catch (err) {
+                showToast("Erreur réseau.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-user-plus"></i> S'inscrire (+10 points)`;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('bentoul_user');
+            currentUser = null;
+            updateUserNav();
+            showToast("Vous avez été déconnecté.");
+        }
+
+        function updateUserNav() {
+            const container = document.getElementById('authNavContainer');
+            const mobileContainer = document.getElementById('authMobileContainer');
+
+            if (currentUser) {
+                const html = `
+                    <div class="user-pill">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <span>${currentUser.name} (${currentUser.points} pts)</span>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="logout()" title="Déconnexion"><i class="fa-solid fa-power-off"></i></button>
+                `;
+                container.innerHTML = html;
+                mobileContainer.innerHTML = html;
+            } else {
+                const html = `
+                    <button class="btn btn-outline btn-sm" onclick="openLoginModal()">Connexion</button>
+                    <button class="btn btn-primary btn-sm" onclick="openSignupModal()">Inscription</button>
+                `;
+                container.innerHTML = html;
+                mobileContainer.innerHTML = html;
+            }
+        }
+
+        // ==========================================
+        // 3. CATALOGUE PRODUITS DEPUIS GOOGLE SHEETS
+        // ==========================================
+        async function loadProductsFromSheets() {
+            const container = document.getElementById('productsContainer');
+            if (!CONFIG.googleScriptUrl) {
+                container.innerHTML = `
+                    <div class="card" style="grid-column: 1 / -1; text-align: center;">
+                        <p style="color: var(--text-muted);">Configurez <strong>CONFIG.googleScriptUrl</strong> pour afficher vos produits enregistrés dans Google Sheets.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                const response = await fetch(`${CONFIG.googleScriptUrl}?action=getProducts`);
+                const res = await response.json();
+
+                if (res.status === "success" && res.products && res.products.length > 0) {
+                    container.innerHTML = res.products.map(prod => `
+                        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                            <div>
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                                    <span class="badge badge-primary">${prod.category || 'Modèle'}</span>
+                                    <strong style="color: var(--primary); font-size: 1.1rem;">${prod.price} PTS</strong>
+                                </div>
+                                ${prod.imageUrl ? `<img src="${prod.imageUrl}" style="width: 100%; height: 160px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 1rem;">` : ''}
+                                <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem;">${prod.title}</h3>
+                                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">${prod.desc || 'Modèle professionnel prêt à être intégré.'}</p>
+                            </div>
+                            <button class="btn btn-primary btn-sm" onclick="buyProduct('${prod.id}', ${prod.price}, '${prod.downloadUrl || ''}')">
+                                <i class="fa-solid fa-download"></i> Obtenir ce modèle
+                            </button>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center;"><p>Aucun produit disponible pour le moment.</p></div>`;
+                }
+            } catch (err) {
+                container.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center;"><p>Impossible de charger le catalogue.</p></div>`;
+            }
+        }
+
+        async function buyProduct(prodId, price, downloadUrl) {
+            if (!currentUser) {
+                showToast("Veuillez vous connecter pour débloquer ce modèle.");
+                openLoginModal();
+                return;
+            }
+
+            if (currentUser.points < price) {
+                showToast(`Points insuffisants (${currentUser.points}/${price} pts). Partagez votre lien de parrainage pour en gagner !`);
+                return;
+            }
+
+            const newPoints = currentUser.points - price;
+            try {
+                await fetch(CONFIG.googleScriptUrl, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: "purchase",
+                        email: currentUser.email,
+                        points: newPoints,
+                        productId: prodId
+                    })
+                });
+
+                currentUser.points = newPoints;
+                localStorage.setItem('bentoul_user', JSON.stringify(currentUser));
+                updateUserNav();
+
+                showToast("Modèle débloqué avec succès !");
+                if (downloadUrl) {
+                    window.open(downloadUrl, '_blank');
+                }
+            } catch (err) {
+                showToast("Erreur lors de l'achat.");
+            }
+        }
+
+        // ==========================================
+        // 4. PARRAINAGE & REDIRECTION DIRECTE
+        // ==========================================
+        function checkReferralFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const ref = params.get('ref');
+            if (ref) {
+                const inputRef = document.getElementById('signup-ref');
+                if (inputRef) inputRef.value = ref;
+
+                if (CONFIG.googleScriptUrl) {
+                    fetch(`${CONFIG.googleScriptUrl}?action=rewardVisit&ref=${encodeURIComponent(ref)}&visitorEmail=${currentUser ? encodeURIComponent(currentUser.email) : ''}`)
+                        .catch(e => console.log('Visite parrainée prise en compte'));
+                }
+            }
         }
 
         function directContactWhatsApp() {
-            const msg = encodeURIComponent(`Bonjour ${CONFIG.businessName}, j'aimerais avoir des informations sur vos services de formulaires en ligne.`);
+            const msg = encodeURIComponent(`Bonjour BENTOUL FORMS, je souhaite avoir des informations sur vos formulaires.`);
             window.open(`https://wa.me/${CONFIG.whatsapp}?text=${msg}`, '_blank');
-        }
-
-        // Placeholder Backend Sync (Google Apps Script)
-        function sendToGoogleSheets(data) {
-            if (!CONFIG.googleScriptUrl) return;
-
-            fetch(CONFIG.googleScriptUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            }).catch(err => console.log('Sheets Sync Optional Notice:', err));
         }
     </script>
 </body>
