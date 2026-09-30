@@ -87,6 +87,18 @@
     .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .form-grid .wide { grid-column: 1 / -1; }
     .form-grid textarea { min-height: 75px; resize: vertical; }
+    .rich-editor { min-width: 0; border: 1px solid #D9E2D8; border-radius: 7px; background: #fff; }
+    .rich-toolbar { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 5px; overflow-x: auto; padding: 7px; border-bottom: 1px solid var(--line); background: #F7F9F5; -webkit-overflow-scrolling: touch; }
+    .rich-toolbar button, .rich-toolbar select, .rich-toolbar input[type="color"] { flex: 0 0 auto; min-width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); }
+    .rich-toolbar button { display: grid; place-items: center; padding: 0 7px; font-size: 13px; font-weight: 700; }
+    .rich-toolbar button:hover, .rich-toolbar button[aria-pressed="true"] { border-color: var(--green); background: #EDF3EB; }
+    .rich-toolbar select { padding: 0 7px; font-size: 11px; }
+    .rich-toolbar input[type="color"] { width: 38px; padding: 4px; }
+    #descriptionEditor { min-height: 170px; max-height: 42dvh; overflow-y: auto; padding: 12px; color: var(--ink); font-size: 16px; font-weight: 400; line-height: 1.6; outline: 0; overflow-wrap: anywhere; -webkit-user-select: text; user-select: text; }
+    #descriptionEditor:empty::before { content: attr(data-placeholder); color: #87938B; pointer-events: none; }
+    #descriptionEditor img { max-width: 100%; height: auto; }
+    #field-description { display: none; }
+    .editor-image-input { display: none; }
     .modal-actions { margin-top: 20px; display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--line); padding-top: 14px; }
     @media (max-width: 768px) {
       .shell { display: block; padding-bottom: 66px; }
@@ -98,6 +110,10 @@
       .content { padding: 20px 14px 40px; }
       .form-grid { grid-template-columns: 1fr; }
       .form-grid .wide { grid-column: auto; }
+      .modal-backdrop { place-items: start center; padding: max(8px, env(safe-area-inset-top)) 8px 8px; }
+      .modal { max-height: var(--modal-available-height, 90dvh); padding: 16px 12px; }
+      #descriptionEditor { min-height: 150px; max-height: 38dvh; font-size: 16px; }
+      .rich-toolbar { margin: -1px -1px 0; border-radius: 6px 6px 0 0; }
     }
   </style>
 </head>
@@ -230,7 +246,7 @@
         <section class="tab-panel" id="panel-bentoulinguo" data-panel="bentoulinguo" hidden>
           <div class="eyebrow">Feuille : "bentoulinguo"</div>
           <h1>Bentoulinguo</h1>
-          <p class="intro">Catalogue de cours et ressources linguistiques.</p>
+          <p class="intro">Cours et ressources linguistiques (ID, Titre, Categorie, Description, DateAjout, ImageUrl, Langue, UrlRedirection, UrlAudio, UrlVideo).</p>
           <div class="panel-head">
             <h2>Articles Bentoulinguo</h2>
             <div class="panel-controls">
@@ -247,15 +263,16 @@
                   <th>Image</th>
                   <th>Titre</th>
                   <th>Catégorie</th>
-                  <th>Prix</th>
-                  <th>Icon / Couleur</th>
+                  <th>Langue</th>
+                  <th>Redirection</th>
+                  <th>Audio</th>
+                  <th>Vidéo</th>
                   <th>Date Ajout</th>
-                  <th>Téléchargement</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody data-rows="bentoulinguo">
-                <tr><td colspan="9" class="message">Chargement...</td></tr>
+                <tr><td colspan="10" class="message">Chargement...</td></tr>
               </tbody>
             </table>
           </div>
@@ -287,6 +304,26 @@
             <input class="field" name="categorie" id="field-categorie" placeholder="Ex: SMS, Outils, Ebook">
           </label>
 
+          <label class="form-label form-bentoulinguo-only">
+            Langue *
+            <input class="field" name="langue" id="field-langue" required placeholder="Ex: Français, Anglais, Espagnol">
+          </label>
+
+          <label class="form-label form-bentoulinguo-only">
+            URL de redirection (facultatif)
+            <input class="field" name="urlRedirection" id="field-url-redirection" type="url" placeholder="https://...">
+          </label>
+
+          <label class="form-label form-bentoulinguo-only">
+            URL audio (facultatif)
+            <input class="field" name="urlAudio" id="field-url-audio" type="url" placeholder="https://...">
+          </label>
+
+          <label class="form-label form-bentoulinguo-only">
+            URL vidéo (facultatif)
+            <input class="field" name="urlVideo" id="field-url-video" type="url" placeholder="https://...">
+          </label>
+
           <!-- Champs réservés à 'produits' (masqués pour benamoura) -->
           <label class="form-label form-bentoul-only">
             Prix (Crédits)
@@ -303,10 +340,36 @@
             <input class="field" name="couleur" id="field-couleur" placeholder="Ex: #245744 ou green">
           </label>
 
-          <label class="form-label wide">
+          <label class="form-label wide" id="plainDescriptionField">
             Description
-            <textarea class="field" name="description" id="field-description" placeholder="Description courte de l'élément..."></textarea>
+            <textarea class="field" id="plainDescriptionInput" placeholder="Description courte de l'élément..."></textarea>
           </label>
+
+          <div class="form-label wide" id="richDescriptionField" style="display:none;">
+            <span>Description</span>
+            <div class="rich-editor">
+              <div class="rich-toolbar" id="descriptionToolbar" role="toolbar" aria-label="Mise en forme de la description">
+                <button type="button" data-editor-command="bold" title="Gras" aria-label="Gras"><strong>B</strong></button>
+                <button type="button" data-editor-command="italic" title="Italique" aria-label="Italique"><em>I</em></button>
+                <button type="button" data-editor-command="underline" title="Souligné" aria-label="Souligné"><u>U</u></button>
+                <button type="button" data-editor-command="justifyLeft" title="Aligner à gauche" aria-label="Aligner à gauche"><span class="material-symbols-outlined">format_align_left</span></button>
+                <button type="button" data-editor-command="justifyCenter" title="Centrer" aria-label="Centrer"><span class="material-symbols-outlined">format_align_center</span></button>
+                <button type="button" data-editor-command="justifyRight" title="Aligner à droite" aria-label="Aligner à droite"><span class="material-symbols-outlined">format_align_right</span></button>
+                <button type="button" data-editor-command="justifyFull" title="Justifier" aria-label="Justifier"><span class="material-symbols-outlined">format_align_justify</span></button>
+                <select id="editorFontFamily" aria-label="Police de caractères">
+                  <option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Trebuchet MS">Trebuchet</option><option value="Verdana">Verdana</option><option value="Times New Roman">Times</option><option value="Courier New">Courier</option>
+                </select>
+                <select id="editorFontSize" aria-label="Taille du texte">
+                  <option value="2">Petit</option><option value="3" selected>Normal</option><option value="4">Grand</option><option value="5">Très grand</option><option value="6">Titre</option>
+                </select>
+                <input type="color" id="editorTextColor" value="#17251F" title="Couleur du texte" aria-label="Couleur du texte">
+                <button type="button" id="insertDescriptionImage" title="Importer une image dans la description et ImageUrl" aria-label="Importer une image"><span class="material-symbols-outlined">image</span></button>
+                <input type="file" class="editor-image-input" id="descriptionImageFile" accept="image/png,image/jpeg,image/webp,image/gif">
+              </div>
+              <div id="descriptionEditor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Description du cours" data-placeholder="Écrivez la description du cours..."></div>
+            </div>
+            <textarea name="description" id="field-description" tabindex="-1" aria-hidden="true"></textarea>
+          </div>
 
           <label class="form-label wide">
             <span id="label-image">URL de l'image (ImageUrl)</span>
@@ -328,12 +391,12 @@
   </div>
 
   <script>
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxE8Xu9bmleAJutUshUJwZsh1hpsWPhRfJVA_2zPngbSHwSdqjXDUkWudVd-EVw4m7ipA/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyhtLBG-pkeeDqKf8sLpL7jyTQm1AWym71WzH5FTUJeRIxHtWUjYn4Bknc3KdPsMwf0aA/exec';
 
     const catalogs = [
       { id: 'bentoul', label: 'Bentoul', sheet: 'produits', isBenamoura: false },
       { id: 'benamoura', label: 'Benamoura', sheet: 'benamoura', isBenamoura: true },
-      { id: 'bentoulinguo', label: 'Bentoulinguo', sheet: 'bentoulinguo', isBenamoura: false }
+      { id: 'bentoulinguo', label: 'Bentoulinguo', sheet: 'bentoulinguo', isBenamoura: false, isBentoulinguo: true }
     ];
 
     let currentCatalogId = 'bentoul';
@@ -355,6 +418,176 @@
       }
       return '';
     };
+
+    let savedEditorRange = null;
+    const richTextTags = new Set(['P', 'DIV', 'BR', 'STRONG', 'B', 'EM', 'I', 'U', 'S', 'UL', 'OL', 'LI', 'H1', 'H2', 'H3', 'BLOCKQUOTE', 'SPAN', 'FONT', 'A', 'IMG']);
+    const blockedRichTextTags = new Set(['SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'SVG', 'VIDEO', 'AUDIO']);
+    const editorFonts = ['Arial', 'Georgia', 'Trebuchet MS', 'Verdana', 'Times New Roman', 'Courier New'];
+    const editorSizes = { '1': '10px', '2': '13px', '3': '16px', '4': '18px', '5': '24px', '6': '32px', '7': '40px' };
+
+    function safeHttpUrl(value) {
+      try {
+        const url = new URL(value, window.location.href);
+        return url.protocol === 'http:' || url.protocol === 'https:' ? url.href : '';
+      } catch (err) { return ''; }
+    }
+
+    function sanitizeRichText(value) {
+      const template = document.createElement('template');
+      template.innerHTML = String(value || '');
+
+      function cleanNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) return document.createTextNode(node.textContent);
+        if (node.nodeType !== Node.ELEMENT_NODE) return document.createDocumentFragment();
+        if (blockedRichTextTags.has(node.tagName)) return document.createDocumentFragment();
+        if (!richTextTags.has(node.tagName)) {
+          const unwrapped = document.createDocumentFragment();
+          Array.from(node.childNodes).forEach(child => unwrapped.appendChild(cleanNode(child)));
+          return unwrapped;
+        }
+
+        if (node.tagName === 'IMG') {
+          const imageUrl = safeHttpUrl(node.getAttribute('src') || '');
+          if (!imageUrl) return document.createDocumentFragment();
+          const image = document.createElement('img');
+          image.src = imageUrl;
+          image.alt = (node.getAttribute('alt') || '').slice(0, 200);
+          image.style.maxWidth = '100%';
+          image.style.height = 'auto';
+          return image;
+        }
+
+        const tagName = node.tagName === 'FONT' ? 'SPAN' : node.tagName.toLowerCase();
+        const element = document.createElement(tagName);
+        const alignment = node.style.textAlign || node.getAttribute('align') || '';
+        if (['left', 'center', 'right', 'justify'].includes(alignment.toLowerCase())) element.style.textAlign = alignment.toLowerCase();
+
+        const color = node.style.color || node.getAttribute('color') || '';
+        if (color && CSS.supports('color', color)) element.style.color = color;
+
+        const fontSize = node.style.fontSize || editorSizes[node.getAttribute('size') || ''] || '';
+        if (/^(\d+(\.\d+)?)(px|pt|em|rem|%)$/.test(fontSize)) element.style.fontSize = fontSize;
+
+        const fontFamily = (node.style.fontFamily || node.getAttribute('face') || '').replace(/['"]/g, '').trim().toLowerCase();
+        const safeFont = editorFonts.find(font => font.toLowerCase() === fontFamily);
+        if (safeFont) element.style.fontFamily = safeFont;
+
+        if (node.tagName === 'A') {
+          const href = safeHttpUrl(node.getAttribute('href') || '');
+          if (href) {
+            element.href = href;
+            element.target = '_blank';
+            element.rel = 'noopener noreferrer';
+          }
+        }
+
+        Array.from(node.childNodes).forEach(child => element.appendChild(cleanNode(child)));
+        return element;
+      }
+
+      const output = document.createElement('div');
+      Array.from(template.content.childNodes).forEach(child => output.appendChild(cleanNode(child)));
+      return output.innerHTML;
+    }
+
+    function syncDescriptionValue() {
+      const editor = document.querySelector('#descriptionEditor');
+      const value = sanitizeRichText(editor.innerHTML);
+      document.querySelector('#field-description').value = value;
+      return value;
+    }
+
+    function setRichEditorContent(value) {
+      const editor = document.querySelector('#descriptionEditor');
+      editor.innerHTML = sanitizeRichText(value);
+      syncDescriptionValue();
+    }
+
+    function rememberEditorSelection() {
+      const editor = document.querySelector('#descriptionEditor');
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount && editor.contains(selection.anchorNode)) savedEditorRange = selection.getRangeAt(0).cloneRange();
+    }
+
+    function restoreEditorSelection() {
+      const editor = document.querySelector('#descriptionEditor');
+      editor.focus({ preventScroll: true });
+      const selection = window.getSelection();
+      if (!selection) return;
+      selection.removeAllRanges();
+      if (savedEditorRange && editor.contains(savedEditorRange.commonAncestorContainer)) {
+        selection.addRange(savedEditorRange);
+      } else {
+        const range = document.createRange();
+        range.selectNodeContents(editor);
+        range.collapse(false);
+        selection.addRange(range);
+      }
+    }
+
+    function applyEditorCommand(command, value = null) {
+      restoreEditorSelection();
+      document.execCommand(command, false, value);
+      rememberEditorSelection();
+      syncDescriptionValue();
+    }
+
+    function insertEditorImage(url, alt) {
+      restoreEditorSelection();
+      const safeUrl = safeHttpUrl(url);
+      if (safeUrl) document.execCommand('insertHTML', false, `<img src="${escapeHtml(safeUrl)}" alt="${escapeHtml(alt)}" style="max-width:100%;height:auto">`);
+      syncDescriptionValue();
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result || ''));
+        reader.onerror = () => reject(new Error('Lecture du fichier impossible.'));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadDescriptionImage(file) {
+      if (!file) return;
+      if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type)) {
+        setStatus('Format image non pris en charge. Choisissez JPG, PNG, WEBP ou GIF.', 'error');
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        setStatus('Image trop lourde. Taille maximale : 5 Mo.', 'error');
+        return;
+      }
+
+      const button = document.querySelector('#insertDescriptionImage');
+      button.disabled = true;
+      setStatus('Import de l’image vers Google Drive...', 'loading');
+      try {
+        const dataUrl = await readFileAsDataUrl(file);
+        const base64 = dataUrl.split(',')[1] || '';
+        const result = await apiRequest('uploadImage', { fileName: file.name, mimeType: file.type, base64 });
+        if (!result.imageUrl) throw new Error('Le serveur n’a pas retourné l’URL de l’image.');
+        document.querySelector('#field-image').value = result.imageUrl;
+        insertEditorImage(result.imageUrl, file.name);
+        setStatus('Image importée et ajoutée à ImageUrl.');
+      } catch (err) {
+        setStatus('Erreur d’import : ' + err.message, 'error');
+        alert('Erreur d’import : ' + err.message);
+      } finally {
+        button.disabled = false;
+        document.querySelector('#descriptionImageFile').value = '';
+      }
+    }
+
+    function syncModalToVisualViewport() {
+      const modal = document.querySelector('#productModal');
+      const viewport = window.visualViewport;
+      if (!viewport || modal.hidden || window.innerWidth > 768) return;
+      modal.style.top = `${Math.max(0, viewport.offsetTop)}px`;
+      modal.style.bottom = 'auto';
+      modal.style.height = `${viewport.height}px`;
+      modal.style.setProperty('--modal-available-height', `${Math.max(220, viewport.height - 16)}px`);
+    }
 
  async function apiRequest(action, data = {}) {
       // Sekirite : Nou pase action nan URL la tou pou GS toujou jwenn li
@@ -382,8 +615,9 @@
 
     // Affichage des lignes adapté rigoureusement aux entêtes
     function renderRows(products, catalog) {
-      if (!products) return `<tr><td colspan="9" class="message error">Impossible de lire la feuille "${catalog.sheet}".</td></tr>`;
-      if (products.length === 0) return `<tr><td colspan="9" class="message">Aucun élément dans la feuille "${catalog.sheet}".</td></tr>`;
+      const colSpan = catalog.isBentoulinguo ? 10 : catalog.isBenamoura ? 7 : 9;
+      if (!products) return `<tr><td colspan="${colSpan}" class="message error">Impossible de lire la feuille "${catalog.sheet}".</td></tr>`;
+      if (products.length === 0) return `<tr><td colspan="${colSpan}" class="message">Aucun élément dans la feuille "${catalog.sheet}".</td></tr>`;
 
       return products.map(item => {
         const id = getProp(item, 'ID', 'id');
@@ -401,6 +635,31 @@
             <button class="danger-btn" type="button" data-del-id="${escapeHtml(id)}" data-cat="${catalog.id}">Supprimer</button>
           </div>
         `;
+
+        if (catalog.isBentoulinguo) {
+          const langue = getProp(item, 'Langue', 'langue');
+          const urlRedirection = getProp(item, 'UrlRedirection', 'urlRedirection');
+          const urlAudio = getProp(item, 'UrlAudio', 'urlAudio');
+          const urlVideo = getProp(item, 'UrlVideo', 'urlVideo');
+          const optionalLink = (url, label) => url ? `<a class="row-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>` : '—';
+          return `
+            <tr>
+              <td>${escapeHtml(id)}</td>
+              <td>${imgHtml}</td>
+              <td>
+                <div class="product-name">${escapeHtml(titre)}</div>
+                ${desc ? `<div class="product-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>` : ''}
+              </td>
+              <td>${cat ? `<span class="pill">${escapeHtml(cat)}</span>` : '—'}</td>
+              <td>${langue ? escapeHtml(langue) : '—'}</td>
+              <td>${optionalLink(urlRedirection, 'Ouvrir')}</td>
+              <td>${optionalLink(urlAudio, 'Audio')}</td>
+              <td>${optionalLink(urlVideo, 'Vidéo')}</td>
+              <td>${escapeHtml(date)}</td>
+              <td>${actions}</td>
+            </tr>
+          `;
+        }
 
         if (catalog.isBenamoura) {
           const urlRedir = getProp(item, 'UrlRedirection', 'urlRedirection', 'DownloadUrl', 'downloadUrl');
@@ -498,12 +757,23 @@
       form.reset();
 
       const isBenamoura = catalog.isBenamoura;
+      const isBentoulinguo = catalog.isBentoulinguo;
       document.querySelector('#modalTargetBadge').textContent = `Feuille : ${catalog.sheet}`;
+      document.querySelector('#plainDescriptionField').style.display = isBentoulinguo ? 'none' : 'grid';
+      document.querySelector('#richDescriptionField').style.display = isBentoulinguo ? 'grid' : 'none';
+      document.querySelector('#descriptionEditor').innerHTML = '';
+      savedEditorRange = null;
 
       // Afficher ou masquer les champs exclusifs à 'produits'
       document.querySelectorAll('.form-bentoul-only').forEach(el => {
-        el.style.display = isBenamoura ? 'none' : 'grid';
+        el.style.display = catalogId === 'bentoul' ? 'grid' : 'none';
       });
+      document.querySelectorAll('.form-bentoulinguo-only').forEach(el => {
+        el.style.display = isBentoulinguo ? 'grid' : 'none';
+      });
+      document.querySelector('#field-langue').required = isBentoulinguo;
+      document.querySelector('#field-file').required = !isBentoulinguo;
+      document.querySelector('#field-file').parentElement.style.display = isBentoulinguo ? 'none' : 'grid';
 
       document.querySelector('#label-image').textContent = isBenamoura ? "URL de l'image (ImageUrl)" : "URL de l'image (ImageUrl)";
       document.querySelector('#label-file').textContent = isBenamoura ? "URL de redirection (UrlRedirection) *" : "Lien de téléchargement (DownloadUrl) *";
@@ -513,7 +783,14 @@
         document.querySelector('#field-id').value = getProp(itemToEdit, 'ID', 'id');
         document.querySelector('#field-titre').value = getProp(itemToEdit, 'Titre', 'titre', 'Nom');
         document.querySelector('#field-categorie').value = getProp(itemToEdit, 'Categorie', 'categorie', 'Catégorie');
-        document.querySelector('#field-description').value = getProp(itemToEdit, 'Description', 'description');
+        const existingDescription = getProp(itemToEdit, 'Description', 'description');
+        document.querySelector('#field-description').value = existingDescription;
+        document.querySelector('#plainDescriptionInput').value = existingDescription;
+        setRichEditorContent(existingDescription);
+        document.querySelector('#field-langue').value = getProp(itemToEdit, 'Langue', 'langue');
+        document.querySelector('#field-url-redirection').value = getProp(itemToEdit, 'UrlRedirection', 'urlRedirection');
+        document.querySelector('#field-url-audio').value = getProp(itemToEdit, 'UrlAudio', 'urlAudio');
+        document.querySelector('#field-url-video').value = getProp(itemToEdit, 'UrlVideo', 'urlVideo');
         document.querySelector('#field-prix').value = getProp(itemToEdit, 'Prix', 'prix') || 0;
         document.querySelector('#field-icon').value = getProp(itemToEdit, 'Icon', 'icon');
         document.querySelector('#field-couleur').value = getProp(itemToEdit, 'Couleur', 'couleur');
@@ -523,14 +800,25 @@
         document.querySelector('#modalTitle').textContent = `Ajouter dans ${catalog.label}`;
         document.querySelector('#field-id').value = '';
         document.querySelector('#field-prix').value = '0';
+        document.querySelector('#field-langue').value = '';
+        document.querySelector('#field-description').value = '';
+        document.querySelector('#plainDescriptionInput').value = '';
+        setRichEditorContent('');
       }
 
-      document.querySelector('#productModal').hidden = false;
+      const modal = document.querySelector('#productModal');
+      modal.hidden = false;
+      syncModalToVisualViewport();
       document.querySelector('#field-titre').focus();
     }
 
     function closeModal() {
-      document.querySelector('#productModal').hidden = true;
+      const modal = document.querySelector('#productModal');
+      modal.hidden = true;
+      modal.style.top = '';
+      modal.style.bottom = '';
+      modal.style.height = '';
+      modal.style.removeProperty('--modal-available-height');
     }
 
     function switchTab(tabId) {
@@ -547,6 +835,34 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      const editor = document.querySelector('#descriptionEditor');
+      const toolbar = document.querySelector('#descriptionToolbar');
+      editor.addEventListener('input', syncDescriptionValue);
+      editor.addEventListener('keyup', rememberEditorSelection);
+      editor.addEventListener('mouseup', rememberEditorSelection);
+      editor.addEventListener('blur', rememberEditorSelection);
+      document.addEventListener('selectionchange', rememberEditorSelection);
+      editor.addEventListener('focus', () => setTimeout(() => editor.scrollIntoView({ block: 'nearest', behavior: 'smooth' }), 250));
+      toolbar.addEventListener('pointerdown', event => {
+        if (event.target.closest('button, select, input')) rememberEditorSelection();
+        if (event.target.closest('button')) event.preventDefault();
+      });
+      toolbar.querySelectorAll('[data-editor-command]').forEach(button => {
+        button.addEventListener('click', () => applyEditorCommand(button.dataset.editorCommand));
+      });
+      document.querySelector('#editorFontFamily').addEventListener('pointerdown', rememberEditorSelection);
+      document.querySelector('#editorFontFamily').addEventListener('change', event => applyEditorCommand('fontName', event.target.value));
+      document.querySelector('#editorFontSize').addEventListener('pointerdown', rememberEditorSelection);
+      document.querySelector('#editorFontSize').addEventListener('change', event => applyEditorCommand('fontSize', event.target.value));
+      document.querySelector('#editorTextColor').addEventListener('pointerdown', rememberEditorSelection);
+      document.querySelector('#editorTextColor').addEventListener('input', event => applyEditorCommand('foreColor', event.target.value));
+      document.querySelector('#insertDescriptionImage').addEventListener('click', () => document.querySelector('#descriptionImageFile').click());
+      document.querySelector('#descriptionImageFile').addEventListener('change', event => uploadDescriptionImage(event.target.files[0]));
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', syncModalToVisualViewport);
+        window.visualViewport.addEventListener('scroll', syncModalToVisualViewport);
+      }
+
       document.querySelectorAll('[data-tab]').forEach(btn => {
         btn.addEventListener('click', () => switchTab(btn.dataset.tab));
       });
@@ -601,15 +917,27 @@
         const id = document.querySelector('#field-id').value.trim();
         const titre = document.querySelector('#field-titre').value.trim();
         const categorie = document.querySelector('#field-categorie').value.trim();
-        const description = document.querySelector('#field-description').value.trim();
+        const description = catalog.isBentoulinguo
+          ? syncDescriptionValue().trim()
+          : document.querySelector('#plainDescriptionInput').value.trim();
         const prix = Number(document.querySelector('#field-prix').value) || 0;
         const icon = document.querySelector('#field-icon').value.trim();
         const couleur = document.querySelector('#field-couleur').value.trim();
         const imgUrl = document.querySelector('#field-image').value.trim();
         const fileUrl = document.querySelector('#field-file').value.trim();
 
-        // Envoi avec tous les alias pour matcher les colonnes exactes de votre Google Sheet
-        const payload = {
+        const payload = catalog.isBentoulinguo ? {
+          sheet: catalog.sheet,
+          id: id,
+          titre: titre,
+          categorie: categorie,
+          description: description,
+          imageUrl: imgUrl,
+          langue: document.querySelector('#field-langue').value.trim(),
+          urlRedirection: document.querySelector('#field-url-redirection').value.trim(),
+          urlAudio: document.querySelector('#field-url-audio').value.trim(),
+          urlVideo: document.querySelector('#field-url-video').value.trim()
+        } : {
           sheet: catalog.sheet,
           id: id,
           titre: titre,
@@ -618,11 +946,9 @@
           icon: icon,
           couleur: couleur,
           description: description,
-          // Images
           image: imgUrl,
           imageUrl: imgUrl,
           ImageUrl: imgUrl,
-          // Fichiers & Liens
           downloadUrl: fileUrl,
           DownloadUrl: fileUrl,
           urlRedirection: fileUrl,
