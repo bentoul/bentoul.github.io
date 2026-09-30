@@ -1,1492 +1,1980 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BENTOUL FORMS - Création de formulaires en ligne en Haïti</title>
-    
-    <meta name="description" content="BENTOUL FORMS crée des formulaires en ligne professionnels pour entreprises, commerces, écoles, associations et particuliers en Haïti.">
-    <meta name="keywords" content="formulaire en ligne Haïti, création formulaire Haïti, formulaire Google Sheets, formulaire WhatsApp, BENTOUL FORMS">
-    <meta property="og:title" content="BENTOUL FORMS - Formulaires en ligne simples et professionnels">
-    <meta property="og:description" content="Création de formulaires sur mesure pour entreprises, écoles et particuliers en Haïti. Compatible WhatsApp & Google Sheets.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.bentoulcreation.blogspot.com/">
-
-    <!-- Polices & Icônes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        :root {
-            --primary: #0F2C59;
-            --primary-light: #1E40AF;
-            --primary-dark: #091E3E;
-            --accent-green: #10B981;
-            --accent-green-hover: #059669;
-            --surface: #FFFFFF;
-            --background: #F8FAFC;
-            --text-main: #1E293B;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
-            --shadow-sm: 0 2px 4px rgba(15, 44, 89, 0.05);
-            --shadow-md: 0 6px 12px -2px rgba(15, 44, 89, 0.08), 0 3px 6px -3px rgba(15, 44, 89, 0.05);
-            --shadow-lg: 0 16px 24px -4px rgba(15, 44, 89, 0.12), 0 8px 8px -4px rgba(15, 44, 89, 0.04);
-            --radius-sm: 8px;
-            --radius-md: 14px;
-            --radius-lg: 20px;
-            --radius-full: 9999px;
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html { scroll-behavior: smooth; font-size: 16px; }
-
-        body {
-            background-color: var(--background);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            padding-bottom: 70px;
-        }
-
-        @media (min-width: 992px) { body { padding-bottom: 0; } }
-
-        a { text-decoration: none; color: inherit; }
-        ul { list-style: none; }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.25rem;
-        }
-
-        .section-padding { padding: 4rem 0; }
-        @media (min-width: 768px) { .section-padding { padding: 5.5rem 0; } }
-
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 3rem auto;
-        }
-
-        .section-title {
-            font-size: 1.85rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 0.75rem;
-            letter-spacing: -0.02em;
-        }
-
-        @media (min-width: 768px) { .section-title { font-size: 2.35rem; } }
-
-        .section-subtitle {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.35rem 0.85rem;
-            border-radius: var(--radius-full);
-            font-size: 0.78rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .badge-primary { background: rgba(15, 44, 89, 0.1); color: var(--primary); }
-        .badge-accent { background: rgba(16, 185, 129, 0.15); color: var(--accent-green-hover); }
-        .badge-orange { background: #FFEDD5; color: #C2410C; }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            padding: 0.85rem 1.75rem;
-            border-radius: var(--radius-md);
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            outline: none;
-            text-align: center;
-            width: 100%;
-        }
-
-        @media (min-width: 576px) { .btn { width: auto; } }
-
-        .btn-primary { background-color: var(--primary); color: var(--surface); box-shadow: var(--shadow-md); }
-        .btn-primary:hover { background-color: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-
-        .btn-whatsapp { background-color: var(--accent-green); color: var(--surface); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
-        .btn-whatsapp:hover { background-color: var(--accent-green-hover); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4); }
-
-        .btn-outline { background-color: transparent; color: var(--primary); border: 2px solid var(--primary); }
-        .btn-outline:hover { background-color: var(--primary); color: var(--surface); }
-
-        .btn-sm { padding: 0.5rem 1rem; font-size: 0.85rem; border-radius: var(--radius-sm); }
-
-        .card {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            border: 1px solid var(--border);
-            padding: 1.75rem;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-            position: relative;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(15, 44, 89, 0.2);
-        }
-
-        .header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 72px;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--primary);
-            line-height: 1.1;
-        }
-
-        .logo-box {
-            background: var(--primary);
-            color: var(--surface);
-            width: 38px;
-            height: 38px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-        }
-
-        .nav-desktop { display: none; }
-        @media (min-width: 992px) {
-            .nav-desktop { display: flex; align-items: center; gap: 1.5rem; }
-            .nav-link { font-weight: 600; font-size: 0.95rem; color: var(--text-main); transition: var(--transition); }
-            .nav-link:hover { color: var(--primary-light); }
-        }
-
-        .auth-nav-buttons {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .menu-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius-sm);
-            background: var(--background);
-            border: 1px solid var(--border);
-            color: var(--primary);
-            font-size: 1.25rem;
-            cursor: pointer;
-        }
-
-        @media (min-width: 992px) { .menu-toggle { display: none; } }
-
-        .drawer-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 44, 89, 0.4);
-            backdrop-filter: blur(4px);
-            z-index: 1050;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .drawer-overlay.active { opacity: 1; visibility: visible; }
-
-        .drawer {
-            position: fixed;
-            top: 0; right: -300px;
-            width: 280px; height: 100%;
-            background: var(--surface);
-            z-index: 1060;
-            padding: 2rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .drawer.active { right: 0; }
-
-        .drawer-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .drawer-close { background: none; border: none; font-size: 1.4rem; color: var(--text-muted); cursor: pointer; }
-        .drawer-links { display: flex; flex-direction: column; gap: 1rem; }
-        .drawer-link { font-size: 1rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 0.75rem; }
-
-        .hero {
-            padding-top: 8rem;
-            padding-bottom: 4rem;
-            background: linear-gradient(135deg, #FFFFFF 0%, #F1F5F9 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; }
-        @media (min-width: 992px) { .hero-grid { grid-template-columns: 1.1fr 0.9fr; } }
-
-        .hero-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--primary);
-            line-height: 1.2;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.02em;
-        }
-
-        @media (min-width: 768px) { .hero-title { font-size: 3.2rem; } }
-        .hero-subtitle { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2rem; font-weight: 500; }
-        .hero-buttons { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
-        @media (min-width: 576px) { .hero-buttons { flex-direction: row; } }
-
-        .hero-note { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
-
-        .hero-mockup {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 1.75rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            position: relative;
-            transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
-            transition: var(--transition);
-        }
-
-        .hero-mockup:hover { transform: perspective(1000px) rotateY(0deg) rotateX(0deg); }
-        .mockup-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
-        .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
-        .mockup-input-group { margin-bottom: 1.25rem; }
-        .mockup-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.35rem; }
-        .mockup-input { width: 100%; height: 38px; background: var(--background); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0 0.75rem; font-size: 0.85rem; color: var(--text-main); display: flex; align-items: center; }
-        .mockup-submit { background: var(--primary); color: white; height: 40px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; margin-top: 1.5rem; }
-
-        .services-grid, .examples-grid, .products-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 768px) { .services-grid, .examples-grid, .products-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 992px) {
-            .services-grid { grid-template-columns: repeat(3, 1fr); }
-            .examples-grid, .products-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .service-icon {
-            width: 52px; height: 52px;
-            border-radius: var(--radius-md);
-            background: rgba(15, 44, 89, 0.08);
-            color: var(--primary);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.35rem; margin-bottom: 1.25rem;
-        }
-
-        .service-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; }
-        .service-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.25rem; }
-
-        .pricing-grid, .options-grid { display: grid; grid-template-columns: 1fr; gap: 1.75rem; }
-        @media (min-width: 992px) { .pricing-grid, .options-grid { grid-template-columns: repeat(3, 1fr); } }
-
-        .pricing-card { display: flex; flex-direction: column; justify-content: space-between; }
-        .pricing-card.popular { border: 2px solid var(--primary); box-shadow: var(--shadow-lg); }
-        .pricing-popular-badge { position: absolute; top: -14px; right: 20px; background: var(--primary); color: white; padding: 0.25rem 0.85rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 800; }
-        .pricing-price { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin: 1rem 0; display: flex; align-items: baseline; gap: 0.3rem; }
-        .pricing-price span { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; }
-        .pricing-features { margin: 1.5rem 0; display: flex; flex-direction: column; gap: 0.75rem; }
-        .pricing-feature { display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; color: var(--text-main); }
-        .pricing-feature i { color: var(--accent-green); font-size: 1rem; }
-
-        .calculator-container {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--border);
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        .calc-group { margin-bottom: 1.75rem; }
-        .calc-label { font-weight: 700; font-size: 1.05rem; color: var(--primary); margin-bottom: 0.85rem; display: block; }
-        .calc-options-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-        @media (min-width: 576px) { .calc-options-grid { grid-template-columns: repeat(3, 1fr); } }
-
-        .calc-card-option {
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-
-        .calc-card-option:hover { border-color: rgba(15, 44, 89, 0.4); }
-        .calc-card-option.selected { border-color: var(--primary); background: rgba(15, 44, 89, 0.03); }
-        .calc-card-option input[type="radio"],
-        .calc-card-option input[type="checkbox"] { position: absolute; top: 1rem; right: 1rem; accent-color: var(--primary); width: 18px; height: 18px; }
-
-        .calc-summary-box { background: var(--background); border-radius: var(--radius-md); padding: 1.5rem; margin-top: 2rem; border: 1px dashed var(--border); }
-        .calc-summary-row { display: flex; justify-content: space-between; font-size: 0.95rem; margin-bottom: 0.6rem; color: var(--text-muted); }
-        .calc-summary-total { display: flex; justify-content: space-between; font-size: 1.4rem; font-weight: 800; color: var(--primary); padding-top: 0.85rem; border-top: 2px solid var(--border); margin-top: 0.85rem; }
-
-        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 992px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
-
-        .step-card { background: var(--surface); padding: 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border); }
-        .step-number { font-size: 2.5rem; font-weight: 800; color: rgba(15, 44, 89, 0.15); line-height: 1; margin-bottom: 0.75rem; }
-        .step-title { font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; }
-
-        .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
-        .faq-item { background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--border); overflow: hidden; transition: var(--transition); }
-        .faq-question { padding: 1.25rem 1.5rem; font-weight: 700; color: var(--primary); cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.05rem; }
-        .faq-answer { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: all 0.3s cubic-bezier(0, 1, 0, 1); color: var(--text-muted); font-size: 0.95rem; }
-        .faq-item.active .faq-answer { padding-bottom: 1.25rem; max-height: 500px; transition: all 0.3s cubic-bezier(1, 0, 1, 0); }
-        .faq-icon { transition: var(--transition); }
-        .faq-item.active .faq-icon { transform: rotate(180deg); }
-
-        /* MODALES */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 44, 89, 0.6);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            display: flex; align-items: center; justify-content: center;
-            padding: 1rem;
-            opacity: 0; visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-container {
-            background: var(--surface);
-            border-radius: var(--radius-lg);
-            width: 100%; max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            padding: 2rem;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute; top: 1.25rem; right: 1.25rem;
-            background: var(--background); border: none;
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--text-muted); cursor: pointer;
-        }
-
-        .form-group { margin-bottom: 1.25rem; }
-        .form-label { display: block; font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem; }
-        .form-control { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 0.95rem; outline: none; transition: var(--transition); background: var(--background); }
-        .form-control:focus { border-color: var(--primary); background: var(--surface); box-shadow: 0 0 0 3px rgba(15, 44, 89, 0.1); }
-        .form-error { color: #EF4444; font-size: 0.78rem; margin-top: 0.3rem; display: none; }
-        .form-group.has-error .form-control { border-color: #EF4444; }
-        .form-group.has-error .form-error { display: block; }
-
-        .floating-whatsapp {
-            position: fixed; bottom: 25px; right: 25px;
-            width: 60px; height: 60px;
-            background-color: var(--accent-green); color: white;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
-            z-index: 900;
-            transition: var(--transition);
-        }
-        .floating-whatsapp:hover { transform: scale(1.1); }
-
-        .mobile-sticky-bar {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--surface);
-            padding: 0.85rem 1.25rem;
-            box-shadow: 0 -4px 12px rgba(0,0,0,0.08);
-            z-index: 890;
-            display: flex; align-items: center; justify-content: space-between;
-            border-top: 1px solid var(--border);
-        }
-        @media (min-width: 992px) { .mobile-sticky-bar { display: none; } }
-
-        .toast-container { position: fixed; top: 85px; right: 20px; z-index: 3000; display: flex; flex-direction: column; gap: 0.75rem; }
-        .toast {
-            background: var(--primary); color: white;
-            padding: 0.85rem 1.25rem; border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg); font-size: 0.9rem; font-weight: 600;
-            display: flex; align-items: center; gap: 0.6rem;
-            animation: slideIn 0.3s ease forwards;
-        }
-
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        .footer { background: var(--primary-dark); color: white; padding: 4rem 0 2rem 0; }
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem; }
-        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
-        .footer-bottom { padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.88rem; color: rgba(255,255,255,0.6); }
-
-        /* USER BADGE CONNECTÉ */
-        .user-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(15, 44, 89, 0.08);
-            padding: 0.4rem 0.85rem;
-            border-radius: var(--radius-full);
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BENTOULAPPS - Application Web Numérique</title>
+  <!-- Material Symbols & Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  
+  <style>
+    :root {
+      --vert-foret: #183D32;
+      --vert-profond: #245744;
+      --vert-sauge: #A8BFA8;
+      --dore-vierge: #C9A24D;
+      --blanc-casse: #F7F8F3;
+      --texte-fonce: #17251F;
+      --fond-card: #FFFFFF;
+      --border-color: #E2E8E4;
+      --shadow-sm: 0 2px 8px rgba(24, 61, 50, 0.06);
+      --shadow-md: 0 4px 16px rgba(24, 61, 50, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.dark-theme {
+      --blanc-casse: #0F1915;
+      --fond-card: #182822;
+      --texte-fonce: #E8EFEA;
+      --border-color: #273E36;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--blanc-casse);
+      color: var(--texte-fonce);
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---- SIDEBAR ---- */
+    .sidebar {
+      width: 260px;
+      background-color: var(--vert-foret);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .sidebar-header {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-header .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--dore-vierge);
+      color: var(--vert-foret);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .sidebar-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #FFFFFF;
+    }
+
+    .nav-links {
+      list-style: none;
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      color: var(--vert-sauge);
+      text-decoration: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background-color: var(--vert-profond);
+      color: #FFFFFF;
+    }
+
+    .nav-item.active {
+      border-left: 4px solid var(--dore-vierge);
+    }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ---- MAIN WRAPPER ---- */
+    .main-wrapper {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding-bottom: 80px;
+      transition: var(--transition);
+    }
+
+    /* ---- TOPBAR ---- */
+    .topbar {
+      height: 64px;
+      background-color: var(--fond-card);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky;
+      top: 0;
+      z-index: 900;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--texte-fonce);
+      cursor: pointer;
+    }
+
+    .credit-badge {
+      background: rgba(201, 162, 77, 0.15);
+      border: 1px solid var(--dore-vierge);
+      color: var(--vert-foret);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    body.dark-theme .credit-badge {
+      color: var(--dore-vierge);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .lang-select {
+      background: var(--blanc-casse);
+      border: 1px solid var(--border-color);
+      color: var(--texte-fonce);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* ---- CONTENT ---- */
+    .content-container {
+      padding: 4px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .page-section {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---- BANNER ---- */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--vert-foret) 0%, var(--vert-profond) 100%);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-banner h1 {
+      font-size: 26px;
+      margin-bottom: 8px;
+      color: var(--dore-vierge);
+    }
+
+    .hero-banner p {
+      font-size: 14px;
+      color: var(--vert-sauge);
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ---- BUTTONS ---- */
+    .btn {
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 13px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--dore-vierge);
+      color: var(--vert-foret);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background-color: rgba(255,255,255,0.15);
+      color: #FFFFFF;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--vert-foret);
+      color: var(--vert-foret);
+    }
+
+    body.dark-theme .btn-outline {
+      border-color: var(--vert-sauge);
+      color: var(--vert-sauge);
+    }
+
+    .btn-success {
+      background-color: #2E7D32;
+      color: #FFFFFF;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* ---- 4 CARTES D'ACCÈS RAPIDE SUR L'ACCUEIL ---- */
+    .home-portal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .portal-card {
+      background-color: var(--fond-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--dore-vierge);
+    }
+
+    .portal-icon-box {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(24, 61, 50, 0.08);
+      color: var(--vert-foret);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+
+    body.dark-theme .portal-icon-box {
+      background: rgba(201, 162, 77, 0.15);
+      color: var(--dore-vierge);
+    }
+
+    .portal-card:hover .portal-icon-box {
+      background: var(--dore-vierge);
+      color: var(--vert-foret);
+    }
+
+    .portal-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--texte-fonce);
+    }
+
+    .portal-card p {
+      font-size: 13px;
+      color: var(--vert-sauge);
+      line-height: 1.4;
+      margin-bottom: 18px;
+      flex: 1;
+    }
+
+    .portal-link-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--vert-foret);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    body.dark-theme .portal-link-text {
+      color: var(--dore-vierge);
+    }
+
+    /* ---- PRODUCT GRID (3 COLONNES DANS BIBLIOTHÈQUE) ---- */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .product-card {
+      background-color: var(--fond-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .product-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+    }
+
+    /* CONTENEUR DE L'IMAGE */
+    .product-thumb-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: #E8EDE9;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-thumb-wrapper img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.3s ease;
+      background-color: #E8EDE9;
+    }
+
+    .product-card:hover .product-thumb-wrapper img {
+      transform: scale(1.05);
+    }
+
+    /* BADGE TYPE / ICON */
+    .badge-type {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(24, 61, 50, 0.9);
+      color: #FFFFFF;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    /* BADGE VERT DÉJÀ PAYÉ */
+    .badge-paid {
+      position: absolute;
+      top: 8px;
+      right: 40px;
+      background: #2E7D32;
+      color: #FFFFFF;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      z-index: 2;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    /* BOUTON ICONE PARTAGER */
+    .btn-share-icon {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--vert-foret);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 3;
+      transition: var(--transition);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .btn-share-icon:hover {
+      background: var(--dore-vierge);
+      color: #FFFFFF;
+      transform: scale(1.1);
+    }
+
+    .product-info {
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-title {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .product-category {
+      font-size: 11px;
+      color: var(--vert-sauge);
+      margin-bottom: 8px;
+    }
+
+    .product-price {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--vert-foret);
+      margin-top: auto;
+      margin-bottom: 10px;
+    }
+
+    body.dark-theme .product-price {
+      color: var(--dore-vierge);
+    }
+
+    .card-actions-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    /* ---- FILTERS ---- */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input, .select-filter {
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: var(--fond-card);
+      color: var(--texte-fonce);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 180px;
+    }
+
+    /* ---- BOTTOM BAR MOBILE ---- */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background-color: var(--fond-card);
+      border-top: 1px solid var(--border-color);
+      z-index: 1000;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--texte-fonce);
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 600;
+      gap: 2px;
+      opacity: 0.6;
+      cursor: pointer;
+      width: 25%;
+    }
+
+    .bottom-nav-item.active {
+      opacity: 1;
+      color: var(--vert-foret);
+    }
+
+    body.dark-theme .bottom-nav-item.active {
+      color: var(--dore-vierge);
+    }
+
+    .bottom-nav-item .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    /* ---- MODALES POPUP MODERNES ---- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 25, 21, 0.72);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-card {
+      background-color: var(--fond-card);
+      border-radius: var(--radius-md);
+      max-width: 650px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      border: 1px solid var(--border-color);
+      animation: popupZoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popupZoom {
+      from { opacity: 0; transform: scale(0.92); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--texte-fonce);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .custom-dialog-card {
+      max-width: 440px;
+      text-align: center;
+      padding: 28px 24px;
+    }
+
+    .dialog-icon-wrapper {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(201, 162, 77, 0.15);
+      color: var(--dore-vierge);
+    }
+
+    .dialog-icon-wrapper.success {
+      background: rgba(36, 87, 68, 0.15);
+      color: #245744;
+    }
+
+    .dialog-icon-wrapper.error {
+      background: rgba(211, 47, 47, 0.15);
+      color: #D32F2F;
+    }
+
+    .dialog-icon-wrapper .dialog-icon {
+      font-size: 32px;
+    }
+
+    .dialog-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--texte-fonce);
+    }
+
+    .dialog-subtitle {
+      font-size: 13px;
+      color: var(--vert-sauge);
+      margin-bottom: 18px;
+      line-height: 1.4;
+    }
+
+    .dialog-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .purchase-summary-box {
+      background-color: var(--blanc-casse);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .purchase-summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 13px;
+      border-bottom: 1px dashed var(--border-color);
+    }
+
+    .purchase-summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .purchase-summary-row.total-row {
+      font-size: 14px;
+      font-weight: 700;
+      padding-top: 8px;
+      margin-top: 4px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* ---- MEDIA RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-wrapper { margin-left: 0; }
+      .menu-toggle { display: block; }
+      .bottom-nav { display: flex; }
+      
+      .home-portal-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .portal-card {
+        padding: 16px 12px;
+      }
+      .portal-icon-box {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+      }
+      .portal-icon-box .material-symbols-outlined {
+        font-size: 22px;
+      }
+      .portal-card h3 {
+        font-size: 13px;
+      }
+      .portal-card p {
+        font-size: 10px;
+        margin-bottom: 12px;
+      }
+      .portal-link-text {
+        font-size: 10px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+      }
+      .product-info { padding: 6px; }
+      .product-title { font-size: 10px; line-height: 1.2; }
+      .product-category { font-size: 8px; margin-bottom: 4px; }
+      .product-price { font-size: 10px; margin-bottom: 6px; }
+      .btn { padding: 6px 6px; font-size: 9px; }
+      .badge-type { font-size: 8px; padding: 2px 4px; top: 4px; left: 4px; }
+      .badge-paid { font-size: 8px; padding: 2px 4px; top: 4px; right: 28px; }
+      .btn-share-icon { width: 22px; height: 22px; top: 4px; right: 4px; }
+      .btn-share-icon .material-symbols-outlined { font-size: 14px; }
+    }
+
+    .loader-spinner {
+      border: 3px solid var(--border-color);
+      border-top: 3px solid var(--vert-foret);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      animation: spin 1s linear infinite;
+      margin: 30px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- HEADER -->
-    <header class="header">
-        <div class="container header-content">
-            <a href="#" class="logo">
-                <div class="logo-box">
-                    <i class="fa-solid fa-square-poll-vertical"></i>
-                </div>
-                <div>
-                    <div>BENTOUL</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">FORMS</div>
-                </div>
-            </a>
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="sidebar" id="appSidebar">
+    <div class="sidebar-header">
+      <div class="logo-icon">B</div>
+      <h2>BENTOULAPPS</h2>
+    </div>
+    <ul class="nav-links">
+      <li class="nav-item active" onclick="switchPage('home')">
+        <span class="material-symbols-outlined">home</span>
+        <span data-i18n="navHome">Accueil</span>
+      </li>
+      <li class="nav-item" onclick="switchPage('library')">
+        <span class="material-symbols-outlined">local_library</span>
+        <span data-i18n="navLibrary">Bibliothèque</span>
+      </li>
+      <li class="nav-item" onclick="switchPage('buy-credits')">
+        <span class="material-symbols-outlined">account_balance_wallet</span>
+        <span data-i18n="navBuyCredits">Acheter des crédits</span>
+      </li>
+      <li class="nav-item" onclick="switchPage('history')">
+        <span class="material-symbols-outlined">history</span>
+        <span data-i18n="navHistory">Historique</span>
+      </li>
+      <li class="nav-item" onclick="switchPage('profile')">
+        <span class="material-symbols-outlined">person</span>
+        <span data-i18n="navProfile">Profil</span>
+      </li>
+      <li class="nav-item" id="adminNavItem" style="display:none;" onclick="switchPage('admin')">
+        <span class="material-symbols-outlined">admin_panel_settings</span>
+        <span data-i18n="navAdmin">Administration</span>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <span style="font-size: 12px; color: var(--vert-sauge);">v2.0 Native</span>
+    </div>
+  </aside>
 
-            <nav class="nav-desktop">
-                <a href="#accueil" class="nav-link">Accueil</a>
-                <a href="#services" class="nav-link">Services</a>
-                <a href="#produits" class="nav-link">Boutique & Modèles</a>
-                <a href="#tarifs" class="nav-link">Tarifs</a>
-                <a href="#exemples" class="nav-link">Exemples</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </nav>
-
-            <div class="auth-nav-buttons" id="authNavContainer">
-                <button class="btn btn-outline btn-sm" onclick="openLoginModal()">Connexion</button>
-                <button class="btn btn-primary btn-sm" onclick="openSignupModal()">Inscription</button>
-            </div>
-
-            <button class="menu-toggle" onclick="openMenu()" aria-label="Ouvrir le menu">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+  <!-- MAIN WRAPPER -->
+  <div class="main-wrapper">
+    
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-toggle" onclick="toggleSidebar()">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+        <div class="credit-badge">
+          <span class="material-symbols-outlined" style="font-size: 16px;">monetization_on</span>
+          <span id="userCreditDisplay">0</span>&nbsp;<span data-i18n="creditsUnit">crédits</span>
         </div>
+      </div>
+      <div class="topbar-right">
+        <select class="lang-select" onchange="changeLanguage(this.value)">
+          <option value="fr">FR 🇫🇷</option>
+          <option value="ht">HT 🇭🇹</option>
+        </select>
+        <button class="btn btn-outline" style="padding: 6px;" onclick="toggleTheme()">
+          <span class="material-symbols-outlined" style="font-size: 18px;">dark_mode</span>
+        </button>
+      </div>
     </header>
 
-    <!-- Mobile Drawer -->
-    <div class="drawer-overlay" id="drawerOverlay" onclick="closeMenu()"></div>
-    <div class="drawer" id="mobileDrawer">
-        <div class="drawer-header">
-            <div class="logo">
-                <div class="logo-box"><i class="fa-solid fa-square-poll-vertical"></i></div>
-                <span>BENTOUL FORMS</span>
-            </div>
-            <button class="drawer-close" onclick="closeMenu()"><i class="fa-solid fa-xmark"></i></button>
+    <!-- CONTENT AREA -->
+    <main class="content-container">
+
+      <!-- 1. ACCUEIL (AVEC LES 4 CARTES D'ACCÈS RAPIDE) -->
+      <section id="page-home" class="page-section active">
+        <div class="hero-banner">
+          <h1 id="welcomeGreeting">Bienvenue sur BENTOULAPPS</h1>
+          <p data-i18n="heroText">Votre bibliothèque d'applications APK, livres PDF, formations vidéo et ressources numériques professionnelles.</p>
+          <div class="hero-buttons">
+            <button class="btn btn-primary" onclick="switchPage('library')" data-i18n="btnExplore">Explorer le catalogue</button>
+            <button class="btn btn-secondary" onclick="switchPage('buy-credits')" data-i18n="btnRecharge">Recharger mes crédits</button>
+          </div>
         </div>
-        <div class="drawer-links">
-            <div id="authMobileContainer" style="margin-bottom: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
-                <button class="btn btn-outline btn-sm" onclick="closeMenu(); openLoginModal();">Connexion</button>
-                <button class="btn btn-primary btn-sm" onclick="closeMenu(); openSignupModal();">Inscription</button>
-            </div>
-            <a href="#accueil" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-house"></i> Accueil</a>
-            <a href="#services" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-list-check"></i> Services</a>
-            <a href="#produits" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-bag-shopping"></i> Modèles & Produits</a>
-            <a href="#tarifs" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-tags"></i> Tarifs</a>
-            <a href="#exemples" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-cubes"></i> Exemples</a>
-            <a href="#contact" class="drawer-link" onclick="closeMenu()"><i class="fa-solid fa-envelope"></i> Contact</a>
-            <button class="btn btn-primary" onclick="closeMenu(); openOrderModal();" style="margin-top: 1rem;">
-                <i class="fa-solid fa-paper-plane"></i> Commander
-            </button>
+
+        <div class="section-title">
+          <span>Nos Espaces & Services</span>
         </div>
+
+        <!-- LES 4 CARTES DEMANDÉES -->
+        <div class="home-portal-grid">
+          
+          <!-- Carte 1 : Bibliothèque -->
+          <div class="portal-card" onclick="switchPage('library')">
+            <div class="portal-icon-box">
+              <span class="material-symbols-outlined" style="font-size: 28px;">local_library</span>
+            </div>
+            <h3>Bibliothèque</h3>
+            <p>Accédez à tous nos documents PDF, applications APK, templates et formulaires téléchargeables.</p>
+            <div class="portal-link-text">
+              <span>Voir les documents</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </div>
+
+          <!-- Carte 2 : Benamoura -->
+          <a class="portal-card" href="pages/benamoura.html">
+            <div class="portal-icon-box">
+              <span class="material-symbols-outlined" style="font-size: 28px;">favorite</span>
+            </div>
+            <h3>Benamoura</h3>
+            <p>Découvrez des conseils d'amour bienveillants, des histoires de vie sincères et des réflexions amoureuses.</p>
+            <div class="portal-link-text">
+              <span>Ouvrir Benamoura</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </a>
+
+          <!-- Carte 3 : Bentoulinguo -->
+          <a class="portal-card" href="pages/bentoulinguo.html">
+            <div class="portal-icon-box">
+              <span class="material-symbols-outlined" style="font-size: 28px;">translate</span>
+            </div>
+            <h3>Bentoulinguo</h3>
+            <p>Apprenez et pratiquez des expressions authentiques en anglais, français et créole.</p>
+            <div class="portal-link-text">
+              <span>Pratiquer les langues</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </a>
+
+          <!-- Carte 4 : Services -->
+          <a class="portal-card" href="pages/services.html">
+            <div class="portal-icon-box">
+              <span class="material-symbols-outlined" style="font-size: 28px;">design_services</span>
+            </div>
+            <h3>Services</h3>
+            <p>Nos prestations numériques : conception de formulaires en ligne sur mesure et accompagnement digital.</p>
+            <div class="portal-link-text">
+              <span>Découvrir nos services</span>
+              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 2. BIBLIOTHÈQUE (CATALOGUE COMPLET DES PRODUITS) -->
+      <section id="page-library" class="page-section">
+        <div class="section-title">
+          <span data-i18n="navLibrary">Bibliothèque de produits</span>
+        </div>
+        
+        <div class="filter-bar">
+          <input type="text" class="search-input" id="searchKeyword" placeholder="Rechercher..." oninput="filterProducts()">
+          <select class="select-filter" id="categoryFilter" onchange="filterProducts()">
+            <option value="" data-i18n="allCategories">Toutes les catégories</option>
+          </select>
+          <select class="select-filter" id="typeFilter" onchange="filterProducts()">
+            <option value="">Tous les types</option>
+            <option value="pdf">PDF</option>
+            <option value="apk">APK</option>
+            <option value="templateblogger">Template Blogger</option>
+            <option value="formulaire">Formulaire</option>
+            <option value="video">Vidéo</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+
+        <div id="libraryLoader" class="loader-spinner" style="display:none;"></div>
+        <div class="products-grid" id="libraryProductsContainer"></div>
+      </section>
+
+      <!-- 3. PAGE VUE DÉTAILLÉE D'UN DOCUMENT -->
+      <section id="page-doc-detail" class="page-section">
+        <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+          <button class="btn btn-outline" onclick="goBackFromDetail()">
+            <span class="material-symbols-outlined">arrow_back</span> Retour
+          </button>
+          <button class="btn btn-outline" id="detailShareTopBtn" onclick="shareCurrentDoc()">
+            <span class="material-symbols-outlined">share</span> Partager
+          </button>
+        </div>
+
+        <div class="product-card" style="padding: 20px; max-width: 800px; margin: 0 auto;">
+          <div class="product-thumb-wrapper" style="aspect-ratio: 16 / 9; border-radius: var(--radius-sm); margin-bottom: 16px;">
+            <img id="detailDocImg" src="" alt="" referrerpolicy="no-referrer" onerror="onProductImageError(this)">
+            <span class="badge-type" id="detailDocBadge"></span>
+            <span class="badge-paid" id="detailDocPaidBadge" style="display:none;">
+              <span class="material-symbols-outlined" style="font-size:12px;">check_circle</span> Payé
+            </span>
+          </div>
+
+          <h2 id="detailDocTitle" style="font-size: 20px; font-weight: 800; margin-bottom: 8px;"></h2>
+          
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; font-size: 13px; color: var(--vert-sauge);">
+            <span>Catégorie : <strong id="detailDocCat" style="color: var(--texte-fonce);">-</strong></span>
+            <span>Date d'ajout : <strong id="detailDocDate" style="color: var(--texte-fonce);">-</strong></span>
+            <span>Prix : <strong id="detailDocPrice" style="color: var(--dore-vierge); font-size: 15px;">-</strong></span>
+          </div>
+
+          <div style="background: var(--blanc-casse); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
+            <h4 style="margin-bottom: 8px; font-size: 14px;">Description du document</h4>
+            <p id="detailDocDesc" style="font-size: 13px; line-height: 1.6; white-space: pre-line; color: var(--texte-fonce);"></p>
+          </div>
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;" id="detailDocActionButtons"></div>
+        </div>
+      </section>
+
+      <!-- 4. ACHETER DES CRÉDITS -->
+      <section id="page-buy-credits" class="page-section">
+        <div class="section-title">
+          <span data-i18n="navBuyCredits">Acheter des crédits</span>
+        </div>
+        <p style="margin-bottom: 20px; font-size: 14px;" data-i18n="creditInfo">Choisissez votre forfait puis effectuez le paiement sécurisé via WhatsApp avec notre service client.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+          
+          <div class="product-card" style="padding: 20px; text-align: center;">
+            <h3 style="color: var(--vert-foret); margin-bottom: 8px;">Forfait Découverte</h3>
+            <div style="font-size: 24px; font-weight: 800; color: var(--dore-vierge); margin-bottom: 12px;">500 Crédits</div>
+            <p style="font-size: 12px; margin-bottom: 16px;">Idéal pour télécharger quelques livres ou applications.</p>
+            <button class="btn btn-primary btn-block" onclick="orderCreditsViaWhatsApp('500 Crédits')">Acheter via WhatsApp</button>
+          </div>
+
+          <div class="product-card" style="padding: 20px; text-align: center; border: 2px solid var(--dore-vierge);">
+            <h3 style="color: var(--vert-foret); margin-bottom: 8px;">Forfait Pro</h3>
+            <div style="font-size: 24px; font-weight: 800; color: var(--dore-vierge); margin-bottom: 12px;">1500 Crédits</div>
+            <p style="font-size: 12px; margin-bottom: 16px;">Accès illimité aux meilleures formations et vidéos.</p>
+            <button class="btn btn-primary btn-block" onclick="orderCreditsViaWhatsApp('1500 Crédits')">Acheter via WhatsApp</button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 5. HISTORIQUE DES ACHATS -->
+      <section id="page-history" class="page-section">
+        <div class="section-title">
+          <span data-i18n="navHistory">Historique des achats</span>
+        </div>
+        <div id="historyContainer"></div>
+      </section>
+
+      <!-- 6. PROFIL UTILISATEUR -->
+      <section id="page-profile" class="page-section">
+        <div class="product-card" style="padding: 24px; max-width: 500px; margin: 0 auto;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <span class="material-symbols-outlined" style="font-size: 64px; color: var(--vert-foret);">account_circle</span>
+            <h2 id="profileNameDisplay">Nom Utilisateur</h2>
+            <p id="profileEmailDisplay" style="font-size: 13px; color: var(--vert-sauge);"></p>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+              <span style="font-size: 13px;">Solde :</span>
+              <strong id="profileCreditsDisplay">0 Crédits</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
+              <span style="font-size: 13px;">Membre depuis :</span>
+              <strong id="profileDateDisplay">-</strong>
+            </div>
+          </div>
+
+          <button class="btn btn-outline btn-block" style="margin-bottom: 10px;" onclick="switchPage('history')">Consulter mes achats</button>
+          <button class="btn btn-primary btn-block" style="background-color: #D32F2F; color: white;" onclick="logout()">Se déconnecter</button>
+        </div>
+      </section>
+
+      <!-- 7. AUTHENTIFICATION -->
+      <section id="page-auth" class="page-section">
+        <div class="product-card" style="padding: 28px; max-width: 400px; margin: 20px auto;">
+          
+          <div id="loginFormBlock">
+            <h2 style="margin-bottom: 16px; text-align: center;" data-i18n="titleLogin">Connexion</h2>
+            <input type="email" id="loginEmail" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Adresse Email">
+            <input type="password" id="loginPassword" class="search-input" style="width: 100%; margin-bottom: 16px;" placeholder="Mot de passe">
+            <button class="btn btn-primary btn-block" onclick="submitLogin()" data-i18n="btnLogin">Se connecter</button>
+            <p style="text-align: center; margin-top: 16px; font-size: 13px;">
+              <a href="#" onclick="toggleAuthForm('register')" style="color: var(--vert-foret); font-weight: 700;">Créer un compte</a>
+            </p>
+          </div>
+
+          <div id="registerFormBlock" style="display:none;">
+            <h2 style="margin-bottom: 16px; text-align: center;" data-i18n="titleRegister">Inscription</h2>
+            <input type="text" id="regNom" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Nom complet">
+            <input type="email" id="regEmail" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Adresse Email">
+            <input type="password" id="regPassword" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Mot de passe">
+            <input type="password" id="regPasswordConfirm" class="search-input" style="width: 100%; margin-bottom: 16px;" placeholder="Confirmer le mot de passe">
+            <button class="btn btn-primary btn-block" onclick="submitRegister()" data-i18n="btnRegister">Créer mon compte</button>
+            <p style="text-align: center; margin-top: 16px; font-size: 13px;">
+              <a href="#" onclick="toggleAuthForm('login')" style="color: var(--vert-foret); font-weight: 700;">Déjà un compte ? Connexion</a>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 8. ADMINISTRATION -->
+      <section id="page-admin" class="page-section">
+        <div class="section-title">
+          <span>Gestion du Catalogue (Admin)</span>
+        </div>
+        <div class="product-card" style="padding: 20px;">
+          <h3 style="margin-bottom: 14px;">Ajouter un nouveau produit</h3>
+          <input type="text" id="adminProdTitre" class="search-input" style="width: 100%; margin-bottom: 10px;" placeholder="Titre du produit">
+          <textarea id="adminProdDesc" class="search-input" style="width: 100%; margin-bottom: 10px;" placeholder="Description"></textarea>
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="text" id="adminProdCat" class="search-input" style="flex:1;" placeholder="Catégorie">
+            <select id="adminProdType" class="select-filter" style="flex:1;">
+              <option value="pdf">PDF</option>
+              <option value="apk">APK</option>
+              <option value="templateblogger">Template Blogger</option>
+              <option value="formulaire">Formulaire</option>
+              <option value="video">Vidéo</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+            <input type="number" id="adminProdPrix" class="search-input" style="flex:1;" placeholder="Prix en crédits">
+            <input type="text" id="adminProdImg" class="search-input" style="flex:1;" placeholder="ImageUrl (Lien direct ou Google Drive)">
+          </div>
+          <input type="text" id="adminProdFileUrl" class="search-input" style="width: 100%; margin-bottom: 16px;" placeholder="DownloadUrl (Google Drive ou direct)">
+          <button class="btn btn-primary" onclick="submitAdminAddProduct()">Enregistrer le produit</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- BOTTOM NAVIGATION FOR MOBILE -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-item active" onclick="switchPage('home')">
+      <span class="material-symbols-outlined">home</span>
+      <span data-i18n="navHome">Accueil</span>
     </div>
-
-    <!-- HERO SECTION -->
-    <section class="hero" id="accueil">
-        <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="hero-badge-container" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
-                        <span class="badge badge-accent"><i class="fa-solid fa-bolt"></i> Simple & Rapide</span>
-                        <span class="badge badge-primary">À partir de 500 HTG</span>
-                        <span class="badge badge-orange"><i class="fa-solid fa-gift"></i> +10 Points offerts</span>
-                    </div>
-                    <h1 class="hero-title">Créez votre formulaire en ligne facilement</h1>
-                    <p class="hero-subtitle">Nous créons des formulaires professionnels connectés à WhatsApp et Google Sheets pour vos commandes, inscriptions et activités.</p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="openOrderModal()">
-                            <i class="fa-solid fa-plus-circle"></i> Créer mon formulaire
-                        </button>
-                        <a href="#produits" class="btn btn-outline">
-                            <i class="fa-solid fa-store"></i> Voir nos modèles
-                        </a>
-                    </div>
-                    <div class="hero-note">
-                        <i class="fa-solid fa-circle-check" style="color: var(--accent-green);"></i>
-                        <span>Service adapté aux entrepreneurs, associations et commerces en Haïti.</span>
-                    </div>
-                </div>
-
-                <div class="hero-mockup">
-                    <div class="mockup-header">
-                        <div class="mockup-dot" style="background: #EF4444;"></div>
-                        <div class="mockup-dot" style="background: #F59E0B;"></div>
-                        <div class="mockup-dot" style="background: #10B981;"></div>
-                        <span style="font-size: 0.75rem; color: var(--text-muted); margin-left: 0.5rem;">Aperçu du formulaire</span>
-                    </div>
-                    <div class="mockup-input-group">
-                        <label class="mockup-label">Nom de l'activité / Entreprise</label>
-                        <div class="mockup-input">Mon Commerce HT</div>
-                    </div>
-                    <div class="mockup-input-group">
-                        <label class="mockup-label">Service Souhaité</label>
-                        <div class="mockup-input">Commande d'articles en ligne</div>
-                    </div>
-                    <div class="mockup-input-group">
-                        <label class="mockup-label">Numéro WhatsApp</label>
-                        <div class="mockup-input">+509 4277 2970</div>
-                    </div>
-                    <div class="mockup-submit">
-                        <i class="fa-solid fa-paper-plane" style="margin-right: 0.4rem;"></i> Envoyer ma demande
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION SERVICES -->
-    <section class="section-padding" id="services">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Nos services de formulaires</h2>
-                <p class="section-subtitle">Des formulaires adaptés à tous vos besoins professionnels.</p>
-            </div>
-
-            <div class="services-grid">
-                <div class="card">
-                    <div class="service-icon"><i class="fa-solid fa-user-plus"></i></div>
-                    <h3 class="service-title">Formulaire d'inscription</h3>
-                    <p class="service-desc">Inscription à une formation, séminaire ou adhésion d'association.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Simple')">Commander</button>
-                </div>
-                <div class="card">
-                    <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
-                    <h3 class="service-title">Formulaire de commande</h3>
-                    <p class="service-desc">Permettez à vos clients de commander vos produits en toute simplicité.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Commander</button>
-                </div>
-                <div class="card">
-                    <div class="service-icon"><i class="fa-solid fa-calendar-check"></i></div>
-                    <h3 class="service-title">Formulaire de réservation</h3>
-                    <p class="service-desc">Prise de rendez-vous, réservations d'hôtels ou de prestations.</p>
-                    <button class="btn btn-outline btn-sm" onclick="openOrderModal('Formulaire Pro')">Commander</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION PRODUITS & RESSOURCES (BASE DE DONNEES) -->
-    <section class="section-padding" id="produits" style="background: #F1F5F9;">
-        <div class="container">
-            <div class="section-header">
-                <span class="badge badge-accent" style="margin-bottom: 0.5rem;">Boutique & Téléchargements</span>
-                <h2 class="section-title">Modèles prêts à l'emploi & Ressources</h2>
-                <p class="section-subtitle">Découvrez notre catalogue. Débloquez-les grâce à vos points d'affiliation ou en achat direct.</p>
-            </div>
-
-            <div class="products-grid" id="productsContainer">
-                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem; color: var(--text-muted);">
-                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 2rem;"></i>
-                    <p style="margin-top: 1rem;">Chargement du catalogue depuis votre base de données...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION TARIFS -->
-    <section class="section-padding" id="tarifs">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Nos tarifs de création</h2>
-                <p class="section-subtitle">Des prix clairs, accessibles et sans frais cachés.</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="card pricing-card">
-                    <div>
-                        <span class="badge badge-primary">Formulaire Simple</span>
-                        <div class="pricing-price">500 <span>HTG</span></div>
-                        <div class="pricing-features">
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Formulaire personnalisé</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Design propre et léger</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Compatible smartphone</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Livraison rapide</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline" onclick="selectPlan('simple')">Choisir cette offre</button>
-                </div>
-
-                <div class="card pricing-card popular">
-                    <div class="pricing-popular-badge">POPULAIRE</div>
-                    <div>
-                        <span class="badge badge-accent">Formulaire Pro</span>
-                        <div class="pricing-price">1 000 <span>HTG</span></div>
-                        <div class="pricing-features">
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Design professionnel avancé</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Validation automatique des entrées</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Envoi des détails sur WhatsApp</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Intégration sur mesure</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="selectPlan('pro')">Choisir cette offre</button>
-                </div>
-
-                <div class="card pricing-card">
-                    <div>
-                        <span class="badge badge-orange">Formulaire Avancé</span>
-                        <div class="pricing-price">1 500 <span>HTG</span></div>
-                        <div class="pricing-features">
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Formulaire haute qualité</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Connexion Google Sheets incluse</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Connexion WhatsApp instantanée</div>
-                            <div class="pricing-feature"><i class="fa-solid fa-check"></i> Support prioritaire</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline" onclick="selectPlan('advanced')">Choisir cette offre</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CALCULATEUR DE PRIX -->
-    <section class="section-padding" style="background: #F8FAFC;">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Calculez le prix de votre formulaire</h2>
-                <p class="section-subtitle">Sélectionnez vos options et obtenez une estimation en direct.</p>
-            </div>
-
-            <div class="calculator-container">
-                <div class="calc-group">
-                    <label class="calc-label">1. Choisissez le type de formulaire :</label>
-                    <div class="calc-options-grid">
-                        <div class="calc-card-option selected" id="opt-simple" onclick="setCalcPlan('simple')">
-                            <input type="radio" name="calc-plan" id="radio-simple" checked>
-                            <strong>Formulaire Simple</strong>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">500 HTG</span>
-                        </div>
-                        <div class="calc-card-option" id="opt-pro" onclick="setCalcPlan('pro')">
-                            <input type="radio" name="calc-plan" id="radio-pro">
-                            <strong>Formulaire Pro</strong>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">1 000 HTG</span>
-                        </div>
-                        <div class="calc-card-option" id="opt-advanced" onclick="setCalcPlan('advanced')">
-                            <input type="radio" name="calc-plan" id="radio-advanced">
-                            <strong>Formulaire Avancé</strong>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">1 500 HTG</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="calc-group">
-                    <label class="calc-label">2. Options de connexion :</label>
-                    <div class="calc-options-grid">
-                        <div class="calc-card-option" id="opt-chk-wa" onclick="toggleCalcOption('whatsapp')">
-                            <input type="checkbox" id="chk-wa">
-                            <strong>WhatsApp</strong>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">+ 500 HTG</span>
-                        </div>
-                        <div class="calc-card-option" id="opt-chk-gs" onclick="toggleCalcOption('googleSheets')">
-                            <input type="checkbox" id="chk-gs">
-                            <strong>Google Sheets</strong>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">+ 1 000 HTG</span>
-                        </div>
-                        <div class="calc-card-option" id="opt-chk-pack" onclick="toggleCalcOption('whatsappSheets')">
-                            <input type="checkbox" id="chk-pack">
-                            <strong>WhatsApp + Sheets</strong>
-                            <span style="font-size: 0.85rem; color: var(--text-muted);">+ 1 500 HTG</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="calc-summary-box">
-                    <div class="calc-summary-row">
-                        <span>Formulaire : <strong id="sum-plan-name">Formulaire Simple</strong></span>
-                        <span id="sum-plan-price">500 HTG</span>
-                    </div>
-                    <div class="calc-summary-row">
-                        <span>Option(s) : <strong id="sum-opt-name">Aucune</strong></span>
-                        <span id="sum-opt-price">0 HTG</span>
-                    </div>
-                    <div class="calc-summary-total">
-                        <span>TOTAL :</span>
-                        <span id="sum-total-price">500 HTG</span>
-                    </div>
-                </div>
-
-                <button class="btn btn-whatsapp" style="width: 100%; margin-top: 1.5rem;" onclick="orderFromCalculator()">
-                    <i class="fa-solid fa-cart-shopping"></i> Commander maintenant
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION CONTACT -->
-    <section class="section-padding" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Contactez BENTOUL FORMS</h2>
-                <p class="section-subtitle">Notre équipe répond directement sur WhatsApp à toutes vos demandes.</p>
-            </div>
-
-            <div style="max-width: 600px; margin: 0 auto;" class="card">
-                <div style="display: flex; flex-direction: column; gap: 1.25rem; text-align: center;">
-                    <div>
-                        <i class="fa-brands fa-whatsapp" style="font-size: 2.2rem; color: var(--accent-green);"></i>
-                        <p style="font-weight: 800; font-size: 1.2rem; margin-top: 0.3rem;">+509 4277 2970</p>
-                    </div>
-                    <div>
-                        <i class="fa-solid fa-envelope" style="font-size: 1.5rem; color: var(--primary);"></i>
-                        <p style="font-weight: 600;">bentoulcreation@gmail.com</p>
-                    </div>
-                    <button class="btn btn-whatsapp" onclick="directContactWhatsApp()" style="margin-top: 0.5rem;">
-                        <i class="fa-brands fa-whatsapp"></i> Écrivez-nous sur WhatsApp (+509 4277 2970)
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="logo" style="color: white; margin-bottom: 1rem;">
-                        <div class="logo-box" style="background: white; color: var(--primary);"><i class="fa-solid fa-square-poll-vertical"></i></div>
-                        <span>BENTOUL FORMS</span>
-                    </div>
-                    <p style="font-size: 0.9rem; opacity: 0.8; max-width: 320px;">Création de formulaires en ligne simples, professionnels et accessibles en Haïti.</p>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 1rem; font-size: 1.1rem;">Navigation</h4>
-                    <ul style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; opacity: 0.8;">
-                        <li><a href="#accueil">Accueil</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#produits">Boutique & Modèles</a></li>
-                        <li><a href="#tarifs">Tarifs</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 style="margin-bottom: 1rem; font-size: 1.1rem;">Mention</h4>
-                    <p style="font-size: 0.88rem; opacity: 0.8;">Une marque de <strong>BENTOUL CREATION</strong>.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                &copy; 2026 BENTOUL FORMS. Tous droits réservés.
-            </div>
-        </div>
-    </footer>
-
-    <!-- BOUTON FLOTTANT WHATSAPP -->
-    <a href="#" class="floating-whatsapp" onclick="directContactWhatsApp(); return false;" aria-label="WhatsApp Contact">
-        <i class="fa-brands fa-whatsapp"></i>
-    </a>
-
-    <!-- BARRE FIXE MOBILE -->
-    <div class="mobile-sticky-bar">
-        <div>
-            <div style="font-size: 0.75rem; color: var(--text-muted);">À partir de</div>
-            <div style="font-weight: 800; color: var(--primary); font-size: 1.1rem;">500 HTG</div>
-        </div>
-        <button class="btn btn-primary btn-sm" onclick="openOrderModal()">
-            <i class="fa-solid fa-paper-plane"></i> Commander
-        </button>
+    <div class="bottom-nav-item" onclick="switchPage('library')">
+      <span class="material-symbols-outlined">local_library</span>
+      <span data-i18n="navLibrary">Bibliothèque</span>
     </div>
-
-    <!-- NOTIFICATIONS TOAST -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <!-- =================================================================
-       MODALE 1 : COMMANDE DE FORMULAIRE (GOOGLE SHEETS + WHATSAPP)
-       ================================================================= -->
-    <div class="modal-overlay" id="orderModal">
-        <div class="modal-container">
-            <button class="modal-close" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="color: var(--primary); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem;">Commander votre formulaire</h3>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Votre demande est enregistrée dans notre tableau Google Sheets puis envoyée sur WhatsApp.</p>
-
-            <form id="orderForm" onsubmit="handleOrderSubmit(event)">
-                <div class="form-group" id="group-fullname">
-                    <label class="form-label">Nom complet *</label>
-                    <input type="text" class="form-control" id="modal-fullname" placeholder="Ex: Jean Baptiste">
-                    <div class="form-error">Le nom est obligatoire.</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Nom de l'entreprise / activité</label>
-                    <input type="text" class="form-control" id="modal-business" placeholder="Ex: Boutique Lakay">
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; @media(min-width: 576px){grid-template-columns: 1fr 1fr;}">
-                    <div class="form-group" id="group-phone">
-                        <label class="form-label">Téléphone / WhatsApp *</label>
-                        <input type="tel" class="form-control" id="modal-phone" placeholder="+509 3000 0000">
-                        <div class="form-error">Numéro requis.</div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="modal-email" placeholder="exemple@mail.com">
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem; @media(min-width: 576px){grid-template-columns: 1fr 1fr;}">
-                    <div class="form-group">
-                        <label class="form-label">Type de formulaire *</label>
-                        <select class="form-control" id="modal-plan" onchange="updateModalSummary()">
-                            <option value="simple">Formulaire Simple (500 HTG)</option>
-                            <option value="pro" selected>Formulaire Pro (1 000 HTG)</option>
-                            <option value="advanced">Formulaire Avancé (1 500 HTG)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Option choisie</label>
-                        <select class="form-control" id="modal-option" onchange="updateModalSummary()">
-                            <option value="none">Aucune (0 HTG)</option>
-                            <option value="whatsapp">WhatsApp (+500 HTG)</option>
-                            <option value="googleSheets">Google Sheets (+1 000 HTG)</option>
-                            <option value="whatsappSheets" selected>WhatsApp + Google Sheets (+1 500 HTG)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group" id="group-desc">
-                    <label class="form-label">Description du projet / Besoins *</label>
-                    <textarea class="form-control" id="modal-desc" rows="3" placeholder="Expliquez ce que le formulaire doit collecter..."></textarea>
-                    <div class="form-error">Veuillez décrire votre projet.</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Champs souhaités</label>
-                    <input type="text" class="form-control" id="modal-fields" placeholder="Ex: Nom, Téléphone, Photo, Pièce d'identité">
-                </div>
-
-                <div style="background: var(--background); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem; font-size: 0.88rem;">
-                    <div style="display: flex; justify-content: space-between;"><span>Formule :</span> <strong id="modal-sum-plan">Formulaire Pro (1 000 HTG)</strong></div>
-                    <div style="display: flex; justify-content: space-between; margin-top: 0.3rem;"><span>Connexion :</span> <strong id="modal-sum-opt">WhatsApp + Sheets (+1 500 HTG)</strong></div>
-                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--border); font-size: 1rem; color: var(--primary);">
-                        <strong>TOTAL ESTIMÉ :</strong> <strong id="modal-sum-total">2 500 HTG</strong>
-                    </div>
-                </div>
-
-                <button type="submit" id="btn-submit-order" class="btn btn-whatsapp" style="width: 100%;">
-                    <i class="fa-brands fa-whatsapp"></i> Envoyer ma commande (Sheets & WhatsApp)
-                </button>
-            </form>
-        </div>
+    <div class="bottom-nav-item" onclick="switchPage('history')">
+      <span class="material-symbols-outlined">history</span>
+      <span data-i18n="navHistory">Historique</span>
     </div>
-
-    <!-- =================================================================
-       MODALE 2 : CONNEXION (LOGIN)
-       ================================================================= -->
-    <div class="modal-overlay" id="loginModal">
-        <div class="modal-container">
-            <button class="modal-close" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="color: var(--primary); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Connexion à votre compte</h3>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Accédez à vos points, téléchargements et formulaires.</p>
-
-            <form onsubmit="handleLoginSubmit(event)">
-                <div class="form-group">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" id="login-email" required placeholder="nom@exemple.com">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Mot de passe</label>
-                    <input type="password" class="form-control" id="login-password" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn btn-primary" id="btn-login-submit" style="width: 100%;">
-                    <i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter
-                </button>
-                <div style="text-align: center; margin-top: 1.25rem; font-size: 0.9rem;">
-                    Pas encore inscrit ? <a href="#" onclick="closeLoginModal(); openSignupModal();" style="color: var(--primary-light); font-weight: 700;">Créer un compte</a>
-                </div>
-            </form>
-        </div>
+    <div class="bottom-nav-item" onclick="switchPage('profile')">
+      <span class="material-symbols-outlined">person</span>
+      <span data-i18n="navProfile">Profil</span>
     </div>
+  </nav>
 
-    <!-- =================================================================
-       MODALE 3 : INSCRIPTION (SIGNUP AVEC PARRAINAGE)
-       ================================================================= -->
-    <div class="modal-overlay" id="signupModal">
-        <div class="modal-container">
-            <button class="modal-close" onclick="closeSignupModal()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="color: var(--primary); font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Créer un compte client</h3>
-            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem;">Recevez immédiatement <strong>10 points bonus</strong> lors de votre inscription !</p>
-
-            <form onsubmit="handleSignupSubmit(event)">
-                <div class="form-group">
-                    <label class="form-label">Nom complet *</label>
-                    <input type="text" class="form-control" id="signup-name" required placeholder="Ex: Marc Antoine">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Email *</label>
-                    <input type="email" class="form-control" id="signup-email" required placeholder="nom@exemple.com">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Mot de passe *</label>
-                    <input type="password" class="form-control" id="signup-password" required placeholder="Minimum 6 caractères">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Code Parrain (optionnel)</label>
-                    <input type="text" class="form-control" id="signup-ref" placeholder="Ex: BT-XXXXXX">
-                </div>
-                <button type="submit" class="btn btn-primary" id="btn-signup-submit" style="width: 100%;">
-                    <i class="fa-solid fa-user-plus"></i> S'inscrire (+10 points)
-                </button>
-                <div style="text-align: center; margin-top: 1.25rem; font-size: 0.9rem;">
-                    Déjà un compte ? <a href="#" onclick="closeSignupModal(); openLoginModal();" style="color: var(--primary-light); font-weight: 700;">Connexion</a>
-                </div>
-            </form>
-        </div>
+  <!-- POPUP GÉNÉRAL -->
+  <div class="modal-overlay" id="appAlertModal">
+    <div class="modal-card custom-dialog-card">
+      <div class="dialog-icon-wrapper" id="appAlertIconContainer">
+        <span class="material-symbols-outlined dialog-icon" id="appAlertIcon">info</span>
+      </div>
+      <h3 class="dialog-title" id="appAlertTitle">Notification</h3>
+      <p class="dialog-subtitle" id="appAlertMessage"></p>
+      <div class="dialog-actions">
+        <button class="btn btn-primary btn-block" onclick="closeAppAlert()" id="appAlertBtn">D'accord</button>
+      </div>
     </div>
+  </div>
 
-    <!-- =================================================================
-       LOGIQUE JAVASCRIPT
-       ================================================================= -->
-    <script>
-        // ==========================================
-        // CONFIGURATION BENTOUL FORMS & GOOGLE SHEETS
-        // ==========================================
-        const CONFIG = {
-            businessName: "BENTOUL CREATION",
-            whatsapp: "50942772970",
-            email: "bentoul@gmail.com",
-            blog: "https://www.bentoul.github.io/",
-            // REMPLACEZ PAR L'URL DU DEPLOIEMENT WEB APP GOOGLE APPS SCRIPT (exec) :
-            googleScriptUrl: "https://script.google.com/macros/s/AKfycbwfbe2FQKybGPi_H-tWa9cEgGtN_4ZacDogydddzJt0X1E2YkfvEfrd0FBV43welzU3oQ/exec"
-        };
+  <!-- POPUP DE CONFIRMATION D'ACHAT -->
+  <div class="modal-overlay" id="purchaseConfirmModal">
+    <div class="modal-card custom-dialog-card">
+      <div class="dialog-icon-wrapper">
+        <span class="material-symbols-outlined dialog-icon">lock_open</span>
+      </div>
+      <h3 class="dialog-title">Débloquer cette ressource</h3>
+      <p class="dialog-subtitle">Voulez-vous vraiment débloquer ce contenu ?</p>
+      
+      <div class="purchase-summary-box">
+        <div class="purchase-summary-row">
+          <span>Produit :</span>
+          <strong id="confirmProdTitle" style="max-width: 60%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</strong>
+        </div>
+        <div class="purchase-summary-row">
+          <span>Prix :</span>
+          <strong id="confirmProdPrice" style="color: var(--dore-vierge);">0 Crédits</strong>
+        </div>
+        <div class="purchase-summary-row">
+          <span>Solde actuel :</span>
+          <strong id="confirmUserBalance">0 Crédits</strong>
+        </div>
+        <div class="purchase-summary-row total-row">
+          <span>Solde restant :</span>
+          <strong id="confirmRemainingBalance">0 Crédits</strong>
+        </div>
+      </div>
 
-        const PRICES = {
-            simple: 500,
-            pro: 1000,
-            advanced: 1500,
-            whatsapp: 500,
-            googleSheets: 1000,
-            whatsappSheets: 1500
-        };
+      <div id="confirmCreditWarning" style="display: none; color: #D32F2F; font-size: 12px; margin-bottom: 12px; font-weight: 700;">
+        ⚠️ Votre solde est insuffisant pour ce téléchargement.
+      </div>
 
-        let currentUser = JSON.parse(localStorage.getItem('bentoul_user') || 'null');
-        let calcState = { plan: 'simple', whatsapp: false, googleSheets: false, whatsappSheets: false };
+      <div class="dialog-actions" id="confirmDialogActions"></div>
+    </div>
+  </div>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateUserNav();
-            updateCalculatorUI();
-            updateModalSummary();
-            loadProductsFromSheets();
-            checkReferralFromUrl();
-        });
+  <!-- MODAL DOCUMENT DÉBLOQUÉ : APERÇU ET TÉLÉCHARGEMENT -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+        <span class="material-symbols-outlined" style="color: #2E7D32;">verified</span>
+        <h3 id="modalTitle" style="font-size: 16px; margin: 0;"></h3>
+      </div>
+      <div id="modalBody" style="margin-bottom: 20px;"></div>
+      <div id="modalActions" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
+    </div>
+  </div>
 
-        function showToast(message) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
-        }
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4wL4EMaCKdFlpByKXIZddVrf2HR2uCHfcvVpRG7iGLtDvLgAw-7NCFzdb-qh25cuw0g/exec";
+    const WHATSAPP_PHONE = "+50942772970";
 
-        // MENU RESPONSIVE
-        function openMenu() {
-            document.getElementById('mobileDrawer').classList.add('active');
-            document.getElementById('drawerOverlay').classList.add('active');
-        }
-
-        function closeMenu() {
-            document.getElementById('mobileDrawer').classList.remove('active');
-            document.getElementById('drawerOverlay').classList.remove('active');
-        }
-
-        // GESTION MODALES
-        function openOrderModal(presetPlanTitle = null) {
-            const modal = document.getElementById('orderModal');
-            modal.classList.add('active');
-            if (presetPlanTitle) {
-                const planSelect = document.getElementById('modal-plan');
-                if (presetPlanTitle.includes('Simple')) planSelect.value = 'simple';
-                else if (presetPlanTitle.includes('Pro')) planSelect.value = 'pro';
-                else if (presetPlanTitle.includes('Avancé')) planSelect.value = 'advanced';
-            }
-            updateModalSummary();
-        }
-        function closeOrderModal() { document.getElementById('orderModal').classList.remove('active'); }
-
-        function openLoginModal() { document.getElementById('loginModal').classList.add('active'); }
-        function closeLoginModal() { document.getElementById('loginModal').classList.remove('active'); }
-
-        function openSignupModal() { document.getElementById('signupModal').classList.add('active'); }
-        function closeSignupModal() { document.getElementById('signupModal').classList.remove('active'); }
-
-        // CALCULATEUR
-        function setCalcPlan(planKey) {
-            calcState.plan = planKey;
-            document.getElementById('radio-simple').checked = (planKey === 'simple');
-            document.getElementById('radio-pro').checked = (planKey === 'pro');
-            document.getElementById('radio-advanced').checked = (planKey === 'advanced');
-
-            document.querySelectorAll('.calc-card-option').forEach(el => el.classList.remove('selected'));
-            document.getElementById('opt-' + planKey).classList.add('selected');
-            updateCalculatorUI();
-        }
-
-        function toggleCalcOption(optKey) {
-            if (optKey === 'whatsappSheets') {
-                calcState.whatsappSheets = !calcState.whatsappSheets;
-                if (calcState.whatsappSheets) {
-                    calcState.whatsapp = false;
-                    calcState.googleSheets = false;
-                }
-            } else {
-                calcState.whatsappSheets = false;
-                if (optKey === 'whatsapp') calcState.whatsapp = !calcState.whatsapp;
-                if (optKey === 'googleSheets') calcState.googleSheets = !calcState.googleSheets;
-            }
-
-            document.getElementById('chk-wa').checked = calcState.whatsapp;
-            document.getElementById('chk-gs').checked = calcState.googleSheets;
-            document.getElementById('chk-pack').checked = calcState.whatsappSheets;
-
-            document.getElementById('opt-chk-wa').classList.toggle('selected', calcState.whatsapp);
-            document.getElementById('opt-chk-gs').classList.toggle('selected', calcState.googleSheets);
-            document.getElementById('opt-chk-pack').classList.toggle('selected', calcState.whatsappSheets);
-
-            updateCalculatorUI();
-        }
-
-        function updateCalculatorUI() {
-            const planPrice = PRICES[calcState.plan];
-            let optPrice = 0;
-            let optText = "Aucune";
-
-            if (calcState.whatsappSheets) {
-                optPrice = PRICES.whatsappSheets;
-                optText = "Pack WhatsApp + Sheets";
-            } else {
-                let opts = [];
-                if (calcState.whatsapp) { optPrice += PRICES.whatsapp; opts.push("WhatsApp"); }
-                if (calcState.googleSheets) { optPrice += PRICES.googleSheets; opts.push("Google Sheets"); }
-                if (opts.length > 0) optText = opts.join(" + ");
-            }
-
-            const total = planPrice + optPrice;
-            const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
-
-            document.getElementById('sum-plan-name').innerText = planNames[calcState.plan];
-            document.getElementById('sum-plan-price').innerText = planPrice + " HTG";
-            document.getElementById('sum-opt-name').innerText = optText;
-            document.getElementById('sum-opt-price').innerText = optPrice + " HTG";
-            document.getElementById('sum-total-price').innerText = total + " HTG";
-        }
-
-        function orderFromCalculator() {
-            document.getElementById('modal-plan').value = calcState.plan;
-            const optSelect = document.getElementById('modal-option');
-            if (calcState.whatsappSheets) optSelect.value = 'whatsappSheets';
-            else if (calcState.whatsapp && calcState.googleSheets) optSelect.value = 'whatsappSheets';
-            else if (calcState.whatsapp) optSelect.value = 'whatsapp';
-            else if (calcState.googleSheets) optSelect.value = 'googleSheets';
-            else optSelect.value = 'none';
-
-            openOrderModal();
-        }
-
-        function updateModalSummary() {
-            const planKey = document.getElementById('modal-plan').value;
-            const optKey = document.getElementById('modal-option').value;
-            const planPrice = PRICES[planKey];
-            const optPrice = optKey !== 'none' ? PRICES[optKey] : 0;
-
-            const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
-            const optNames = { none: 'Aucune', whatsapp: 'WhatsApp (+500 HTG)', googleSheets: 'Google Sheets (+1 000 HTG)', whatsappSheets: 'WhatsApp + Sheets (+1 500 HTG)' };
-
-            document.getElementById('modal-sum-plan').innerText = `${planNames[planKey]} (${planPrice} HTG)`;
-            document.getElementById('modal-sum-opt').innerText = `${optNames[optKey]}`;
-            document.getElementById('modal-sum-total').innerText = `${planPrice + optPrice} HTG`;
-        }
-
-        function selectPlan(planKey) {
-            setCalcPlan(planKey);
-            document.getElementById('modal-plan').value = planKey;
-            openOrderModal();
-        }
-
-        // ==========================================
-        // 1. SOUMISSION COMMANDE -> GOOGLE SHEETS & WHATSAPP
-        // ==========================================
-            // ==========================================
-// 1. SOUMISSION COMMANDE -> GOOGLE SHEETS & WHATSAPP
-// ==========================================
-
-// ==========================================
-// SOUMISSION COMMANDE -> GOOGLE SHEETS ("commande") & WHATSAPP
-// ==========================================
-async function handleOrderSubmit(e) {
-    e.preventDefault();
-    document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
-
-    const fullname = document.getElementById('modal-fullname').value.trim();
-    const business = document.getElementById('modal-business').value.trim();
-    const phone = document.getElementById('modal-phone').value.trim();
-    const email = document.getElementById('modal-email').value.trim();
-    const planKey = document.getElementById('modal-plan').value;
-    const optKey = document.getElementById('modal-option').value;
-    const desc = document.getElementById('modal-desc').value.trim();
-    const fields = document.getElementById('modal-fields').value.trim();
-
-    let isValid = true;
-    if (!fullname) { document.getElementById('group-fullname').classList.add('has-error'); isValid = false; }
-    if (!phone) { document.getElementById('group-phone').classList.add('has-error'); isValid = false; }
-    if (!desc) { document.getElementById('group-desc').classList.add('has-error'); isValid = false; }
-
-    if (!isValid) {
-        showToast("Veuillez remplir les champs obligatoires.");
-        return;
-    }
-
-    const submitBtn = document.getElementById('btn-submit-order');
-    const originalBtnHtml = submitBtn.innerHTML;
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Enregistrement en cours...`;
-
-    const planPrice = PRICES[planKey];
-    const optPrice = optKey !== 'none' ? PRICES[optKey] : 0;
-    const totalPrice = planPrice + optPrice;
-
-    const planNames = { simple: 'Formulaire Simple', pro: 'Formulaire Pro', advanced: 'Formulaire Avancé' };
-    const optNames = { none: 'Aucune', whatsapp: 'WhatsApp', googleSheets: 'Google Sheets', whatsappSheets: 'Pack WhatsApp + Google Sheets' };
-
-    // Données structurées spécifiquement pour la feuille "commande"
-    const payload = {
-        action: "orderForm",
-        date: new Date().toLocaleString('fr-FR'),
-        fullname: fullname,
-        business: business || "Non spécifié",
-        phone: phone,
-        email: email || (typeof currentUser !== 'undefined' && currentUser ? currentUser.email : "Non spécifié"),
-        plan: planNames[planKey],
-        option: optNames[optKey],
-        totalPrice: totalPrice + " HTG",
-        desc: desc,
-        fields: fields || "Non spécifié"
+    const translations = {
+      fr: {
+        navHome: "Accueil",
+        navLibrary: "Bibliothèque",
+        navBuyCredits: "Acheter crédits",
+        navHistory: "Historique",
+        navProfile: "Profil",
+        navAdmin: "Administration",
+        creditsUnit: "crédits",
+        heroText: "Votre bibliothèque d'applications APK, livres PDF, formations vidéo et ressources numériques professionnelles.",
+        btnExplore: "Explorer le catalogue",
+        btnRecharge: "Recharger mes crédits",
+        titleRecent: "Produits récents",
+        allCategories: "Toutes les catégories",
+        titleLogin: "Connexion",
+        titleRegister: "Inscription",
+        btnLogin: "Se connecter",
+        btnRegister: "Créer mon compte",
+        creditInfo: "Choisissez votre forfait puis effectuez le paiement sécurisé via WhatsApp avec notre service client."
+      },
+      ht: {
+        navHome: "Akèy",
+        navLibrary: "Bibliotèk",
+        navBuyCredits: "Achte Kredi",
+        navHistory: "Istwa",
+        navProfile: "Pwofil",
+        navAdmin: "Administrasyon",
+        creditsUnit: "kredi",
+        heroText: "Biblyotèk aplikasyon APK, liv PDF, fòmasyon videyo ak resous dijital ou yo.",
+        btnExplore: "Eksplore katalòg la",
+        btnRecharge: "Rechaje kredi m",
+        titleRecent: "Pwodui ki fèk ajoute",
+        allCategories: "Tout kategori yo",
+        titleLogin: "Koneksyon",
+        titleRegister: "Enskripsyon",
+        btnLogin: "Konekte",
+        btnRegister: "Kreye kont mwen",
+        creditInfo: "Chwazi fòfè ou epi fè peman an sekirite pa WhatsApp ak sèvis kliyan nou an."
+      }
     };
 
-    // 1. Envoi sécurisé vers la feuille "commande" dans Google Sheets
-    if (CONFIG.googleScriptUrl) {
-        try {
-            await fetch(CONFIG.googleScriptUrl, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify(payload)
-            });
-        } catch (err) {
-            console.warn("Notice Sheets:", err);
+    let currentLang = "fr";
+    let currentUser = JSON.parse(localStorage.getItem("bentoulapps_user")) || null;
+    let allProducts = [];
+    let alertActionCallback = null;
+    let previousSection = "home";
+    let currentDetailDocId = null;
+    let userPurchasedDocIds = new Set();
+
+    /* ---- LECTURE DES COLONNES DE VOTRE GOOGLE SHEET ---- */
+    function getProp(obj, names) {
+      if (!obj || typeof obj !== 'object') return '';
+      const keys = Object.keys(obj);
+      for (const name of names) {
+        const cleanName = name.toLowerCase().replace(/[\s_\-]/g, '');
+        for (const k of keys) {
+          if (k.toLowerCase().replace(/[\s_\-]/g, '') === cleanName) {
+            const val = obj[k];
+            if (val !== undefined && val !== null && String(val).trim() !== '') {
+              return String(val).trim();
+            }
+          }
         }
+      }
+      return '';
     }
 
-    // 2. Préparation du message WhatsApp
-    let message = `Bonjour ${CONFIG.businessName},\n\n`;
-    message += `Je souhaite commander un formulaire :\n\n`;
-    message += `*Nom :* ${fullname}\n`;
-    if (business) message += `*Entreprise :* ${business}\n`;
-    message += `*Téléphone :* ${phone}\n`;
-    if (email) message += `*Email :* ${email}\n\n`;
-    message += `*Formule :* ${planNames[planKey]}\n`;
-    message += `*Option :* ${optNames[optKey]}\n`;
-    message += `*Prix total :* ${totalPrice} HTG\n\n`;
-    message += `*Description du besoin :*\n${desc}\n`;
-    if (fields) message += `\n*Champs souhaités :*\n${fields}\n`;
-    message += `\nMerci !`;
+    /* ---- GESTION DES IMAGES (GOOGLE DRIVE & DIRECT) ---- */
+    function extractDriveFileId(str) {
+      if (!str || typeof str !== 'string') return null;
+      const match = str.match(/(?:file\/d\/|id=|open\?id=|uc\?id=|\/d\/)([a-zA-Z0-9_-]{20,})/);
+      if (match && match[1]) return match[1];
+      if (/^[a-zA-Z0-9_-]{25,}$/.test(str.trim())) return str.trim();
+      return null;
+    }
 
-    // 3. Redirection WhatsApp
-    const waUrl = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(message)}`;
-    showToast("Commande enregistrée dans Google Sheets ! Redirection WhatsApp...");
+    function buildProductImageUrl(rawUrl) {
+      if (!rawUrl || typeof rawUrl !== 'string') return { src: '', driveId: '' };
+      let url = rawUrl.trim();
+      if (!url) return { src: '', driveId: '' };
 
-    setTimeout(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnHtml;
-        closeOrderModal();
-        window.open(waUrl, '_blank');
-    }, 800);
-}
+      const driveId = extractDriveFileId(url);
+      if (driveId) {
+        return {
+          src: `https://lh3.googleusercontent.com/d/${driveId}`,
+          driveId: driveId
+        };
+      }
 
-// 2. AUTHENTIFICATION UTILISATEUR
-        // ==========================================
-        async function handleLoginSubmit(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            const btn = document.getElementById('btn-login-submit');
+      if (url.includes('dropbox.com')) {
+        url = url.replace('?dl=0', '?raw=1').replace('&dl=0', '&raw=1');
+        if (!url.includes('raw=1')) url += (url.includes('?') ? '&' : '?') + 'raw=1';
+      }
 
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Connexion...`;
+      return { src: url, driveId: '' };
+    }
 
-            if (!CONFIG.googleScriptUrl) {
-                showToast("Veuillez renseigner votre URL Apps Script dans CONFIG.googleScriptUrl");
-                btn.disabled = false;
-                btn.innerHTML = `Se connecter`;
-                return;
-            }
+    function onProductImageError(img) {
+      const driveId = img.getAttribute("data-drive-id");
+      const attempt = parseInt(img.getAttribute("data-error-attempt") || "0", 10);
 
-            try {
-                const response = await fetch(`${CONFIG.googleScriptUrl}?action=login&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
-                const res = await response.json();
+      if (driveId) {
+        if (attempt === 0) {
+          img.setAttribute("data-error-attempt", "1");
+          img.src = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
+          return;
+        } else if (attempt === 1) {
+          img.setAttribute("data-error-attempt", "2");
+          img.src = `https://drive.google.com/uc?export=view&id=${driveId}`;
+          return;
+        }
+      }
 
-                if (res.status === "success") {
-                    currentUser = res.user;
-                    localStorage.setItem('bentoul_user', JSON.stringify(currentUser));
-                    showToast(`Bienvenue, ${currentUser.name} !`);
-                    updateUserNav();
-                    closeLoginModal();
-                } else {
-                    showToast(res.message || "Erreur d'identifiants.");
-                }
-            } catch (err) {
-                showToast("Erreur de connexion au serveur.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter`;
-            }
+      img.onerror = null;
+      img.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260' viewBox='0 0 400 260'%3E%3Crect fill='%23183D32' width='400' height='260'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-weight='bold' font-size='16' fill='%23C9A24D' text-anchor='middle' dy='.3em'%3EBENTOULAPPS%3C/text%3E%3C/svg%3E";
+    }
+
+    /* ---- POPUP PERSONNALISÉ ---- */
+    function showNotification(message, title = "Notification", type = "info", onClose = null) {
+      const modal = document.getElementById("appAlertModal");
+      const iconContainer = document.getElementById("appAlertIconContainer");
+      const icon = document.getElementById("appAlertIcon");
+      const titleEl = document.getElementById("appAlertTitle");
+      const msgEl = document.getElementById("appAlertMessage");
+
+      titleEl.innerText = title;
+      msgEl.innerText = message;
+      alertActionCallback = onClose;
+
+      iconContainer.className = "dialog-icon-wrapper " + type;
+      if (type === "success") icon.innerText = "check_circle";
+      else if (type === "error") icon.innerText = "cancel";
+      else icon.innerText = "info";
+
+      modal.style.display = "flex";
+    }
+
+    function closeAppAlert() {
+      document.getElementById("appAlertModal").style.display = "none";
+      if (typeof alertActionCallback === "function") {
+        const cb = alertActionCallback;
+        alertActionCallback = null;
+        cb();
+      }
+    }
+
+    /* ---- APPELS API ---- */
+    async function apiCall(action, payload = {}, method = "POST") {
+      try {
+        let response;
+        if (method === "GET") {
+          const params = new URLSearchParams({ action, ...payload });
+          response = await fetch(`${GOOGLE_SCRIPT_URL}?${params.toString()}`);
+        } else {
+          response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            redirect: "follow",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action, ...payload })
+          });
+        }
+        return await response.json();
+      } catch (error) {
+        console.error("Erreur API:", error);
+        return { success: false, message: "Impossible de joindre le serveur. Vérifiez votre connexion." };
+      }
+    }
+
+    /* ---- INITIALISATION ---- */
+    window.addEventListener("DOMContentLoaded", () => {
+      updateUserUI();
+      loadUserPurchasesLocal();
+      loadProducts();
+    });
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+          el.innerText = translations[lang][key];
+        }
+      });
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark-theme");
+    }
+
+    function toggleSidebar() {
+      document.getElementById("appSidebar").classList.toggle("open");
+    }
+
+    function switchPage(pageId) {
+      const currentActive = document.querySelector(".page-section.active");
+      if (currentActive && currentActive.id !== `page-${pageId}`) {
+        previousSection = currentActive.id.replace("page-", "");
+      }
+
+      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+      document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
+      document.querySelectorAll(".bottom-nav-item").forEach(item => item.classList.remove("active"));
+
+      const targetSection = document.getElementById(`page-${pageId}`);
+      if (targetSection) targetSection.classList.add("active");
+
+      if (pageId === "history") loadUserPurchases();
+      if (pageId === "profile" && !currentUser) switchPage("auth");
+
+      document.getElementById("appSidebar").classList.remove("open");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updateUserUI() {
+      const creditDisplay = document.getElementById("userCreditDisplay");
+      const greeting = document.getElementById("welcomeGreeting");
+      const adminNav = document.getElementById("adminNavItem");
+
+      if (currentUser) {
+        const nomUtilisateur = currentUser.nom || currentUser.name || "Utilisateur";
+        creditDisplay.innerText = currentUser.credits !== undefined ? currentUser.credits : 0;
+        greeting.innerText = `Bienvenue, ${nomUtilisateur}`;
+        document.getElementById("profileNameDisplay").innerText = nomUtilisateur;
+        document.getElementById("profileEmailDisplay").innerText = currentUser.email || "";
+        document.getElementById("profileCreditsDisplay").innerText = `${currentUser.credits || 0} Crédits`;
+        document.getElementById("profileDateDisplay").innerText = currentUser.date_creation || currentUser.dateCreation || "-";
+
+        adminNav.style.display = (currentUser.role === "admin") ? "flex" : "none";
+      } else {
+        creditDisplay.innerText = "0";
+        greeting.innerText = "Bienvenue sur BENTOULAPPS";
+        adminNav.style.display = "none";
+      }
+    }
+
+    /* ---- NORMALISATION BASE DE DONNÉES GOOGLE SHEETS ---- */
+    function normalizeProduct(p) {
+      const rawImg = p.ImageUrl || p.imageurl || p.Image || getProp(p, ['imageurl', 'image', 'url_image', 'photo', 'affiche']);
+      const imgData = buildProductImageUrl(rawImg);
+
+      const downloadUrl = p.DownloadUrl || p.downloadurl || p.url_fichier || getProp(p, ['downloadurl', 'url_fichier', 'fichier', 'url', 'lien']);
+      const iconType = (p.Icon || p.icon || p.Type || p.type || "autre").toString().toLowerCase();
+
+      return {
+        id: (p.ID || p.id || getProp(p, ['id', 'id_produit']) || "").toString(),
+        titre: p.Titre || p.titre || getProp(p, ['titre', 'nom', 'title']) || "Sans titre",
+        categorie: p.Categorie || p.categorie || getProp(p, ['categorie', 'cat']) || "Divers",
+        prix: Number(p.Prix || p.prix || getProp(p, ['prix', 'price', 'credits']) || 0),
+        icon: iconType,
+        type: iconType,
+        couleur: p.Couleur || p.couleur || "",
+        description: p.Description || p.description || getProp(p, ['description', 'desc']) || "",
+        downloadUrl: downloadUrl,
+        url_fichier: downloadUrl,
+        dateAjout: p.DateAjout || p.dateajout || getProp(p, ['dateajout', 'date']) || "",
+        image: imgData.src,
+        driveId: imgData.driveId
+      };
+    }
+
+    async function loadProducts() {
+      const loader = document.getElementById("libraryLoader");
+      loader.style.display = "block";
+
+      const res = await apiCall("getProducts", {}, "GET");
+      loader.style.display = "none";
+
+      if (res.success) {
+        allProducts = (res.products || []).map(normalizeProduct);
+        populateCategories();
+        renderProducts(allProducts);
+
+        // Si l'URL contient un paramètre ?doc=ID, ouvrir directement le détail
+        const urlParams = new URLSearchParams(window.location.search);
+        const docId = urlParams.get('doc');
+        if (docId) {
+          showDocDetail(docId);
+        }
+      } else {
+        showNotification(res.message || "Erreur de chargement", "Erreur", "error");
+      }
+    }
+
+    /* ---- RENDU UNIQUEMENT DANS LA BIBLIOTHÈQUE ---- */
+    function renderProducts(products) {
+      const libraryContainer = document.getElementById("libraryProductsContainer");
+      if (!libraryContainer) return;
+
+      libraryContainer.innerHTML = "";
+
+      if (products.length === 0) {
+        libraryContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--vert-sauge);">Aucun produit disponible.</p>`;
+        return;
+      }
+
+      // Tous les produits s'affichent uniquement dans la bibliothèque
+      products.forEach(p => libraryContainer.appendChild(createProductCard(p)));
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement("div");
+      card.className = "product-card";
+
+      const isPaid = userPurchasedDocIds.has(product.id.toString());
+      const paidBadgeHtml = isPaid 
+        ? `<span class="badge-paid"><span class="material-symbols-outlined" style="font-size:12px;">check_circle</span> Payé</span>` 
+        : ``;
+
+      const actionBtnHtml = isPaid
+        ? `<button class="btn btn-success" style="flex:1;" onclick="openDocumentModal('${product.id}', '')"><span class="material-symbols-outlined">folder_open</span> Accéder</button>`
+        : `<button class="btn btn-primary" style="flex:1;" onclick="startPurchaseFlow('${product.id}')">Débloquer</button>`;
+
+      card.innerHTML = `
+        <div class="product-thumb-wrapper">
+          <img 
+            src="${product.image}" 
+            alt="${product.titre}" 
+            data-drive-id="${product.driveId || ''}" 
+            data-error-attempt="0" 
+            referrerpolicy="no-referrer" 
+            loading="lazy" 
+            onerror="onProductImageError(this)"
+          >
+          <span class="badge-type">${product.icon || product.type}</span>
+          ${paidBadgeHtml}
+          <button class="btn-share-icon" onclick="shareDoc('${product.id}', event)" title="Partager ce document">
+            <span class="material-symbols-outlined" style="font-size:16px;">share</span>
+          </button>
+        </div>
+        <div class="product-info">
+          <div class="product-title" onclick="showDocDetail('${product.id}')">${product.titre}</div>
+          <div class="product-category">${product.categorie}</div>
+          <div class="product-price">${isPaid ? '<span style="color:#2E7D32;">✓ Débloqué</span>' : product.prix + ' Crédits'}</div>
+          <div class="card-actions-row">
+            <button class="btn btn-outline" style="flex:1;" onclick="showDocDetail('${product.id}')">Détails</button>
+            ${actionBtnHtml}
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    function populateCategories() {
+      const categories = [...new Set(allProducts.map(p => p.categorie).filter(Boolean))];
+      const select = document.getElementById("categoryFilter");
+      select.innerHTML = `<option value="">Toutes les catégories</option>`;
+      categories.forEach(c => {
+        select.innerHTML += `<option value="${c}">${c}</option>`;
+      });
+    }
+
+    function filterProducts() {
+      const kw = document.getElementById("searchKeyword").value.toLowerCase();
+      const cat = document.getElementById("categoryFilter").value;
+      const type = document.getElementById("typeFilter").value;
+
+      const filtered = allProducts.filter(p => {
+        const matchKw = p.titre.toLowerCase().includes(kw) || p.description.toLowerCase().includes(kw);
+        const matchCat = cat === "" || p.categorie === cat;
+        const matchType = type === "" || p.icon === type || p.type === type;
+        return matchKw && matchCat && matchType;
+      });
+
+      renderProducts(filtered);
+    }
+
+    /* ---- VUE DÉTAILLÉE D'UN DOCUMENT AVEC BOUTON RETOUR ---- */
+    function showDocDetail(productId) {
+      const product = allProducts.find(p => p.id === productId.toString());
+      if (!product) return;
+
+      currentDetailDocId = product.id;
+      const isPaid = userPurchasedDocIds.has(product.id.toString());
+
+      document.getElementById("detailDocImg").src = product.image;
+      document.getElementById("detailDocImg").setAttribute("data-drive-id", product.driveId || "");
+      document.getElementById("detailDocBadge").innerText = product.icon || product.type;
+      
+      const paidBadge = document.getElementById("detailDocPaidBadge");
+      paidBadge.style.display = isPaid ? "flex" : "none";
+
+      document.getElementById("detailDocTitle").innerText = product.titre;
+      document.getElementById("detailDocCat").innerText = product.categorie;
+      document.getElementById("detailDocDate").innerText = product.dateAjout || "-";
+      document.getElementById("detailDocPrice").innerText = isPaid ? "Déjà payé (Accès gratuit)" : `${product.prix} Crédits`;
+      document.getElementById("detailDocDesc").innerText = product.description || "Aucune description fournie pour ce document.";
+
+      const actionButtons = document.getElementById("detailDocActionButtons");
+      actionButtons.innerHTML = "";
+
+      if (isPaid) {
+        actionButtons.innerHTML = `
+          <button class="btn btn-success" style="flex:1; padding: 12px;" onclick="openDocumentModal('${product.id}', '')">
+            <span class="material-symbols-outlined">folder_open</span> Accéder / Télécharger
+          </button>
+        `;
+      } else {
+        actionButtons.innerHTML = `
+          <button class="btn btn-primary" style="flex:1; padding: 12px;" onclick="startPurchaseFlow('${product.id}')">
+            <span class="material-symbols-outlined">lock_open</span> Débloquer pour ${product.prix} Crédits
+          </button>
+        `;
+      }
+
+      switchPage("doc-detail");
+    }
+
+    function goBackFromDetail() {
+      switchPage(previousSection || "library");
+    }
+
+    /* ---- PARTAGE AVEC URL UNIQUE ---- */
+    function shareDoc(productId, event) {
+      if (event) event.stopPropagation();
+      const product = allProducts.find(p => p.id === productId.toString());
+      if (!product) return;
+
+      const shareUrl = `${window.location.origin}${window.location.pathname}?doc=${encodeURIComponent(product.id)}`;
+      const shareTitle = `BENTOULAPPS - ${product.titre}`;
+      const shareText = `Découvrez "${product.titre}" sur Bentoulapps :`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: shareUrl
+        }).catch(() => {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showNotification("Lien unique du document copié dans le presse-papier !", "Lien copié", "success");
+        }).catch(() => {
+          showNotification(`Partagez ce lien : ${shareUrl}`, "Partager", "info");
+        });
+      } else {
+        showNotification(`Partagez ce lien : ${shareUrl}`, "Partager", "info");
+      }
+    }
+
+    function shareCurrentDoc() {
+      if (currentDetailDocId) {
+        shareDoc(currentDetailDocId);
+      }
+    }
+
+    /* ---- PROCESSUS D'ACHAT ---- */
+    function startPurchaseFlow(productId) {
+      if (!currentUser) {
+        showNotification("Veuillez vous connecter pour débloquer cette ressource.", "Connexion requise", "info", () => {
+          switchPage("auth");
+        });
+        return;
+      }
+
+      const product = allProducts.find(p => p.id === productId.toString());
+      if (!product) return;
+
+      const userCredits = Number(currentUser.credits || 0);
+      const prodPrice = Number(product.prix || 0);
+      const remainingCredits = userCredits - prodPrice;
+      const hasEnough = remainingCredits >= 0;
+
+      document.getElementById("confirmProdTitle").innerText = product.titre;
+      document.getElementById("confirmProdPrice").innerText = `${prodPrice} Crédits`;
+      document.getElementById("confirmUserBalance").innerText = `${userCredits} Crédits`;
+      
+      const remainingEl = document.getElementById("confirmRemainingBalance");
+      remainingEl.innerText = `${remainingCredits} Crédits`;
+      remainingEl.style.color = hasEnough ? "var(--vert-profond)" : "#D32F2F";
+
+      const warningEl = document.getElementById("confirmCreditWarning");
+      warningEl.style.display = hasEnough ? "none" : "block";
+
+      const actionsBox = document.getElementById("confirmDialogActions");
+      actionsBox.innerHTML = "";
+
+      if (hasEnough) {
+        actionsBox.innerHTML = `
+          <button class="btn btn-outline" style="flex:1;" onclick="closePurchaseConfirmModal()">Annuler</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="executeProductPurchase('${product.id}')">Débloquer</button>
+        `;
+      } else {
+        actionsBox.innerHTML = `
+          <button class="btn btn-outline" style="flex:1;" onclick="closePurchaseConfirmModal()">Fermer</button>
+          <button class="btn btn-primary" style="flex:1;" onclick="closePurchaseConfirmModal(); switchPage('buy-credits');">Recharger</button>
+        `;
+      }
+
+      document.getElementById("purchaseConfirmModal").style.display = "flex";
+    }
+
+    function closePurchaseConfirmModal() {
+      document.getElementById("purchaseConfirmModal").style.display = "none";
+    }
+
+    async function executeProductPurchase(productId) {
+      closePurchaseConfirmModal();
+
+      const product = allProducts.find(p => p.id === productId.toString());
+      const res = await apiCall("buyProduct", {
+        email: currentUser.email,
+        productId: productId,
+        price: product ? product.prix : 0
+      });
+
+      if (res.success) {
+        if (res.newCredits !== undefined) {
+          currentUser.credits = res.newCredits;
+          localStorage.setItem("bentoulapps_user", JSON.stringify(currentUser));
+          updateUserUI();
         }
 
-        async function handleSignupSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('signup-name').value.trim();
-            const email = document.getElementById('signup-email').value.trim();
-            const password = document.getElementById('signup-password').value.trim();
-            const ref = document.getElementById('signup-ref').value.trim().toUpperCase();
-            const btn = document.getElementById('btn-signup-submit');
+        userPurchasedDocIds.add(productId.toString());
+        saveUserPurchasesLocal();
+        renderProducts(allProducts);
 
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Inscription...`;
-
-            if (!CONFIG.googleScriptUrl) {
-                showToast("Veuillez renseigner votre URL Apps Script dans CONFIG.googleScriptUrl");
-                btn.disabled = false;
-                btn.innerHTML = `S'inscrire`;
-                return;
-            }
-
-            try {
-                const url = `${CONFIG.googleScriptUrl}?action=register&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&referredBy=${encodeURIComponent(ref)}`;
-                const response = await fetch(url);
-                const res = await response.json();
-
-                if (res.status === "success") {
-                    currentUser = res.user;
-                    localStorage.setItem('bentoul_user', JSON.stringify(currentUser));
-                    showToast(`Compte créé avec succès ! +10 points obtenus.`);
-                    updateUserNav();
-                    closeSignupModal();
-                } else {
-                    showToast(res.message || "Erreur lors de l'inscription.");
-                }
-            } catch (err) {
-                showToast("Erreur réseau.");
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-user-plus"></i> S'inscrire (+10 points)`;
-            }
+        openDocumentModal(productId, res.fileUrl || (product ? product.downloadUrl : ""));
+      } else {
+        if (res.insufficientCredits) {
+          showNotification("Votre solde de crédits est insuffisant pour finaliser cet achat.", "Crédits insuffisants", "error", () => {
+            switchPage("buy-credits");
+          });
+        } else {
+          showNotification(res.message || "Impossible de débloquer le produit.", "Erreur", "error");
         }
+      }
+    }
 
-        function logout() {
-            localStorage.removeItem('bentoul_user');
-            currentUser = null;
-            updateUserNav();
-            showToast("Vous avez été déconnecté.");
-        }
+    /* ---- LECTEUR & TÉLÉCHARGEMENT ---- */
+    function openDocumentModal(productId, fileUrl) {
+      const product = allProducts.find(p => p.id === productId.toString());
+      const modal = document.getElementById("previewModal");
+      const title = document.getElementById("modalTitle");
+      const body = document.getElementById("modalBody");
+      const actions = document.getElementById("modalActions");
 
-        function updateUserNav() {
-            const container = document.getElementById('authNavContainer');
-            const mobileContainer = document.getElementById('authMobileContainer');
+      const prodName = product ? product.titre : "Ressource numérique";
+      const iconType = product ? (product.icon || product.type).toLowerCase() : "autre";
+      const rawUrl = fileUrl || (product ? product.downloadUrl : "");
 
-            if (currentUser) {
-                const html = `
-                    <div class="user-pill">
-                        <i class="fa-solid fa-user-circle"></i>
-                        <span>${currentUser.name} (${currentUser.points} pts)</span>
-                    </div>
-                    <button class="btn btn-outline btn-sm" onclick="logout()" title="Déconnexion"><i class="fa-solid fa-power-off"></i></button>
-                `;
-                container.innerHTML = html;
-                mobileContainer.innerHTML = html;
-            } else {
-                const html = `
-                    <button class="btn btn-outline btn-sm" onclick="openLoginModal()">Connexion</button>
-                    <button class="btn btn-primary btn-sm" onclick="openSignupModal()">Inscription</button>
-                `;
-                container.innerHTML = html;
-                mobileContainer.innerHTML = html;
-            }
-        }
+      title.innerText = prodName;
+      body.innerHTML = "";
+      actions.innerHTML = "";
 
-        // ==========================================
-        // 3. CATALOGUE PRODUITS DEPUIS GOOGLE SHEETS
-        // ==========================================
-        async function loadProductsFromSheets() {
-            const container = document.getElementById('productsContainer');
-            if (!CONFIG.googleScriptUrl) {
-                container.innerHTML = `
-                    <div class="card" style="grid-column: 1 / -1; text-align: center;">
-                        <p style="color: var(--text-muted);">Configurez <strong>CONFIG.googleScriptUrl</strong> pour afficher vos produits enregistrés dans Google Sheets.</p>
-                    </div>
-                `;
-                return;
-            }
+      let previewUrl = rawUrl;
+      let downloadUrl = rawUrl;
 
-            try {
-                const response = await fetch(`${CONFIG.googleScriptUrl}?action=getProducts`);
-                const res = await response.json();
+      const driveMatch = rawUrl.match(/(?:drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)|lh3\.googleusercontent\.com\/d\/)([a-zA-Z0-9_-]+)/);
+      if (driveMatch && driveMatch[1]) {
+        previewUrl = `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+        downloadUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+      }
 
-                if (res.status === "success" && res.products && res.products.length > 0) {
-                    container.innerHTML = res.products.map(prod => `
-                        <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                            <div>
-                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
-                                    <span class="badge badge-primary">${prod.category || 'Modèle'}</span>
-                                    <strong style="color: var(--primary); font-size: 1.1rem;">${prod.price} PTS</strong>
-                                </div>
-                                ${prod.imageUrl ? `<img src="${prod.imageUrl}" style="width: 100%; height: 160px; object-fit: cover; border-radius: var(--radius-sm); margin-bottom: 1rem;">` : ''}
-                                <h3 style="color: var(--primary); font-size: 1.2rem; margin-bottom: 0.5rem;">${prod.title}</h3>
-                                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.25rem;">${prod.desc || 'Modèle professionnel prêt à être intégré.'}</p>
-                            </div>
-                            <button class="btn btn-primary btn-sm" onclick="buyProduct('${prod.id}', ${prod.price}, '${prod.downloadUrl || ''}')">
-                                <i class="fa-solid fa-download"></i> Obtenir ce modèle
-                            </button>
-                        </div>
-                    `).join('');
-                } else {
-                    container.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center;"><p>Aucun produit disponible pour le moment.</p></div>`;
-                }
-            } catch (err) {
-                container.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center;"><p>Impossible de charger le catalogue.</p></div>`;
-            }
-        }
+      if (iconType.includes("pdf")) {
+        body.innerHTML = `
+          <div style="background:#000; border-radius: 8px; overflow:hidden; margin-bottom:12px;">
+            <iframe src="${previewUrl}" style="width: 100%; height: 350px; border: none; display: block;" allow="autoplay"></iframe>
+          </div>
+        `;
+      } else if (iconType.includes("video")) {
+        body.innerHTML = `
+          <video controls controlsList="nodownload" style="width: 100%; max-height: 350px; border-radius: 8px; background: #000; margin-bottom:12px;">
+            <source src="${rawUrl}" type="video/mp4">
+            Votre navigateur ne supporte pas ce format vidéo.
+          </video>
+        `;
+      } else if (iconType.includes("apk")) {
+        body.innerHTML = `
+          <div style="background: rgba(201, 162, 77, 0.12); border-left: 4px solid var(--dore-vierge); padding: 14px; border-radius: 6px; margin-bottom: 14px; font-size: 13px;">
+            🤖 <strong>Installation APK :</strong> Téléchargez le fichier APK ci-dessous, puis autorisez l'installation depuis vos fichiers.
+          </div>
+        `;
+      } else if (iconType.includes("templateblogger")) {
+        body.innerHTML = `
+          <div style="background: rgba(36, 87, 68, 0.12); border-left: 4px solid var(--vert-profond); padding: 14px; border-radius: 6px; margin-bottom: 14px; font-size: 13px;">
+            🌐 <strong>Template Blogger :</strong> Cliquez sur Aperçu pour voir la démo ou téléchargez le fichier XML/ZIP du thème.
+          </div>
+        `;
+      } else {
+        body.innerHTML = `
+          <div style="padding: 16px; background: var(--blanc-casse); border-radius: 8px; margin-bottom: 12px; font-size: 13px;">
+            Votre ressource est débloquée et prête à l'emploi.
+          </div>
+        `;
+      }
 
-        async function buyProduct(prodId, price, downloadUrl) {
-            if (!currentUser) {
-                showToast("Veuillez vous connecter pour débloquer ce modèle.");
-                openLoginModal();
-                return;
-            }
+      actions.innerHTML = `
+        <a href="${previewUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="flex:1;">
+          <span class="material-symbols-outlined" style="font-size:18px;">visibility</span> Aperçu plein écran
+        </a>
+        <a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex:1;">
+          <span class="material-symbols-outlined" style="font-size:18px;">download</span> Télécharger le fichier
+        </a>
+      `;
 
-            if (currentUser.points < price) {
-                showToast(`Points insuffisants (${currentUser.points}/${price} pts). Partagez votre lien de parrainage pour en gagner !`);
-                return;
-            }
+      modal.style.display = "flex";
+    }
 
-            const newPoints = currentUser.points - price;
-            try {
-                await fetch(CONFIG.googleScriptUrl, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: "purchase",
-                        email: currentUser.email,
-                        points: newPoints,
-                        productId: prodId
-                    })
-                });
+    function closeModal() {
+      document.getElementById("previewModal").style.display = "none";
+      const video = document.querySelector("#previewModal video");
+      if (video) video.pause();
+    }
 
-                currentUser.points = newPoints;
-                localStorage.setItem('bentoul_user', JSON.stringify(currentUser));
-                updateUserNav();
+    function orderCreditsViaWhatsApp(packName) {
+      const userMail = currentUser ? currentUser.email : "Non connecté";
+      const message = encodeURIComponent(`Bonjour BENTOULAPPS, je souhaite recharger mon compte avec le ${packName}. Email : ${userMail}`);
+      window.open(`https://wa.me/${WHATSAPP_PHONE.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
+    }
 
-                showToast("Modèle débloqué avec succès !");
-                if (downloadUrl) {
-                    window.open(downloadUrl, '_blank');
-                }
-            } catch (err) {
-                showToast("Erreur lors de l'achat.");
-            }
-        }
+    /* ---- GESTION HISTORIQUE & CACHE DES ACHATS ---- */
+    function loadUserPurchasesLocal() {
+      if (!currentUser) return;
+      const saved = localStorage.getItem(`bentoulapps_purchases_${currentUser.email}`);
+      if (saved) {
+        userPurchasedDocIds = new Set(JSON.parse(saved));
+      }
+    }
 
-        // ==========================================
-        // 4. PARRAINAGE & REDIRECTION DIRECTE
-        // ==========================================
-        function checkReferralFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            const ref = params.get('ref');
-            if (ref) {
-                const inputRef = document.getElementById('signup-ref');
-                if (inputRef) inputRef.value = ref;
+    function saveUserPurchasesLocal() {
+      if (!currentUser) return;
+      localStorage.setItem(`bentoulapps_purchases_${currentUser.email}`, JSON.stringify([...userPurchasedDocIds]));
+    }
 
-                if (CONFIG.googleScriptUrl) {
-                    fetch(`${CONFIG.googleScriptUrl}?action=rewardVisit&ref=${encodeURIComponent(ref)}&visitorEmail=${currentUser ? encodeURIComponent(currentUser.email) : ''}`)
-                        .catch(e => console.log('Visite parrainée prise en compte'));
-                }
-            }
-        }
+    async function loadUserPurchases() {
+      if (!currentUser) return;
+      const container = document.getElementById("historyContainer");
+      container.innerHTML = `<div class="loader-spinner"></div>`;
 
-        function directContactWhatsApp() {
-            const msg = encodeURIComponent(`Bonjour BENTOUL FORMS, je souhaite avoir des informations sur vos formulaires.`);
-            window.open(`https://wa.me/${CONFIG.whatsapp}?text=${msg}`, '_blank');
-        }
-    </script>
+      const res = await apiCall("getPurchases", { email: currentUser.email }, "GET");
+      container.innerHTML = "";
+
+      if (res.success && res.purchases && res.purchases.length > 0) {
+        res.purchases.forEach(p => {
+          if (p.idProduit) userPurchasedDocIds.add(p.idProduit.toString());
+          container.innerHTML += `
+            <div class="product-card" style="padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong>${p.nomProduit || 'Produit'}</strong>
+                <div style="font-size: 11px; color: var(--vert-sauge);">${p.date || ''} - ${p.prixPaye || 0} Crédits</div>
+              </div>
+              <button class="btn btn-primary" style="padding: 6px 12px; font-size: 11px;" onclick="openDocumentModal('${p.idProduit}', '')">
+                Accéder
+              </button>
+            </div>
+          `;
+        });
+        saveUserPurchasesLocal();
+        renderProducts(allProducts);
+      } else {
+        container.innerHTML = `<p style="text-align: center; font-size: 13px; color: var(--vert-sauge);">Aucun achat enregistré pour le moment.</p>`;
+      }
+    }
+
+    function toggleAuthForm(type) {
+      document.getElementById("loginFormBlock").style.display = (type === 'login') ? "block" : "none";
+      document.getElementById("registerFormBlock").style.display = (type === 'register') ? "block" : "none";
+    }
+
+    async function submitLogin() {
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      if (!email || !password) return showNotification("Veuillez remplir tous les champs.", "Attention", "info");
+
+      const res = await apiCall("login", { email, password });
+      if (res.success) {
+        currentUser = res.user;
+        localStorage.setItem("bentoulapps_user", JSON.stringify(currentUser));
+        updateUserUI();
+        loadUserPurchasesLocal();
+        loadUserPurchases();
+        showNotification("Connexion réussie !", "Bienvenue", "success", () => {
+          switchPage("home");
+        });
+      } else {
+        showNotification(res.message, "Erreur", "error");
+      }
+    }
+
+    async function submitRegister() {
+      const nom = document.getElementById("regNom").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const password = document.getElementById("regPassword").value;
+      const confirm = document.getElementById("regPasswordConfirm").value;
+
+      if (!nom || !email || !password) return showNotification("Veuillez renseigner tous les champs.", "Champs requis", "info");
+      if (password !== confirm) return showNotification("Les mots de passe ne correspondent pas.", "Attention", "error");
+
+      const res = await apiCall("register", { nom, name: nom, email, password });
+      if (res.success) {
+        currentUser = res.user;
+        localStorage.setItem("bentoulapps_user", JSON.stringify(currentUser));
+        updateUserUI();
+        showNotification(res.message, "Compte créé", "success", () => {
+          switchPage("home");
+        });
+      } else {
+        showNotification(res.message, "Erreur", "error");
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      userPurchasedDocIds.clear();
+      localStorage.removeItem("bentoulapps_user");
+      updateUserUI();
+      renderProducts(allProducts);
+      showNotification("Vous avez été déconnecté.", "Déconnexion", "info", () => {
+        switchPage("home");
+      });
+    }
+
+    async function submitAdminAddProduct() {
+      if (!currentUser || currentUser.role !== "admin") return showNotification("Action réservée aux administrateurs.", "Accès refusé", "error");
+
+      const payload = {
+        adminEmail: currentUser.email,
+        titre: document.getElementById("adminProdTitre").value.trim(),
+        description: document.getElementById("adminProdDesc").value.trim(),
+        categorie: document.getElementById("adminProdCat").value.trim(),
+        type: document.getElementById("adminProdType").value,
+        icon: document.getElementById("adminProdType").value,
+        prix: document.getElementById("adminProdPrix").value,
+        image: document.getElementById("adminProdImg").value.trim(),
+        imageUrl: document.getElementById("adminProdImg").value.trim(),
+        downloadUrl: document.getElementById("adminProdFileUrl").value.trim(),
+        url_fichier: document.getElementById("adminProdFileUrl").value.trim()
+      };
+
+      if (!payload.titre || !payload.prix) return showNotification("Le titre et le prix sont obligatoires.", "Attention", "info");
+
+      const res = await apiCall("adminAddProduct", payload);
+      if (res.success) {
+        document.getElementById("adminProdTitre").value = "";
+        document.getElementById("adminProdDesc").value = "";
+        document.getElementById("adminProdCat").value = "";
+        document.getElementById("adminProdPrix").value = "";
+        document.getElementById("adminProdImg").value = "";
+        document.getElementById("adminProdFileUrl").value = "";
+        showNotification(res.message, "Succès", "success", () => {
+          loadProducts();
+        });
+      } else {
+        showNotification(res.message, "Erreur", "error");
+      }
+    }
+  </script>
 </body>
 </html>

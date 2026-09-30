@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183D32">
+  <title>BENTOULAPPS | Tableau de bord & Gestion des catalogues</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --forest: #183D32;
+      --green: #245744;
+      --gold: #C9A24D;
+      --paper: #F7F8F3;
+      --ink: #17251F;
+      --muted: #68766E;
+      --line: #E2E9DF;
+      --danger: #b3261e;
+      --danger-bg: #FDF2F2;
+      font-family: 'Trebuchet MS', system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; color: var(--ink); background: var(--paper); }
+    button { font: inherit; cursor: pointer; }
+    .shell { min-height: 100vh; display: grid; grid-template-columns: 230px minmax(0, 1fr); }
+    .sidebar { padding: 25px 15px; display: flex; flex-direction: column; color: #fff; background: var(--forest); }
+    .brand { padding: 4px 9px 24px; display: flex; align-items: center; gap: 10px; }
+    .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; color: var(--forest); background: var(--gold); font: bold 21px Georgia, serif; }
+    .brand-name { font-size: 14px; font-weight: 800; }
+    .brand-caption { margin-top: 2px; color: #C2D2C6; font-size: 11px; }
+    .nav-label { padding: 12px 12px 6px; color: #B8CBBD; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .tab-list { display: grid; gap: 5px; }
+    .tab-button { min-height: 42px; padding: 0 12px; display: flex; align-items: center; gap: 11px; border: 0; border-radius: 7px; color: #DCE7DF; background: transparent; text-align: left; font-size: 13px; font-weight: 600; }
+    .tab-button:hover, .tab-button[aria-selected="true"] { color: #fff; background: #2C5A47; }
+    .tab-icon { width: 20px; color: var(--gold); text-align: center; font-size: 15px; }
+    .side-note { margin-top: auto; padding: 14px 9px 0; border-top: 1px solid #ffffff24; color: #C7D6CC; font-size: 11px; line-height: 1.5; }
+    .main { min-width: 0; }
+    .topbar { min-height: 64px; padding: 0 30px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: #ffffffc9; backdrop-filter: blur(8px); }
+    .topbar-title { font-size: 13px; font-weight: 800; }
+    .status { color: var(--muted); font-size: 12px; font-weight: 600; }
+    .status.loading { color: var(--gold); }
+    .status.error { color: var(--danger); }
+    .content { width: min(1200px, 100%); margin: auto; padding: 30px 30px 60px; }
+    .eyebrow { color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    h1 { margin: 6px 0 4px; font-size: 26px; }
+    .intro { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .tab-panel { display: none; animation: enter .18s ease-out; }
+    .tab-panel.active { display: block; }
+    @keyframes enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .panel-head { margin: 24px 0 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .panel-head h2 { margin: 0; font-size: 17px; }
+    .count { color: var(--muted); font-size: 12px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    table { width: 100%; min-width: 780px; border-collapse: collapse; font-size: 12px; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid #EDF0EA; text-align: left; vertical-align: middle; }
+    th { color: var(--muted); background: #F7F9F5; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+    tr:last-child td { border-bottom: 0; }
+    td:first-child { font-family: monospace; font-size: 11px; color: var(--muted); }
+    .product-name { max-width: 230px; font-weight: bold; overflow-wrap: anywhere; }
+    .product-desc { max-width: 200px; color: var(--muted); font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pill { display: inline-block; padding: 3px 8px; border-radius: 12px; color: var(--green); background: #EDF3EB; font-size: 10px; font-weight: 800; }
+    .color-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; border: 1px solid rgba(0,0,0,0.15); margin-left: 4px; }
+    .row-link { border: 0; padding: 5px 9px; border-radius: 5px; color: var(--forest); background: #EDF3EB; font-size: 11px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+    .row-link:hover { background: #DDE9DA; }
+    .thumb-mini { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; background: #e0e0e0; vertical-align: middle; }
+    .message { padding: 25px; color: var(--muted); text-align: center; }
+    .message.error { color: var(--danger); background: var(--danger-bg); }
+    .form-label { display: grid; gap: 4px; color: var(--muted); font-size: 11px; font-weight: 800; }
+    .field { width: 100%; min-height: 38px; padding: 8px 10px; border: 1px solid #D9E2D8; border-radius: 6px; color: var(--ink); background: #fff; font: inherit; font-size: 12px; }
+    .field:focus { outline: 2px solid #24574440; border-color: var(--green); }
+    .primary-btn,.secondary-btn,.danger-btn { min-height: 36px; padding: 0 14px; border: 0; border-radius: 6px; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; }
+    .primary-btn { color: #fff; background: var(--green); }
+    .primary-btn:hover { background: var(--forest); }
+    .primary-btn:disabled, .secondary-btn:disabled, .danger-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    .secondary-btn { color: var(--forest); background: #EDF3EB; }
+    .secondary-btn:hover { background: #E0EBDC; }
+    .danger-btn { color: var(--danger); background: var(--danger-bg); }
+    .danger-btn:hover { background: #FCE8E8; }
+    .panel-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .table-actions { display: flex; gap: 6px; }
+    .modal-backdrop { position: fixed; z-index: 100; inset: 0; padding: 15px; display: grid; place-items: center; background: rgba(15, 30, 23, 0.65); backdrop-filter: blur(2px); }
+    .modal-backdrop[hidden] { display: none; }
+    .modal { width: min(620px, 100%); max-height: 90vh; overflow-y: auto; padding: 22px; border-radius: 10px; background: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+    .modal-head { margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+    .modal-head h2 { margin: 0; font-size: 18px; }
+    .badge-sheet { padding: 4px 8px; border-radius: 4px; background: #EBF1ED; color: var(--forest); font-family: monospace; font-size: 11px; }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .form-grid .wide { grid-column: 1 / -1; }
+    .form-grid textarea { min-height: 75px; resize: vertical; }
+    .modal-actions { margin-top: 20px; display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--line); padding-top: 14px; }
+    @media (max-width: 768px) {
+      .shell { display: block; padding-bottom: 66px; }
+      .sidebar { position: fixed; z-index: 50; inset: auto 0 0; padding: 4px 8px; }
+      .brand, .nav-label, .side-note { display: none; }
+      .tab-list { grid-template-columns: repeat(4, 1fr); gap: 4px; }
+      .tab-button { min-height: 50px; padding: 2px; flex-direction: column; justify-content: center; gap: 2px; font-size: 10px; text-align: center; }
+      .topbar { min-height: 56px; padding: 0 15px; }
+      .content { padding: 20px 14px 40px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .wide { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">B</div>
+        <div>
+          <div class="brand-name">BENTOULAPPS</div>
+          <div class="brand-caption">Espace de gestion</div>
+        </div>
+      </div>
+      <div class="nav-label">Navigation Feuilles</div>
+      <nav class="tab-list" role="tablist">
+        <button class="tab-button" id="tab-home" role="tab" aria-selected="true" data-tab="home"><span class="tab-icon">⌂</span>Vue Générale</button>
+        <button class="tab-button" id="tab-bentoul" role="tab" aria-selected="false" data-tab="bentoul"><span class="tab-icon">▤</span>Feuille Bentoul</button>
+        <button class="tab-button" id="tab-benamoura" role="tab" aria-selected="false" data-tab="benamoura"><span class="tab-icon">♡</span>Feuille Benamoura</button>
+        <button class="tab-button" id="tab-bentoulinguo" role="tab" aria-selected="false" data-tab="bentoulinguo"><span class="tab-icon">文</span>Feuille Bentoulinguo</button>
+      </nav>
+      <div class="side-note">Respect strict des colonnes spécifiques de chaque feuille Google Sheets.</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-title">BENTOULAPPS <span aria-hidden="true">/</span> Base de données</div>
+        <div class="status" id="globalStatus">Prêt</div>
+      </header>
+
+      <div class="content">
+        <!-- VUE ACCUEIL -->
+        <section class="tab-panel active" id="panel-home" data-panel="home">
+          <div class="eyebrow">Tableau récapitulatif</div>
+          <h1>Gestion des Feuilles</h1>
+          <p class="intro">Accédez directement aux données enregistrées dans chaque onglet de votre Google Sheets.</p>
+          
+          <div class="panel-head">
+            <h2>Feuilles disponibles</h2>
+            <div class="panel-controls">
+              <span class="count" id="overviewCount">3 feuilles</span>
+              <button class="secondary-btn" type="button" data-refresh>Actualiser tout</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Espace</th>
+                  <th>Nom de la feuille Sheet</th>
+                  <th>Total éléments</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="overviewRows">
+                <tr><td colspan="4" class="message">Chargement des données...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- FEUILLE BENTOUL (produits) -->
+        <section class="tab-panel" id="panel-bentoul" data-panel="bentoul" hidden>
+          <div class="eyebrow">Feuille : "produits"</div>
+          <h1>Bentoul</h1>
+          <p class="intro">Catalogue de produits (ID, Titre, Catégorie, Prix, Icon, Couleur, Description, DownloadUrl, DateAjout, ImageUrl).</p>
+          <div class="panel-head">
+            <h2>Articles enregistrés</h2>
+            <div class="panel-controls">
+              <span class="count" data-count="bentoul">...</span>
+              <button class="secondary-btn" type="button" data-refresh>Actualiser</button>
+              <button class="primary-btn" type="button" data-add="bentoul">+ Ajouter dans Bentoul</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Titre</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Icon / Couleur</th>
+                  <th>Date Ajout</th>
+                  <th>Téléchargement</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody data-rows="bentoul">
+                <tr><td colspan="9" class="message">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- FEUILLE BENAMOURA (benamoura) -->
+        <section class="tab-panel" id="panel-benamoura" data-panel="benamoura" hidden>
+          <div class="eyebrow">Feuille : "benamoura"</div>
+          <h1>Benamoura</h1>
+          <p class="intro">Articles (ID, Titre, Description, ImageUrl, Categorie, DateAjout, UrlRedirection).</p>
+          <div class="panel-head">
+            <h2>Articles Benamoura</h2>
+            <div class="panel-controls">
+              <span class="count" data-count="benamoura">...</span>
+              <button class="secondary-btn" type="button" data-refresh>Actualiser</button>
+              <button class="primary-btn" type="button" data-add="benamoura">+ Ajouter dans Benamoura</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Titre</th>
+                  <th>Catégorie</th>
+                  <th>Date Ajout</th>
+                  <th>Redirection</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody data-rows="benamoura">
+                <tr><td colspan="7" class="message">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- FEUILLE BENTOULINGUO -->
+        <section class="tab-panel" id="panel-bentoulinguo" data-panel="bentoulinguo" hidden>
+          <div class="eyebrow">Feuille : "bentoulinguo"</div>
+          <h1>Bentoulinguo</h1>
+          <p class="intro">Catalogue de cours et ressources linguistiques.</p>
+          <div class="panel-head">
+            <h2>Articles Bentoulinguo</h2>
+            <div class="panel-controls">
+              <span class="count" data-count="bentoulinguo">...</span>
+              <button class="secondary-btn" type="button" data-refresh>Actualiser</button>
+              <button class="primary-btn" type="button" data-add="bentoulinguo">+ Ajouter dans Bentoulinguo</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Titre</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Icon / Couleur</th>
+                  <th>Date Ajout</th>
+                  <th>Téléchargement</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody data-rows="bentoulinguo">
+                <tr><td colspan="9" class="message">Chargement...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL UNIQUE DYNAMIQUE (Ajout / Modification) -->
+  <div class="modal-backdrop" id="productModal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle">Formulaire</h2>
+          <span class="badge-sheet" id="modalTargetBadge">Feuille : ...</span>
+        </div>
+        <button class="secondary-btn" type="button" data-close-modal>✕ Fermer</button>
+      </div>
+      <form id="productForm">
+        <input type="hidden" name="id" id="field-id">
+        <div class="form-grid">
+          <label class="form-label wide">
+            Titre de l'élément *
+            <input class="field" name="titre" id="field-titre" required placeholder="Ex: Pack SMS Marketing">
+          </label>
+
+          <label class="form-label">
+            Catégorie
+            <input class="field" name="categorie" id="field-categorie" placeholder="Ex: SMS, Outils, Ebook">
+          </label>
+
+          <!-- Champs réservés à 'produits' (masqués pour benamoura) -->
+          <label class="form-label form-bentoul-only">
+            Prix (Crédits)
+            <input class="field" name="prix" id="field-prix" type="number" min="0" step="1" value="0">
+          </label>
+
+          <label class="form-label form-bentoul-only">
+            Icon (Nom ou symbole)
+            <input class="field" name="icon" id="field-icon" placeholder="Ex: file-pdf, star, 📦">
+          </label>
+
+          <label class="form-label form-bentoul-only">
+            Couleur (Code HEX ou nom)
+            <input class="field" name="couleur" id="field-couleur" placeholder="Ex: #245744 ou green">
+          </label>
+
+          <label class="form-label wide">
+            Description
+            <textarea class="field" name="description" id="field-description" placeholder="Description courte de l'élément..."></textarea>
+          </label>
+
+          <label class="form-label wide">
+            <span id="label-image">URL de l'image (ImageUrl)</span>
+            <input class="field" name="imageUrl" id="field-image" type="url" placeholder="https://exemple.com/image.jpg">
+          </label>
+
+          <label class="form-label wide">
+            <span id="label-file">URL du fichier / Téléchargement (DownloadUrl / UrlRedirection) *</span>
+            <input class="field" name="downloadUrl" id="field-file" type="url" placeholder="https://drive.google.com/..." required>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button class="secondary-btn" type="button" data-close-modal>Annuler</button>
+          <button class="primary-btn" type="submit" id="btnSubmitForm">Enregistrer dans la feuille</button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbxE8Xu9bmleAJutUshUJwZsh1hpsWPhRfJVA_2zPngbSHwSdqjXDUkWudVd-EVw4m7ipA/exec';
+
+    const catalogs = [
+      { id: 'bentoul', label: 'Bentoul', sheet: 'produits', isBenamoura: false },
+      { id: 'benamoura', label: 'Benamoura', sheet: 'benamoura', isBenamoura: true },
+      { id: 'bentoulinguo', label: 'Bentoulinguo', sheet: 'bentoulinguo', isBenamoura: false }
+    ];
+
+    let currentCatalogId = 'bentoul';
+    const catalogCache = {};
+
+    function setStatus(msg, type = '') {
+      const el = document.querySelector('#globalStatus');
+      el.textContent = msg;
+      el.className = 'status ' + type;
+    }
+
+    const escapeHtml = str => String(str ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+    // Récupération souple des clés sensibles à la casse
+    const getProp = (obj, ...keys) => {
+      if (!obj) return '';
+      for (const k of keys) {
+        if (obj[k] !== undefined && obj[k] !== null && String(obj[k]).trim() !== '') return obj[k];
+      }
+      return '';
+    };
+
+ async function apiRequest(action, data = {}) {
+      // Sekirite : Nou pase action nan URL la tou pou GS toujou jwenn li
+      const url = `${API_URL}?action=${encodeURIComponent(action)}`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action, ...data })
+      });
+      if (!response.ok) throw new Error("Erreur de connexion au serveur.");
+      const res = await response.json();
+      if (!res.success && res.ok !== true) throw new Error(res.message || "Opération échouée.");
+      return res;
+    }
+
+    async function fetchSheetData(sheetName) {
+      try {
+        const res = await apiRequest('getProducts', { sheet: sheetName });
+        return res.products || [];
+      } catch (err) {
+        console.error("Erreur chargement feuille : " + sheetName, err);
+        return null;
+      }
+    }
+
+    // Affichage des lignes adapté rigoureusement aux entêtes
+    function renderRows(products, catalog) {
+      if (!products) return `<tr><td colspan="9" class="message error">Impossible de lire la feuille "${catalog.sheet}".</td></tr>`;
+      if (products.length === 0) return `<tr><td colspan="9" class="message">Aucun élément dans la feuille "${catalog.sheet}".</td></tr>`;
+
+      return products.map(item => {
+        const id = getProp(item, 'ID', 'id');
+        const titre = getProp(item, 'Titre', 'titre', 'Nom') || 'Sans titre';
+        const desc = getProp(item, 'Description', 'description');
+        const cat = getProp(item, 'Categorie', 'categorie', 'Catégorie');
+        const img = getProp(item, 'ImageUrl', 'imageUrl', 'image', 'Image');
+        const date = getProp(item, 'DateAjout', 'dateAjout', 'Date') || '—';
+
+        const imgHtml = img ? `<img src="${escapeHtml(img)}" class="thumb-mini" alt="" onerror="this.style.display='none'">` : '—';
+
+        const actions = `
+          <div class="table-actions">
+            <button class="secondary-btn" type="button" data-edit-id="${escapeHtml(id)}" data-cat="${catalog.id}">Modifier</button>
+            <button class="danger-btn" type="button" data-del-id="${escapeHtml(id)}" data-cat="${catalog.id}">Supprimer</button>
+          </div>
+        `;
+
+        if (catalog.isBenamoura) {
+          const urlRedir = getProp(item, 'UrlRedirection', 'urlRedirection', 'DownloadUrl', 'downloadUrl');
+          const linkHtml = urlRedir ? `<a class="row-link" href="${escapeHtml(urlRedir)}" target="_blank" rel="noopener">Ouvrir</a>` : '—';
+          return `
+            <tr>
+              <td>${escapeHtml(id)}</td>
+              <td>${imgHtml}</td>
+              <td>
+                <div class="product-name">${escapeHtml(titre)}</div>
+                ${desc ? `<div class="product-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>` : ''}
+              </td>
+              <td>${cat ? `<span class="pill">${escapeHtml(cat)}</span>` : '—'}</td>
+              <td>${escapeHtml(date)}</td>
+              <td>${linkHtml}</td>
+              <td>${actions}</td>
+            </tr>
+          `;
+        } else {
+          // Feuille 'produits' : ID, Titre, Categorie, Prix, Icon, Couleur, Description, DownloadUrl, DateAjout, ImageUrl
+          const prix = getProp(item, 'Prix', 'prix');
+          const icon = getProp(item, 'Icon', 'icon');
+          const couleur = getProp(item, 'Couleur', 'couleur');
+          const downloadUrl = getProp(item, 'DownloadUrl', 'downloadUrl', 'url_fichier', 'UrlRedirection');
+          const linkHtml = downloadUrl ? `<a class="row-link" href="${escapeHtml(downloadUrl)}" target="_blank" rel="noopener">Fichier</a>` : '—';
+
+          return `
+            <tr>
+              <td>${escapeHtml(id)}</td>
+              <td>${imgHtml}</td>
+              <td>
+                <div class="product-name">${escapeHtml(titre)}</div>
+                ${desc ? `<div class="product-desc" title="${escapeHtml(desc)}">${escapeHtml(desc)}</div>` : ''}
+              </td>
+              <td>${cat ? `<span class="pill">${escapeHtml(cat)}</span>` : '—'}</td>
+              <td><strong>${prix !== '' ? escapeHtml(prix) + ' Cr' : '0'}</strong></td>
+              <td>
+                ${icon ? `<code>${escapeHtml(icon)}</code>` : '—'}
+                ${couleur ? `<span class="color-dot" style="background:${escapeHtml(couleur)};" title="${escapeHtml(couleur)}"></span>` : ''}
+              </td>
+              <td>${escapeHtml(date)}</td>
+              <td>${linkHtml}</td>
+              <td>${actions}</td>
+            </tr>
+          `;
+        }
+      }).join('');
+    }
+
+    async function loadAllCatalogs() {
+      setStatus("Synchronisation avec Google Sheets...", "loading");
+
+      let totalCount = 0;
+      let hasError = false;
+
+      for (const cat of catalogs) {
+        const data = await fetchSheetData(cat.sheet);
+        catalogCache[cat.id] = data;
+
+        const countEl = document.querySelector(`[data-count="${cat.id}"]`);
+        const rowsEl = document.querySelector(`[data-rows="${cat.id}"]`);
+
+        if (data !== null) {
+          totalCount += data.length;
+          if (countEl) countEl.textContent = `${data.length} élément(s)`;
+          if (rowsEl) rowsEl.innerHTML = renderRows(data, cat);
+        } else {
+          hasError = true;
+          if (countEl) countEl.textContent = 'Erreur';
+          if (rowsEl) rowsEl.innerHTML = renderRows(null, cat);
+        }
+      }
+
+      document.querySelector('#overviewRows').innerHTML = catalogs.map(cat => {
+        const count = catalogCache[cat.id] ? catalogCache[cat.id].length : 'Indisponible';
+        return `
+          <tr>
+            <td><strong>${escapeHtml(cat.label)}</strong></td>
+            <td><code>${escapeHtml(cat.sheet)}</code></td>
+            <td>${count} élément(s)</td>
+            <td><button class="row-link" type="button" data-switch="${cat.id}">Voir la feuille</button></td>
+          </tr>
+        `;
+      }).join('');
+
+      document.querySelector('#overviewCount').textContent = `${catalogs.length} feuilles actives`;
+      setStatus(hasError ? "Certaines feuilles n'ont pas pu être chargées." : "Base de données à jour", hasError ? "error" : "");
+    }
+
+    // Modal dynamique respectant la feuille sélectionnée
+    function openModal(catalogId, itemToEdit = null) {
+      currentCatalogId = catalogId;
+      const catalog = catalogs.find(c => c.id === catalogId);
+      const form = document.querySelector('#productForm');
+      form.reset();
+
+      const isBenamoura = catalog.isBenamoura;
+      document.querySelector('#modalTargetBadge').textContent = `Feuille : ${catalog.sheet}`;
+
+      // Afficher ou masquer les champs exclusifs à 'produits'
+      document.querySelectorAll('.form-bentoul-only').forEach(el => {
+        el.style.display = isBenamoura ? 'none' : 'grid';
+      });
+
+      document.querySelector('#label-image').textContent = isBenamoura ? "URL de l'image (ImageUrl)" : "URL de l'image (ImageUrl)";
+      document.querySelector('#label-file').textContent = isBenamoura ? "URL de redirection (UrlRedirection) *" : "Lien de téléchargement (DownloadUrl) *";
+
+      if (itemToEdit) {
+        document.querySelector('#modalTitle').textContent = `Modifier dans ${catalog.label}`;
+        document.querySelector('#field-id').value = getProp(itemToEdit, 'ID', 'id');
+        document.querySelector('#field-titre').value = getProp(itemToEdit, 'Titre', 'titre', 'Nom');
+        document.querySelector('#field-categorie').value = getProp(itemToEdit, 'Categorie', 'categorie', 'Catégorie');
+        document.querySelector('#field-description').value = getProp(itemToEdit, 'Description', 'description');
+        document.querySelector('#field-prix').value = getProp(itemToEdit, 'Prix', 'prix') || 0;
+        document.querySelector('#field-icon').value = getProp(itemToEdit, 'Icon', 'icon');
+        document.querySelector('#field-couleur').value = getProp(itemToEdit, 'Couleur', 'couleur');
+        document.querySelector('#field-image').value = getProp(itemToEdit, 'ImageUrl', 'imageUrl', 'image', 'Image');
+        document.querySelector('#field-file').value = getProp(itemToEdit, 'DownloadUrl', 'downloadUrl', 'UrlRedirection', 'urlRedirection', 'url_fichier');
+      } else {
+        document.querySelector('#modalTitle').textContent = `Ajouter dans ${catalog.label}`;
+        document.querySelector('#field-id').value = '';
+        document.querySelector('#field-prix').value = '0';
+      }
+
+      document.querySelector('#productModal').hidden = false;
+      document.querySelector('#field-titre').focus();
+    }
+
+    function closeModal() {
+      document.querySelector('#productModal').hidden = true;
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        const active = btn.dataset.tab === tabId;
+        btn.setAttribute('aria-selected', active);
+      });
+      document.querySelectorAll('[data-panel]').forEach(panel => {
+        const active = panel.dataset.panel === tabId;
+        panel.classList.toggle('active', active);
+        panel.hidden = !active;
+      });
+      window.location.hash = tabId;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      });
+
+      document.addEventListener('click', async (e) => {
+        const target = e.target.closest('button, a');
+        if (!target) return;
+
+        if (target.hasAttribute('data-close-modal')) { closeModal(); return; }
+        if (target.hasAttribute('data-switch')) { switchTab(target.dataset.switch); return; }
+        if (target.hasAttribute('data-refresh')) { await loadAllCatalogs(); return; }
+        if (target.hasAttribute('data-add')) { openModal(target.dataset.add); return; }
+
+        if (target.hasAttribute('data-edit-id')) {
+          const catId = target.dataset.cat;
+          const id = target.dataset.editId;
+          const list = catalogCache[catId] || [];
+          const item = list.find(i => String(getProp(i, 'ID', 'id')) === String(id));
+          if (item) openModal(catId, item);
+          return;
+        }
+
+        if (target.hasAttribute('data-del-id')) {
+          const catId = target.dataset.cat;
+          const id = target.dataset.delId;
+          const catalog = catalogs.find(c => c.id === catId);
+          
+          if (!confirm(`Supprimer définitivement l'ID [${id}] de la feuille "${catalog.sheet}" ?`)) return;
+
+          setStatus(`Suppression en cours dans ${catalog.sheet}...`, 'loading');
+          target.disabled = true;
+
+          try {
+            const res = await apiRequest('adminDeleteProduct', { sheet: catalog.sheet, id: id });
+            setStatus(res.message || "Suppression effectuée avec succès.");
+            await loadAllCatalogs();
+          } catch (err) {
+            setStatus("Erreur : " + err.message, "error");
+            alert("Erreur : " + err.message);
+          } finally {
+            target.disabled = false;
+          }
+        }
+      });
+
+      // Envoi du formulaire (Ajout ou Modification)
+      document.querySelector('#productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const catalog = catalogs.find(c => c.id === currentCatalogId);
+        const submitBtn = document.querySelector('#btnSubmitForm');
+        
+        const id = document.querySelector('#field-id').value.trim();
+        const titre = document.querySelector('#field-titre').value.trim();
+        const categorie = document.querySelector('#field-categorie').value.trim();
+        const description = document.querySelector('#field-description').value.trim();
+        const prix = Number(document.querySelector('#field-prix').value) || 0;
+        const icon = document.querySelector('#field-icon').value.trim();
+        const couleur = document.querySelector('#field-couleur').value.trim();
+        const imgUrl = document.querySelector('#field-image').value.trim();
+        const fileUrl = document.querySelector('#field-file').value.trim();
+
+        // Envoi avec tous les alias pour matcher les colonnes exactes de votre Google Sheet
+        const payload = {
+          sheet: catalog.sheet,
+          id: id,
+          titre: titre,
+          categorie: categorie,
+          prix: prix,
+          icon: icon,
+          couleur: couleur,
+          description: description,
+          // Images
+          image: imgUrl,
+          imageUrl: imgUrl,
+          ImageUrl: imgUrl,
+          // Fichiers & Liens
+          downloadUrl: fileUrl,
+          DownloadUrl: fileUrl,
+          urlRedirection: fileUrl,
+          UrlRedirection: fileUrl,
+          url_fichier: fileUrl
+        };
+
+        submitBtn.disabled = true;
+        const isUpdate = Boolean(id);
+        setStatus(isUpdate ? `Mise à jour dans ${catalog.sheet}...` : `Ajout dans ${catalog.sheet}...`, 'loading');
+
+        try {
+          const action = isUpdate ? 'adminUpdateProduct' : 'adminAddProduct';
+          const res = await apiRequest(action, payload);
+          setStatus(res.message || "Enregistré avec succès !");
+          closeModal();
+          await loadAllCatalogs();
+        } catch (err) {
+          setStatus("Erreur : " + err.message, "error");
+          alert("Erreur : " + err.message);
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+
+      document.querySelector('#productModal').addEventListener('click', (e) => {
+        if (e.target.id === 'productModal') closeModal();
+      });
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      const initialTab = (window.location.hash || '#home').replace('#', '');
+      switchTab(['home', 'bentoul', 'benamoura', 'bentoulinguo'].includes(initialTab) ? initialTab : 'home');
+
+      loadAllCatalogs();
+    });
+  </script>
+</body>
+</html>
