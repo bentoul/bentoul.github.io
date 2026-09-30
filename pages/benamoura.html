@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Benamoura - Amour, SMS, Histoires & Conseils</title>
-  <!-- Material Symbols & Google Fonts -->
+  <!-- Local Font Awesome icons and page typography -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css">
+  <script defer src="../assets/fontawesome/adapter.js"></script>
   
   <style>
     :root {
@@ -87,6 +88,9 @@
       font-weight: 700;
       font-size: 20px;
     }
+
+    .sidebar-header .logo-icon { font-size: 0; }
+    .sidebar-header .logo-icon::before { content: "\f004"; font: 900 20px/1 "Font Awesome 6 Free"; }
 
     .sidebar-header h2 {
       font-size: 18px;

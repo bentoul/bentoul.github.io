@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BENTOULAPPS - Application Web Numérique</title>
-  <!-- Material Symbols & Google Fonts -->
+  <!-- Local Font Awesome icons and page typography -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
+  <script defer src="assets/fontawesome/adapter.js"></script>
   
   <style>
     :root {
@@ -1205,7 +1206,7 @@
       </div>
 
       <div id="confirmCreditWarning" style="display: none; color: #D32F2F; font-size: 12px; margin-bottom: 12px; font-weight: 700;">
-        ⚠️ Votre solde est insuffisant pour ce téléchargement.
+        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Votre solde est insuffisant pour ce téléchargement.
       </div>
 
       <div class="dialog-actions" id="confirmDialogActions"></div>
@@ -1561,7 +1562,7 @@
         <div class="product-info">
           <div class="product-title" onclick="showDocDetail('${product.id}')">${product.titre}</div>
           <div class="product-category">${product.categorie}</div>
-          <div class="product-price">${isPaid ? '<span style="color:#2E7D32;">✓ Débloqué</span>' : product.prix + ' Crédits'}</div>
+          <div class="product-price">${isPaid ? '<span style="color:#2E7D32;"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Débloqué</span>' : product.prix + ' Crédits'}</div>
           <div class="card-actions-row">
             <button class="btn btn-outline" style="flex:1;" onclick="showDocDetail('${product.id}')">Détails</button>
             ${actionBtnHtml}

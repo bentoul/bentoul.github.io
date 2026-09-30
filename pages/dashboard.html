@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#183D32">
   <title>BENTOULAPPS | Tableau de bord & Gestion des catalogues</title>
+  <link rel="stylesheet" href="../assets/fontawesome/css/all.min.css">
+  <script defer src="../assets/fontawesome/adapter.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -129,10 +131,10 @@
       </div>
       <div class="nav-label">Navigation Feuilles</div>
       <nav class="tab-list" role="tablist">
-        <button class="tab-button" id="tab-home" role="tab" aria-selected="true" data-tab="home"><span class="tab-icon">⌂</span>Vue Générale</button>
-        <button class="tab-button" id="tab-bentoul" role="tab" aria-selected="false" data-tab="bentoul"><span class="tab-icon">▤</span>Feuille Bentoul</button>
-        <button class="tab-button" id="tab-benamoura" role="tab" aria-selected="false" data-tab="benamoura"><span class="tab-icon">♡</span>Feuille Benamoura</button>
-        <button class="tab-button" id="tab-bentoulinguo" role="tab" aria-selected="false" data-tab="bentoulinguo"><span class="tab-icon">文</span>Feuille Bentoulinguo</button>
+        <button class="tab-button" id="tab-home" role="tab" aria-selected="true" data-tab="home"><span class="tab-icon"><i class="fa-solid fa-house" aria-hidden="true"></i></span>Vue Générale</button>
+        <button class="tab-button" id="tab-bentoul" role="tab" aria-selected="false" data-tab="bentoul"><span class="tab-icon"><i class="fa-solid fa-boxes-stacked" aria-hidden="true"></i></span>Feuille Bentoul</button>
+        <button class="tab-button" id="tab-benamoura" role="tab" aria-selected="false" data-tab="benamoura"><span class="tab-icon"><i class="fa-solid fa-heart" aria-hidden="true"></i></span>Feuille Benamoura</button>
+        <button class="tab-button" id="tab-bentoulinguo" role="tab" aria-selected="false" data-tab="bentoulinguo"><span class="tab-icon"><i class="fa-solid fa-language" aria-hidden="true"></i></span>Feuille Bentoulinguo</button>
       </nav>
       <div class="side-note">Respect strict des colonnes spécifiques de chaque feuille Google Sheets.</div>
     </aside>
@@ -289,7 +291,7 @@
           <h2 id="modalTitle">Formulaire</h2>
           <span class="badge-sheet" id="modalTargetBadge">Feuille : ...</span>
         </div>
-        <button class="secondary-btn" type="button" data-close-modal>✕ Fermer</button>
+        <button class="secondary-btn" type="button" data-close-modal><i class="fa-solid fa-xmark" aria-hidden="true"></i> Fermer</button>
       </div>
       <form id="productForm">
         <input type="hidden" name="id" id="field-id">
