@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Éditeur de contenu | BCREATION</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    :root { color-scheme: light; --ink:#1d2925; --muted:#728079; --page:#f3f8f3; --surface:#fff; --line:#dce7df; --accent:#287a5d; --accent-dark:#16563f; --soft:#e1f1e6; --danger:#b53e42; --shadow:0 12px 32px rgba(34,55,44,.08); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:var(--page); font:14px/1.5 "DM Sans",sans-serif; }
+    button,input,textarea,select { font:inherit; }
+    button { cursor:pointer; }
+    .topbar { position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; min-height:66px; padding:0 max(18px,calc((100vw - 1180px)/2)); background:var(--surface); border-bottom:1px solid var(--line); }
+    .brand { color:var(--ink); font:800 18px Outfit,sans-serif; text-decoration:none; letter-spacing:.03em; }
+    .brand b { color:var(--accent); }
+    .back-link { color:var(--accent-dark); font-weight:700; text-decoration:none; }
+    main { width:min(1180px,calc(100% - 32px)); margin:30px auto 65px; }
+    h1,h2,h3,p { margin-top:0; }
+    h1,h2,h3 { font-family:Outfit,sans-serif; letter-spacing:0; }
+    h1 { margin-bottom:5px; font-size:30px; line-height:1.15; }
+    h2 { margin-bottom:4px; font-size:19px; }
+    .eyebrow { color:var(--accent); font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
+    .muted { color:var(--muted); }
+    .intro { display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:23px; }
+    .intro p { margin-bottom:0; color:var(--muted); }
+    .layout { display:grid; grid-template-columns:minmax(0,2.45fr) minmax(260px,.92fr); gap:14px; align-items:start; }
+    .editor-form { display:grid; grid-template-columns:minmax(220px,.82fr) minmax(380px,1.5fr); gap:14px; align-items:start; min-width:0; }
+    .panel { overflow:hidden; border:1px solid var(--line); border-radius:7px; background:var(--surface); box-shadow:var(--shadow); }
+    .sidebar-panel { position:sticky; top:82px; max-height:calc(100vh - 98px); overflow:auto; }
+    .editor-panel { min-width:0; }
+    .panel-heading { display:flex; align-items:center; gap:11px; padding:16px 19px; border-bottom:1px solid var(--line); }
+    .panel-heading h2 { margin:0; }
+    .panel-heading i { display:grid; width:34px; height:34px; place-items:center; border-radius:5px; background:var(--soft); color:var(--accent); }
+    .panel-body { padding:16px; }
+    .field { display:grid; gap:6px; margin-bottom:15px; }
+    .field[hidden] { display:none; }
+    .field label { font-size:12px; font-weight:700; }
+    .field input,.field select,.field textarea { width:100%; min-height:41px; padding:9px 11px; border:1px solid #ccd9d0; border-radius:4px; outline:none; background:#fff; color:var(--ink); }
+    .field input:focus,.field select:focus,.field textarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(40,122,93,.12); }
+    .two-col { display:grid; grid-template-columns:1fr; gap:0; }
+    .toolbar { display:flex; flex-wrap:wrap; gap:4px; padding:7px; border:1px solid #ccd9d0; border-bottom:0; border-radius:4px 4px 0 0; background:#f6f8f6; }
+    .toolbar-primary-row { display:flex; width:100%; flex-wrap:wrap; align-items:center; gap:7px; padding:0 0 7px; border-bottom:1px solid #dce5de; }
+    .toolbar-primary-row .tool-select { width:auto; min-width:0; }
+    #blockFormat { width:92px; }
+    #fontFamily { width:118px; }
+    .color-palette { display:flex; align-items:center; gap:4px; }
+    .color-swatch { width:23px; height:23px; padding:0; border:1px solid rgba(29,41,37,.2); border-radius:4px; }
+    .color-picker { width:34px; height:31px; padding:3px; border:1px solid var(--line); border-radius:4px; background:#fff; }
+    .tool-btn,.tool-select { min-width:32px; height:31px; padding:0 7px; border:1px solid transparent; border-radius:3px; background:transparent; color:#3d4a43; }
+    .tool-btn:hover,.tool-btn:focus-visible { border-color:#c8d9cd; background:#e6f1e9; color:var(--accent-dark); }
+    .tool-select { width:auto; border:1px solid var(--line); background:#fff; font-size:11px; }
+    .toolbar-separator { width:1px; height:22px; align-self:center; margin:0 3px; background:#d5dfd7; }
+    .rich-editor { min-height:420px; max-height:calc(100vh - 330px); overflow:auto; padding:18px; border:1px solid #ccd9d0; border-radius:0 0 4px 4px; outline:none; background:#fff; line-height:1.75; }
+    .rich-editor:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(40,122,93,.12); }
+    .rich-editor:empty::before { color:#9aa69e; content:attr(data-placeholder); pointer-events:none; }
+    .rich-editor h1,.rich-editor h2,.rich-editor h3,.rich-editor h4,.rich-editor h5 { margin:12px 0 6px; }
+    .preview-image { display:none; width:100%; max-height:190px; margin-top:8px; object-fit:cover; border:1px solid var(--line); border-radius:4px; }
+    .editor-image-preview { display:block; width:100%; max-height:260px; margin:10px 0; object-fit:contain; border:1px solid var(--line); border-radius:4px; background:#f4f7f4; }
+    .upload-status { min-height:18px; margin:6px 0 0; color:var(--muted); font-size:11px; }
+    .actions { display:flex; gap:8px; margin-top:18px; }
+    .primary,.secondary,.danger-button { min-height:40px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 13px; border:0; border-radius:4px; font-size:12px; font-weight:800; }
+    .primary { flex:1; background:var(--accent); color:#fff; }
+    .primary:hover { background:var(--accent-dark); }
+    .primary:disabled { opacity:.6; cursor:wait; }
+    .secondary { border:1px solid var(--line); background:#fff; color:var(--muted); }
+    .danger-button { min-height:32px; padding:6px 9px; border:1px solid #efd3d3; background:#fff; color:var(--danger); }
+    .item-list { display:grid; }
+    .content-row { display:grid; grid-template-columns:52px minmax(0,1fr) auto; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid var(--line); }
+    .content-row:last-child { border-bottom:0; }
+    .thumb { width:52px; height:45px; object-fit:cover; border-radius:3px; background:var(--soft); }
+    .item-title { overflow:hidden; margin:0; font-weight:700; text-overflow:ellipsis; white-space:nowrap; }
+    .item-subtitle { color:var(--muted); font-size:11px; }
+    .row-actions { display:flex; gap:5px; }
+    .empty { padding:26px 18px; color:var(--muted); text-align:center; }
+    .mobile-switcher { display:none; }
+    .mobile-panel-hidden { display:none !important; }
+    .upload-trigger[aria-disabled="true"] { opacity:.55; pointer-events:none; }
+    #editorApp[hidden] { display:none; }
+    #toast { position:fixed; right:18px; bottom:18px; z-index:10; max-width:min(380px,calc(100vw - 36px)); padding:12px 15px; border-radius:4px; background:#1d2925; color:#fff; box-shadow:var(--shadow); opacity:0; pointer-events:none; transform:translateY(7px); transition:.2s; }
+    #toast.visible { opacity:1; transform:translateY(0); }
+    @media(max-width:1100px) and (min-width:861px) { .layout { grid-template-columns:1fr; } .editor-form { grid-template-columns:minmax(220px,.8fr) minmax(360px,1.2fr); } .list-sidebar { position:static; max-height:420px; } .item-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media(max-width:860px) { main { margin-top:18px; } .intro { margin-bottom:12px; } .layout { grid-template-columns:1fr; gap:10px; } .editor-form { grid-template-columns:1fr; gap:10px; } .sidebar-panel { position:static; max-height:none; } .mobile-switcher { position:sticky; top:66px; z-index:4; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; margin:0 0 12px; padding:4px; border:1px solid var(--line); border-radius:6px; background:var(--surface); box-shadow:0 4px 14px rgba(25,39,31,.08); } .mobile-switcher button { min-height:40px; padding:4px; border:0; border-radius:4px; background:transparent; color:var(--muted); font-size:11px; font-weight:800; } .mobile-switcher button.active { background:var(--soft); color:var(--accent-dark); } .rich-editor { min-height:340px; max-height:none; } }
+    @media(max-width:520px) { main { width:calc(100% - 22px); margin-top:14px; } .topbar { min-height:58px; padding:0 12px; } .mobile-switcher { top:58px; } h1 { font-size:25px; } .intro { align-items:start; flex-direction:column; } .panel-body { padding:14px; } .tool-btn { min-width:30px; } .toolbar-primary-row { flex-wrap:nowrap; gap:4px; overflow-x:auto; } #blockFormat { width:58px; } #fontFamily { width:84px; } .toolbar-primary-row .tool-select { flex:0 0 auto; } .color-swatch { width:17px; height:17px; } .color-picker { width:30px; height:29px; } .content-row { grid-template-columns:43px minmax(0,1fr) auto; gap:8px; padding:10px; } .thumb { width:43px; height:42px; } .danger-button { font-size:10px; } .rich-editor { min-height:300px; padding:13px; } .editor-panel .panel-heading { padding:12px 14px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="index.html">B<b>CREATION</b></a><a class="back-link" href="index.html"><i class="fa-solid fa-arrow-left"></i> Retour à l’application</a></header>
+
+  <main id="editorApp">
+    <section class="intro"><div><div class="eyebrow">Administration · Google Sheets</div><h1>Éditeur de contenu</h1><p>Publiez dans la boutique, Benamoura ou Bentoulinguo.</p></div></section>
+    <nav class="mobile-switcher" aria-label="Panneaux de l’éditeur">
+      <button class="active" type="button" data-mobile-panel="description" aria-pressed="true"><i class="fa-solid fa-pen-to-square"></i> Description</button>
+      <button type="button" data-mobile-panel="fields" aria-pressed="false"><i class="fa-solid fa-sliders"></i> Champs</button>
+      <button type="button" data-mobile-panel="list" aria-pressed="false"><i class="fa-solid fa-list"></i> Liste</button>
+    </nav>
+    <div class="layout">
+      <form id="contentForm" class="editor-form">
+        <input type="hidden" id="contentId">
+        <section class="panel sidebar-panel input-sidebar" data-mobile-content="fields">
+          <div class="panel-heading"><i class="fa-solid fa-sliders"></i><h2>Champs de l’article</h2></div>
+          <div class="panel-body">
+          <div class="field"><label for="targetSheet">Espace de publication</label><select id="targetSheet"><option value="produits">Boutique</option><option value="benamoura">Benamoura · conseils, SMS, poésie</option><option value="bentoulinguo">Bentoulinguo · expressions & traductions</option></select></div>
+          <div class="field"><label for="contentTitle">Titre</label><input id="contentTitle" maxlength="180" required placeholder="Titre du contenu"></div>
+          <div class="two-col">
+            <div class="field"><label for="contentCategory" id="categoryLabel">Catégorie</label><input id="contentCategory" placeholder="Ex. Informatique, poésie, anglais"></div>
+            <div class="field" id="priceField"><label for="contentPrice">Prix en crédits</label><input id="contentPrice" type="number" min="0" step="1" value="0"></div>
+          </div>
+          <div class="field" id="languageField" hidden><label for="contentLanguage">Langue</label><input id="contentLanguage" placeholder="Français, Kreyòl, English, Español"></div>
+          <div class="field"><label for="imageUrl">Image · URL</label><input id="imageUrl" type="url" placeholder="https://…"><img class="preview-image" id="imagePreview" alt="Aperçu de l’image"></div>
+          <div class="field" id="downloadField"><label for="downloadUrl" id="downloadLabel">Lien du contenu / document</label><input id="downloadUrl" type="url" placeholder="https://…"></div>
+          <div id="bentoulinguoFields" hidden>
+            <div class="field"><label for="audioUrl">URL audio (facultatif)</label><input id="audioUrl" type="url" placeholder="https://…"></div>
+            <div class="field"><label for="videoUrl">URL vidéo (facultatif)</label><input id="videoUrl" type="url" placeholder="https://…"></div>
+          </div>
+          </div>
+        </section>
+        <section class="panel editor-panel" data-mobile-content="description">
+          <div class="panel-heading"><i class="fa-solid fa-pen-to-square"></i><h2 id="formHeading">Description</h2></div>
+          <div class="panel-body">
+            <div class="field"><label>Description avec mise en forme</label>
+              <div class="toolbar" role="toolbar" aria-label="Mise en forme de la description">
+                <button class="tool-btn" type="button" data-command="undo" title="Annuler" aria-label="Annuler"><i class="fa-solid fa-rotate-left"></i></button>
+                <button class="tool-btn" type="button" data-command="redo" title="Rétablir" aria-label="Rétablir"><i class="fa-solid fa-rotate-right"></i></button><span class="toolbar-separator"></span>
+                <div class="toolbar-primary-row">
+                  <select class="tool-select" id="blockFormat" aria-label="Niveau du titre"><option value="H1">H1</option><option value="H2" selected>H2</option><option value="H3">H3</option><option value="H4">H4</option><option value="H5">H5</option><option value="BLOCKQUOTE">Citation</option></select>
+                  <select class="tool-select" id="fontFamily" aria-label="Police du texte"><option value="DM Sans">DM Sans</option><option value="Outfit">Outfit</option><option value="Georgia">Georgia</option><option value="Arial">Arial</option><option value="Courier New">Courier New</option></select>
+                  <button class="tool-btn" type="button" data-command="underline" title="Souligné" aria-label="Souligné"><i class="fa-solid fa-underline"></i></button>
+                  <div class="color-palette" role="group" aria-label="Palette de couleur du texte">
+                    <button class="color-swatch" type="button" data-text-color="#1d2925" style="background:#1d2925" title="Noir" aria-label="Texte noir"></button>
+                    <button class="color-swatch" type="button" data-text-color="#287a5d" style="background:#287a5d" title="Vert" aria-label="Texte vert"></button>
+                    <button class="color-swatch" type="button" data-text-color="#3264c8" style="background:#3264c8" title="Bleu" aria-label="Texte bleu"></button>
+                    <button class="color-swatch" type="button" data-text-color="#c64b62" style="background:#c64b62" title="Rose" aria-label="Texte rose"></button>
+                    <button class="color-swatch" type="button" data-text-color="#b45309" style="background:#b45309" title="Orange" aria-label="Texte orange"></button>
+                    <input class="color-picker" id="textColor" type="color" value="#1d2925" aria-label="Couleur personnalisée">
+                  </div>
+                </div>
+                <button class="tool-btn" type="button" data-command="bold" title="Gras" aria-label="Gras"><i class="fa-solid fa-bold"></i></button>
+                <button class="tool-btn" type="button" data-command="italic" title="Italique" aria-label="Italique"><i class="fa-solid fa-italic"></i></button>
+                <button class="tool-btn" type="button" data-command="strikeThrough" title="Barré" aria-label="Barré"><i class="fa-solid fa-strikethrough"></i></button><span class="toolbar-separator"></span>
+                <button class="tool-btn" type="button" data-command="insertUnorderedList" title="Liste à puces" aria-label="Liste à puces"><i class="fa-solid fa-list-ul"></i></button>
+                <button class="tool-btn" type="button" data-command="insertOrderedList" title="Liste numérotée" aria-label="Liste numérotée"><i class="fa-solid fa-list-ol"></i></button>
+                <button class="tool-btn" type="button" data-command="outdent" title="Diminuer le retrait" aria-label="Diminuer le retrait"><i class="fa-solid fa-outdent"></i></button>
+                <button class="tool-btn" type="button" data-command="indent" title="Augmenter le retrait" aria-label="Augmenter le retrait"><i class="fa-solid fa-indent"></i></button><span class="toolbar-separator"></span>
+                <button class="tool-btn" type="button" data-command="justifyLeft" title="Aligner à gauche" aria-label="Aligner à gauche"><i class="fa-solid fa-align-left"></i></button>
+                <button class="tool-btn" type="button" data-command="justifyCenter" title="Centrer" aria-label="Centrer"><i class="fa-solid fa-align-center"></i></button>
+                <button class="tool-btn" type="button" data-command="justifyRight" title="Aligner à droite" aria-label="Aligner à droite"><i class="fa-solid fa-align-right"></i></button><span class="toolbar-separator"></span>
+                <button class="tool-btn" type="button" id="linkButton" title="Insérer un lien" aria-label="Insérer un lien"><i class="fa-solid fa-link"></i></button>
+                <button class="tool-btn" type="button" data-command="unlink" title="Retirer le lien" aria-label="Retirer le lien"><i class="fa-solid fa-link-slash"></i></button>
+                <label class="tool-btn upload-trigger" id="imageUploadButton" for="imageUploadInput" title="Téléverser une image dans Google Drive" aria-label="Téléverser une image" role="button" tabindex="0"><i class="fa-solid fa-image"></i><i class="fa-solid fa-arrow-up-from-bracket"></i></label>
+                <button class="tool-btn" type="button" data-command="removeFormat" title="Effacer la mise en forme" aria-label="Effacer la mise en forme"><i class="fa-solid fa-eraser"></i></button>
+              </div>
+              <input id="imageUploadInput" type="file" accept="image/jpeg,image/png,image/gif,image/webp" hidden>
+              <div id="imageUploadStatus" class="upload-status" role="status" aria-live="polite"></div>
+              <img class="editor-image-preview" id="editorImagePreview" alt="Aperçu de l’image de l’article" hidden>
+              <div id="descriptionEditor" class="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" data-placeholder="Rédigez votre description…"></div>
+            </div>
+            <div class="actions"><button class="primary" id="saveButton" type="submit"><i class="fa-solid fa-cloud-arrow-up"></i> Publier dans Google Sheets</button><button class="secondary" type="button" id="resetButton">Effacer</button></div>
+          </div>
+        </section>
+      </form>
+      <section class="panel sidebar-panel list-sidebar" data-mobile-content="list"><div class="panel-heading"><i class="fa-solid fa-table-list"></i><h2>Articles publiés</h2></div><div class="item-list" id="contentList"><div class="empty">Chargement…</div></div></section>
+    </div>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbwnZPiFwDw8a8oaFOsInnJpNsddMb7kctDTDNW7ADRQCEkXqvtmipM1bXaVprHbMxlraA/exec";
+    const state = { sheet: "produits", items: [] };
+    const editor = document.getElementById("descriptionEditor");
+    let toastTimer;
+    let savedEditorRange = null;
+
+    function saveEditorSelection() {
+      const selection = window.getSelection();
+      if (selection && selection.rangeCount && editor.contains(selection.anchorNode)) {
+        savedEditorRange = selection.getRangeAt(0).cloneRange();
+      }
+    }
+
+    function restoreEditorSelection() {
+      editor.focus();
+      if (!savedEditorRange) return;
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(savedEditorRange);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[char]);
+    }
+
+    async function api(action, payload = {}) {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action, ...payload })
+      });
+      if (!response.ok) throw new Error("Le serveur Apps Script ne répond pas.");
+      const result = await response.json();
+      if (!result.success) throw new Error(result.message || "L’opération a échoué.");
+      return result;
+    }
+
+    function notify(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("visible"), 3200);
+    }
+
+    function setSheetFields() {
+      const sheet = document.getElementById("targetSheet").value;
+      state.sheet = sheet;
+      const isShop = sheet === "produits";
+      const isLanguage = sheet === "bentoulinguo";
+      document.getElementById("priceField").hidden = !isShop;
+      document.getElementById("languageField").hidden = !isLanguage;
+      document.getElementById("bentoulinguoFields").hidden = !isLanguage;
+      document.getElementById("downloadField").hidden = isLanguage;
+      document.getElementById("categoryLabel").textContent = isLanguage ? "Catégorie" : sheet === "benamoura" ? "Type d’article" : "Catégorie";
+      document.getElementById("downloadLabel").textContent = sheet === "benamoura" ? "Lien de partage (facultatif)" : "Lien du document (facultatif)";
+      document.getElementById("downloadUrl").placeholder = isShop ? "https://…" : "https://…";
+      clearForm();
+      loadItems();
+    }
+
+    function clearForm() {
+      document.getElementById("contentId").value = "";
+      document.getElementById("formHeading").textContent = "Nouveau contenu";
+      document.getElementById("contentTitle").value = "";
+      document.getElementById("contentCategory").value = "";
+      document.getElementById("contentPrice").value = "0";
+      document.getElementById("contentLanguage").value = "";
+      document.getElementById("imageUrl").value = "";
+      document.getElementById("downloadUrl").value = "";
+      document.getElementById("audioUrl").value = "";
+      document.getElementById("videoUrl").value = "";
+      updateImagePreview();
+      editor.innerHTML = "";
+      document.getElementById("saveButton").innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publier dans Google Sheets';
+    }
+
+    document.getElementById("targetSheet").addEventListener("change", setSheetFields);
+    document.getElementById("resetButton").addEventListener("click", clearForm);
+
+    async function loadItems() {
+      const list = document.getElementById("contentList");
+      list.innerHTML = '<div class="empty"><i class="fa-solid fa-spinner fa-spin"></i> Chargement…</div>';
+      try {
+        const result = await api("getProducts", { sheet: state.sheet });
+        state.items = result.products || [];
+        renderItems();
+      } catch (error) { list.innerHTML = `<div class="empty">${escapeHtml(error.message)}</div>`; }
+    }
+
+    function renderItems() {
+      const list = document.getElementById("contentList");
+      if (!state.items.length) { list.innerHTML = '<div class="empty">Aucun contenu dans cette feuille.</div>'; return; }
+      list.innerHTML = state.items.map(item => {
+        const id = valueOf(item, "ID", "id");
+        const title = valueOf(item, "Titre", "titre") || "Sans titre";
+        const category = valueOf(item, "Categorie", "categorie", "Langue", "langue") || "";
+        const image = safeImage(valueOf(item, "ImageUrl", "imageUrl"));
+        const price = state.sheet === "produits" ? ` · ${Number(valueOf(item, "Prix", "prix")) || 0} crédits` : "";
+        return `<article class="content-row"><img class="thumb" src="${escapeHtml(image || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=120&h=100&fit=crop")}" alt="" onerror="this.style.visibility='hidden'"><div><p class="item-title">${escapeHtml(title)}</p><span class="item-subtitle">${escapeHtml(category)}${price}</span></div><div class="row-actions"><button class="secondary edit-button" type="button" data-id="${escapeHtml(id)}" aria-label="Modifier ${escapeHtml(title)}"><i class="fa-solid fa-pen"></i></button><button class="danger-button delete-button" type="button" data-id="${escapeHtml(id)}" aria-label="Supprimer ${escapeHtml(title)}"><i class="fa-solid fa-trash"></i></button></div></article>`;
+      }).join("");
+      list.querySelectorAll(".edit-button").forEach(button => button.addEventListener("click", () => editItem(button.dataset.id)));
+      list.querySelectorAll(".delete-button").forEach(button => button.addEventListener("click", () => deleteItem(button.dataset.id)));
+    }
+
+    function safeImage(value) { return /^https?:\/\//i.test(String(value || "")) ? String(value) : ""; }
+    function valueOf(item, ...keys) { for (const key of keys) if (item && item[key] !== undefined && item[key] !== null && item[key] !== "") return item[key]; return ""; }
+
+    function editItem(id) {
+      const item = state.items.find(row => String(valueOf(row, "ID", "id")) === String(id));
+      if (!item) return;
+      setMobilePanel("fields");
+      document.getElementById("contentId").value = id;
+      document.getElementById("formHeading").textContent = "Modifier le contenu";
+      document.getElementById("contentTitle").value = valueOf(item, "Titre", "titre");
+      document.getElementById("contentCategory").value = valueOf(item, "Categorie", "categorie");
+      document.getElementById("contentPrice").value = Number(valueOf(item, "Prix", "prix")) || 0;
+      document.getElementById("contentLanguage").value = valueOf(item, "Langue", "langue");
+      document.getElementById("imageUrl").value = valueOf(item, "ImageUrl", "imageUrl");
+      document.getElementById("downloadUrl").value = valueOf(item, "DownloadUrl", "UrlRedirection", "urlRedirection");
+      document.getElementById("audioUrl").value = valueOf(item, "UrlAudio", "urlAudio");
+      document.getElementById("videoUrl").value = valueOf(item, "UrlVideo", "urlVideo");
+      editor.innerHTML = valueOf(item, "Description", "description");
+      updateImagePreview();
+      document.getElementById("saveButton").innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications';
+      document.getElementById("contentTitle").focus();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    document.getElementById("contentForm").addEventListener("submit", async event => {
+      event.preventDefault();
+      const id = document.getElementById("contentId").value.trim();
+      const sheet = state.sheet;
+      const category = document.getElementById("contentCategory").value.trim();
+      const description = editor.innerHTML.trim();
+      const payload = {
+        sheet,
+        id,
+        titre: document.getElementById("contentTitle").value.trim(),
+        categorie: category || (sheet === "benamoura" ? "Poésie" : sheet === "bentoulinguo" ? "Langue" : "Informatique"),
+        description,
+        imageUrl: document.getElementById("imageUrl").value.trim(),
+        downloadUrl: document.getElementById("downloadUrl").value.trim(),
+        urlRedirection: document.getElementById("downloadUrl").value.trim(),
+        prix: document.getElementById("contentPrice").value,
+        langue: document.getElementById("contentLanguage").value.trim(),
+        urlAudio: document.getElementById("audioUrl").value.trim(),
+        urlVideo: document.getElementById("videoUrl").value.trim()
+      };
+      const button = document.getElementById("saveButton");
+      button.disabled = true;
+      try {
+        const action = id ? "adminUpdateProduct" : "adminAddProduct";
+        const result = await api(action, payload);
+        notify(result.message || "Contenu enregistré dans Google Sheets.");
+        clearForm();
+        await loadItems();
+      } catch (error) { notify(error.message); }
+      finally { button.disabled = false; }
+    });
+
+    async function deleteItem(id) {
+      const item = state.items.find(row => String(valueOf(row, "ID", "id")) === String(id));
+      if (!item || !confirm(`Supprimer « ${valueOf(item, "Titre", "titre") || "ce contenu"} » ?`)) return;
+      try {
+        const result = await api("adminDeleteProduct", { sheet: state.sheet, id });
+        notify(result.message || "Contenu supprimé.");
+        await loadItems();
+      } catch (error) { notify(error.message); }
+    }
+
+    function runFormat(command, value = null) {
+      restoreEditorSelection();
+      document.execCommand(command, false, value);
+      saveEditorSelection();
+    }
+
+    document.querySelectorAll("[data-command]").forEach(button => {
+      button.addEventListener("mousedown", event => { saveEditorSelection(); event.preventDefault(); });
+      button.addEventListener("click", () => runFormat(button.dataset.command));
+    });
+    editor.addEventListener("keyup", saveEditorSelection);
+    editor.addEventListener("mouseup", saveEditorSelection);
+    editor.addEventListener("input", saveEditorSelection);
+    document.getElementById("blockFormat").addEventListener("mousedown", saveEditorSelection);
+    document.getElementById("fontFamily").addEventListener("mousedown", saveEditorSelection);
+    document.getElementById("textColor").addEventListener("mousedown", saveEditorSelection);
+    document.getElementById("blockFormat").addEventListener("change", event => {
+      if (/^H[1-5]$/.test(event.target.value) || event.target.value === "BLOCKQUOTE") runFormat("formatBlock", `<${event.target.value}>`);
+    });
+    document.getElementById("fontFamily").addEventListener("change", event => runFormat("fontName", event.target.value));
+    document.getElementById("textColor").addEventListener("change", event => runFormat("foreColor", event.target.value));
+    document.querySelectorAll("[data-text-color]").forEach(button => {
+      button.addEventListener("mousedown", event => { saveEditorSelection(); event.preventDefault(); });
+      button.addEventListener("click", () => {
+        const color = button.dataset.textColor;
+        document.getElementById("textColor").value = color;
+        runFormat("foreColor", color);
+      });
+    });
+    document.getElementById("linkButton").addEventListener("mousedown", event => { saveEditorSelection(); event.preventDefault(); });
+    document.getElementById("linkButton").addEventListener("click", () => {
+      const url = prompt("Adresse du lien (https://…)");
+      if (url && /^https?:\/\//i.test(url.trim())) runFormat("createLink", url.trim());
+      else if (url) notify("Saisissez une adresse http ou https valide.");
+    });
+
+    function updateImagePreview() {
+      const image = safeImage(document.getElementById("imageUrl").value);
+      const fieldPreview = document.getElementById("imagePreview");
+      fieldPreview.src = image;
+      fieldPreview.style.display = image ? "block" : "none";
+      const editorPreview = document.getElementById("editorImagePreview");
+      editorPreview.src = image;
+      editorPreview.hidden = !image;
+    }
+    document.getElementById("imageUrl").addEventListener("input", updateImagePreview);
+
+    function readImageAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Impossible de lire cette image."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function uploadSelectedImage(file) {
+      const button = document.getElementById("imageUploadButton");
+      const status = document.getElementById("imageUploadStatus");
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+      if (!allowedTypes.includes(file.type)) throw new Error("Choisissez une image JPG, PNG, GIF ou WebP.");
+      if (file.size > 3 * 1024 * 1024) throw new Error("L’image doit faire moins de 3 Mo.");
+      button.setAttribute("aria-disabled", "true");
+      status.textContent = "Téléversement de l’image…";
+      try {
+        const dataUrl = await readImageAsDataUrl(file);
+        const result = await api("dashboardUploadImage", {
+          sheet: state.sheet,
+          fileName: file.name,
+          mimeType: file.type,
+          base64: dataUrl.split(",")[1]
+        });
+        document.getElementById("imageUrl").value = result.imageUrl;
+        updateImagePreview();
+        status.textContent = "Image enregistrée. Elle sera associée à l’article après publication.";
+        notify("Image téléversée sur Google Drive.");
+      } catch (error) {
+        const message = error.message.includes("Action non reconnue") || error.message.includes("Accès réservé")
+          ? "L’API Apps Script doit être redéployée avec le code.gs mis à jour avant le téléversement."
+          : error.message;
+        status.textContent = message;
+        notify(message);
+      } finally {
+        button.setAttribute("aria-disabled", "false");
+        document.getElementById("imageUploadInput").value = "";
+      }
+    }
+
+    document.getElementById("imageUploadInput").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (file) uploadSelectedImage(file);
+    });
+
+    let activeMobilePanel = "description";
+    function setMobilePanel(panelName) {
+      activeMobilePanel = panelName;
+      const isMobile = window.matchMedia("(max-width: 860px)").matches;
+      document.querySelectorAll("[data-mobile-content]").forEach(panel => {
+        panel.classList.toggle("mobile-panel-hidden", isMobile && panel.dataset.mobileContent !== panelName);
+      });
+      document.querySelectorAll("[data-mobile-panel]").forEach(button => {
+        const selected = button.dataset.mobilePanel === panelName;
+        button.classList.toggle("active", selected);
+        button.setAttribute("aria-pressed", String(selected));
+      });
+    }
+
+    document.querySelectorAll("[data-mobile-panel]").forEach(button => {
+      button.addEventListener("click", () => setMobilePanel(button.dataset.mobilePanel));
+    });
+    window.addEventListener("resize", () => setMobilePanel(activeMobilePanel));
+    setMobilePanel("description");
+
+    loadItems();
+  </script>
+</body>
+</html>

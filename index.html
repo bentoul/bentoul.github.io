@@ -1,1981 +1,795 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BENTOULAPPS - Application Web Numérique</title>
-  <!-- Local Font Awesome icons and page typography -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
-  <script defer src="assets/fontawesome/adapter.js"></script>
-  
-  <style>
-    :root {
-      --vert-foret: #183D32;
-      --vert-profond: #245744;
-      --vert-sauge: #A8BFA8;
-      --dore-vierge: #C9A24D;
-      --blanc-casse: #F7F8F3;
-      --texte-fonce: #17251F;
-      --fond-card: #FFFFFF;
-      --border-color: #E2E8E4;
-      --shadow-sm: 0 2px 8px rgba(24, 61, 50, 0.06);
-      --shadow-md: 0 4px 16px rgba(24, 61, 50, 0.12);
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    body.dark-theme {
-      --blanc-casse: #0F1915;
-      --fond-card: #182822;
-      --texte-fonce: #E8EFEA;
-      --border-color: #273E36;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background-color: var(--blanc-casse);
-      color: var(--texte-fonce);
-      display: flex;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ---- SIDEBAR ---- */
-    .sidebar {
-      width: 260px;
-      background-color: var(--vert-foret);
-      color: #FFFFFF;
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1000;
-      transition: var(--transition);
-    }
-
-    .sidebar-header {
-      padding: 24px 20px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .sidebar-header .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--dore-vierge);
-      color: var(--vert-foret);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 20px;
-    }
-
-    .sidebar-header h2 {
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #FFFFFF;
-    }
-
-    .nav-links {
-      list-style: none;
-      padding: 20px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px 16px;
-      color: var(--vert-sauge);
-      text-decoration: none;
-      border-radius: var(--radius-sm);
-      font-weight: 500;
-      font-size: 14px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .nav-item:hover, .nav-item.active {
-      background-color: var(--vert-profond);
-      color: #FFFFFF;
-    }
-
-    .nav-item.active {
-      border-left: 4px solid var(--dore-vierge);
-    }
-
-    .sidebar-footer {
-      padding: 16px 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* ---- MAIN WRAPPER ---- */
-    .main-wrapper {
-      flex: 1;
-      margin-left: 260px;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      padding-bottom: 80px;
-      transition: var(--transition);
-    }
-
-    /* ---- TOPBAR ---- */
-    .topbar {
-      height: 64px;
-      background-color: var(--fond-card);
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      position: sticky;
-      top: 0;
-      z-index: 900;
-    }
-
-    .topbar-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--texte-fonce);
-      cursor: pointer;
-    }
-
-    .credit-badge {
-      background: rgba(201, 162, 77, 0.15);
-      border: 1px solid var(--dore-vierge);
-      color: var(--vert-foret);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    body.dark-theme .credit-badge {
-      color: var(--dore-vierge);
-    }
-
-    .topbar-right {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .lang-select {
-      background: var(--blanc-casse);
-      border: 1px solid var(--border-color);
-      color: var(--texte-fonce);
-      padding: 6px 10px;
-      border-radius: var(--radius-sm);
-      font-size: 13px;
-      font-weight: 600;
-      outline: none;
-      cursor: pointer;
-    }
-
-    /* ---- CONTENT ---- */
-    .content-container {
-      padding: 4px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .page-section {
-      display: none;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    .page-section.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ---- BANNER ---- */
-    .hero-banner {
-      background: linear-gradient(135deg, var(--vert-foret) 0%, var(--vert-profond) 100%);
-      color: #FFFFFF;
-      border-radius: var(--radius-lg);
-      padding: 32px 28px;
-      margin-bottom: 28px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-md);
-    }
-
-    .hero-banner h1 {
-      font-size: 26px;
-      margin-bottom: 8px;
-      color: var(--dore-vierge);
-    }
-
-    .hero-banner p {
-      font-size: 14px;
-      color: var(--vert-sauge);
-      max-width: 500px;
-      margin-bottom: 20px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    /* ---- BUTTONS ---- */
-    .btn {
-      padding: 10px 18px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      font-size: 13px;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: var(--transition);
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background-color: var(--dore-vierge);
-      color: var(--vert-foret);
-    }
-
-    .btn-primary:hover {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background-color: rgba(255,255,255,0.15);
-      color: #FFFFFF;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--vert-foret);
-      color: var(--vert-foret);
-    }
-
-    body.dark-theme .btn-outline {
-      border-color: var(--vert-sauge);
-      color: var(--vert-sauge);
-    }
-
-    .btn-success {
-      background-color: #2E7D32;
-      color: #FFFFFF;
-    }
-
-    .btn-block {
-      width: 100%;
-    }
-
-    /* ---- 4 CARTES D'ACCÈS RAPIDE SUR L'ACCUEIL ---- */
-    .home-portal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-bottom: 30px;
-    }
-
-    .portal-card {
-      background-color: var(--fond-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      padding: 24px 20px;
-      display: flex;
-      flex-direction: column;
-      text-decoration: none;
-      color: inherit;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-    }
-
-    .portal-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--dore-vierge);
-    }
-
-    .portal-icon-box {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      background: rgba(24, 61, 50, 0.08);
-      color: var(--vert-foret);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      transition: var(--transition);
-    }
-
-    body.dark-theme .portal-icon-box {
-      background: rgba(201, 162, 77, 0.15);
-      color: var(--dore-vierge);
-    }
-
-    .portal-card:hover .portal-icon-box {
-      background: var(--dore-vierge);
-      color: var(--vert-foret);
-    }
-
-    .portal-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--texte-fonce);
-    }
-
-    .portal-card p {
-      font-size: 13px;
-      color: var(--vert-sauge);
-      line-height: 1.4;
-      margin-bottom: 18px;
-      flex: 1;
-    }
-
-    .portal-link-text {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--vert-foret);
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    body.dark-theme .portal-link-text {
-      color: var(--dore-vierge);
-    }
-
-    /* ---- PRODUCT GRID (3 COLONNES DANS BIBLIOTHÈQUE) ---- */
-    .section-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .product-card {
-      background-color: var(--fond-card);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .product-card:hover {
-      box-shadow: var(--shadow-md);
-      transform: translateY(-3px);
-    }
-
-    /* CONTENEUR DE L'IMAGE */
-    .product-thumb-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      background: #E8EDE9;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .product-thumb-wrapper img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      transition: transform 0.3s ease;
-      background-color: #E8EDE9;
-    }
-
-    .product-card:hover .product-thumb-wrapper img {
-      transform: scale(1.05);
-    }
-
-    /* BADGE TYPE / ICON */
-    .badge-type {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: rgba(24, 61, 50, 0.9);
-      color: #FFFFFF;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      backdrop-filter: blur(4px);
-      z-index: 2;
-    }
-
-    /* BADGE VERT DÉJÀ PAYÉ */
-    .badge-paid {
-      position: absolute;
-      top: 8px;
-      right: 40px;
-      background: #2E7D32;
-      color: #FFFFFF;
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      z-index: 2;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    /* BOUTON ICONE PARTAGER */
-    .btn-share-icon {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.9);
-      color: var(--vert-foret);
-      border: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      z-index: 3;
-      transition: var(--transition);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-
-    .btn-share-icon:hover {
-      background: var(--dore-vierge);
-      color: #FFFFFF;
-      transform: scale(1.1);
-    }
-
-    .product-info {
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
-
-    .product-title {
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 4px;
-      line-height: 1.3;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      cursor: pointer;
-    }
-
-    .product-category {
-      font-size: 11px;
-      color: var(--vert-sauge);
-      margin-bottom: 8px;
-    }
-
-    .product-price {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--vert-foret);
-      margin-top: auto;
-      margin-bottom: 10px;
-    }
-
-    body.dark-theme .product-price {
-      color: var(--dore-vierge);
-    }
-
-    .card-actions-row {
-      display: flex;
-      gap: 6px;
-    }
-
-    /* ---- FILTERS ---- */
-    .filter-bar {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .search-input, .select-filter {
-      padding: 10px 14px;
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      background-color: var(--fond-card);
-      color: var(--texte-fonce);
-      font-size: 13px;
-      outline: none;
-    }
-
-    .search-input {
-      flex: 1;
-      min-width: 180px;
-    }
-
-    /* ---- BOTTOM BAR MOBILE ---- */
-    .bottom-nav {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background-color: var(--fond-card);
-      border-top: 1px solid var(--border-color);
-      z-index: 1000;
-      justify-content: space-around;
-      align-items: center;
-    }
-
-    .bottom-nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--texte-fonce);
-      text-decoration: none;
-      font-size: 10px;
-      font-weight: 600;
-      gap: 2px;
-      opacity: 0.6;
-      cursor: pointer;
-      width: 25%;
-    }
-
-    .bottom-nav-item.active {
-      opacity: 1;
-      color: var(--vert-foret);
-    }
-
-    body.dark-theme .bottom-nav-item.active {
-      color: var(--dore-vierge);
-    }
-
-    .bottom-nav-item .material-symbols-outlined {
-      font-size: 20px;
-    }
-
-    /* ---- MODALES POPUP MODERNES ---- */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(15, 25, 21, 0.72);
-      z-index: 2000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      backdrop-filter: blur(6px);
-    }
-
-    .modal-card {
-      background-color: var(--fond-card);
-      border-radius: var(--radius-md);
-      max-width: 650px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 24px;
-      box-shadow: var(--shadow-md);
-      position: relative;
-      border: 1px solid var(--border-color);
-      animation: popupZoom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes popupZoom {
-      from { opacity: 0; transform: scale(0.92); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      color: var(--texte-fonce);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    .custom-dialog-card {
-      max-width: 440px;
-      text-align: center;
-      padding: 28px 24px;
-    }
-
-    .dialog-icon-wrapper {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      margin: 0 auto 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(201, 162, 77, 0.15);
-      color: var(--dore-vierge);
-    }
-
-    .dialog-icon-wrapper.success {
-      background: rgba(36, 87, 68, 0.15);
-      color: #245744;
-    }
-
-    .dialog-icon-wrapper.error {
-      background: rgba(211, 47, 47, 0.15);
-      color: #D32F2F;
-    }
-
-    .dialog-icon-wrapper .dialog-icon {
-      font-size: 32px;
-    }
-
-    .dialog-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--texte-fonce);
-    }
-
-    .dialog-subtitle {
-      font-size: 13px;
-      color: var(--vert-sauge);
-      margin-bottom: 18px;
-      line-height: 1.4;
-    }
-
-    .dialog-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .purchase-summary-box {
-      background-color: var(--blanc-casse);
-      border: 1px solid var(--border-color);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      text-align: left;
-    }
-
-    .purchase-summary-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 6px 0;
-      font-size: 13px;
-      border-bottom: 1px dashed var(--border-color);
-    }
-
-    .purchase-summary-row:last-child {
-      border-bottom: none;
-    }
-
-    .purchase-summary-row.total-row {
-      font-size: 14px;
-      font-weight: 700;
-      padding-top: 8px;
-      margin-top: 4px;
-      border-top: 1px solid var(--border-color);
-    }
-
-    /* ---- MEDIA RESPONSIVE ---- */
-    @media (max-width: 768px) {
-      .sidebar { transform: translateX(-100%); }
-      .sidebar.open { transform: translateX(0); }
-      .main-wrapper { margin-left: 0; }
-      .menu-toggle { display: block; }
-      .bottom-nav { display: flex; }
-      
-      .home-portal-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-      }
-      .portal-card {
-        padding: 16px 12px;
-      }
-      .portal-icon-box {
-        width: 40px;
-        height: 40px;
-        margin-bottom: 10px;
-      }
-      .portal-icon-box .material-symbols-outlined {
-        font-size: 22px;
-      }
-      .portal-card h3 {
-        font-size: 13px;
-      }
-      .portal-card p {
-        font-size: 10px;
-        margin-bottom: 12px;
-      }
-      .portal-link-text {
-        font-size: 10px;
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-      }
-      .product-info { padding: 6px; }
-      .product-title { font-size: 10px; line-height: 1.2; }
-      .product-category { font-size: 8px; margin-bottom: 4px; }
-      .product-price { font-size: 10px; margin-bottom: 6px; }
-      .btn { padding: 6px 6px; font-size: 9px; }
-      .badge-type { font-size: 8px; padding: 2px 4px; top: 4px; left: 4px; }
-      .badge-paid { font-size: 8px; padding: 2px 4px; top: 4px; right: 28px; }
-      .btn-share-icon { width: 22px; height: 22px; top: 4px; right: 4px; }
-      .btn-share-icon .material-symbols-outlined { font-size: 14px; }
-    }
-
-    .loader-spinner {
-      border: 3px solid var(--border-color);
-      border-top: 3px solid var(--vert-foret);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      animation: spin 1s linear infinite;
-      margin: 30px auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f3f8f3">
+	<title>BCREATION | Apprendre, découvrir, partager</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+	<style>
+		:root {
+			color-scheme: light;
+			--ink: #1d2925;
+			--muted: #728079;
+			--page: #f3f8f3;
+			--surface: #fff;
+			--line: #dce7df;
+			--accent: #287a5d;
+			--accent-dark: #16563f;
+			--accent-soft: #e1f1e6;
+			--highlight: #f5c94e;
+			--header-height: 72px;
+			--footer-height: 70px;
+			--shadow: 0 12px 32px rgba(34, 55, 44, .08);
+		}
+		body[data-theme="boutique"] {
+			--page: #f2f6ff; --line: #dce5f4; --accent: #3264c8; --accent-dark: #244d9b;
+			--accent-soft: #e4edff; --highlight: #f2b544;
+		}
+		body[data-theme="amour"] {
+			--page: #fff4f3; --line: #f0dedd; --accent: #c64b62; --accent-dark: #963348;
+			--accent-soft: #fde5e5; --highlight: #e89a68;
+		}
+		body[data-theme="langues"] {
+			--page: #f1f8f6; --line: #d7e8e4; --accent: #087f83; --accent-dark: #075b60;
+			--accent-soft: #dff2ee; --highlight: #f0b83e;
+		}
+		* { box-sizing: border-box; }
+		[hidden] { display: none !important; }
+		body { min-height: 100vh; margin: 0; background: var(--page); color: var(--ink); font: 14px/1.5 "DM Sans", sans-serif; transition: background .28s ease; }
+		button, input { font: inherit; }
+		button, a { -webkit-tap-highlight-color: transparent; }
+		button { color: inherit; }
+		.app-header { position: fixed; inset: 0 0 auto; z-index: 20; display: flex; height: var(--header-height); align-items: center; justify-content: space-between; padding: 0 max(20px, calc((100vw - 1180px) / 2)); background: var(--surface); border-bottom: 1px solid var(--line); transition: border-color .28s; }
+		.header-start, .header-end { display: flex; align-items: center; gap: 13px; }
+		.icon-button { display: grid; width: 40px; height: 40px; place-items: center; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); cursor: pointer; transition: .2s; }
+		.icon-button:hover { color: var(--accent); border-color: var(--accent); }
+		.brand { color: var(--ink); font: 800 19px Outfit, sans-serif; letter-spacing: .04em; text-decoration: none; }
+		.brand b { color: var(--accent); }
+		.profile-trigger { display: flex; align-items: center; gap: 9px; padding: 5px 8px 5px 5px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); cursor: pointer; }
+		.avatar { display: grid; width: 34px; height: 34px; place-items: center; border-radius: 50%; background: var(--accent-soft); color: var(--accent-dark); font-weight: 800; }
+		.identity { text-align: left; line-height: 1.15; }
+		.identity strong { display: block; font-size: 12px; }
+		.identity small { color: var(--muted); font-size: 10px; }
+		.credit-pill { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border-radius: 5px; background: #fff4d7; color: #845e0b; font-size: 12px; font-weight: 800; white-space: nowrap; }
+		.drawer-shade { position: fixed; inset: 0; z-index: 29; background: rgba(19, 31, 26, .4); opacity: 0; visibility: hidden; transition: .25s; }
+		.drawer-shade.open { opacity: 1; visibility: visible; }
+		.drawer { position: fixed; inset: 0 auto 0 0; z-index: 30; display: flex; width: min(310px, 86vw); flex-direction: column; padding: 22px 16px; background: var(--surface); border-right: 1px solid var(--line); transform: translateX(-102%); transition: transform .28s cubic-bezier(.2,.8,.2,1); }
+		.drawer.open { transform: translateX(0); }
+		.drawer-top { display: flex; align-items: center; justify-content: space-between; padding: 0 3px 22px; }
+		.drawer-user { display: flex; align-items: center; gap: 12px; margin: 0 2px 20px; padding: 14px; background: var(--page); border: 1px solid var(--line); border-radius: 7px; }
+		.drawer-user .avatar { width: 44px; height: 44px; font-size: 16px; }
+		.drawer-user strong { display: block; }
+		.drawer-user small { color: var(--muted); }
+		.nav-label { padding: 13px 10px 5px; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+		.drawer-nav { display: grid; gap: 3px; overflow: auto; }
+		.drawer-link { display: flex; align-items: center; gap: 13px; min-height: 44px; padding: 9px 11px; border: 0; border-radius: 5px; background: transparent; color: #58655e; text-align: left; cursor: pointer; }
+		.drawer-link i { width: 20px; color: var(--accent); text-align: center; }
+		.drawer-link:hover, .drawer-link.active { background: var(--accent-soft); color: var(--accent-dark); font-weight: 700; }
+		.drawer-bottom { margin-top: auto; padding: 15px 8px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+		.app-main { width: min(1180px, calc(100% - 36px)); min-height: calc(100vh - var(--header-height) - var(--footer-height)); margin: var(--header-height) auto var(--footer-height); padding: 27px 0 38px; }
+		.view { display: none; animation: reveal .3s ease both; }
+		.view.active { display: block; }
+		.view.articles-only > .channel-home,
+		.view.articles-only > .section-top,
+		.view.articles-only > .filter-row,
+		.view.articles-only > .love-feature,
+		.view.articles-only > .section-heading { display: none; }
+		.view.product-detail-only > :not(#productDetail) { display: none; }
+		@keyframes reveal { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+		.welcome-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 21px; }
+		.eyebrow { margin-bottom: 5px; color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+		h1, h2, h3, p { margin-top: 0; }
+		h1, h2, h3 { font-family: Outfit, sans-serif; letter-spacing: 0; }
+		h1 { margin-bottom: 5px; font-size: clamp(25px, 3vw, 33px); line-height: 1.15; }
+		h2 { margin-bottom: 4px; font-size: 21px; }
+		h3 { margin-bottom: 6px; font-size: 16px; }
+		.muted { color: var(--muted); }
+		.welcome-row p, .section-heading p { margin-bottom: 0; color: var(--muted); }
+		.welcome-note { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--muted); font-size: 12px; }
+		.welcome-note i { color: var(--accent); }
+		.channel-home { display: flex; align-items: center; justify-content: space-between; gap: 22px; margin-bottom: 25px; padding: 21px 0; border-bottom: 1px solid var(--line); }
+		.channel-home-copy { max-width: 570px; }
+		.channel-home h2 { margin-bottom: 6px; }
+		.channel-home p { margin-bottom: 0; color: var(--muted); }
+		.channel-home-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+		.button-whatsapp { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 9px; padding: 10px 15px; border: 1px solid #16845b; border-radius: 5px; background: #16845b; color: white; font-size: 12px; font-weight: 800; text-decoration: none; transition: .2s; }
+		.button-whatsapp:hover { border-color: #106b49; background: #106b49; }
+		.home-hero { position: relative; display: grid; min-height: 250px; grid-template-columns: 1.1fr .9fr; overflow: hidden; background: #183b31; color: white; border-radius: 8px; }
+		.hero-copy { position: relative; z-index: 1; align-self: center; padding: 34px clamp(22px, 4vw, 48px); }
+		.hero-copy .eyebrow { color: #bde8c9; }
+		.hero-copy h2 { max-width: 420px; margin-bottom: 12px; font-size: clamp(27px, 4vw, 41px); }
+		.hero-copy p { max-width: 410px; color: rgba(255,255,255,.78); }
+		.hero-image { min-height: 250px; background: linear-gradient(90deg, #183b31 0%, transparent 35%), url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=85") center / cover; }
+		.button-primary, .button-light { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; gap: 9px; padding: 10px 15px; border: 0; border-radius: 5px; background: var(--accent); color: white; font-size: 12px; font-weight: 800; text-decoration: none; cursor: pointer; transition: .2s; }
+		.button-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+		.home-hero .button-primary { background: #d9f071; color: #203b2d; }
+		.home-hero .button-primary:hover { background: white; }
+		.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin: 29px 0 14px; }
+		.text-link { display: inline-flex; align-items: center; gap: 7px; color: var(--accent-dark); font-size: 12px; font-weight: 800; text-decoration: none; cursor: pointer; }
+		.quick-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+		.quick-card { display: flex; min-height: 98px; align-items: center; gap: 13px; padding: 15px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--ink); text-align: left; cursor: pointer; transition: .2s; }
+		.quick-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow); }
+		.quick-icon { display: grid; width: 42px; height: 42px; flex: 0 0 auto; place-items: center; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: 17px; }
+		.quick-card strong { display: block; font: 700 14px Outfit, sans-serif; }
+		.quick-card small { color: var(--muted); font-size: 11px; }
+		.section-top { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin: 6px 0 22px; }
+		.section-top p { margin-bottom: 0; color: var(--muted); }
+		.section-mark { display: grid; width: 46px; height: 46px; flex: 0 0 auto; place-items: center; border-radius: 7px; background: var(--accent-soft); color: var(--accent); font-size: 20px; }
+		.section-title-wrap { display: flex; align-items: center; gap: 13px; }
+		.filter-row { display: flex; gap: 8px; overflow-x: auto; margin: 16px 0; padding-bottom: 3px; }
+		.filter-chip { padding: 8px 13px; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); color: var(--muted); font-size: 11px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+		.filter-chip.active { border-color: var(--accent); background: var(--accent); color: white; }
+		.card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+		#shopGrid[hidden] { display: none; }
+		.content-card { overflow: hidden; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); transition: .2s; }
+		.content-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+		.card-image { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--accent-soft); }
+		.card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+		.content-card:hover .card-image img { transform: scale(1.035); }
+		.card-tag { position: absolute; top: 10px; left: 10px; padding: 5px 8px; border-radius: 3px; background: var(--surface); color: var(--accent-dark); font-size: 9px; font-weight: 800; text-transform: uppercase; }
+		.card-body { padding: 15px; }
+		.card-body .purchase-actions { margin-top: 10px; }
+		.card-body h3 { font-size: 16px; }
+		.card-body p { min-height: 39px; margin-bottom: 12px; color: var(--muted); font-size: 12px; }
+		.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+		.price { color: var(--accent-dark); font-size: 12px; font-weight: 800; }
+		.small-action { display: inline-flex; align-items: center; gap: 7px; padding: 8px 10px; border: 0; border-radius: 4px; background: var(--accent-soft); color: var(--accent-dark); font-size: 11px; font-weight: 800; cursor: pointer; }
+		.love-feature { display: grid; min-height: 330px; grid-template-columns: 1fr 1fr; overflow: hidden; border-radius: 8px; background: #772d42; color: white; }
+		.love-feature img { width: 100%; height: 100%; min-height: 330px; object-fit: cover; }
+		.love-feature-copy { align-self: center; padding: clamp(22px, 4vw, 48px); }
+		.love-feature-copy .eyebrow { color: #ffd5cf; }
+		.love-feature-copy h2 { font-size: clamp(25px, 3vw, 38px); }
+		.love-feature-copy p { color: rgba(255,255,255,.8); }
+		.love-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; margin-top: 18px; }
+		.lang-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+		.lang-card { position: relative; display: flex; min-height: 155px; flex-direction: column; justify-content: space-between; overflow: hidden; padding: 19px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+		.lang-card::after { position: absolute; right: -23px; bottom: -38px; width: 130px; height: 130px; border: 18px solid var(--accent-soft); border-radius: 50%; content: ""; }
+		.lang-card .flag { font-size: 24px; }
+		.lang-card h3, .lang-card p, .lang-card button { position: relative; z-index: 1; }
+		.lang-card p { margin-bottom: 10px; color: var(--muted); font-size: 12px; }
+		.simple-panel { padding: clamp(20px, 4vw, 34px); border: 1px solid var(--line); border-radius: 7px; background: var(--surface); }
+		.search-box { display: flex; gap: 10px; align-items: center; margin: 20px 0; padding: 0 14px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); }
+		.search-box i { color: var(--accent); }
+		.search-box input { width: 100%; height: 48px; border: 0; outline: 0; background: transparent; color: var(--ink); }
+		.profile-card { display: flex; align-items: center; gap: 16px; margin: 18px 0; padding: 19px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+		.profile-card .avatar { width: 58px; height: 58px; font-size: 19px; }
+		.bottom-nav { position: fixed; inset: auto 0 0; z-index: 18; display: grid; height: var(--footer-height); grid-template-columns: repeat(4, 1fr); padding: 5px max(12px, calc((100vw - 740px) / 2)); border-top: 1px solid var(--line); background: var(--surface); box-shadow: 0 -4px 18px rgba(25, 39, 31, .05); }
+		.tab-button { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; border: 0; border-radius: 5px; background: transparent; color: var(--muted); font-size: 10px; font-weight: 700; cursor: pointer; transition: .2s; }
+		.tab-button i { font-size: 18px; }
+		.tab-button.active { color: var(--accent); }
+		.tab-button.active::before { position: absolute; top: 0; width: 28px; height: 3px; border-radius: 0 0 4px 4px; background: var(--accent); content: ""; }
+		#toast { position: fixed; right: 18px; bottom: calc(var(--footer-height) + 15px); z-index: 50; max-width: min(360px, calc(100vw - 36px)); padding: 12px 15px; border-radius: 5px; background: #1d2925; color: white; opacity: 0; pointer-events: none; transform: translateY(8px); transition: .2s; }
+		#toast.visible { opacity: 1; transform: translateY(0); }
+		.empty-state { grid-column: 1 / -1; padding: 35px 15px; color: var(--muted); text-align: center; }
+		.detail-panel { display: none; }
+		.detail-panel.active { display: block; }
+		.detail-image { display: block; width: 100%; max-height: 390px; object-fit: cover; border-radius: 7px; background: var(--accent-soft); }
+		.detail-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+		.modal-backdrop { position: fixed; inset: 0; z-index: 60; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(22, 35, 29, .58); }
+		.modal-backdrop.open { display: flex; }
+		.auth-modal, .content-modal { width: min(440px, 100%); max-height: min(88vh, 760px); overflow: auto; padding: 24px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); }
+		.pdf-modal { display: flex; width: min(1000px, 100%); height: min(88vh, 900px); flex-direction: column; padding: 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); box-shadow: var(--shadow); }
+		.pdf-frame { width: 100%; min-height: 0; flex: 1; border: 1px solid var(--line); background: #e9eeeb; }
+		.modal-head { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 18px; }
+		.modal-head h2 { margin: 0; }
+		.form-field { display: grid; gap: 6px; margin: 14px 0; }
+		.form-field[hidden] { display: none; }
+		.form-field label { font-size: 12px; font-weight: 700; }
+		.form-field input { width: 100%; min-height: 42px; padding: 10px 11px; border: 1px solid var(--line); border-radius: 5px; background: var(--surface); color: var(--ink); }
+		.auth-switch { margin-top: 16px; color: var(--muted); font-size: 12px; text-align: center; }
+		.auth-switch button { border: 0; background: none; color: var(--accent); font-weight: 800; cursor: pointer; }
+		.purchase-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+		.purchase-row:last-child { border-bottom: 0; }
+		.purchase-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+		@media (min-width: 1000px) { .app-main { padding-top: 33px; } }
+		@media (max-width: 740px) {
+			:root { --header-height: 62px; --footer-height: 64px; }
+			.app-header { padding: 0 12px; }
+			.header-start, .header-end { gap: 8px; }
+			.brand { font-size: 16px; }
+			.profile-trigger { gap: 0; padding: 3px; border: 0; }
+			.profile-trigger .identity { display: none; }
+			.avatar { width: 34px; height: 34px; }
+			.credit-pill { padding: 8px 9px; font-size: 10px; }
+			.app-main { width: calc(100% - 24px); padding-top: 21px; }
+			.welcome-row { align-items: start; }
+			.welcome-note { display: none; }
+			.channel-home { align-items: flex-start; flex-direction: column; gap: 15px; margin-bottom: 20px; padding: 8px 0 20px; }
+			.channel-home-actions { width: 100%; }
+			.channel-home-actions > * { flex: 1 1 auto; }
+			.home-hero { min-height: 300px; grid-template-columns: 1fr; }
+			.hero-copy { align-self: end; padding: 25px 20px; }
+			.hero-image { position: absolute; inset: 0; min-height: 0; background-image: linear-gradient(0deg, rgba(17, 47, 37, .98), rgba(17, 47, 37, .58) 58%, rgba(17, 47, 37, .28)), url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=85"); }
+			.quick-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+			.quick-card { min-height: 80px; gap: 9px; padding: 10px; }
+			.quick-icon { width: 35px; height: 35px; font-size: 14px; }
+			.quick-card strong { font-size: 12px; }
+			.quick-card small { font-size: 10px; }
+			.card-grid, .love-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+			.card-body { padding: 11px; }
+			.card-body h3 { font-size: 14px; }
+			.card-body p { min-height: 48px; font-size: 11px; }
+			.small-action { padding: 7px 8px; font-size: 10px; }
+			.love-feature { min-height: 350px; grid-template-columns: 1fr; }
+			.love-feature img { position: absolute; width: calc(100% - 24px); height: 350px; min-height: 0; border-radius: 8px; object-fit: cover; }
+			.love-feature { position: relative; }
+			.love-feature::after { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(71, 26, 41, .95), rgba(71, 26, 41, .03)); content: ""; }
+			.love-feature-copy { position: relative; z-index: 1; align-self: end; padding: 22px; }
+			.lang-grid { gap: 9px; }
+			.lang-card { min-height: 145px; padding: 14px; }
+			.section-heading { margin-top: 23px; }
+		}
+		@media (max-width: 380px) { .card-grid, .love-grid { grid-template-columns: 1fr; } .card-image { aspect-ratio: 16 / 9; } .identity { display: none; } }
+		@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+	</style>
 </head>
-<body>
-
-  <!-- SIDEBAR NAVIGATION -->
-  <aside class="sidebar" id="appSidebar">
-    <div class="sidebar-header">
-      <div class="logo-icon">B</div>
-      <h2>BENTOULAPPS</h2>
-    </div>
-    <ul class="nav-links">
-      <li class="nav-item active" onclick="switchPage('home')">
-        <span class="material-symbols-outlined">home</span>
-        <span data-i18n="navHome">Accueil</span>
-      </li>
-      <li class="nav-item" onclick="switchPage('library')">
-        <span class="material-symbols-outlined">local_library</span>
-        <span data-i18n="navLibrary">Bibliothèque</span>
-      </li>
-      <li class="nav-item" onclick="switchPage('buy-credits')">
-        <span class="material-symbols-outlined">account_balance_wallet</span>
-        <span data-i18n="navBuyCredits">Acheter des crédits</span>
-      </li>
-      <li class="nav-item" onclick="switchPage('history')">
-        <span class="material-symbols-outlined">history</span>
-        <span data-i18n="navHistory">Historique</span>
-      </li>
-      <li class="nav-item" onclick="switchPage('profile')">
-        <span class="material-symbols-outlined">person</span>
-        <span data-i18n="navProfile">Profil</span>
-      </li>
-      <li class="nav-item" id="adminNavItem" style="display:none;" onclick="switchPage('admin')">
-        <span class="material-symbols-outlined">admin_panel_settings</span>
-        <span data-i18n="navAdmin">Administration</span>
-      </li>
-    </ul>
-    <div class="sidebar-footer">
-      <span style="font-size: 12px; color: var(--vert-sauge);">v2.0 Native</span>
-    </div>
-  </aside>
-
-  <!-- MAIN WRAPPER -->
-  <div class="main-wrapper">
-    
-    <!-- TOPBAR -->
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="menu-toggle" onclick="toggleSidebar()">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
-        <div class="credit-badge">
-          <span class="material-symbols-outlined" style="font-size: 16px;">monetization_on</span>
-          <span id="userCreditDisplay">0</span>&nbsp;<span data-i18n="creditsUnit">crédits</span>
-        </div>
-      </div>
-      <div class="topbar-right">
-        <select class="lang-select" onchange="changeLanguage(this.value)">
-          <option value="fr">FR 🇫🇷</option>
-          <option value="ht">HT 🇭🇹</option>
-        </select>
-        <button class="btn btn-outline" style="padding: 6px;" onclick="toggleTheme()">
-          <span class="material-symbols-outlined" style="font-size: 18px;">dark_mode</span>
-        </button>
-      </div>
-    </header>
-
-    <!-- CONTENT AREA -->
-    <main class="content-container">
-
-      <!-- 1. ACCUEIL (AVEC LES 4 CARTES D'ACCÈS RAPIDE) -->
-      <section id="page-home" class="page-section active">
-        <div class="hero-banner">
-          <h1 id="welcomeGreeting">Bienvenue sur BENTOULAPPS</h1>
-          <p data-i18n="heroText">Votre bibliothèque d'applications APK, livres PDF, formations vidéo et ressources numériques professionnelles.</p>
-          <div class="hero-buttons">
-            <button class="btn btn-primary" onclick="switchPage('library')" data-i18n="btnExplore">Explorer le catalogue</button>
-            <button class="btn btn-secondary" onclick="switchPage('buy-credits')" data-i18n="btnRecharge">Recharger mes crédits</button>
-          </div>
-        </div>
-
-        <div class="section-title">
-          <span>Nos Espaces & Services</span>
-        </div>
-
-        <!-- LES 4 CARTES DEMANDÉES -->
-        <div class="home-portal-grid">
-          
-          <!-- Carte 1 : Bibliothèque -->
-          <div class="portal-card" onclick="switchPage('library')">
-            <div class="portal-icon-box">
-              <span class="material-symbols-outlined" style="font-size: 28px;">local_library</span>
-            </div>
-            <h3>Bibliothèque</h3>
-            <p>Accédez à tous nos documents PDF, applications APK, templates et formulaires téléchargeables.</p>
-            <div class="portal-link-text">
-              <span>Voir les documents</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-            </div>
-          </div>
-
-          <!-- Carte 2 : Benamoura -->
-          <a class="portal-card" href="pages/benamoura.html">
-            <div class="portal-icon-box">
-              <span class="material-symbols-outlined" style="font-size: 28px;">favorite</span>
-            </div>
-            <h3>Benamoura</h3>
-            <p>Découvrez des conseils d'amour bienveillants, des histoires de vie sincères et des réflexions amoureuses.</p>
-            <div class="portal-link-text">
-              <span>Ouvrir Benamoura</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-            </div>
-          </a>
-
-          <!-- Carte 3 : Bentoulinguo -->
-          <a class="portal-card" href="pages/bentoulinguo.html">
-            <div class="portal-icon-box">
-              <span class="material-symbols-outlined" style="font-size: 28px;">translate</span>
-            </div>
-            <h3>Bentoulinguo</h3>
-            <p>Apprenez et pratiquez des expressions authentiques en anglais, français et créole.</p>
-            <div class="portal-link-text">
-              <span>Pratiquer les langues</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-            </div>
-          </a>
-
-          <!-- Carte 4 : Services -->
-          <a class="portal-card" href="pages/services.html">
-            <div class="portal-icon-box">
-              <span class="material-symbols-outlined" style="font-size: 28px;">design_services</span>
-            </div>
-            <h3>Services</h3>
-            <p>Nos prestations numériques : conception de formulaires en ligne sur mesure et accompagnement digital.</p>
-            <div class="portal-link-text">
-              <span>Découvrir nos services</span>
-              <span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
-            </div>
-          </a>
-
-        </div>
-      </section>
-
-      <!-- 2. BIBLIOTHÈQUE (CATALOGUE COMPLET DES PRODUITS) -->
-      <section id="page-library" class="page-section">
-        <div class="section-title">
-          <span data-i18n="navLibrary">Bibliothèque de produits</span>
-        </div>
-        
-        <div class="filter-bar">
-          <input type="text" class="search-input" id="searchKeyword" placeholder="Rechercher..." oninput="filterProducts()">
-          <select class="select-filter" id="categoryFilter" onchange="filterProducts()">
-            <option value="" data-i18n="allCategories">Toutes les catégories</option>
-          </select>
-          <select class="select-filter" id="typeFilter" onchange="filterProducts()">
-            <option value="">Tous les types</option>
-            <option value="pdf">PDF</option>
-            <option value="apk">APK</option>
-            <option value="templateblogger">Template Blogger</option>
-            <option value="formulaire">Formulaire</option>
-            <option value="video">Vidéo</option>
-            <option value="autre">Autre</option>
-          </select>
-        </div>
-
-        <div id="libraryLoader" class="loader-spinner" style="display:none;"></div>
-        <div class="products-grid" id="libraryProductsContainer"></div>
-      </section>
-
-      <!-- 3. PAGE VUE DÉTAILLÉE D'UN DOCUMENT -->
-      <section id="page-doc-detail" class="page-section">
-        <div style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
-          <button class="btn btn-outline" onclick="goBackFromDetail()">
-            <span class="material-symbols-outlined">arrow_back</span> Retour
-          </button>
-          <button class="btn btn-outline" id="detailShareTopBtn" onclick="shareCurrentDoc()">
-            <span class="material-symbols-outlined">share</span> Partager
-          </button>
-        </div>
-
-        <div class="product-card" style="padding: 20px; max-width: 800px; margin: 0 auto;">
-          <div class="product-thumb-wrapper" style="aspect-ratio: 16 / 9; border-radius: var(--radius-sm); margin-bottom: 16px;">
-            <img id="detailDocImg" src="" alt="" referrerpolicy="no-referrer" onerror="onProductImageError(this)">
-            <span class="badge-type" id="detailDocBadge"></span>
-            <span class="badge-paid" id="detailDocPaidBadge" style="display:none;">
-              <span class="material-symbols-outlined" style="font-size:12px;">check_circle</span> Payé
-            </span>
-          </div>
-
-          <h2 id="detailDocTitle" style="font-size: 20px; font-weight: 800; margin-bottom: 8px;"></h2>
-          
-          <div style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; font-size: 13px; color: var(--vert-sauge);">
-            <span>Catégorie : <strong id="detailDocCat" style="color: var(--texte-fonce);">-</strong></span>
-            <span>Date d'ajout : <strong id="detailDocDate" style="color: var(--texte-fonce);">-</strong></span>
-            <span>Prix : <strong id="detailDocPrice" style="color: var(--dore-vierge); font-size: 15px;">-</strong></span>
-          </div>
-
-          <div style="background: var(--blanc-casse); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 20px;">
-            <h4 style="margin-bottom: 8px; font-size: 14px;">Description du document</h4>
-            <p id="detailDocDesc" style="font-size: 13px; line-height: 1.6; white-space: pre-line; color: var(--texte-fonce);"></p>
-          </div>
-
-          <div style="display: flex; gap: 10px; flex-wrap: wrap;" id="detailDocActionButtons"></div>
-        </div>
-      </section>
-
-      <!-- 4. ACHETER DES CRÉDITS -->
-      <section id="page-buy-credits" class="page-section">
-        <div class="section-title">
-          <span data-i18n="navBuyCredits">Acheter des crédits</span>
-        </div>
-        <p style="margin-bottom: 20px; font-size: 14px;" data-i18n="creditInfo">Choisissez votre forfait puis effectuez le paiement sécurisé via WhatsApp avec notre service client.</p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-          
-          <div class="product-card" style="padding: 20px; text-align: center;">
-            <h3 style="color: var(--vert-foret); margin-bottom: 8px;">Forfait Découverte</h3>
-            <div style="font-size: 24px; font-weight: 800; color: var(--dore-vierge); margin-bottom: 12px;">500 Crédits</div>
-            <p style="font-size: 12px; margin-bottom: 16px;">Idéal pour télécharger quelques livres ou applications.</p>
-            <button class="btn btn-primary btn-block" onclick="orderCreditsViaWhatsApp('500 Crédits')">Acheter via WhatsApp</button>
-          </div>
-
-          <div class="product-card" style="padding: 20px; text-align: center; border: 2px solid var(--dore-vierge);">
-            <h3 style="color: var(--vert-foret); margin-bottom: 8px;">Forfait Pro</h3>
-            <div style="font-size: 24px; font-weight: 800; color: var(--dore-vierge); margin-bottom: 12px;">1500 Crédits</div>
-            <p style="font-size: 12px; margin-bottom: 16px;">Accès illimité aux meilleures formations et vidéos.</p>
-            <button class="btn btn-primary btn-block" onclick="orderCreditsViaWhatsApp('1500 Crédits')">Acheter via WhatsApp</button>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 5. HISTORIQUE DES ACHATS -->
-      <section id="page-history" class="page-section">
-        <div class="section-title">
-          <span data-i18n="navHistory">Historique des achats</span>
-        </div>
-        <div id="historyContainer"></div>
-      </section>
-
-      <!-- 6. PROFIL UTILISATEUR -->
-      <section id="page-profile" class="page-section">
-        <div class="product-card" style="padding: 24px; max-width: 500px; margin: 0 auto;">
-          <div style="text-align: center; margin-bottom: 20px;">
-            <span class="material-symbols-outlined" style="font-size: 64px; color: var(--vert-foret);">account_circle</span>
-            <h2 id="profileNameDisplay">Nom Utilisateur</h2>
-            <p id="profileEmailDisplay" style="font-size: 13px; color: var(--vert-sauge);"></p>
-          </div>
-
-          <div style="margin-bottom: 20px;">
-            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
-              <span style="font-size: 13px;">Solde :</span>
-              <strong id="profileCreditsDisplay">0 Crédits</strong>
-            </div>
-            <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border-color);">
-              <span style="font-size: 13px;">Membre depuis :</span>
-              <strong id="profileDateDisplay">-</strong>
-            </div>
-          </div>
-
-          <button class="btn btn-outline btn-block" style="margin-bottom: 10px;" onclick="switchPage('history')">Consulter mes achats</button>
-          <button class="btn btn-primary btn-block" style="background-color: #D32F2F; color: white;" onclick="logout()">Se déconnecter</button>
-        </div>
-      </section>
-
-      <!-- 7. AUTHENTIFICATION -->
-      <section id="page-auth" class="page-section">
-        <div class="product-card" style="padding: 28px; max-width: 400px; margin: 20px auto;">
-          
-          <div id="loginFormBlock">
-            <h2 style="margin-bottom: 16px; text-align: center;" data-i18n="titleLogin">Connexion</h2>
-            <input type="email" id="loginEmail" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Adresse Email">
-            <input type="password" id="loginPassword" class="search-input" style="width: 100%; margin-bottom: 16px;" placeholder="Mot de passe">
-            <button class="btn btn-primary btn-block" onclick="submitLogin()" data-i18n="btnLogin">Se connecter</button>
-            <p style="text-align: center; margin-top: 16px; font-size: 13px;">
-              <a href="#" onclick="toggleAuthForm('register')" style="color: var(--vert-foret); font-weight: 700;">Créer un compte</a>
-            </p>
-          </div>
-
-          <div id="registerFormBlock" style="display:none;">
-            <h2 style="margin-bottom: 16px; text-align: center;" data-i18n="titleRegister">Inscription</h2>
-            <input type="text" id="regNom" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Nom complet">
-            <input type="email" id="regEmail" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Adresse Email">
-            <input type="password" id="regPassword" class="search-input" style="width: 100%; margin-bottom: 12px;" placeholder="Mot de passe">
-            <input type="password" id="regPasswordConfirm" class="search-input" style="width: 100%; margin-bottom: 16px;" placeholder="Confirmer le mot de passe">
-            <button class="btn btn-primary btn-block" onclick="submitRegister()" data-i18n="btnRegister">Créer mon compte</button>
-            <p style="text-align: center; margin-top: 16px; font-size: 13px;">
-              <a href="#" onclick="toggleAuthForm('login')" style="color: var(--vert-foret); font-weight: 700;">Déjà un compte ? Connexion</a>
-            </p>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- 8. ADMINISTRATION -->
-      <section id="page-admin" class="page-section">
-        <div class="section-title">
-          <span>Gestion du Catalogue (Admin)</span>
-        </div>
-        <div class="product-card" style="padding: 20px;">
-          <h3 style="margin-bottom: 14px;">Ajouter un nouveau produit</h3>
-          <input type="text" id="adminProdTitre" class="search-input" style="width: 100%; margin-bottom: 10px;" placeholder="Titre du produit">
-          <textarea id="adminProdDesc" class="search-input" style="width: 100%; margin-bottom: 10px;" placeholder="Description"></textarea>
-          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-            <input type="text" id="adminProdCat" class="search-input" style="flex:1;" placeholder="Catégorie">
-            <select id="adminProdType" class="select-filter" style="flex:1;">
-              <option value="pdf">PDF</option>
-              <option value="apk">APK</option>
-              <option value="templateblogger">Template Blogger</option>
-              <option value="formulaire">Formulaire</option>
-              <option value="video">Vidéo</option>
-              <option value="autre">Autre</option>
-            </select>
-          </div>
-          <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-            <input type="number" id="adminProdPrix" class="search-input" style="flex:1;" placeholder="Prix en crédits">
-            <input type="text" id="adminProdImg" class="search-input" style="flex:1;" placeholder="ImageUrl (Lien direct ou Google Drive)">
-          </div>
-          <input type="text" id="adminProdFileUrl" class="search-input" style="width: 100%; margin-bottom: 16px;" placeholder="DownloadUrl (Google Drive ou direct)">
-          <button class="btn btn-primary" onclick="submitAdminAddProduct()">Enregistrer le produit</button>
-        </div>
-      </section>
-
-    </main>
-  </div>
-
-  <!-- BOTTOM NAVIGATION FOR MOBILE -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-item active" onclick="switchPage('home')">
-      <span class="material-symbols-outlined">home</span>
-      <span data-i18n="navHome">Accueil</span>
-    </div>
-    <div class="bottom-nav-item" onclick="switchPage('library')">
-      <span class="material-symbols-outlined">local_library</span>
-      <span data-i18n="navLibrary">Bibliothèque</span>
-    </div>
-    <div class="bottom-nav-item" onclick="switchPage('history')">
-      <span class="material-symbols-outlined">history</span>
-      <span data-i18n="navHistory">Historique</span>
-    </div>
-    <div class="bottom-nav-item" onclick="switchPage('profile')">
-      <span class="material-symbols-outlined">person</span>
-      <span data-i18n="navProfile">Profil</span>
-    </div>
-  </nav>
-
-  <!-- POPUP GÉNÉRAL -->
-  <div class="modal-overlay" id="appAlertModal">
-    <div class="modal-card custom-dialog-card">
-      <div class="dialog-icon-wrapper" id="appAlertIconContainer">
-        <span class="material-symbols-outlined dialog-icon" id="appAlertIcon">info</span>
-      </div>
-      <h3 class="dialog-title" id="appAlertTitle">Notification</h3>
-      <p class="dialog-subtitle" id="appAlertMessage"></p>
-      <div class="dialog-actions">
-        <button class="btn btn-primary btn-block" onclick="closeAppAlert()" id="appAlertBtn">D'accord</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- POPUP DE CONFIRMATION D'ACHAT -->
-  <div class="modal-overlay" id="purchaseConfirmModal">
-    <div class="modal-card custom-dialog-card">
-      <div class="dialog-icon-wrapper">
-        <span class="material-symbols-outlined dialog-icon">lock_open</span>
-      </div>
-      <h3 class="dialog-title">Débloquer cette ressource</h3>
-      <p class="dialog-subtitle">Voulez-vous vraiment débloquer ce contenu ?</p>
-      
-      <div class="purchase-summary-box">
-        <div class="purchase-summary-row">
-          <span>Produit :</span>
-          <strong id="confirmProdTitle" style="max-width: 60%; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">-</strong>
-        </div>
-        <div class="purchase-summary-row">
-          <span>Prix :</span>
-          <strong id="confirmProdPrice" style="color: var(--dore-vierge);">0 Crédits</strong>
-        </div>
-        <div class="purchase-summary-row">
-          <span>Solde actuel :</span>
-          <strong id="confirmUserBalance">0 Crédits</strong>
-        </div>
-        <div class="purchase-summary-row total-row">
-          <span>Solde restant :</span>
-          <strong id="confirmRemainingBalance">0 Crédits</strong>
-        </div>
-      </div>
-
-      <div id="confirmCreditWarning" style="display: none; color: #D32F2F; font-size: 12px; margin-bottom: 12px; font-weight: 700;">
-        <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Votre solde est insuffisant pour ce téléchargement.
-      </div>
-
-      <div class="dialog-actions" id="confirmDialogActions"></div>
-    </div>
-  </div>
-
-  <!-- MODAL DOCUMENT DÉBLOQUÉ : APERÇU ET TÉLÉCHARGEMENT -->
-  <div class="modal-overlay" id="previewModal">
-    <div class="modal-card">
-      <button class="modal-close" onclick="closeModal()">&times;</button>
-      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
-        <span class="material-symbols-outlined" style="color: #2E7D32;">verified</span>
-        <h3 id="modalTitle" style="font-size: 16px; margin: 0;"></h3>
-      </div>
-      <div id="modalBody" style="margin-bottom: 20px;"></div>
-      <div id="modalActions" style="display: flex; gap: 10px; flex-wrap: wrap;"></div>
-    </div>
-  </div>
-
-  <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyhtLBG-pkeeDqKf8sLpL7jyTQm1AWym71WzH5FTUJeRIxHtWUjYn4Bknc3KdPsMwf0aA/exec";
-    const WHATSAPP_PHONE = "+50942772970";
-
-    const translations = {
-      fr: {
-        navHome: "Accueil",
-        navLibrary: "Bibliothèque",
-        navBuyCredits: "Acheter crédits",
-        navHistory: "Historique",
-        navProfile: "Profil",
-        navAdmin: "Administration",
-        creditsUnit: "crédits",
-        heroText: "Votre bibliothèque d'applications APK, livres PDF, formations vidéo et ressources numériques professionnelles.",
-        btnExplore: "Explorer le catalogue",
-        btnRecharge: "Recharger mes crédits",
-        titleRecent: "Produits récents",
-        allCategories: "Toutes les catégories",
-        titleLogin: "Connexion",
-        titleRegister: "Inscription",
-        btnLogin: "Se connecter",
-        btnRegister: "Créer mon compte",
-        creditInfo: "Choisissez votre forfait puis effectuez le paiement sécurisé via WhatsApp avec notre service client."
-      },
-      ht: {
-        navHome: "Akèy",
-        navLibrary: "Bibliotèk",
-        navBuyCredits: "Achte Kredi",
-        navHistory: "Istwa",
-        navProfile: "Pwofil",
-        navAdmin: "Administrasyon",
-        creditsUnit: "kredi",
-        heroText: "Biblyotèk aplikasyon APK, liv PDF, fòmasyon videyo ak resous dijital ou yo.",
-        btnExplore: "Eksplore katalòg la",
-        btnRecharge: "Rechaje kredi m",
-        titleRecent: "Pwodui ki fèk ajoute",
-        allCategories: "Tout kategori yo",
-        titleLogin: "Koneksyon",
-        titleRegister: "Enskripsyon",
-        btnLogin: "Konekte",
-        btnRegister: "Kreye kont mwen",
-        creditInfo: "Chwazi fòfè ou epi fè peman an sekirite pa WhatsApp ak sèvis kliyan nou an."
-      }
-    };
-
-    let currentLang = "fr";
-    let currentUser = JSON.parse(localStorage.getItem("bentoulapps_user")) || null;
-    let allProducts = [];
-    let alertActionCallback = null;
-    let previousSection = "home";
-    let currentDetailDocId = null;
-    let userPurchasedDocIds = new Set();
-
-    /* ---- LECTURE DES COLONNES DE VOTRE GOOGLE SHEET ---- */
-    function getProp(obj, names) {
-      if (!obj || typeof obj !== 'object') return '';
-      const keys = Object.keys(obj);
-      for (const name of names) {
-        const cleanName = name.toLowerCase().replace(/[\s_\-]/g, '');
-        for (const k of keys) {
-          if (k.toLowerCase().replace(/[\s_\-]/g, '') === cleanName) {
-            const val = obj[k];
-            if (val !== undefined && val !== null && String(val).trim() !== '') {
-              return String(val).trim();
-            }
-          }
-        }
-      }
-      return '';
-    }
-
-    /* ---- GESTION DES IMAGES (GOOGLE DRIVE & DIRECT) ---- */
-    function extractDriveFileId(str) {
-      if (!str || typeof str !== 'string') return null;
-      const match = str.match(/(?:file\/d\/|id=|open\?id=|uc\?id=|\/d\/)([a-zA-Z0-9_-]{20,})/);
-      if (match && match[1]) return match[1];
-      if (/^[a-zA-Z0-9_-]{25,}$/.test(str.trim())) return str.trim();
-      return null;
-    }
-
-    function buildProductImageUrl(rawUrl) {
-      if (!rawUrl || typeof rawUrl !== 'string') return { src: '', driveId: '' };
-      let url = rawUrl.trim();
-      if (!url) return { src: '', driveId: '' };
-
-      const driveId = extractDriveFileId(url);
-      if (driveId) {
-        return {
-          src: `https://lh3.googleusercontent.com/d/${driveId}`,
-          driveId: driveId
-        };
-      }
-
-      if (url.includes('dropbox.com')) {
-        url = url.replace('?dl=0', '?raw=1').replace('&dl=0', '&raw=1');
-        if (!url.includes('raw=1')) url += (url.includes('?') ? '&' : '?') + 'raw=1';
-      }
-
-      return { src: url, driveId: '' };
-    }
-
-    function onProductImageError(img) {
-      const driveId = img.getAttribute("data-drive-id");
-      const attempt = parseInt(img.getAttribute("data-error-attempt") || "0", 10);
-
-      if (driveId) {
-        if (attempt === 0) {
-          img.setAttribute("data-error-attempt", "1");
-          img.src = `https://drive.google.com/thumbnail?id=${driveId}&sz=w1000`;
-          return;
-        } else if (attempt === 1) {
-          img.setAttribute("data-error-attempt", "2");
-          img.src = `https://drive.google.com/uc?export=view&id=${driveId}`;
-          return;
-        }
-      }
-
-      img.onerror = null;
-      img.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260' viewBox='0 0 400 260'%3E%3Crect fill='%23183D32' width='400' height='260'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-weight='bold' font-size='16' fill='%23C9A24D' text-anchor='middle' dy='.3em'%3EBENTOULAPPS%3C/text%3E%3C/svg%3E";
-    }
-
-    /* ---- POPUP PERSONNALISÉ ---- */
-    function showNotification(message, title = "Notification", type = "info", onClose = null) {
-      const modal = document.getElementById("appAlertModal");
-      const iconContainer = document.getElementById("appAlertIconContainer");
-      const icon = document.getElementById("appAlertIcon");
-      const titleEl = document.getElementById("appAlertTitle");
-      const msgEl = document.getElementById("appAlertMessage");
-
-      titleEl.innerText = title;
-      msgEl.innerText = message;
-      alertActionCallback = onClose;
-
-      iconContainer.className = "dialog-icon-wrapper " + type;
-      if (type === "success") icon.innerText = "check_circle";
-      else if (type === "error") icon.innerText = "cancel";
-      else icon.innerText = "info";
-
-      modal.style.display = "flex";
-    }
-
-    function closeAppAlert() {
-      document.getElementById("appAlertModal").style.display = "none";
-      if (typeof alertActionCallback === "function") {
-        const cb = alertActionCallback;
-        alertActionCallback = null;
-        cb();
-      }
-    }
-
-    /* ---- APPELS API ---- */
-    async function apiCall(action, payload = {}, method = "POST") {
-      try {
-        let response;
-        if (method === "GET") {
-          const params = new URLSearchParams({ action, ...payload });
-          response = await fetch(`${GOOGLE_SCRIPT_URL}?${params.toString()}`);
-        } else {
-          response = await fetch(GOOGLE_SCRIPT_URL, {
-            method: "POST",
-            redirect: "follow",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action, ...payload })
-          });
-        }
-        return await response.json();
-      } catch (error) {
-        console.error("Erreur API:", error);
-        return { success: false, message: "Impossible de joindre le serveur. Vérifiez votre connexion." };
-      }
-    }
-
-    /* ---- INITIALISATION ---- */
-    window.addEventListener("DOMContentLoaded", () => {
-      updateUserUI();
-      loadUserPurchasesLocal();
-      loadProducts();
-    });
-
-    function changeLanguage(lang) {
-      currentLang = lang;
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (translations[lang] && translations[lang][key]) {
-          el.innerText = translations[lang][key];
-        }
-      });
-    }
-
-    function toggleTheme() {
-      document.body.classList.toggle("dark-theme");
-    }
-
-    function toggleSidebar() {
-      document.getElementById("appSidebar").classList.toggle("open");
-    }
-
-    function switchPage(pageId) {
-      const currentActive = document.querySelector(".page-section.active");
-      if (currentActive && currentActive.id !== `page-${pageId}`) {
-        previousSection = currentActive.id.replace("page-", "");
-      }
-
-      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
-      document.querySelectorAll(".nav-item").forEach(item => item.classList.remove("active"));
-      document.querySelectorAll(".bottom-nav-item").forEach(item => item.classList.remove("active"));
-
-      const targetSection = document.getElementById(`page-${pageId}`);
-      if (targetSection) targetSection.classList.add("active");
-
-      if (pageId === "history") loadUserPurchases();
-      if (pageId === "profile" && !currentUser) switchPage("auth");
-
-      document.getElementById("appSidebar").classList.remove("open");
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function updateUserUI() {
-      const creditDisplay = document.getElementById("userCreditDisplay");
-      const greeting = document.getElementById("welcomeGreeting");
-      const adminNav = document.getElementById("adminNavItem");
-
-      if (currentUser) {
-        const nomUtilisateur = currentUser.nom || currentUser.name || "Utilisateur";
-        creditDisplay.innerText = currentUser.credits !== undefined ? currentUser.credits : 0;
-        greeting.innerText = `Bienvenue, ${nomUtilisateur}`;
-        document.getElementById("profileNameDisplay").innerText = nomUtilisateur;
-        document.getElementById("profileEmailDisplay").innerText = currentUser.email || "";
-        document.getElementById("profileCreditsDisplay").innerText = `${currentUser.credits || 0} Crédits`;
-        document.getElementById("profileDateDisplay").innerText = currentUser.date_creation || currentUser.dateCreation || "-";
-
-        adminNav.style.display = (currentUser.role === "admin") ? "flex" : "none";
-      } else {
-        creditDisplay.innerText = "0";
-        greeting.innerText = "Bienvenue sur BENTOULAPPS";
-        adminNav.style.display = "none";
-      }
-    }
-
-    /* ---- NORMALISATION BASE DE DONNÉES GOOGLE SHEETS ---- */
-    function normalizeProduct(p) {
-      const rawImg = p.ImageUrl || p.imageurl || p.Image || getProp(p, ['imageurl', 'image', 'url_image', 'photo', 'affiche']);
-      const imgData = buildProductImageUrl(rawImg);
-
-      const downloadUrl = p.DownloadUrl || p.downloadurl || p.url_fichier || getProp(p, ['downloadurl', 'url_fichier', 'fichier', 'url', 'lien']);
-      const iconType = (p.Icon || p.icon || p.Type || p.type || "autre").toString().toLowerCase();
-
-      return {
-        id: (p.ID || p.id || getProp(p, ['id', 'id_produit']) || "").toString(),
-        titre: p.Titre || p.titre || getProp(p, ['titre', 'nom', 'title']) || "Sans titre",
-        categorie: p.Categorie || p.categorie || getProp(p, ['categorie', 'cat']) || "Divers",
-        prix: Number(p.Prix || p.prix || getProp(p, ['prix', 'price', 'credits']) || 0),
-        icon: iconType,
-        type: iconType,
-        couleur: p.Couleur || p.couleur || "",
-        description: p.Description || p.description || getProp(p, ['description', 'desc']) || "",
-        downloadUrl: downloadUrl,
-        url_fichier: downloadUrl,
-        dateAjout: p.DateAjout || p.dateajout || getProp(p, ['dateajout', 'date']) || "",
-        image: imgData.src,
-        driveId: imgData.driveId
-      };
-    }
-
-    async function loadProducts() {
-      const loader = document.getElementById("libraryLoader");
-      loader.style.display = "block";
-
-      const res = await apiCall("getProducts", {}, "GET");
-      loader.style.display = "none";
-
-      if (res.success) {
-        allProducts = (res.products || []).map(normalizeProduct);
-        populateCategories();
-        renderProducts(allProducts);
-
-        // Si l'URL contient un paramètre ?doc=ID, ouvrir directement le détail
-        const urlParams = new URLSearchParams(window.location.search);
-        const docId = urlParams.get('doc');
-        if (docId) {
-          showDocDetail(docId);
-        }
-      } else {
-        showNotification(res.message || "Erreur de chargement", "Erreur", "error");
-      }
-    }
-
-    /* ---- RENDU UNIQUEMENT DANS LA BIBLIOTHÈQUE ---- */
-    function renderProducts(products) {
-      const libraryContainer = document.getElementById("libraryProductsContainer");
-      if (!libraryContainer) return;
-
-      libraryContainer.innerHTML = "";
-
-      if (products.length === 0) {
-        libraryContainer.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--vert-sauge);">Aucun produit disponible.</p>`;
-        return;
-      }
-
-      // Tous les produits s'affichent uniquement dans la bibliothèque
-      products.forEach(p => libraryContainer.appendChild(createProductCard(p)));
-    }
-
-    function createProductCard(product) {
-      const card = document.createElement("div");
-      card.className = "product-card";
-
-      const isPaid = userPurchasedDocIds.has(product.id.toString());
-      const paidBadgeHtml = isPaid 
-        ? `<span class="badge-paid"><span class="material-symbols-outlined" style="font-size:12px;">check_circle</span> Payé</span>` 
-        : ``;
-
-      const actionBtnHtml = isPaid
-        ? `<button class="btn btn-success" style="flex:1;" onclick="openDocumentModal('${product.id}', '')"><span class="material-symbols-outlined">folder_open</span> Accéder</button>`
-        : `<button class="btn btn-primary" style="flex:1;" onclick="startPurchaseFlow('${product.id}')">Débloquer</button>`;
-
-      card.innerHTML = `
-        <div class="product-thumb-wrapper">
-          <img 
-            src="${product.image}" 
-            alt="${product.titre}" 
-            data-drive-id="${product.driveId || ''}" 
-            data-error-attempt="0" 
-            referrerpolicy="no-referrer" 
-            loading="lazy" 
-            onerror="onProductImageError(this)"
-          >
-          <span class="badge-type">${product.icon || product.type}</span>
-          ${paidBadgeHtml}
-          <button class="btn-share-icon" onclick="shareDoc('${product.id}', event)" title="Partager ce document">
-            <span class="material-symbols-outlined" style="font-size:16px;">share</span>
-          </button>
-        </div>
-        <div class="product-info">
-          <div class="product-title" onclick="showDocDetail('${product.id}')">${product.titre}</div>
-          <div class="product-category">${product.categorie}</div>
-          <div class="product-price">${isPaid ? '<span style="color:#2E7D32;"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Débloqué</span>' : product.prix + ' Crédits'}</div>
-          <div class="card-actions-row">
-            <button class="btn btn-outline" style="flex:1;" onclick="showDocDetail('${product.id}')">Détails</button>
-            ${actionBtnHtml}
-          </div>
-        </div>
-      `;
-      return card;
-    }
-
-    function populateCategories() {
-      const categories = [...new Set(allProducts.map(p => p.categorie).filter(Boolean))];
-      const select = document.getElementById("categoryFilter");
-      select.innerHTML = `<option value="">Toutes les catégories</option>`;
-      categories.forEach(c => {
-        select.innerHTML += `<option value="${c}">${c}</option>`;
-      });
-    }
-
-    function filterProducts() {
-      const kw = document.getElementById("searchKeyword").value.toLowerCase();
-      const cat = document.getElementById("categoryFilter").value;
-      const type = document.getElementById("typeFilter").value;
-
-      const filtered = allProducts.filter(p => {
-        const matchKw = p.titre.toLowerCase().includes(kw) || p.description.toLowerCase().includes(kw);
-        const matchCat = cat === "" || p.categorie === cat;
-        const matchType = type === "" || p.icon === type || p.type === type;
-        return matchKw && matchCat && matchType;
-      });
-
-      renderProducts(filtered);
-    }
-
-    /* ---- VUE DÉTAILLÉE D'UN DOCUMENT AVEC BOUTON RETOUR ---- */
-    function showDocDetail(productId) {
-      const product = allProducts.find(p => p.id === productId.toString());
-      if (!product) return;
-
-      currentDetailDocId = product.id;
-      const isPaid = userPurchasedDocIds.has(product.id.toString());
-
-      document.getElementById("detailDocImg").src = product.image;
-      document.getElementById("detailDocImg").setAttribute("data-drive-id", product.driveId || "");
-      document.getElementById("detailDocBadge").innerText = product.icon || product.type;
-      
-      const paidBadge = document.getElementById("detailDocPaidBadge");
-      paidBadge.style.display = isPaid ? "flex" : "none";
-
-      document.getElementById("detailDocTitle").innerText = product.titre;
-      document.getElementById("detailDocCat").innerText = product.categorie;
-      document.getElementById("detailDocDate").innerText = product.dateAjout || "-";
-      document.getElementById("detailDocPrice").innerText = isPaid ? "Déjà payé (Accès gratuit)" : `${product.prix} Crédits`;
-      document.getElementById("detailDocDesc").innerText = product.description || "Aucune description fournie pour ce document.";
-
-      const actionButtons = document.getElementById("detailDocActionButtons");
-      actionButtons.innerHTML = "";
-
-      if (isPaid) {
-        actionButtons.innerHTML = `
-          <button class="btn btn-success" style="flex:1; padding: 12px;" onclick="openDocumentModal('${product.id}', '')">
-            <span class="material-symbols-outlined">folder_open</span> Accéder / Télécharger
-          </button>
-        `;
-      } else {
-        actionButtons.innerHTML = `
-          <button class="btn btn-primary" style="flex:1; padding: 12px;" onclick="startPurchaseFlow('${product.id}')">
-            <span class="material-symbols-outlined">lock_open</span> Débloquer pour ${product.prix} Crédits
-          </button>
-        `;
-      }
-
-      switchPage("doc-detail");
-    }
-
-    function goBackFromDetail() {
-      switchPage(previousSection || "library");
-    }
-
-    /* ---- PARTAGE AVEC URL UNIQUE ---- */
-    function shareDoc(productId, event) {
-      if (event) event.stopPropagation();
-      const product = allProducts.find(p => p.id === productId.toString());
-      if (!product) return;
-
-      const shareUrl = `${window.location.origin}${window.location.pathname}?doc=${encodeURIComponent(product.id)}`;
-      const shareTitle = `BENTOULAPPS - ${product.titre}`;
-      const shareText = `Découvrez "${product.titre}" sur Bentoulapps :`;
-
-      if (navigator.share) {
-        navigator.share({
-          title: shareTitle,
-          text: shareText,
-          url: shareUrl
-        }).catch(() => {});
-      } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          showNotification("Lien unique du document copié dans le presse-papier !", "Lien copié", "success");
-        }).catch(() => {
-          showNotification(`Partagez ce lien : ${shareUrl}`, "Partager", "info");
-        });
-      } else {
-        showNotification(`Partagez ce lien : ${shareUrl}`, "Partager", "info");
-      }
-    }
-
-    function shareCurrentDoc() {
-      if (currentDetailDocId) {
-        shareDoc(currentDetailDocId);
-      }
-    }
-
-    /* ---- PROCESSUS D'ACHAT ---- */
-    function startPurchaseFlow(productId) {
-      if (!currentUser) {
-        showNotification("Veuillez vous connecter pour débloquer cette ressource.", "Connexion requise", "info", () => {
-          switchPage("auth");
-        });
-        return;
-      }
-
-      const product = allProducts.find(p => p.id === productId.toString());
-      if (!product) return;
-
-      const userCredits = Number(currentUser.credits || 0);
-      const prodPrice = Number(product.prix || 0);
-      const remainingCredits = userCredits - prodPrice;
-      const hasEnough = remainingCredits >= 0;
-
-      document.getElementById("confirmProdTitle").innerText = product.titre;
-      document.getElementById("confirmProdPrice").innerText = `${prodPrice} Crédits`;
-      document.getElementById("confirmUserBalance").innerText = `${userCredits} Crédits`;
-      
-      const remainingEl = document.getElementById("confirmRemainingBalance");
-      remainingEl.innerText = `${remainingCredits} Crédits`;
-      remainingEl.style.color = hasEnough ? "var(--vert-profond)" : "#D32F2F";
-
-      const warningEl = document.getElementById("confirmCreditWarning");
-      warningEl.style.display = hasEnough ? "none" : "block";
-
-      const actionsBox = document.getElementById("confirmDialogActions");
-      actionsBox.innerHTML = "";
-
-      if (hasEnough) {
-        actionsBox.innerHTML = `
-          <button class="btn btn-outline" style="flex:1;" onclick="closePurchaseConfirmModal()">Annuler</button>
-          <button class="btn btn-primary" style="flex:1;" onclick="executeProductPurchase('${product.id}')">Débloquer</button>
-        `;
-      } else {
-        actionsBox.innerHTML = `
-          <button class="btn btn-outline" style="flex:1;" onclick="closePurchaseConfirmModal()">Fermer</button>
-          <button class="btn btn-primary" style="flex:1;" onclick="closePurchaseConfirmModal(); switchPage('buy-credits');">Recharger</button>
-        `;
-      }
-
-      document.getElementById("purchaseConfirmModal").style.display = "flex";
-    }
-
-    function closePurchaseConfirmModal() {
-      document.getElementById("purchaseConfirmModal").style.display = "none";
-    }
-
-    async function executeProductPurchase(productId) {
-      closePurchaseConfirmModal();
-
-      const product = allProducts.find(p => p.id === productId.toString());
-      const res = await apiCall("buyProduct", {
-        email: currentUser.email,
-        productId: productId,
-        price: product ? product.prix : 0
-      });
-
-      if (res.success) {
-        if (res.newCredits !== undefined) {
-          currentUser.credits = res.newCredits;
-          localStorage.setItem("bentoulapps_user", JSON.stringify(currentUser));
-          updateUserUI();
-        }
-
-        userPurchasedDocIds.add(productId.toString());
-        saveUserPurchasesLocal();
-        renderProducts(allProducts);
-
-        openDocumentModal(productId, res.fileUrl || (product ? product.downloadUrl : ""));
-      } else {
-        if (res.insufficientCredits) {
-          showNotification("Votre solde de crédits est insuffisant pour finaliser cet achat.", "Crédits insuffisants", "error", () => {
-            switchPage("buy-credits");
-          });
-        } else {
-          showNotification(res.message || "Impossible de débloquer le produit.", "Erreur", "error");
-        }
-      }
-    }
-
-    /* ---- LECTEUR & TÉLÉCHARGEMENT ---- */
-    function openDocumentModal(productId, fileUrl) {
-      const product = allProducts.find(p => p.id === productId.toString());
-      const modal = document.getElementById("previewModal");
-      const title = document.getElementById("modalTitle");
-      const body = document.getElementById("modalBody");
-      const actions = document.getElementById("modalActions");
-
-      const prodName = product ? product.titre : "Ressource numérique";
-      const iconType = product ? (product.icon || product.type).toLowerCase() : "autre";
-      const rawUrl = fileUrl || (product ? product.downloadUrl : "");
-
-      title.innerText = prodName;
-      body.innerHTML = "";
-      actions.innerHTML = "";
-
-      let previewUrl = rawUrl;
-      let downloadUrl = rawUrl;
-
-      const driveMatch = rawUrl.match(/(?:drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)|lh3\.googleusercontent\.com\/d\/)([a-zA-Z0-9_-]+)/);
-      if (driveMatch && driveMatch[1]) {
-        previewUrl = `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
-        downloadUrl = `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
-      }
-
-      if (iconType.includes("pdf")) {
-        body.innerHTML = `
-          <div style="background:#000; border-radius: 8px; overflow:hidden; margin-bottom:12px;">
-            <iframe src="${previewUrl}" style="width: 100%; height: 350px; border: none; display: block;" allow="autoplay"></iframe>
-          </div>
-        `;
-      } else if (iconType.includes("video")) {
-        body.innerHTML = `
-          <video controls controlsList="nodownload" style="width: 100%; max-height: 350px; border-radius: 8px; background: #000; margin-bottom:12px;">
-            <source src="${rawUrl}" type="video/mp4">
-            Votre navigateur ne supporte pas ce format vidéo.
-          </video>
-        `;
-      } else if (iconType.includes("apk")) {
-        body.innerHTML = `
-          <div style="background: rgba(201, 162, 77, 0.12); border-left: 4px solid var(--dore-vierge); padding: 14px; border-radius: 6px; margin-bottom: 14px; font-size: 13px;">
-            🤖 <strong>Installation APK :</strong> Téléchargez le fichier APK ci-dessous, puis autorisez l'installation depuis vos fichiers.
-          </div>
-        `;
-      } else if (iconType.includes("templateblogger")) {
-        body.innerHTML = `
-          <div style="background: rgba(36, 87, 68, 0.12); border-left: 4px solid var(--vert-profond); padding: 14px; border-radius: 6px; margin-bottom: 14px; font-size: 13px;">
-            🌐 <strong>Template Blogger :</strong> Cliquez sur Aperçu pour voir la démo ou téléchargez le fichier XML/ZIP du thème.
-          </div>
-        `;
-      } else {
-        body.innerHTML = `
-          <div style="padding: 16px; background: var(--blanc-casse); border-radius: 8px; margin-bottom: 12px; font-size: 13px;">
-            Votre ressource est débloquée et prête à l'emploi.
-          </div>
-        `;
-      }
-
-      actions.innerHTML = `
-        <a href="${previewUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="flex:1;">
-          <span class="material-symbols-outlined" style="font-size:18px;">visibility</span> Aperçu plein écran
-        </a>
-        <a href="${downloadUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="flex:1;">
-          <span class="material-symbols-outlined" style="font-size:18px;">download</span> Télécharger le fichier
-        </a>
-      `;
-
-      modal.style.display = "flex";
-    }
-
-    function closeModal() {
-      document.getElementById("previewModal").style.display = "none";
-      const video = document.querySelector("#previewModal video");
-      if (video) video.pause();
-    }
-
-    function orderCreditsViaWhatsApp(packName) {
-      const userMail = currentUser ? currentUser.email : "Non connecté";
-      const message = encodeURIComponent(`Bonjour BENTOULAPPS, je souhaite recharger mon compte avec le ${packName}. Email : ${userMail}`);
-      window.open(`https://wa.me/${WHATSAPP_PHONE.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
-    }
-
-    /* ---- GESTION HISTORIQUE & CACHE DES ACHATS ---- */
-    function loadUserPurchasesLocal() {
-      if (!currentUser) return;
-      const saved = localStorage.getItem(`bentoulapps_purchases_${currentUser.email}`);
-      if (saved) {
-        userPurchasedDocIds = new Set(JSON.parse(saved));
-      }
-    }
-
-    function saveUserPurchasesLocal() {
-      if (!currentUser) return;
-      localStorage.setItem(`bentoulapps_purchases_${currentUser.email}`, JSON.stringify([...userPurchasedDocIds]));
-    }
-
-    async function loadUserPurchases() {
-      if (!currentUser) return;
-      const container = document.getElementById("historyContainer");
-      container.innerHTML = `<div class="loader-spinner"></div>`;
-
-      const res = await apiCall("getPurchases", { email: currentUser.email }, "GET");
-      container.innerHTML = "";
-
-      if (res.success && res.purchases && res.purchases.length > 0) {
-        res.purchases.forEach(p => {
-          if (p.idProduit) userPurchasedDocIds.add(p.idProduit.toString());
-          container.innerHTML += `
-            <div class="product-card" style="padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-              <div>
-                <strong>${p.nomProduit || 'Produit'}</strong>
-                <div style="font-size: 11px; color: var(--vert-sauge);">${p.date || ''} - ${p.prixPaye || 0} Crédits</div>
-              </div>
-              <button class="btn btn-primary" style="padding: 6px 12px; font-size: 11px;" onclick="openDocumentModal('${p.idProduit}', '')">
-                Accéder
-              </button>
-            </div>
-          `;
-        });
-        saveUserPurchasesLocal();
-        renderProducts(allProducts);
-      } else {
-        container.innerHTML = `<p style="text-align: center; font-size: 13px; color: var(--vert-sauge);">Aucun achat enregistré pour le moment.</p>`;
-      }
-    }
-
-    function toggleAuthForm(type) {
-      document.getElementById("loginFormBlock").style.display = (type === 'login') ? "block" : "none";
-      document.getElementById("registerFormBlock").style.display = (type === 'register') ? "block" : "none";
-    }
-
-    async function submitLogin() {
-      const email = document.getElementById("loginEmail").value.trim();
-      const password = document.getElementById("loginPassword").value;
-
-      if (!email || !password) return showNotification("Veuillez remplir tous les champs.", "Attention", "info");
-
-      const res = await apiCall("login", { email, password });
-      if (res.success) {
-        currentUser = res.user;
-        localStorage.setItem("bentoulapps_user", JSON.stringify(currentUser));
-        updateUserUI();
-        loadUserPurchasesLocal();
-        loadUserPurchases();
-        showNotification("Connexion réussie !", "Bienvenue", "success", () => {
-          switchPage("home");
-        });
-      } else {
-        showNotification(res.message, "Erreur", "error");
-      }
-    }
-
-    async function submitRegister() {
-      const nom = document.getElementById("regNom").value.trim();
-      const email = document.getElementById("regEmail").value.trim();
-      const password = document.getElementById("regPassword").value;
-      const confirm = document.getElementById("regPasswordConfirm").value;
-
-      if (!nom || !email || !password) return showNotification("Veuillez renseigner tous les champs.", "Champs requis", "info");
-      if (password !== confirm) return showNotification("Les mots de passe ne correspondent pas.", "Attention", "error");
-
-      const res = await apiCall("register", { nom, name: nom, email, password });
-      if (res.success) {
-        currentUser = res.user;
-        localStorage.setItem("bentoulapps_user", JSON.stringify(currentUser));
-        updateUserUI();
-        showNotification(res.message, "Compte créé", "success", () => {
-          switchPage("home");
-        });
-      } else {
-        showNotification(res.message, "Erreur", "error");
-      }
-    }
-
-    function logout() {
-      currentUser = null;
-      userPurchasedDocIds.clear();
-      localStorage.removeItem("bentoulapps_user");
-      updateUserUI();
-      renderProducts(allProducts);
-      showNotification("Vous avez été déconnecté.", "Déconnexion", "info", () => {
-        switchPage("home");
-      });
-    }
-
-    async function submitAdminAddProduct() {
-      if (!currentUser || currentUser.role !== "admin") return showNotification("Action réservée aux administrateurs.", "Accès refusé", "error");
-
-      const payload = {
-        adminEmail: currentUser.email,
-        titre: document.getElementById("adminProdTitre").value.trim(),
-        description: document.getElementById("adminProdDesc").value.trim(),
-        categorie: document.getElementById("adminProdCat").value.trim(),
-        type: document.getElementById("adminProdType").value,
-        icon: document.getElementById("adminProdType").value,
-        prix: document.getElementById("adminProdPrix").value,
-        image: document.getElementById("adminProdImg").value.trim(),
-        imageUrl: document.getElementById("adminProdImg").value.trim(),
-        downloadUrl: document.getElementById("adminProdFileUrl").value.trim(),
-        url_fichier: document.getElementById("adminProdFileUrl").value.trim()
-      };
-
-      if (!payload.titre || !payload.prix) return showNotification("Le titre et le prix sont obligatoires.", "Attention", "info");
-
-      const res = await apiCall("adminAddProduct", payload);
-      if (res.success) {
-        document.getElementById("adminProdTitre").value = "";
-        document.getElementById("adminProdDesc").value = "";
-        document.getElementById("adminProdCat").value = "";
-        document.getElementById("adminProdPrix").value = "";
-        document.getElementById("adminProdImg").value = "";
-        document.getElementById("adminProdFileUrl").value = "";
-        showNotification(res.message, "Succès", "success", () => {
-          loadProducts();
-        });
-      } else {
-        showNotification(res.message, "Erreur", "error");
-      }
-    }
-  </script>
+<body data-theme="accueil">
+	<header class="app-header">
+		<div class="header-start">
+			<button class="icon-button" id="menuButton" aria-label="Ouvrir le menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+			<a class="brand" href="#accueil" aria-label="BCREATION accueil">B<b>CREATION</b></a>
+		</div>
+		<div class="header-end">
+			<button class="credit-pill" type="button" onclick="setPage('profil')" aria-label="Voir mes crédits"><i class="fa-solid fa-coins"></i><span id="creditBalance">0 crédit</span></button>
+			<button class="profile-trigger" type="button" onclick="setPage('profil')" aria-label="Ouvrir mon profil">
+				<span class="avatar" id="headerAvatar">?</span><span class="identity"><strong id="headerUsername">Visiteur</strong><small>Mon profil</small></span>
+			</button>
+		</div>
+	</header>
+
+	<div class="drawer-shade" id="drawerShade"></div>
+	<aside class="drawer" id="sideDrawer" aria-label="Navigation principale" aria-hidden="true">
+		<div class="drawer-top"><a class="brand" href="#accueil" onclick="setPage('accueil')">B<b>CREATION</b></a><button class="icon-button" id="closeMenuButton" aria-label="Fermer le menu"><i class="fa-solid fa-xmark"></i></button></div>
+		<div class="drawer-user"><span class="avatar" id="drawerAvatar">?</span><div><strong id="drawerUsername">Visiteur</strong><small id="drawerCredits">Connectez-vous</small></div></div>
+		<nav class="drawer-nav">
+			<span class="nav-label">Explorer</span>
+			<button class="drawer-link active" data-page="accueil"><i class="fa-solid fa-house"></i> Accueil</button>
+			<button class="drawer-link" data-page="boutique"><i class="fa-solid fa-bag-shopping"></i> Boutique & cours</button>
+			<button class="drawer-link" data-page="amour"><i class="fa-solid fa-heart"></i> Amour & Benamoura</button>
+			<button class="drawer-link" data-page="langues"><i class="fa-solid fa-earth-africa"></i> Langues</button>
+			<span class="nav-label">Mon espace</span>
+			<button class="drawer-link" data-page="astuces"><i class="fa-solid fa-lightbulb"></i> Astuces</button>
+			<button class="drawer-link" data-page="communaute"><i class="fa-solid fa-users"></i> Communauté</button>
+			<button class="drawer-link" data-page="recherche"><i class="fa-solid fa-magnifying-glass"></i> Recherche</button>
+			<button class="drawer-link" data-page="profil"><i class="fa-solid fa-user"></i> Profil</button>
+			<button class="drawer-link" id="adminEditorLink" type="button" style="display:none" onclick="location.href='adm.html'"><i class="fa-solid fa-pen-ruler"></i> Ouvrir l’éditeur admin</button>
+		</nav>
+		<div class="drawer-bottom">BCREATION <span id="drawerYear"></span></div>
+	</aside>
+
+	<main class="app-main">
+		<section class="view active" id="view-accueil" data-theme="accueil">
+			<div class="welcome-row"><div><div class="eyebrow">Ton espace, tes découvertes</div><h1>Salut, <span id="greetingName">Visiteur</span> <span aria-hidden="true">B</span></h1><p>Choisis ce qui t’inspire aujourd’hui.</p></div><div class="welcome-note"><i class="fa-solid fa-sparkles"></i> Un petit pas chaque jour</div></div>
+			<section class="home-hero">
+				<div class="hero-copy"><div class="eyebrow">Apprendre autrement</div><h2>Des idées neuves. Des compétences en plus.</h2><p>Retrouve tes formations, découvre des astuces et partage ce qui te tient à cœur.</p><button class="button-primary" type="button" onclick="setPage('boutique')">Découvrir la boutique <i class="fa-solid fa-arrow-right"></i></button></div>
+				<div class="hero-image" role="img" aria-label="Espace de travail créatif avec ordinateur portable"></div>
+			</section>
+			<div class="section-heading"><div><div class="eyebrow">Tes espaces</div><h2>Que veux-tu explorer ?</h2></div></div>
+			<div class="quick-grid">
+				<button class="quick-card" data-page="boutique"><span class="quick-icon"><i class="fa-solid fa-laptop-code"></i></span><span><strong>Informatique</strong><small>Cours & astuces</small></span></button>
+				<button class="quick-card" data-page="amour"><span class="quick-icon"><i class="fa-solid fa-heart"></i></span><span><strong>Benamoura</strong><small>Histoires à partager</small></span></button>
+				<button class="quick-card" data-page="langues"><span class="quick-icon"><i class="fa-solid fa-earth-africa"></i></span><span><strong>Langues</strong><small>Apprendre ensemble</small></span></button>
+				<button class="quick-card" data-page="communaute"><span class="quick-icon"><i class="fa-solid fa-comments"></i></span><span><strong>Communauté</strong><small>À toi la parole</small></span></button>
+			</div>
+			<div class="section-heading"><div><div class="eyebrow">À découvrir</div><h2>Populaires cette semaine</h2></div><button class="text-link" onclick="setPage('boutique')">Tout voir <i class="fa-solid fa-arrow-right"></i></button></div>
+			<div class="card-grid" id="featuredGrid"><div class="empty-state">Chargement des contenus…</div></div>
+		</section>
+
+		<section class="view" id="view-boutique" data-theme="boutique">
+			<section class="channel-home"><div class="channel-home-copy"><div class="eyebrow">Accueil Bentoul</div><h2>Bienvenue dans l’espace Bentoul</h2><p>Retrouve des cours, des astuces et des articles pour progresser en informatique.</p></div><div class="channel-home-actions"><button class="button-primary" type="button" onclick="showArticles('boutique', 'shopGrid')">Voir les articles <i class="fa-solid fa-arrow-down"></i></button><a class="button-whatsapp" href="https://whatsapp.com/channel/0029VadhmlpEAKWIRzYyWt0a" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> S’abonner sur WhatsApp</a></div></section>
+			<div class="filter-row"><button class="filter-chip active" data-filter="all">Tout</button><button class="filter-chip" data-filter="cours">Cours</button><button class="filter-chip" data-filter="astuces">Astuces</button><button class="filter-chip" data-filter="documents">Documents</button></div>
+			<div class="detail-panel" id="productDetail">
+				<button class="text-link" type="button" onclick="closeProductDetail()"><i class="fa-solid fa-arrow-left"></i> Retour à la boutique</button>
+				<div class="simple-panel" style="margin-top:14px;">
+					<img class="detail-image" id="productDetailImage" alt="">
+					<div class="eyebrow" id="productDetailCategory" style="margin-top:18px;">Produit</div>
+					<h2 id="productDetailTitle"></h2><p class="muted" id="productDetailDescription"></p>
+					<div class="detail-actions"><span class="credit-pill" id="productDetailPrice"></span><button class="small-action" id="shareProductButton"><i class="fa-solid fa-share-nodes"></i> Partager</button><button class="small-action" id="likeProductButton"><i class="fa-regular fa-heart"></i> J’aime <span id="productLikeCount">0</span></button><button class="button-primary" id="buyProductButton"><i class="fa-solid fa-cart-shopping"></i> Acheter</button></div>
+					<div class="detail-actions" id="ownedProductActions" hidden><button class="small-action" id="previewPdfButton" type="button"><i class="fa-solid fa-eye"></i> Aperçu PDF</button><a class="button-primary" id="downloadProductButton" href="#" download><i class="fa-solid fa-download"></i> Télécharger</a></div>
+					<div id="purchaseResult" style="margin-top:14px;"></div>
+				</div>
+			</div>
+			<div class="card-grid" id="shopGrid"><div class="empty-state">Chargement de la boutique…</div></div>
+		</section>
+
+		<section class="view" id="view-amour" data-theme="amour">
+			<section class="channel-home"><div class="channel-home-copy"><div class="eyebrow">Accueil Benamoura</div><h2>Bienvenue chez Benamoura</h2><p>Des messages, des poèmes et des histoires du cœur à lire et à partager.</p></div><div class="channel-home-actions"><button class="button-primary" type="button" onclick="showArticles('amour', 'benamouraGrid')">Voir les articles <i class="fa-solid fa-arrow-down"></i></button><a class="button-whatsapp" href="https://whatsapp.com/channel/0029Vb6gBha8F2pDLuILTH1o" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> S’abonner sur WhatsApp</a></div></section>
+			<section class="love-feature"><img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1000&q=85" alt="Un couple profite d'un moment ensemble"><div class="love-feature-copy"><div class="eyebrow">Une histoire pour aujourd’hui</div><h2>Les plus beaux mots sont ceux qu’on partage.</h2><p>Découvre des textes romantiques, des pensées et des histoires à envoyer à quelqu’un qui compte.</p><button class="button-primary" onclick="notify('La collection Benamoura arrive bientôt.')">Voir la collection <i class="fa-solid fa-arrow-right"></i></button></div></section>
+			<div class="section-heading"><div><div class="eyebrow">À lire et à transmettre</div><h2>Histoires du cœur</h2></div><button class="text-link" onclick="notify('Tous les articles sont affichés.')">Tout voir <i class="fa-solid fa-arrow-right"></i></button></div>
+			<div class="love-grid" id="benamouraGrid"><div class="empty-state">Chargement des publications…</div></div>
+		</section>
+
+		<section class="view" id="view-langues" data-theme="langues">
+			<section class="channel-home"><div class="channel-home-copy"><div class="eyebrow">Accueil Bentoulinguo</div><h2>Bienvenue chez Bentoulinguo</h2><p>Explore des expressions et découvre de nouvelles langues à ton rythme.</p></div><div class="channel-home-actions"><button class="button-primary" type="button" onclick="showArticles('langues', 'languageGrid')">Voir les articles <i class="fa-solid fa-arrow-down"></i></button><a class="button-whatsapp" href="https://whatsapp.com/channel/0029VaKlidYC1Fu8eoaNQ22p" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> S’abonner sur WhatsApp</a></div></section>
+			<div class="section-top"><div class="section-title-wrap"><span class="section-mark"><i class="fa-solid fa-earth-africa"></i></span><div><div class="eyebrow">Mots & cultures</div><h1>Langues</h1><p>Découvre une langue et avance à ton rythme.</p></div></div></div>
+			<div class="lang-grid" id="languageGrid"><div class="empty-state">Chargement des expressions…</div></div>
+		</section>
+
+		<section class="view" id="view-astuces" data-theme="boutique"><div class="section-top"><div class="section-title-wrap"><span class="section-mark"><i class="fa-solid fa-lightbulb"></i></span><div><div class="eyebrow">Partie informatique</div><h1>Astuces</h1><p>Des conseils pratiques pour mieux utiliser tes outils numériques.</p></div></div></div><div class="simple-panel"><h2>Le conseil du jour</h2><p class="muted">Utilise un gestionnaire de mots de passe et active la double authentification sur tes comptes importants.</p><button class="button-primary" onclick="notify('Astuce enregistrée.')"><i class="fa-regular fa-bookmark"></i> Garder cette astuce</button></div></section>
+		<section class="view" id="view-communaute" data-theme="accueil"><div class="section-top"><div class="section-title-wrap"><span class="section-mark"><i class="fa-solid fa-users"></i></span><div><div class="eyebrow">Échanger ensemble</div><h1>Communauté</h1><p>Un espace pour partager tes idées et tes découvertes.</p></div></div></div><div class="simple-panel"><h2>Qu’as-tu envie de partager ?</h2><div class="search-box"><i class="fa-regular fa-pen-to-square"></i><input id="communityInput" placeholder="Écris un message à la communauté…"><button class="button-primary" onclick="publishPost()"><i class="fa-solid fa-paper-plane"></i> Publier</button></div><div id="communityNotice" class="muted">Les publications de la communauté apparaîtront ici.</div></div></section>
+		<section class="view" id="view-recherche" data-theme="accueil"><div class="section-top"><div class="section-title-wrap"><span class="section-mark"><i class="fa-solid fa-magnifying-glass"></i></span><div><div class="eyebrow">Trouver rapidement</div><h1>Recherche</h1><p>Cours, astuces, langues et articles.</p></div></div></div><div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input id="searchInput" placeholder="Que recherches-tu ?" oninput="searchContent()"></div><div id="searchResults" class="quick-grid"></div></section>
+		<section class="view" id="view-profil" data-theme="accueil">
+			<div class="section-top"><div class="section-title-wrap"><span class="section-mark"><i class="fa-solid fa-user"></i></span><div><div class="eyebrow">Ton compte</div><h1>Mon profil</h1><p>Informations et documents achetés.</p></div></div></div>
+			<div class="profile-card"><span class="avatar" id="profileAvatar">?</span><div><h2 id="profileName" style="margin:0">Visiteur</h2><span class="muted" id="profileEmail">Connectez-vous pour accéder à votre compte.</span></div><button class="button-primary" id="profileAuthButton" onclick="openAuth('login')">Se connecter</button></div>
+			<div class="simple-panel"><h3>Mes documents achetés</h3><div id="purchaseList" class="muted">Connectez-vous pour voir vos achats.</div></div>
+		</section>
+	</main>
+
+	<nav class="bottom-nav" aria-label="Navigation rapide">
+		<button class="tab-button active" data-page="accueil"><i class="fa-solid fa-house"></i><span>Accueil</span></button>
+		<button class="tab-button" data-page="boutique"><i class="fa-solid fa-bag-shopping"></i><span>Boutique</span></button>
+		<button class="tab-button" data-page="amour"><i class="fa-solid fa-heart"></i><span>Amour</span></button>
+		<button class="tab-button" data-page="langues"><i class="fa-solid fa-earth-africa"></i><span>Langues</span></button>
+	</nav>
+	<div class="modal-backdrop" id="authBackdrop" role="presentation">
+		<section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+			<div class="modal-head"><h2 id="authTitle">Connexion</h2><button class="icon-button" onclick="closeAuth()" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button></div>
+			<form id="authForm">
+				<div class="form-field" id="authNameField" hidden><label for="authName">Nom complet</label><input id="authName" autocomplete="name"></div>
+				<div class="form-field"><label for="authEmail">Adresse e-mail</label><input id="authEmail" type="email" autocomplete="email" required></div>
+				<div class="form-field"><label for="authPassword">Mot de passe</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" required></div>
+				<p class="muted" id="authFeedback" role="status"></p>
+				<button class="button-primary" id="authSubmit" type="submit" style="width:100%">Se connecter</button>
+			</form>
+			<div class="auth-switch"><span id="authSwitchText">Pas encore de compte ?</span> <button id="authSwitchButton" type="button" onclick="toggleAuthMode()">Créer un compte</button></div>
+		</section>
+	</div>
+	<div class="modal-backdrop" id="contentBackdrop" role="presentation">
+		<section class="content-modal" role="dialog" aria-modal="true" aria-labelledby="contentModalTitle">
+			<div class="modal-head"><h2 id="contentModalTitle"></h2><button class="icon-button" onclick="closeContentModal()" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button></div>
+			<img class="detail-image" id="contentModalImage" alt="">
+			<p id="contentModalText" style="margin:15px 0"></p>
+			<div class="detail-actions"><button class="small-action" id="shareContentButton"><i class="fa-solid fa-share-nodes"></i> Partager</button><a class="button-primary" id="contentSourceLink" href="#" target="_blank" rel="noopener noreferrer" hidden>Ouvrir le contenu <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+		</section>
+	</div>
+	<div class="modal-backdrop" id="pdfBackdrop" role="presentation">
+		<section class="pdf-modal" role="dialog" aria-modal="true" aria-labelledby="pdfModalTitle">
+			<div class="modal-head"><h2 id="pdfModalTitle">Aperçu du PDF</h2><button class="icon-button" type="button" onclick="closePdfPreview()" aria-label="Fermer l’aperçu"><i class="fa-solid fa-xmark"></i></button></div>
+			<iframe class="pdf-frame" id="pdfFrame" title="Aperçu du document PDF"></iframe>
+		</section>
+	</div>
+	<div id="toast" role="status" aria-live="polite"></div>
+
+	<script>
+		const API_URL = "https://script.google.com/macros/s/AKfycbwnZPiFwDw8a8oaFOsInnJpNsddMb7kctDTDNW7ADRQCEkXqvtmipM1bXaVprHbMxlraA/exec";
+		const pageThemes = { accueil: "accueil", boutique: "boutique", amour: "amour", langues: "langues", astuces: "boutique", communaute: "accueil", recherche: "accueil", profil: "accueil" };
+		const drawer = document.getElementById("sideDrawer");
+		const shade = document.getElementById("drawerShade");
+		const appState = { user: null, products: [], benamoura: [], languages: [], purchases: [], selectedProduct: null, authMode: "login" };
+		let toastTimeout;
+
+		function valueOf(item, ...keys) { for (const key of keys) if (item && item[key] !== undefined && item[key] !== null && item[key] !== "") return item[key]; return ""; }
+		function escapeHtml(value) { return String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" })[char]); }
+		function safeUrl(value) { const url = String(value || "").trim(); return /^https?:\/\//i.test(url) ? url : ""; }
+		function plainText(value) {
+			const parsed = new DOMParser().parseFromString(String(value || ""), "text/html");
+			return parsed.body.textContent || "";
+		}
+		function sanitizeRichHtml(value) {
+			const parsed = new DOMParser().parseFromString(String(value || ""), "text/html");
+			const allowedTags = new Set(["P", "DIV", "BR", "B", "STRONG", "I", "EM", "U", "S", "DEL", "STRIKE", "UL", "OL", "LI", "H1", "H2", "H3", "H4", "H5", "BLOCKQUOTE", "A", "SPAN", "FONT"]);
+			const allowedFontFamilies = new Map([["dm sans", "DM Sans"], ["outfit", "Outfit"], ["georgia", "Georgia"], ["arial", "Arial"], ["courier new", "Courier New"]]);
+			function copyNode(node) {
+				if (node.nodeType === Node.TEXT_NODE) return document.createTextNode(node.nodeValue || "");
+				if (node.nodeType !== Node.ELEMENT_NODE) return document.createDocumentFragment();
+				const tag = node.tagName;
+				if (["SCRIPT", "STYLE", "IFRAME", "OBJECT", "SVG", "MATH"].includes(tag)) return document.createDocumentFragment();
+				if (!allowedTags.has(tag)) {
+					const fragment = document.createDocumentFragment();
+					[...node.childNodes].forEach(child => fragment.appendChild(copyNode(child)));
+					return fragment;
+				}
+				const clean = document.createElement(tag.toLowerCase());
+				if (tag === "A") {
+					const href = safeUrl(node.getAttribute("href"));
+					if (href) { clean.href = href; clean.rel = "noopener noreferrer"; }
+				}
+				const color = tag === "FONT" ? node.getAttribute("color") : node.style.color;
+				const background = node.style.backgroundColor;
+				if (color && CSS.supports("color", color)) clean.style.color = color;
+				if (background && CSS.supports("background-color", background)) clean.style.backgroundColor = background;
+				const fontValue = String((tag === "FONT" ? node.getAttribute("face") : node.style.fontFamily) || "").replace(/["']/g, "").trim().toLowerCase();
+				if (allowedFontFamilies.has(fontValue)) clean.style.fontFamily = allowedFontFamilies.get(fontValue);
+				const alignment = node.style.textAlign;
+				if (["left", "center", "right", "justify"].includes(alignment)) clean.style.textAlign = alignment;
+				[...node.childNodes].forEach(child => clean.appendChild(copyNode(child)));
+				return clean;
+			}
+			const output = document.createElement("div");
+			[...parsed.body.childNodes].forEach(child => output.appendChild(copyNode(child)));
+			return output.innerHTML;
+		}
+
+		async function api(action, payload = {}) {
+			const requestData = { action, ...payload };
+			if (appState.user && appState.user.token && !requestData.token) requestData.token = appState.user.token;
+			const response = await fetch(API_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(requestData) });
+			if (!response.ok) throw new Error("Le serveur Google Sheets ne répond pas.");
+			const result = await response.json();
+			if (!result.success) throw new Error(result.message || "L’opération a échoué.");
+			return result;
+		}
+
+		function setPage(page) {
+			const target = document.getElementById(`view-${page}`);
+			if (!target) return;
+			closeProductDetail();
+			document.querySelectorAll(".view.articles-only").forEach(view => view.classList.remove("articles-only"));
+			document.body.dataset.theme = pageThemes[page] || "accueil";
+			document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view === target));
+			document.querySelectorAll("[data-page]").forEach(link => link.classList.toggle("active", link.dataset.page === page));
+			closeDrawer();
+			window.scrollTo({ top: 0, behavior: "smooth" });
+			history.replaceState(null, "", `#${page}`);
+		}
+
+		function showArticles(page, gridId) {
+			const view = document.getElementById(`view-${page}`);
+			const grid = document.getElementById(gridId);
+			if (!view || !grid) return;
+			view.classList.add("articles-only");
+			grid.scrollIntoView({ behavior: "smooth" });
+		}
+
+		function openDrawer() {
+			drawer.classList.add("open"); shade.classList.add("open"); drawer.setAttribute("aria-hidden", "false");
+			document.getElementById("menuButton").setAttribute("aria-expanded", "true");
+		}
+		function closeDrawer() {
+			drawer.classList.remove("open"); shade.classList.remove("open"); drawer.setAttribute("aria-hidden", "true");
+			document.getElementById("menuButton").setAttribute("aria-expanded", "false");
+		}
+		function notify(message) {
+			const toast = document.getElementById("toast"); toast.textContent = message; toast.classList.add("visible");			clearTimeout(toastTimeout); toastTimeout = setTimeout(() => toast.classList.remove("visible"), 3000);
+		}
+
+		function updateUserUI() {
+			const user = appState.user;
+			const name = user ? valueOf(user, "nom", "name") || "Membre" : "Visiteur";
+			const credits = user ? Number(user.credits) || 0 : 0;
+			document.getElementById("headerUsername").textContent = name;
+			document.getElementById("greetingName").textContent = name;
+			document.getElementById("headerAvatar").textContent = name.charAt(0).toUpperCase();
+			document.getElementById("creditBalance").textContent = `${credits} crédit${credits > 1 ? "s" : ""}`;
+			document.getElementById("drawerUsername").textContent = name;
+			document.getElementById("drawerAvatar").textContent = name.charAt(0).toUpperCase();
+			document.getElementById("drawerCredits").textContent = user ? `${credits} crédits disponibles` : "Connectez-vous";
+			document.getElementById("profileName").textContent = name;
+			document.getElementById("profileEmail").textContent = user ? user.email : "Connectez-vous pour accéder à votre compte.";
+			document.getElementById("profileAvatar").textContent = name.charAt(0).toUpperCase();
+			document.getElementById("profileAuthButton").textContent = user ? "Se déconnecter" : "Se connecter";
+			document.getElementById("profileAuthButton").onclick = user ? logout : () => openAuth("login");
+			const isAdmin = user && String(valueOf(user, "role", "Role")).trim().toLowerCase() === "admin";
+			document.getElementById("adminEditorLink").style.display = isAdmin ? "flex" : "none";
+		}
+
+		function formatDate(value) {
+			if (!value) return "";
+			const parsed = new Date(value);
+			return Number.isNaN(parsed.getTime()) ? String(value) : parsed.toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+		}
+
+		function createContentCard(item, type) {
+			const id = valueOf(item, "ID", "id");
+			const title = valueOf(item, "Titre", "titre", "title") || "Sans titre";
+			const description = plainText(valueOf(item, "Description", "description")) || "Ouvrir pour découvrir ce contenu.";
+			const image = safeUrl(valueOf(item, "ImageUrl", "imageUrl", "image"));
+			const category = valueOf(item, "Categorie", "categorie", "Langue", "langue") || (type === "product" ? "Boutique" : type === "love" ? "Benamoura" : "Langue");
+			const categoryText = String(category).toLowerCase();
+			const filterCategory = type === "product" ? (categoryText.includes("doc") ? "documents" : categoryText.includes("astuce") ? "astuces" : "cours") : "";
+			const price = Number(valueOf(item, "Prix", "prix")) || 0;
+			const buttonText = type === "product" ? "Consulter" : type === "love" ? "Lire" : "Découvrir";
+			const amount = type === "product" ? (price ? `${price} crédits` : "Gratuit") : type === "love" ? (formatDate(valueOf(item, "DateAjout", "date")) || "À partager") : category;
+			const fileUrl = type === "product" && isProductUnlocked(item) ? productFileUrl(item) : "";
+			const ownedActions = fileUrl ? `<div class="purchase-actions">${isPdfProduct(item, fileUrl) ? `<button class="small-action card-preview-button" type="button" data-pdf-url="${escapeHtml(pdfPreviewUrl(fileUrl))}" data-pdf-title="${escapeHtml(title)}"><i class="fa-solid fa-eye"></i> Aperçu PDF</button>` : ""}<a class="small-action" href="${escapeHtml(directDownloadUrl(fileUrl))}" download="${escapeHtml(title)}"><i class="fa-solid fa-download"></i> Télécharger</a></div>` : "";
+			return `<article class="content-card" ${filterCategory ? `data-category="${filterCategory}"` : ""}><div class="card-image">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : ""}<span class="card-tag">${escapeHtml(category)}</span></div><div class="card-body"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p><div class="card-foot"><span class="price">${escapeHtml(amount)}</span><button class="small-action" type="button" data-content-type="${type}" data-content-id="${escapeHtml(id)}">${buttonText} <i class="fa-solid fa-arrow-right"></i></button></div>${ownedActions}</div></article>`;
+		}
+
+		function bindContentCards(container) {
+			container.querySelectorAll("[data-content-id]").forEach(button => button.addEventListener("click", () => {
+				const { contentType, contentId } = button.dataset;
+				const source = contentType === "product" ? appState.products : contentType === "love" ? appState.benamoura : appState.languages;
+				const item = source.find(entry => String(valueOf(entry, "ID", "id")) === contentId);
+				if (!item) return;
+				if (contentType === "product") openProductDetail(item);
+				else openContentDetail(item, contentType);
+			}));
+			container.querySelectorAll(".card-preview-button").forEach(button => button.addEventListener("click", () => openPdfPreview(button.dataset.pdfUrl, button.dataset.pdfTitle)));
+		}
+
+		function renderProducts() {
+			const grid = document.getElementById("shopGrid");
+			grid.innerHTML = appState.products.length ? appState.products.map(item => createContentCard(item, "product")).join("") : '<div class="empty-state">La boutique ne contient pas encore de produits.</div>';
+			bindContentCards(grid);
+			const featured = document.getElementById("featuredGrid");
+			const items = [...appState.products.slice(0, 2), ...appState.benamoura.slice(0, 1)];
+			featured.innerHTML = items.length ? items.map((item, index) => createContentCard(item, index < 2 ? "product" : "love")).join("") : '<div class="empty-state">Aucun contenu disponible pour le moment.</div>';
+			bindContentCards(featured);
+		}
+
+		function renderBenamoura() {
+			const grid = document.getElementById("benamouraGrid");
+			grid.innerHTML = appState.benamoura.length ? appState.benamoura.map(item => createContentCard(item, "love")).join("") : '<div class="empty-state">Aucun conseil, SMS ou poème publié pour le moment.</div>';
+			bindContentCards(grid);
+		}
+
+		function renderLanguages() {
+			const grid = document.getElementById("languageGrid");
+			if (!appState.languages.length) { grid.innerHTML = '<div class="empty-state">Aucune expression publiée pour le moment.</div>'; return; }
+			grid.innerHTML = appState.languages.map(item => {
+				const id = valueOf(item, "ID", "id");
+				const title = valueOf(item, "Titre", "titre") || "Expression";
+				const language = valueOf(item, "Langue", "langue", "Categorie", "categorie") || "Langue";
+				const description = plainText(valueOf(item, "Description", "description")) || "Expression et traduction";
+				return `<article class="lang-card"><span class="flag"><i class="fa-solid fa-language" style="color:var(--accent)"></i></span><div><span class="card-tag" style="position:static;display:inline-block;margin-bottom:8px">${escapeHtml(language)}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p><button class="small-action" type="button" data-content-type="language" data-content-id="${escapeHtml(id)}">Voir l’expression <i class="fa-solid fa-arrow-right"></i></button></div></article>`;
+			}).join("");
+			bindContentCards(grid);
+		}
+
+		async function loadAllData() {
+			try {
+				const [products, benamoura, languages] = await Promise.all([
+					api("getProducts", { sheet: "produits" }),
+					api("getProducts", { sheet: "benamoura" }),
+					api("getProducts", { sheet: "bentoulinguo" })
+				]);
+				appState.products = products.products || [];
+				appState.benamoura = benamoura.products || [];
+				appState.languages = languages.products || [];
+				renderProducts(); renderBenamoura(); renderLanguages(); renderPurchases();
+			} catch (error) {
+				document.getElementById("shopGrid").innerHTML = `<div class="empty-state">${escapeHtml(error.message)} Vérifiez le déploiement de l’API Apps Script.</div>`;
+				document.getElementById("benamouraGrid").innerHTML = '<div class="empty-state">Impossible de charger les publications.</div>';
+				document.getElementById("languageGrid").innerHTML = '<div class="empty-state">Impossible de charger les expressions.</div>';
+				document.getElementById("featuredGrid").innerHTML = '<div class="empty-state">Impossible de charger les contenus.</div>';
+			}
+		}
+
+		function openProductDetail(product) {
+			appState.selectedProduct = product;
+			document.getElementById("view-boutique").classList.add("product-detail-only");
+			const detail = document.getElementById("productDetail");
+			const grid = document.getElementById("shopGrid");
+			const image = safeUrl(valueOf(product, "ImageUrl", "imageUrl"));
+			document.getElementById("productDetailImage").src = image;
+			document.getElementById("productDetailImage").hidden = !image;
+			document.getElementById("productDetailTitle").textContent = valueOf(product, "Titre", "titre") || "Produit";
+			document.getElementById("productDetailDescription").innerHTML = sanitizeRichHtml(valueOf(product, "Description", "description"));
+			document.getElementById("productDetailCategory").textContent = valueOf(product, "Categorie", "categorie") || "Boutique";
+			const price = Number(valueOf(product, "Prix", "prix")) || 0;
+			document.getElementById("productDetailPrice").innerHTML = `<i class="fa-solid fa-coins"></i> ${price} crédit${price > 1 ? "s" : ""}`;
+			document.getElementById("productLikeCount").textContent = Number(valueOf(product, "Likes", "likes")) || 0;
+			document.getElementById("purchaseResult").textContent = "";
+			grid.hidden = true; detail.classList.add("active");
+			syncOwnedProductActions(product);
+			document.getElementById("shareProductButton").onclick = () => shareContent(product);
+			document.getElementById("likeProductButton").onclick = likeSelectedProduct;
+			document.getElementById("buyProductButton").onclick = buySelectedProduct;
+			window.scrollTo({ top: 0, behavior: "smooth" });
+		}
+
+		function closeProductDetail() {
+			document.getElementById("productDetail").classList.remove("active");
+			document.getElementById("shopGrid").hidden = false;
+			document.getElementById("view-boutique").classList.remove("product-detail-only");
+		}
+
+		function openContentDetail(item, type) {
+			document.getElementById("contentModalTitle").textContent = valueOf(item, "Titre", "titre") || "Contenu";
+			document.getElementById("contentModalText").innerHTML = sanitizeRichHtml(valueOf(item, "Description", "description"));
+			const image = safeUrl(valueOf(item, "ImageUrl", "imageUrl"));
+			const img = document.getElementById("contentModalImage"); img.src = image; img.hidden = !image;
+			const link = safeUrl(valueOf(item, "UrlRedirection", "DownloadUrl", "UrlVideo", "UrlAudio"));
+			const sourceLink = document.getElementById("contentSourceLink"); sourceLink.href = link; sourceLink.hidden = !link;
+			document.getElementById("shareContentButton").onclick = () => shareContent(item);
+			document.getElementById("contentBackdrop").classList.add("open");
+		}
+
+		function closeContentModal() { document.getElementById("contentBackdrop").classList.remove("open"); }
+
+		function productFileUrl(product) {
+			return safeUrl(valueOf(product, "DownloadUrl", "downloadUrl", "UrlRedirection", "urlRedirection"));
+		}
+
+		function isPdfProduct(product, url = productFileUrl(product)) {
+			const format = valueOf(product, "Format", "format", "MimeType", "mimeType", "TypeDocument", "typeDocument").toString().toLowerCase();
+			try { return format.includes("pdf") || new URL(url).pathname.toLowerCase().endsWith(".pdf"); }
+			catch (error) { return format.includes("pdf"); }
+		}
+
+		function driveFileId(url) {
+			try {
+				const parsed = new URL(url);
+				if (parsed.hostname !== "google.com" && !parsed.hostname.endsWith(".google.com")) return "";
+				const pathMatch = parsed.pathname.match(/\/file\/d\/([\w-]+)/);
+				return pathMatch ? pathMatch[1] : parsed.searchParams.get("id") || "";
+			} catch (error) { return ""; }
+		}
+
+		function directDownloadUrl(url) {
+			const id = driveFileId(url);
+			return id ? `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}` : url;
+		}
+
+		function pdfPreviewUrl(url) {
+			const id = driveFileId(url);
+			return id ? `https://drive.google.com/file/d/${encodeURIComponent(id)}/preview` : url;
+		}
+
+		function openPdfPreview(url, title) {
+			const safePdfUrl = safeUrl(pdfPreviewUrl(url));
+			if (!safePdfUrl) return;
+			document.getElementById("pdfModalTitle").textContent = title || "Aperçu du PDF";
+			document.getElementById("pdfFrame").src = safePdfUrl;
+			document.getElementById("pdfBackdrop").classList.add("open");
+		}
+
+		function closePdfPreview() {
+			document.getElementById("pdfBackdrop").classList.remove("open");
+			document.getElementById("pdfFrame").src = "about:blank";
+		}
+
+		function isProductUnlocked(product) {
+			const productId = String(valueOf(product, "ID", "id"));
+			return appState.purchases.some(item => String(valueOf(item, "idProduit", "ID_Produit", "productId")) === productId);
+		}
+
+		function syncOwnedProductActions(product) {
+			const unlocked = Boolean(appState.user && product && isProductUnlocked(product));
+			const url = product ? productFileUrl(product) : "";
+			const pdf = Boolean(url && product && isPdfProduct(product, url));
+			const actions = document.getElementById("ownedProductActions");
+			const preview = document.getElementById("previewPdfButton");
+			const download = document.getElementById("downloadProductButton");
+			document.getElementById("buyProductButton").hidden = unlocked;
+			actions.hidden = !unlocked || !url;
+			preview.hidden = !pdf;
+			preview.onclick = () => openPdfPreview(url, valueOf(product, "Titre", "titre"));
+			download.href = directDownloadUrl(url);
+			download.download = valueOf(product, "Titre", "titre") || "document";
+		}
+
+		async function shareContent(item) {
+			const title = valueOf(item, "Titre", "titre") || "BCREATION";
+			const shareData = { title, text: plainText(valueOf(item, "Description", "description")) || title, url: location.href };
+			try {
+				if (navigator.share) await navigator.share(shareData);
+				else if (navigator.clipboard) { await navigator.clipboard.writeText(shareData.url); notify("Lien copié."); }
+				else notify("Le partage n’est pas disponible sur cet appareil.");
+			} catch (error) { if (error.name !== "AbortError") notify("Impossible de partager ce contenu."); }
+		}
+
+		async function likeSelectedProduct() {
+			if (!appState.user) { openAuth("login"); notify("Connectez-vous pour aimer ce produit."); return; }
+			const button = document.getElementById("likeProductButton"); button.disabled = true;
+			try {
+				const result = await api("likeProduct", { email: appState.user.email, productId: valueOf(appState.selectedProduct, "ID", "id") });
+				appState.selectedProduct.Likes = result.likes;
+				document.getElementById("productLikeCount").textContent = result.likes;
+				notify("Merci pour votre like.");
+			} catch (error) { notify(error.message); }
+			finally { button.disabled = false; }
+		}
+
+		async function buySelectedProduct() {
+			if (!appState.user) { openAuth("login"); notify("Connectez-vous avant un achat."); return; }
+			const product = appState.selectedProduct;
+			const price = Number(valueOf(product, "Prix", "prix")) || 0;
+			if (Number(appState.user.credits) < price) { notify("Crédits insuffisants pour cet achat."); return; }
+			const button = document.getElementById("buyProductButton"); button.disabled = true;
+			try {
+				const result = await api("buyProduct", { email: appState.user.email, productId: valueOf(product, "ID", "id"), price });
+				appState.user.credits = result.newCredits;
+				localStorage.setItem("bcreation_user", JSON.stringify(appState.user));
+				updateUserUI();
+				document.getElementById("purchaseResult").innerHTML = '<p class="muted">Achat confirmé. Votre document est disponible ci-dessus et dans votre profil.</p>';
+				notify(result.message || "Achat confirmé.");
+				await loadPurchases();
+			} catch (error) { notify(error.message); }
+			finally { button.disabled = false; }
+		}
+
+		async function loadPurchases() {
+			if (!appState.user) { appState.purchases = []; renderPurchases(); syncOwnedProductActions(appState.selectedProduct); return; }
+			try {
+				const result = await api("getPurchases", { email: appState.user.email });
+				appState.purchases = result.purchases || [];
+				renderProducts();
+				renderPurchases();
+				syncOwnedProductActions(appState.selectedProduct);
+			} catch (error) { document.getElementById("purchaseList").textContent = error.message; }
+		}
+
+		function renderPurchases() {
+			const list = document.getElementById("purchaseList");
+			if (!appState.user) { list.textContent = "Connectez-vous pour voir vos achats."; return; }
+			if (!appState.purchases.length) { list.textContent = "Aucun achat pour le moment."; return; }
+			list.innerHTML = appState.purchases.map(item => {
+				const product = appState.products.find(entry => String(valueOf(entry, "ID", "id")) === String(valueOf(item, "idProduit", "ID_Produit", "productId")));
+				const url = product ? productFileUrl(product) : "";
+				const title = valueOf(product, "Titre", "titre") || item.nomProduit || "Document";
+				const actions = url ? `<div class="purchase-actions">${isPdfProduct(product, url) ? `<button class="small-action profile-pdf-button" type="button" data-pdf-url="${escapeHtml(pdfPreviewUrl(url))}" data-pdf-title="${escapeHtml(title)}"><i class="fa-solid fa-eye"></i> Aperçu PDF</button>` : ""}<a class="small-action" href="${escapeHtml(directDownloadUrl(url))}" download="${escapeHtml(title)}"><i class="fa-solid fa-download"></i> Télécharger</a></div>` : "";
+				return `<div class="purchase-row"><span><strong>${escapeHtml(title)}</strong><br><small class="muted">${escapeHtml(formatDate(item.date))}</small></span><span class="price">${Number(item.prixPaye) || 0} crédits</span>${actions}</div>`;
+			}).join("");
+			list.querySelectorAll(".profile-pdf-button").forEach(button => button.addEventListener("click", () => openPdfPreview(button.dataset.pdfUrl, button.dataset.pdfTitle)));
+		}
+
+		function openAuth(mode = "login") {
+			appState.authMode = mode;
+			const register = mode === "register";
+			document.getElementById("authTitle").textContent = register ? "Créer un compte" : "Connexion";
+			document.getElementById("authSubmit").textContent = register ? "Créer mon compte" : "Se connecter";
+			document.getElementById("authNameField").hidden = !register;
+			document.getElementById("authName").required = register;
+			document.getElementById("authPassword").autocomplete = register ? "new-password" : "current-password";
+			document.getElementById("authSwitchText").textContent = register ? "Déjà un compte ?" : "Pas encore de compte ?";
+			document.getElementById("authSwitchButton").textContent = register ? "Se connecter" : "Créer un compte";
+			document.getElementById("authFeedback").textContent = "";
+			document.getElementById("authBackdrop").classList.add("open");
+		}
+		function toggleAuthMode() { openAuth(appState.authMode === "login" ? "register" : "login"); }
+		function closeAuth() { document.getElementById("authBackdrop").classList.remove("open"); }
+		function logout() { appState.user = null; appState.purchases = []; localStorage.removeItem("bcreation_user"); updateUserUI(); renderProducts(); renderPurchases(); syncOwnedProductActions(appState.selectedProduct); notify("Vous êtes déconnecté."); }
+
+		document.getElementById("authForm").addEventListener("submit", async event => {
+			event.preventDefault();
+			const button = document.getElementById("authSubmit");
+			const feedback = document.getElementById("authFeedback");
+			button.disabled = true; feedback.textContent = "Vérification…";
+			try {
+				const payload = { email: document.getElementById("authEmail").value.trim().toLowerCase(), password: document.getElementById("authPassword").value };
+				const result = appState.authMode === "register" ? await api("register", { ...payload, nom: document.getElementById("authName").value.trim() }) : await api("login", payload);
+				appState.user = { ...result.user, token: result.token };
+				localStorage.setItem("bcreation_user", JSON.stringify(appState.user));
+				updateUserUI(); closeAuth(); await loadPurchases(); notify(result.message || "Connexion réussie.");
+			} catch (error) { feedback.textContent = error.message; }
+			finally { button.disabled = false; }
+		});
+
+		function searchContent() {
+			const query = document.getElementById("searchInput").value.trim().toLowerCase();
+			const results = document.getElementById("searchResults");
+			if (!query) { results.innerHTML = ""; return; }
+			const items = [...appState.products, ...appState.benamoura, ...appState.languages];
+			const matches = items.filter(item => `${valueOf(item, "Titre", "titre")} ${plainText(valueOf(item, "Description", "description"))} ${valueOf(item, "Categorie", "categorie", "Langue", "langue")}`.toLowerCase().includes(query));
+			results.innerHTML = matches.length ? matches.map(item => `<div class="quick-card"><span class="quick-icon"><i class="fa-solid fa-magnifying-glass"></i></span><span><strong>${escapeHtml(valueOf(item, "Titre", "titre"))}</strong><small>${escapeHtml(valueOf(item, "Categorie", "categorie", "Langue", "langue"))}</small></span></div>`).join("") : '<div class="empty-state">Aucun résultat pour cette recherche.</div>';
+		}
+
+		function publishPost() {
+			if (!appState.user) { openAuth("login"); notify("Connectez-vous pour publier."); return; }
+			const field = document.getElementById("communityInput");
+			const notice = document.getElementById("communityNotice");
+			if (!field.value.trim()) { notify("Écrivez un message avant de publier."); return; }
+			const post = document.createElement("p"); post.className = "profile-card"; post.textContent = `${valueOf(appState.user, "nom", "name")}: ${field.value.trim()}`;
+			notice.replaceChildren(post); field.value = ""; notify("Publication ajoutée à l’aperçu.");
+		}
+
+		document.querySelectorAll("[data-page]").forEach(button => button.addEventListener("click", () => setPage(button.dataset.page)));
+		document.getElementById("menuButton").addEventListener("click", openDrawer);
+		document.getElementById("closeMenuButton").addEventListener("click", closeDrawer);
+		shade.addEventListener("click", closeDrawer);
+		document.getElementById("authBackdrop").addEventListener("click", event => { if (event.target.id === "authBackdrop") closeAuth(); });
+		document.getElementById("contentBackdrop").addEventListener("click", event => { if (event.target.id === "contentBackdrop") closeContentModal(); });
+		document.getElementById("pdfBackdrop").addEventListener("click", event => { if (event.target.id === "pdfBackdrop") closePdfPreview(); });
+		document.addEventListener("keydown", event => { if (event.key === "Escape") { closeDrawer(); closeAuth(); closeContentModal(); closePdfPreview(); } });
+		document.querySelectorAll(".filter-chip").forEach(chip => chip.addEventListener("click", () => {
+			document.querySelectorAll(".filter-chip").forEach(item => item.classList.toggle("active", item === chip));
+			document.querySelectorAll("#shopGrid [data-category]").forEach(card => { card.hidden = chip.dataset.filter !== "all" && card.dataset.category !== chip.dataset.filter; });
+		}));
+
+		const savedUser = (() => { try { return JSON.parse(localStorage.getItem("bcreation_user") || "null"); } catch (error) { return null; } })();
+		if (savedUser && savedUser.email && savedUser.token) appState.user = savedUser;
+		else localStorage.removeItem("bcreation_user");
+		updateUserUI();
+		document.getElementById("drawerYear").textContent = new Date().getFullYear();
+		loadAllData();
+		if (appState.user) loadPurchases();
+		const initialPage = location.hash.slice(1);
+		if (document.getElementById(`view-${initialPage}`)) setPage(initialPage);
+	</script>
 </body>
 </html>
