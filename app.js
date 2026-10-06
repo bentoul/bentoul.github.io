@@ -1,4 +1,4 @@
-const API_URL = (window.APP_CONFIG && window.APP_CONFIG.apiUrl || "").trim();
+const API_URL = (window.APP_CONFIG && window.APP_CONFIG.apiUrl || "https://script.google.com/macros/s/AKfycbxUu3Fy_VKO7qcNrVYwH3p79OY7mrklGlV0uW3YyctQtOeA2CyiagR4sAHe-IUbzFWhNw/exec").trim();
 const SESSION_KEY = "bcreation-user-session";
 const DEFAULT_AVATAR = `data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="24" fill="#e2e8f0"/><circle cx="24" cy="18" r="8" fill="#94a3b8"/><path d="M8 44c1-9 7-14 16-14s15 5 16 14" fill="#94a3b8"/></svg>'

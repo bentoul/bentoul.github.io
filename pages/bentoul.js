@@ -234,17 +234,19 @@ purchaseDialog.innerHTML = `
   </div>
 `;
 
-const previewDialog = createDialog("preview-dialog");
-previewDialog.innerHTML = `
-  <div class="dialog-content">
-    <div class="preview-header">
-      <h2 id="preview-title"></h2>
-      <button class="dialog-button" id="preview-close" type="button">Fermer</button>
-    </div>
-    <iframe class="preview-frame" id="preview-frame" title="Aperçu PDF"></iframe>
-    <p class="dialog-message">Si l’aperçu ne s’affiche pas, <a class="preview-open-link" id="preview-open-link" target="_blank" rel="noopener noreferrer">ouvrez le PDF dans un nouvel onglet</a>.</p>
-  </div>
+const documentViewer = document.createElement("section");
+documentViewer.className = "document-viewer";
+documentViewer.hidden = true;
+documentViewer.setAttribute("aria-label", "Aperçu du document");
+documentViewer.innerHTML = `
+  <header class="document-viewer-header">
+    <button class="dialog-button" id="document-viewer-back" type="button">← Retour</button>
+    <h2 id="document-viewer-title"></h2>
+  </header>
+  <iframe class="document-viewer-frame" id="document-viewer-frame" title="Aperçu du document"></iframe>
 `;
+document.body.append(documentViewer);
+let previewReturnFocus = null;
 
 const detailsPanel = document.createElement("section");
 detailsPanel.className = "product-details";
@@ -368,10 +370,16 @@ function showProductDetails(product) {
 }
 
 function showPdfDocumentPreview(product, fileUrl) {
-  previewDialog.querySelector("#preview-title").textContent = getProductTitle(product);
-  previewDialog.querySelector("#preview-frame").src = fileUrl;
-  previewDialog.querySelector("#preview-open-link").href = fileUrl;
-  previewDialog.showModal();
+  const activeElement = document.activeElement;
+  previewReturnFocus = activeElement instanceof HTMLElement && !purchaseDialog.contains(activeElement)
+    ? activeElement
+    : detailsPanel.querySelector(".details-back");
+  documentViewer.querySelector("#document-viewer-title").textContent = getProductTitle(product);
+  documentViewer.querySelector("#document-viewer-frame").src = fileUrl;
+  documentViewer.hidden = false;
+  document.body.classList.add("document-viewer-open");
+  documentViewer.querySelector("#document-viewer-back").focus();
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 async function showPdfPreview(product) {
@@ -450,14 +458,22 @@ async function shareProduct(product) {
   }
 }
 
-function updateCreditSummary(summary, price, balance, isLoggedIn, alreadyPurchased = false, purchaseRejected = false) {
+function updateCreditSummary(summary, price, balance, isLoggedIn, alreadyPurchased = false, purchaseRejected = false, isPurchase = false) {
   summary.replaceChildren();
-  const remaining = alreadyPurchased || purchaseRejected ? balance : Math.max(0, balance - price);
-  const rows = [
-    ["Prix du document", alreadyPurchased ? "Déjà acquis" : price > 0 ? `${price} crédits` : "Gratuit"],
-    ["Crédits restants", isLoggedIn ? `${balance} crédits` : "—"],
-    [purchaseRejected ? "Solde conservé" : "Solde après achat", isLoggedIn ? `${remaining} crédits` : "—"]
-  ];
+  const remaining = alreadyPurchased || purchaseRejected
+    ? balance
+    : isPurchase ? balance - price : Math.max(0, balance - price);
+  const rows = isPurchase
+    ? [
+        ["Solde actuel", isLoggedIn ? `${balance} pts` : "—"],
+        ["Prix du document", alreadyPurchased ? "Déjà acquis" : price > 0 ? `${price} pts` : "Gratuit"],
+        ["Nouveau solde", isLoggedIn ? `${remaining} pts` : "—"]
+      ]
+    : [
+        ["Prix du document", alreadyPurchased ? "Déjà acquis" : price > 0 ? `${price} crédits` : "Gratuit"],
+        ["Crédits restants", isLoggedIn ? `${balance} crédits` : "—"],
+        [purchaseRejected ? "Solde conservé" : "Solde après achat", isLoggedIn ? `${remaining} crédits` : "—"]
+      ];
   rows.forEach(([label, value], index) => {
     const row = document.createElement("div");
     row.className = `purchase-summary-row${index === rows.length - 1 ? " purchase-summary-row-total" : ""}`;
@@ -487,15 +503,24 @@ function openPurchaseConfirmation(product, action = "download") {
   purchaseDialog.querySelector("#purchase-dialog-description").textContent = action === "preview"
     ? `L’aperçu de « ${title} » nécessite l’accès au document.`
     : action === "purchase"
-      ? `Vous souhaitez acheter « ${title} ». Vérifiez le coût et votre solde avant de confirmer.`
+      ? title
       : `Vous souhaitez télécharger « ${title} ». Vérifiez le coût avant de confirmer.`;
-  updateCreditSummary(purchaseDialog.querySelector("#purchase-summary"), price, balance, Boolean(currentSession), alreadyPurchased);
+  purchaseDialog.querySelector("#purchase-dialog-description").classList.toggle("purchase-product-title", action === "purchase");
+  updateCreditSummary(
+    purchaseDialog.querySelector("#purchase-summary"),
+    price,
+    balance,
+    Boolean(currentSession),
+    alreadyPurchased,
+    false,
+    action === "purchase"
+  );
   message.textContent = "";
   message.dataset.state = "";
   confirmButton.disabled = false;
   confirmButton.textContent = action === "preview"
     ? "Confirmer et ouvrir l’aperçu"
-    : action === "purchase" ? "Confirmer l’achat" : "Confirmer et télécharger";
+    : action === "purchase" ? "Confirmer" : "Confirmer et télécharger";
 
   if (!productId) {
     message.textContent = "L’identifiant de ce produit est invalide.";
@@ -506,10 +531,12 @@ function openPurchaseConfirmation(product, action = "download") {
     confirmButton.disabled = true;
     confirmButton.textContent = "Connexion requise";
   } else if (!alreadyPurchased && purchaseHistoryLoaded && balance < price) {
-    message.textContent = `Crédits insuffisants : il vous manque ${price - balance} crédits.`;
+    message.textContent = action === "purchase"
+      ? "Solde insuffisant pour débloquer cet article."
+      : `Crédits insuffisants : il vous manque ${price - balance} crédits.`;
     message.dataset.state = "error";
     confirmButton.disabled = true;
-    confirmButton.textContent = "Crédits insuffisants";
+    if (action !== "purchase") confirmButton.textContent = "Crédits insuffisants";
   } else if (alreadyPurchased) {
     message.textContent = "Ce document est déjà acquis : aucun crédit ne sera débité.";
   }
@@ -517,15 +544,30 @@ function openPurchaseConfirmation(product, action = "download") {
   purchaseDialog.showModal();
 }
 
-function openDownloadUrl(fileUrl) {
+async function downloadProductFile(fileUrl, product) {
+  let response;
+  try {
+    response = await fetch(fileUrl);
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Le téléchargement direct est bloqué par le serveur du document. Vérifiez que son accès autorise le téléchargement depuis BENTOUL.");
+    }
+    throw error;
+  }
+  if (!response.ok) throw new Error(`Le serveur du document a répondu avec le statut ${response.status}.`);
+
+  const blob = await response.blob();
+  if (!blob.size) throw new Error("Le fichier téléchargé est vide.");
+
+  const objectUrl = URL.createObjectURL(blob);
   const link = document.createElement("a");
-  link.href = fileUrl;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.referrerPolicy = "no-referrer";
+  link.href = objectUrl;
+  link.download = getProductTitle(product).replace(/[<>:"/\\|?*\u0000-\u001f]/g, "_") || "document";
+  if (isPdfProduct(product) && !/\.pdf$/i.test(link.download)) link.download += ".pdf";
   document.body.append(link);
   link.click();
   link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
 }
 
 async function confirmProductDownload() {
@@ -541,10 +583,6 @@ async function confirmProductDownload() {
     return;
   }
 
-  const downloadWindow = pendingPurchaseAction === "download"
-    ? window.open("about:blank", "_blank")
-    : null;
-  if (downloadWindow) downloadWindow.opener = null;
   confirmButton.disabled = true;
   purchaseDialog.querySelector("#purchase-cancel").disabled = true;
   confirmButton.textContent = "Vérification des crédits…";
@@ -570,7 +608,6 @@ async function confirmProductDownload() {
     }
 
     if (!result.success) {
-      if (downloadWindow) downloadWindow.close();
       if (result.currentCredits !== undefined) updateSessionCredits(result.currentCredits);
       updateCreditSummary(
         purchaseDialog.querySelector("#purchase-summary"),
@@ -578,19 +615,23 @@ async function confirmProductDownload() {
         getCurrentCredits(),
         true,
         false,
-        Boolean(result.insufficientCredits)
+        Boolean(result.insufficientCredits),
+        pendingPurchaseAction === "purchase"
       );
-      message.textContent = result.message || "Le téléchargement n’a pas pu être autorisé.";
+      message.textContent = result.insufficientCredits && pendingPurchaseAction === "purchase"
+        ? "Solde insuffisant pour débloquer cet article."
+        : result.message || "Le téléchargement n’a pas pu être autorisé.";
       message.dataset.state = "error";
       confirmButton.disabled = true;
-      confirmButton.textContent = result.insufficientCredits ? "Crédits insuffisants" : "Téléchargement indisponible";
+      confirmButton.textContent = pendingPurchaseAction === "purchase"
+        ? "Confirmer"
+        : result.insufficientCredits ? "Crédits insuffisants" : "Téléchargement indisponible";
       purchaseDialog.querySelector("#purchase-cancel").disabled = false;
       return;
     }
 
     const authorizedUrl = safeResourceUrl(result.fileUrl);
     if (!authorizedUrl) {
-      if (downloadWindow) downloadWindow.close();
       throw new Error("Aucun lien de téléchargement n’est configuré pour ce produit.");
     }
 
@@ -606,13 +647,16 @@ async function confirmProductDownload() {
       showPdfDocumentPreview(product, authorizedUrl);
     } else if (pendingPurchaseAction === "purchase") {
       setCatalogMessage(`« ${getProductTitle(product)} » est maintenant disponible dans votre compte.`);
-    } else if (downloadWindow) {
-      downloadWindow.location.replace(authorizedUrl);
     } else {
-      openDownloadUrl(authorizedUrl);
+      setCatalogMessage(`Téléchargement de « ${getProductTitle(product)} »…`);
+      try {
+        await downloadProductFile(authorizedUrl, product);
+        setCatalogMessage(`Le téléchargement de « ${getProductTitle(product)} » a commencé.`);
+      } catch (error) {
+        setCatalogMessage(error.message || "Impossible de télécharger ce document.", "error");
+      }
     }
   } catch (error) {
-    if (downloadWindow) downloadWindow.close();
     message.textContent = error instanceof TypeError
       ? "Impossible de joindre le serveur d’achat. Vérifiez votre connexion Internet."
       : (error.message || "Une erreur est survenue lors de l’achat.");
@@ -745,8 +789,14 @@ window.addEventListener("hashchange", openSharedProductFromHash);
 window.addEventListener("bcreation-session-changed", syncCatalogSession);
 purchaseDialog.querySelector("#purchase-cancel").addEventListener("click", () => purchaseDialog.close());
 purchaseDialog.querySelector("#purchase-confirm").addEventListener("click", confirmProductDownload);
-previewDialog.querySelector("#preview-close").addEventListener("click", () => previewDialog.close());
-previewDialog.addEventListener("close", () => {
-  previewDialog.querySelector("#preview-frame").src = "about:blank";
+documentViewer.querySelector("#document-viewer-back").addEventListener("click", () => {
+  documentViewer.hidden = true;
+  documentViewer.querySelector("#document-viewer-frame").src = "about:blank";
+  document.body.classList.remove("document-viewer-open");
+  if (previewReturnFocus instanceof HTMLElement && previewReturnFocus.isConnected) {
+    previewReturnFocus.focus();
+  } else {
+    detailsPanel.querySelector(".details-back")?.focus();
+  }
 });
 loadProducts();
