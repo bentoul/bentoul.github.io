@@ -3,7 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Parcourez la boutique BENTOUL et découvrez des ressources numériques et des contenus à explorer." />
     <title>Boutique — BENTOUL</title>
+    <link rel="canonical" href="https://www.bentoul.com/pages/bentoul.html" />
+    <link rel="icon" type="image/png" sizes="1024x1024" href="../images/logo.png" />
+    <link rel="apple-touch-icon" href="../images/logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BENTOUL" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content="Boutique — BENTOUL" />
+    <meta property="og:description" content="Parcourez la boutique BENTOUL et découvrez des ressources numériques et des contenus à explorer." />
+    <meta property="og:url" content="https://www.bentoul.com/pages/bentoul.html" />
+    <meta property="og:image" content="https://www.bentoul.com/images/miniatureSeries.jpg" />
+    <meta property="og:image:secure_url" content="https://www.bentoul.com/images/miniatureSeries.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1376" />
+    <meta property="og:image:height" content="768" />
+    <meta property="og:image:alt" content="BENTOUL Stories — personnages, histoires et partage" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Boutique — BENTOUL" />
+    <meta name="twitter:description" content="Parcourez la boutique BENTOUL et découvrez des ressources numériques et des contenus à explorer." />
+    <meta name="twitter:image" content="https://www.bentoul.com/images/miniatureSeries.jpg" />
+    <meta name="twitter:image:alt" content="BENTOUL Stories — personnages, histoires et partage" />
     <style>
       .layout:has(.catalog-heading) {
         grid-template-columns: 250px minmax(0, 1fr);
@@ -662,7 +683,7 @@
       };
     </script>
     <script src="../app.js" defer></script>
-    <script src="bentoul.js" defer></script>
+    <script src="../pages/bentoul.js" defer></script>
   </head>
   <body>
     <main id="accueil">
@@ -681,6 +702,10 @@
         <p class="catalog-status" id="catalog-status" role="status" aria-live="polite">Chargement des produits…</p>
         <div class="catalog-grid" id="catalog-grid" aria-busy="true"></div>
       </section>
+      <aside class="ad-slot" data-ad-slot aria-label="Espace publicitaire">
+        <span class="ad-slot-label">Publicité</span>
+        <p>Espace réservé à une annonce</p>
+      </aside>
     </main>
   </body>
 </html>

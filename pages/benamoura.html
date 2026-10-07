@@ -9,6 +9,20 @@
       content="Conseils amour, SMS et histoires à lire en épisodes sur Benamoura."
     />
     <title>Benamoura — Conseils, SMS &amp; histoires</title>
+    <link rel="canonical" href="https://www.bentoul.com/pages/benamoura.html" />
+    <link rel="icon" type="image/png" sizes="1024x1024" href="../images/logo.png" />
+    <link rel="apple-touch-icon" href="../images/logo.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BENTOUL — Benamoura" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content="Benamoura — Conseils, SMS &amp; histoires" />
+    <meta property="og:description" content="Conseils amour, SMS à partager et histoires à lire en épisodes sur Benamoura." />
+    <meta property="og:url" content="https://www.bentoul.com/pages/benamoura.html" />
+    <meta property="og:image" content="https://www.bentoul.com/images/home.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Benamoura — Conseils, SMS &amp; histoires" />
+    <meta name="twitter:description" content="Conseils amour, SMS à partager et histoires à lire en épisodes sur Benamoura." />
+    <meta name="twitter:image" content="https://www.bentoul.com/images/home.jpg" />
     <style>
       :root {
         color-scheme: light;
@@ -41,6 +55,29 @@
       .page-shell {
         width: min(1160px, calc(100% - 2rem));
         margin: 0 auto;
+      }
+
+      .ad-slot {
+        position: relative;
+        display: grid;
+        min-height: 110px;
+        place-content: center;
+        margin: 1.5rem 0;
+        border: 1px dashed #d9cbd1;
+        border-radius: 12px;
+        background: #fff;
+        color: #75636b;
+        text-align: center;
+      }
+
+      .ad-slot p { margin: 0; }
+      .ad-slot-label {
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        font-size: .7rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
       }
 
       .topbar {
@@ -626,7 +663,7 @@
     <div class="page-shell">
       <header class="topbar">
         <a class="brand" href="benamoura.html" aria-label="Benamoura, accueil">BENAMOURA</a>
-        <a class="home-link" href="index.html">Retour à BENTOUL</a>
+        <a class="home-link" href="../index.html">Retour à BENTOUL</a>
       </header>
 
       <main>
@@ -673,6 +710,10 @@
         </section>
       </main>
 
+      <aside class="ad-slot" data-ad-slot aria-label="Espace publicitaire">
+        <span class="ad-slot-label">Publicité</span>
+        <p>Espace réservé à une annonce</p>
+      </aside>
       <footer class="footer">Benamoura · Des histoires et des mots à partager</footer>
     </div>
 
@@ -689,7 +730,7 @@
       </div>
     </dialog>
 
-    <script src="app.js"></script>
+    <script src="../app.js"></script>
     <script>
       (() => {
         const apiUrl = (window.APP_CONFIG && window.APP_CONFIG.apiUrl || "").trim();

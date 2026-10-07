@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, follow">
+  <title>Administration des séries — BENTOUL</title>
+  <link rel="icon" type="image/png" sizes="1024x1024" href="/images/logo.png">
+  <link rel="apple-touch-icon" href="/images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --blogger-orange: #f57c00;
+      --blogger-orange-hover: #e65100;
+      --blogger-orange-light: #fff3e0;
+      --bg: #f8f9fa;
+      --surface: #ffffff;
+      --text: #202124;
+      --muted: #5f6368;
+      --border: #dadce0;
+      --border-light: #eceff1;
+      --primary: #f57c00;
+      --primary-hover: #e65100;
+      --danger: #d93025;
+      --danger-hover: #b31412;
+      --radius: 8px;
+      --shadow-sm: 0 1px 2px 0 rgba(60,64,67,0.1), 0 1px 3px 1px rgba(60,64,67,0.06);
+      --shadow-card: 0 1px 3px 0 rgba(60,64,67,0.2), 0 4px 8px 3px rgba(60,64,67,0.08);
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #1e1e1e;
+      --surface: #2d2d2d;
+      --text: #e8eaed;
+      --muted: #9aa0a6;
+      --border: #3c4043;
+      --border-light: #444746;
+      --primary: #ff9800;
+      --primary-hover: #f57c00;
+      --blogger-orange-light: #3d2c1e;
+      --danger: #f28b82;
+      --danger-hover: #ee675c;
+      --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.5);
+      --shadow-card: 0 2px 6px 0 rgba(0,0,0,0.6);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 0 0 60px 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.5 "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    /* Blogger Top Header */
+    .blogger-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 2px rgba(60,64,67,0.08);
+    }
+    .blogger-header-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .blogger-logo {
+      width: 34px;
+      height: 34px;
+      background: var(--blogger-orange);
+      color: #fff;
+      font-weight: 700;
+      font-size: 20px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 2px 4px rgba(245, 124, 0, 0.35);
+      user-select: none;
+    }
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-subtitle {
+      margin: 2px 0 0;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    main {
+      width: min(1180px, 100%);
+      margin: 24px auto 0;
+      padding: 0 16px;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar, .toolbar-row, .card-actions, .form-actions, .editor-tools, .field-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Blogger Buttons */
+    .btn {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all .15s ease-in-out;
+    }
+    .btn:hover {
+      background: rgba(60,64,67,0.04);
+      color: var(--text);
+      border-color: #bdc1c6;
+    }
+    .btn-primary {
+      background: var(--blogger-orange);
+      border-color: var(--blogger-orange);
+      color: #ffffff !important;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(245, 124, 0, 0.25);
+    }
+    .btn-primary:hover {
+      background: var(--blogger-orange-hover);
+      border-color: var(--blogger-orange-hover);
+      box-shadow: 0 2px 5px rgba(245, 124, 0, 0.35);
+    }
+    .btn-danger {
+      border-color: transparent;
+      color: var(--danger);
+      background: transparent;
+    }
+    .btn-danger:hover {
+      background: rgba(217,48,37,0.08);
+      border-color: rgba(217,48,37,0.2);
+      color: var(--danger-hover);
+    }
+    .btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Panels / Cards */
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+    .panel h2 {
+      margin: 0 0 16px;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .panel h2::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--blogger-orange);
+      border-radius: 2px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 18px;
+    }
+    .form-group { min-width: 0; margin-bottom: 12px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: .83rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .control {
+      display: block;
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .control:focus {
+      outline: none;
+      border-color: var(--blogger-orange);
+      box-shadow: 0 0 0 2px rgba(245, 124, 0, 0.2);
+    }
+    .fields-toggle {
+      width: 100%;
+      margin: 4px 0 16px;
+      background: var(--bg);
+      border: 1px dashed var(--border);
+      color: var(--muted);
+    }
+    .fields-toggle:hover {
+      background: rgba(245, 124, 0, 0.05);
+      border-color: var(--blogger-orange);
+      color: var(--blogger-orange);
+    }
+
+    /* Blogger Post Editor style */
+    .editor {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      box-shadow: 0 1px 3px rgba(60,64,67,0.06);
+    }
+    .editor-tools {
+      gap: 4px;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+    }
+    [data-theme="dark"] .editor-tools { background: #262626; }
+    .editor-tools button,
+    .editor-tools select,
+    .editor-tools input {
+      min-height: 32px;
+      padding: 4px 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      transition: all .15s ease;
+    }
+    .editor-tools button:hover,
+    .editor-tools select:hover {
+      background: rgba(60,64,67,0.08);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .editor-tools select {
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .editor-tools .color-control {
+      width: 32px;
+      height: 32px;
+      padding: 2px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+    }
+
+    .episode-editor {
+      min-height: 360px;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding: 28px 36px;
+      outline: 0;
+      background: var(--surface);
+      color: var(--text);
+      overflow-wrap: anywhere;
+      font: 16px/1.8 "Lora", Georgia, serif;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .episode-editor:focus {
+      outline: none;
+    }
+    .episode-editor > :first-child { margin-top: 0; }
+    .episode-editor > :last-child { margin-bottom: 0; }
+
+    .status {
+      min-height: 20px;
+      margin: 10px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .status.error {
+      color: var(--danger);
+      font-weight: 500;
+    }
+
+    /* Blogger Post List style */
+    .series-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+    .series-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--surface);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow .2s ease, border-color .2s ease;
+    }
+    .series-card:hover {
+      border-color: #bdc1c6;
+      box-shadow: var(--shadow-card);
+    }
+    .series-card img {
+      display: block;
+      width: 100%;
+      height: 155px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .series-card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .series-card h3 {
+      margin: 0 0 6px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .series-card p {
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .episode-list {
+      margin: 12px 0 16px;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--border-light);
+      flex-grow: 1;
+    }
+    .episode-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 0;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .episode-list li span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+    .episode-list .btn {
+      min-height: 28px;
+      padding: 2px 8px;
+      font-size: 12px;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+    .card-actions .btn {
+      font-size: 12.5px;
+      min-height: 32px;
+      padding: 4px 10px;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 640px) {
+      .blogger-header-inner { padding: 10px 12px; }
+      .form-grid { grid-template-columns: minmax(0, 1fr); }
+      .form-group.full { grid-column: auto; }
+      .episode-editor { padding: 16px; }
+      .editor-tools select { max-width: 120px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="blogger-header">
+    <div class="blogger-header-inner">
+      <div class="brand-title">
+        <div class="blogger-logo" aria-hidden="true">B</div>
+        <div>
+          <h1>Administration des séries</h1>
+          <p class="brand-subtitle">Gestionnaire de contenu &middot; bentoul</p>
+        </div>
+      </div>
+      <nav class="toolbar-row" aria-label="Navigation">
+        <a class="btn" href="../index.html">Accueil</a>
+        <a class="btn" href="../pages/bentoul.html">Boutique</a>
+        <a class="btn" href="../pages/series.html">← Séries</a>
+        <a class="btn" href="../pages/benamoura.html">Benamoura</a>
+        <button class="btn btn-primary" id="new-series" type="button">＋ Nouvelle série</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="panel" id="admin-form-panel" hidden>
+      <h2 id="form-title">Nouvel épisode</h2>
+      <form id="series-form" novalidate>
+        <button class="btn fields-toggle" id="fields-toggle" type="button" aria-controls="series-fields" aria-expanded="false">
+          Afficher les champs de la série et de l’épisode
+        </button>
+        <div id="series-fields" hidden>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="form-mode">Action</label>
+            <select id="form-mode" class="control">
+              <option value="newSeries">Créer une série et son premier épisode</option>
+              <option value="addEpisode">Ajouter un épisode</option>
+              <option value="editEpisode">Modifier un épisode</option>
+              <option value="editSeries">Modifier les informations de la série</option>
+            </select>
+          </div>
+          <div class="form-group" id="series-picker-group">
+            <label for="series-picker">Série</label>
+            <select id="series-picker" class="control"></select>
+          </div>
+          <div class="form-group" id="episode-picker-group">
+            <label for="episode-picker">Épisode à modifier</label>
+            <select id="episode-picker" class="control"></select>
+          </div>
+        </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="series-title">Titre de la série *</label>
+              <input id="series-title" class="control" maxlength="150">
+            </div>
+            <div class="form-group">
+              <label for="series-category">Catégorie *</label>
+              <select id="series-category" class="control">
+                <option>Amour</option><option>Drame</option><option>Romance</option><option>Mystère</option><option>Général</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="series-description">Description courte *</label>
+              <textarea id="series-description" class="control" rows="3" maxlength="2000"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="series-cover">URL de l’image de la série *</label>
+              <input id="series-cover" type="url" class="control" placeholder="https://...">
+            </div>
+            <div class="form-group">
+              <label for="series-cover-file">Importer une nouvelle image</label>
+              <input id="series-cover-file" type="file" class="control" accept="image/jpeg,image/png,image/gif,image/webp">
+              <small class="muted">JPG, PNG, GIF ou WEBP — 3 Mo maximum.</small>
+            </div>
+          </div>
+
+          <div id="episode-fields">
+            <h3 style="font-size:1rem; font-weight:500; margin:16px 0 10px; color:var(--blogger-orange);">Informations de l’épisode</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="episode-number">Numéro *</label>
+                <input id="episode-number" type="number" min="1" step="1" class="control">
+              </div>
+              <div class="form-group">
+                <label for="episode-title">Titre *</label>
+                <input id="episode-title" class="control" maxlength="180">
+              </div>
+              <div class="form-group">
+                <label for="episode-image-url">URL de l’image de l’épisode</label>
+                <input id="episode-image-url" type="url" class="control" placeholder="https://...">
+              </div>
+              <div class="form-group">
+                <label for="episode-image-file">Importer une image d’épisode</label>
+                <input id="episode-image-file" type="file" class="control" accept="image/jpeg,image/png,image/gif,image/webp">
+                <small class="muted">Facultatif — 3 Mo maximum.</small>
+              </div>
+              <div class="form-group full">
+                <label for="episode-audio">URL audio de l’épisode</label>
+                <input id="episode-audio" type="url" class="control" placeholder="https://...">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group full" id="editor-group" style="margin-top:14px;">
+          <label for="episode-editor">Histoire de l’épisode *</label>
+          <div class="editor">
+            <div class="editor-tools" id="editor-toolbar" role="toolbar" aria-label="Mise en forme du texte">
+              <button type="button" data-command="bold" title="Gras" aria-label="Gras"><strong>G</strong></button>
+              <button type="button" data-command="italic" title="Italique" aria-label="Italique"><em>I</em></button>
+              <button type="button" data-command="underline" title="Souligné" aria-label="Souligné"><u>S</u></button>
+              <select id="heading-style" aria-label="Titre">
+                <option value="">Texte normal</option>
+                <option value="h1">Titre 1</option><option value="h2">Titre 2</option>
+                <option value="h3">Titre 3</option><option value="h4">Titre 4</option>
+                <option value="h5">Titre 5</option><option value="h6">Titre 6</option>
+              </select>
+              <select id="font-family" aria-label="Police">
+                <option value="">Police</option><option>Arial</option><option>Georgia</option>
+                <option>Times New Roman</option><option>Verdana</option><option>Courier New</option><option>Lora</option>
+              </select>
+              <select id="font-size" aria-label="Taille de police">
+                <option value="">Taille</option>
+                <option value="12px">12</option><option value="14px">14</option><option value="16px">16</option>
+                <option value="18px">18</option><option value="20px">20</option><option value="24px">24</option>
+                <option value="28px">28</option><option value="32px">32</option><option value="36px">36</option>
+              </select>
+              <label for="font-color" class="muted" style="margin:0; font-size:12px;">Couleur</label>
+              <input id="font-color" class="color-control" type="color" value="#171717" aria-label="Couleur du texte">
+              <select id="text-align" aria-label="Alignement">
+                <option value="">Aligner</option><option value="left">Gauche</option>
+                <option value="center">Centrer</option><option value="right">Droite</option><option value="justify">Justifier</option>
+              </select>
+              <button type="button" data-command="insertUnorderedList" title="Liste à puces">• Liste</button>
+              <button type="button" data-command="insertOrderedList" title="Liste numérotée">1. Liste</button>
+              <button type="button" data-command="undo" title="Annuler" aria-label="Annuler">↶</button>
+              <button type="button" data-command="redo" title="Rétablir" aria-label="Rétablir">↷</button>
+              <button type="button" data-command="clearFormat" title="Effacer le formatage">Effacer le format</button>
+            </div>
+            <div id="episode-editor" class="episode-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Histoire de l’épisode"></div>
+          </div>
+          <small class="muted" style="display:block; margin-top:6px;">Le texte est nettoyé avant chaque sauvegarde pour supprimer les balises vides et le formatage non pris en charge.</small>
+        </div>
+        <div class="form-actions" style="margin-top:16px;">
+          <button class="btn btn-primary" id="save-button" type="submit">Enregistrer</button>
+          <button class="btn" id="cancel-form" type="button">Annuler</button>
+        </div>
+        <p class="status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Séries publiées</h2>
+      <p class="status" id="page-status" role="status" aria-live="polite">Chargement des séries…</p>
+      <div id="series-list" class="series-grid"></div>
+    </section>
+  </main>
+
+  <script src="../pages/episode-editor.js"></script>
+  <script>
+    (() => {
+      const API_URL = "https://script.google.com/macros/s/AKfycbwZ1rb0Y05oN-_vQsIEHW0QtS6tAOwshBaDEgHJhW5lZ7EPtRLr77MRpS-jNo5XTCs0hw/exec";
+      const SHEET = "Series";
+      const params = new URLSearchParams(location.search);
+      const session = readSession();
+      const elements = Object.fromEntries([
+        "admin-form-panel", "series-form", "form-title", "form-mode", "series-picker",
+        "series-picker-group", "episode-picker", "episode-picker-group", "fields-toggle",
+        "series-fields", "episode-fields", "editor-group", "episode-editor", "series-list",
+        "page-status", "form-status", "save-button", "series-title", "series-category",
+        "series-description", "series-cover", "series-cover-file", "episode-number",
+        "episode-title", "episode-image-url", "episode-image-file", "episode-audio",
+        "editor-toolbar", "heading-style", "font-family", "font-size", "font-color",
+        "text-align", "cancel-form", "new-series"
+      ].map(id => [id, document.getElementById(id)]));
+      let seriesRows = [];
+      let groups = [];
+      let supportsAdminSeriesApi = isAdmin();
+
+      function readSession() {
+        try {
+          return JSON.parse(sessionStorage.getItem("bcreation-user-session") || "null");
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function isAdmin() {
+        const role = String(session?.user?.role || "").normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/[^a-z]/g, "");
+        return Boolean(session?.user?.email && session?.token &&
+          ["admin", "administrator", "administrateur", "superadmin"].includes(role));
+      }
+
+      function escapeHTML(value) {
+        return String(value || "").replace(/&/g, "&amp;").replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+      }
+
+      function get(row, ...keys) {
+        for (const key of keys) if (row[key] !== undefined && row[key] !== null) return row[key];
+        return "";
+      }
+
+      function makeGroups(rows) {
+        const grouped = new Map();
+        rows.forEach(row => {
+          const title = String(get(row, "SeriesTitle", "seriestitle") || get(row, "TitreEpisode", "Titre") || "Histoire sans titre").trim();
+          if (!grouped.has(title)) {
+            grouped.set(title, {
+              title,
+              description: String(get(row, "SeriesDescription", "seriesdescription")),
+              cover: window.normalizeGoogleDriveImageUrl(get(row, "ImageUrl", "imageurl")),
+              category: String(get(row, "Categorie", "categorie") || "Général"),
+              episodes: []
+            });
+          }
+          grouped.get(title).episodes.push({
+            sheetId: String(get(row, "ID", "id")),
+            sheetRow: Number(row._sheetRowNumber) || 0,
+            number: Number(get(row, "EpisodeNumber", "episodenumber")) || 1,
+            title: String(get(row, "TitreEpisode", "titreEpisode", "Titre", "titre") || ""),
+            content: String(get(row, "contenuEpisode", "ContenuEpisode", "Description", "description") || ""),
+            image: window.normalizeGoogleDriveImageUrl(get(row, "imageEpisode", "ImageEpisode") || ""),
+            audio: String(get(row, "UrlRedirection", "urlredirection", "UrlAudio", "urlaudio") || "")
+          });
+        });
+        return Array.from(grouped.values()).map(group => ({
+          ...group,
+          episodes: group.episodes.sort((a, b) => a.number - b.number)
+        }));
+      }
+
+      async function request(payload) {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (!response.ok || !result?.success) {
+          throw new Error(result?.message || `Erreur HTTP ${response.status}.`);
+        }
+        return result;
+      }
+
+      async function loadPublicRows() {
+        let lastError;
+        for (let attempt = 1; attempt <= 4; attempt++) {
+          try {
+            const response = await fetch(
+              `${API_URL}?action=getProducts&sheet=${SHEET}&_=${Date.now()}`,
+              { cache: "no-store" }
+            );
+            const body = await response.text();
+            if (!response.ok) throw new Error(`Erreur HTTP ${response.status}.`);
+            let result;
+            try {
+              result = JSON.parse(body);
+            } catch (error) {
+              throw new Error("Google Apps Script a renvoyé une page invalide au lieu des données JSON.");
+            }
+            if (!result?.success || !Array.isArray(result.products)) {
+              throw new Error(result?.message || "La réponse de Google Sheets ne contient pas la liste des épisodes.");
+            }
+            return result;
+          } catch (error) {
+            lastError = error;
+            if (attempt < 4) await new Promise(resolve => setTimeout(resolve, attempt * 600));
+          }
+        }
+        throw lastError;
+      }
+
+      async function loadRows() {
+        let result;
+        try {
+          result = await loadPublicRows();
+        } catch (error) {
+          throw new Error(
+            `Impossible de joindre Google Sheets. Vérifiez la connexion, les autorisations et l’URL de l’API Apps Script. ${error.message || ""}`.trim()
+          );
+        }
+        const publicRows = result.products;
+        if (isAdmin()) {
+          try {
+            const adminResult = await request({
+              action: "adminGetSeries", sheet: SHEET,
+              email: session.user.email, token: session.token
+            });
+            if (!Array.isArray(adminResult.products)) {
+              throw new Error("La réponse sécurisée ne contient pas la liste des épisodes.");
+            }
+            result = adminResult;
+          } catch (error) {
+            supportsAdminSeriesApi = false;
+            console.warn("L’action sécurisée adminGetSeries n’est pas disponible; chargement en lecture seule.", error);
+            result.products = publicRows.map((product, index) => ({
+              ...product,
+              _sheetRowNumber: Number(product._sheetRowNumber) || index + 2
+            }));
+          }
+        } else {
+          result.products = publicRows.map((product, index) => ({
+            ...product,
+            _sheetRowNumber: Number(product._sheetRowNumber) || index + 2
+          }));
+        }
+        if (!Array.isArray(result.products)) throw new Error("La réponse de Google Sheets ne contient pas la liste des épisodes.");
+        seriesRows = result.products;
+        groups = makeGroups(seriesRows);
+        renderSeriesList();
+        populatePickers();
+        if (!isAdmin() || !supportsAdminSeriesApi) {
+          setStatus(
+            elements["page-status"],
+            isAdmin()
+              ? "Séries chargées en lecture seule. La sauvegarde et la suppression nécessitent la dernière version de code.gs déployée."
+              : groups.length
+                ? `${groups.length} série(s) chargée(s) depuis Google Sheets.`
+                : "Aucune série enregistrée."
+          );
+        }
+      }
+
+      function setStatus(element, message, error = false) {
+        element.textContent = message;
+        element.classList.toggle("error", error);
+      }
+
+      function adminURL(action, title, episode) {
+        const query = new URLSearchParams();
+        if (action) query.set("action", action);
+        if (title) query.set("series", title);
+        if (episode !== undefined) query.set("episode", String(episode));
+        return `serieAdm.html?${query.toString()}`;
+      }
+
+      function renderSeriesList() {
+        elements["series-list"].innerHTML = groups.map(group => `
+          <article class="series-card">
+            ${group.cover ? `<img src="${escapeHTML(group.cover)}" alt="${escapeHTML(group.title)}" loading="lazy">` : ""}
+            <div class="series-card-body">
+              <h3>${escapeHTML(group.title)}</h3>
+              <p class="muted">${escapeHTML(group.category)} · ${group.episodes.length} épisode(s)</p>
+              <ul class="episode-list">
+                ${group.episodes.map(episode => `
+                  <li>
+                    <span>Épisode ${episode.number} — ${escapeHTML(episode.title)}</span>
+                    <div>
+                      <a class="btn" href="${adminURL("editEpisode", group.title, episode.sheetRow)}">Modifier</a>
+                      <button class="btn btn-danger" type="button" data-delete-episode-id="${escapeHTML(episode.sheetId)}" data-delete-episode-row="${episode.sheetRow}" data-delete-episode-number="${episode.number}" data-delete-episode-title="${escapeHTML(episode.title)}" data-delete-episode-series="${escapeHTML(group.title)}">Supprimer</button>
+                    </div>
+                  </li>
+                `).join("")}
+              </ul>
+              <div class="card-actions">
+                <a class="btn" href="${adminURL("editSeries", group.title)}">Modifier la série</a>
+                <a class="btn" href="${adminURL("addEpisode", group.title)}">＋ Épisode</a>
+                <button class="btn btn-danger" type="button" data-delete-series="${escapeHTML(group.title)}">Supprimer</button>
+              </div>
+            </div>
+          </article>
+        `).join("");
+        elements["series-list"].querySelectorAll("[data-delete-series]").forEach(button => {
+          button.addEventListener("click", () => deleteSeries(button.dataset.deleteSeries));
+        });
+        elements["series-list"].querySelectorAll("[data-delete-episode-id]").forEach(button => {
+          button.addEventListener("click", () => deleteEpisode(
+            button.dataset.deleteEpisodeId,
+            button.dataset.deleteEpisodeTitle,
+            button.dataset.deleteEpisodeSeries,
+            button.dataset.deleteEpisodeNumber,
+            Number(button.dataset.deleteEpisodeRow)
+          ));
+        });
+        setStatus(elements["page-status"], groups.length ? `${groups.length} série(s) chargée(s) depuis Google Sheets.` : "Aucune série enregistrée.");
+      }
+
+      function populatePickers() {
+        const selectedTitle = params.get("series") || elements["series-picker"].value;
+        elements["series-picker"].innerHTML = groups.map(group =>
+          `<option value="${escapeHTML(group.title)}">${escapeHTML(group.title)}</option>`
+        ).join("");
+        if (selectedTitle && groups.some(group => group.title === selectedTitle)) {
+          elements["series-picker"].value = selectedTitle;
+        }
+        populateEpisodes();
+      }
+
+      function selectedGroup() {
+        return groups.find(group => group.title === elements["series-picker"].value) || null;
+      }
+
+      function populateEpisodes() {
+        const group = selectedGroup();
+        elements["episode-picker"].innerHTML = (group?.episodes || []).map(episode =>
+          `<option value="${episode.sheetRow}">Épisode ${episode.number} — ${escapeHTML(episode.title)}</option>`
+        ).join("");
+        const targetEpisode = params.get("episode");
+        if (targetEpisode) {
+          const matchingEpisode = group?.episodes.find(item =>
+            String(item.sheetRow) === targetEpisode ||
+            item.sheetId === targetEpisode ||
+            item.number === Number(targetEpisode)
+          );
+          if (matchingEpisode) elements["episode-picker"].value = String(matchingEpisode.sheetRow);
+        }
+      }
+
+      function setField(id, value) {
+        elements[id].value = value || "";
+      }
+
+      function fillSeriesFields() {
+        const group = selectedGroup();
+        const mode = elements["form-mode"].value;
+        const episode = group?.episodes.find(item =>
+          String(item.sheetRow) === elements["episode-picker"].value ||
+          item.sheetId === elements["episode-picker"].value ||
+          item.number === Number(elements["episode-picker"].value)
+        );
+        const isNew = mode === "newSeries";
+        const source = isNew ? null : group;
+        setField("series-title", source?.title || "");
+        setField("series-category", source?.category || "Amour");
+        setField("series-description", source?.description || "");
+        setField("series-cover", source?.cover || "");
+        setField("episode-number", mode === "editEpisode" ? episode?.number : (group?.episodes.length ? Math.max(...group.episodes.map(item => item.number)) + 1 : 1));
+        setField("episode-title", mode === "editEpisode" ? episode?.title : "");
+        setField("episode-image-url", mode === "editEpisode" ? episode?.image : "");
+        setField("episode-audio", mode === "editEpisode" ? episode?.audio : "");
+        elements["episode-editor"].innerHTML = window.cleanEpisodeHTML(mode === "editEpisode" ? episode?.content : "");
+        elements["episode-fields"].hidden = mode === "editSeries";
+        elements["editor-group"].hidden = mode === "editSeries";
+        elements["episode-picker-group"].hidden = mode !== "editEpisode";
+        elements["series-picker-group"].hidden = isNew;
+        elements["series-picker"].disabled = isNew;
+        elements["form-title"].textContent = ({
+          newSeries: "Créer une série et son premier épisode",
+          addEpisode: "Ajouter un épisode",
+          editEpisode: "Modifier un épisode",
+          editSeries: "Modifier les informations de la série"
+        })[mode];
+        elements["save-button"].textContent = mode === "editSeries" ? "Mettre à jour la série" : "Enregistrer l’épisode";
+        elements["fields-toggle"].hidden = false;
+        elements["series-cover-file"].value = "";
+        elements["episode-image-file"].value = "";
+      }
+
+      function openForm(mode, title, episode) {
+        elements["admin-form-panel"].hidden = false;
+        elements["form-mode"].value = mode;
+        if (title) elements["series-picker"].value = title;
+        populateEpisodes();
+        if (episode !== undefined) elements["episode-picker"].value = String(episode);
+        elements["series-fields"].hidden = true;
+        elements["fields-toggle"].setAttribute("aria-expanded", "false");
+        elements["fields-toggle"].textContent = "Afficher les champs de la série et de l’épisode";
+        fillSeriesFields();
+        if (!supportsAdminSeriesApi) {
+          setStatus(
+            elements["form-status"],
+            "Mode aperçu : republiez code.gs comme application Web pour enregistrer les changements en toute sécurité.",
+            true
+          );
+        } else {
+          setStatus(elements["form-status"], "");
+        }
+        elements["admin-form-panel"].scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      async function uploadImage(file) {
+        if (!file) return "";
+        if (!["image/jpeg", "image/png", "image/gif", "image/webp"].includes(file.type)) {
+          throw new Error("Choisissez une image JPG, PNG, GIF ou WEBP.");
+        }
+        if (file.size > 3 * 1024 * 1024) throw new Error("Chaque image doit faire moins de 3 Mo.");
+        const base64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = () => reject(new Error("Impossible de lire le fichier image."));
+          reader.readAsDataURL(file);
+        });
+        const result = await request({
+          action: "uploadContentImage", sheet: SHEET, email: session.user.email,
+          token: session.token, fileName: file.name, mimeType: file.type, base64
+        });
+        return window.normalizeGoogleDriveImageUrl(result.imageUrl);
+      }
+
+      function validateURL(value, label, required = false) {
+        if (!value && !required) return true;
+        try {
+          return new URL(value).protocol === "https:" || new URL(value).protocol === "http:";
+        } catch (error) {
+          setStatus(elements["form-status"], `${label} doit être une URL HTTP ou HTTPS valide.`, true);
+          return false;
+        }
+      }
+
+      async function saveForm(event) {
+        event.preventDefault();
+        if (!isAdmin()) {
+          setStatus(elements["form-status"], "Votre session administrateur n’est plus valide.", true);
+          return;
+        }
+        if (!supportsAdminSeriesApi) {
+          setStatus(
+            elements["form-status"],
+            "Enregistrement désactivé : l’API en ligne est ancienne. Publiez la dernière version de code.gs dans Apps Script, puis rechargez cette page.",
+            true
+          );
+          return;
+        }
+        const mode = elements["form-mode"].value;
+        const group = mode === "newSeries" ? null : selectedGroup();
+        const editedEpisode = group?.episodes.find(item =>
+          String(item.sheetRow) === elements["episode-picker"].value ||
+          item.sheetId === elements["episode-picker"].value ||
+          item.number === Number(elements["episode-picker"].value)
+        );
+        const content = window.cleanEpisodeHTML(elements["episode-editor"].innerHTML);
+        const coverFile = elements["series-cover-file"].files[0];
+        const episodeFile = elements["episode-image-file"].files[0];
+        const coverURL = window.normalizeGoogleDriveImageUrl(elements["series-cover"].value.trim());
+        const episodeImageURL = window.normalizeGoogleDriveImageUrl(elements["episode-image-url"].value.trim());
+
+        if (!elements["series-title"].value.trim() || !elements["series-description"].value.trim() || (!coverURL && !coverFile)) {
+          elements["series-fields"].hidden = false;
+          elements["fields-toggle"].setAttribute("aria-expanded", "true");
+          elements["fields-toggle"].textContent = "Masquer les champs de la série et de l’épisode";
+          setStatus(elements["form-status"], "Le titre, la description et l’image de la série sont obligatoires.", true);
+          return;
+        }
+        if (!validateURL(coverURL, "L’image de la série", !coverFile) || !validateURL(episodeImageURL, "L’image de l’épisode") ||
+            !validateURL(elements["episode-audio"].value.trim(), "L’URL audio")) return;
+
+        if (mode !== "editSeries" && (!elements["episode-title"].value.trim() ||
+            !Number.isInteger(Number(elements["episode-number"].value)) ||
+            Number(elements["episode-number"].value) < 1 || window.isEpisodeContentEmpty(content))) {
+          elements["series-fields"].hidden = false;
+          elements["fields-toggle"].setAttribute("aria-expanded", "true");
+          elements["fields-toggle"].textContent = "Masquer les champs de la série et de l’épisode";
+          setStatus(elements["form-status"], "Saisissez le numéro, le titre et l’histoire de l’épisode.", true);
+          return;
+        }
+        if (mode === "editSeries" && !group) {
+          setStatus(elements["form-status"], "Sélectionnez une série à modifier.", true);
+          return;
+        }
+        const number = Number(elements["episode-number"].value);
+        if (mode !== "editSeries" && group && group.episodes.some(item => item.number === number && item !== editedEpisode)) {
+          setStatus(elements["form-status"], "Ce numéro d’épisode existe déjà dans cette série.", true);
+          return;
+        }
+
+        elements["save-button"].disabled = true;
+        setStatus(elements["form-status"], "Enregistrement dans Google Sheets…");
+        try {
+          let cover = coverURL;
+          let episodeImage = episodeImageURL;
+          if (coverFile) cover = await uploadImage(coverFile);
+          if (episodeFile) episodeImage = await uploadImage(episodeFile);
+          const seriesTitle = elements["series-title"].value.trim();
+          const seriesDescription = elements["series-description"].value.trim();
+          const category = elements["series-category"].value;
+          const sessionFields = { email: session.user.email, token: session.token, sheet: SHEET };
+
+          if (mode === "newSeries" || mode === "addEpisode") {
+            await request({
+              action: "addProduct", ...sessionFields,
+              seriesTitle, seriesDescription, episodeNumber: number,
+              episodeTitle: elements["episode-title"].value.trim(),
+              episodeContent: content, categorie: category, imageUrl: cover,
+              episodeImageUrl: episodeImage, urlAudio: elements["episode-audio"].value.trim()
+            });
+          } else if (mode === "editSeries") {
+            for (const episode of group.episodes) {
+              await request({
+                action: "adminUpdateProduct", ...sessionFields, id: episode.sheetId,
+                sourceSheetRow: episode.sheetRow,
+                sourceSeriesTitle: group.title, sourceEpisodeNumber: episode.number,
+                seriesTitle, seriesDescription, imageUrl: cover, categorie: category,
+                episodeNumber: episode.number
+              });
+            }
+          } else {
+            if (!editedEpisode?.sheetId) throw new Error("ID Google Sheets manquant pour cet épisode.");
+            await request({
+              action: "adminUpdateProduct", ...sessionFields, id: editedEpisode.sheetId,
+              sourceSheetRow: editedEpisode.sheetRow,
+              sourceSeriesTitle: group.title, sourceEpisodeNumber: editedEpisode.number,
+              seriesTitle, seriesDescription, imageUrl: cover, categorie: category,
+              episodeNumber: number, episodeTitle: elements["episode-title"].value.trim(),
+              episodeContent: content, episodeImageUrl: episodeImage,
+              urlAudio: elements["episode-audio"].value.trim()
+            });
+          }
+
+          await loadRows();
+          elements["admin-form-panel"].hidden = true;
+          setStatus(elements["page-status"], "Modifications enregistrées dans Google Sheets.");
+        } catch (error) {
+          console.error(error);
+          setStatus(elements["form-status"], `Échec de l’enregistrement : ${error.message}`, true);
+        } finally {
+          elements["save-button"].disabled = false;
+        }
+      }
+
+      async function deleteSeries(title) {
+        if (!supportsAdminSeriesApi) {
+          setStatus(
+            elements["page-status"],
+            "Suppression désactivée : publiez la dernière version de code.gs dans Apps Script pour activer cette action.",
+            true
+          );
+          return;
+        }
+        if (!window.confirm(`Supprimer la série « ${title} » et tous ses épisodes ? Cette action est irréversible.`)) return;
+        try {
+          await request({
+            action: "adminDeleteSeries", sheet: SHEET, seriesTitle: title,
+            email: session.user.email, token: session.token
+          });
+          await loadRows();
+        } catch (error) {
+          console.error(error);
+          setStatus(elements["page-status"], `Échec de la suppression : ${error.message}`, true);
+        }
+      }
+
+      async function deleteEpisode(id, title, seriesTitle, episodeNumber, sheetRow) {
+        if (!supportsAdminSeriesApi) {
+          setStatus(
+            elements["page-status"],
+            "Suppression désactivée : l’API en ligne ne sait pas encore cibler sûrement cet épisode. Publiez la dernière version de code.gs dans Apps Script.",
+            true
+          );
+          return;
+        }
+        if (!id || !window.confirm(`Supprimer l’épisode « ${title} » ? Cette action est irréversible.`)) return;
+        try {
+          await request({
+            action: "adminDeleteProduct", sheet: SHEET, id,
+            email: session.user.email, token: session.token,
+            sourceSheetRow: sheetRow, sourceSeriesTitle: seriesTitle,
+            sourceEpisodeNumber: episodeNumber
+          });
+          await loadRows();
+        } catch (error) {
+          console.error(error);
+          setStatus(elements["page-status"], `Échec de la suppression : ${error.message}`, true);
+        }
+      }
+
+      elements["new-series"].addEventListener("click", () => openForm("newSeries"));
+      elements["form-mode"].addEventListener("change", () => {
+        populateEpisodes();
+        fillSeriesFields();
+      });
+      elements["series-picker"].addEventListener("change", () => {
+        populateEpisodes();
+        fillSeriesFields();
+      });
+      elements["episode-picker"].addEventListener("change", fillSeriesFields);
+      elements["fields-toggle"].addEventListener("click", () => {
+        const willShow = elements["series-fields"].hidden;
+        elements["series-fields"].hidden = !willShow;
+        elements["fields-toggle"].setAttribute("aria-expanded", String(willShow));
+        elements["fields-toggle"].textContent = willShow
+          ? "Masquer les champs de la série et de l’épisode"
+          : "Afficher les champs de la série et de l’épisode";
+      });
+      elements["cancel-form"].addEventListener("click", () => { elements["admin-form-panel"].hidden = true; });
+      elements["series-form"].addEventListener("submit", saveForm);
+      elements["editor-toolbar"].addEventListener("mousedown", event => {
+        if (event.target.closest("button")) event.preventDefault();
+      });
+      elements["editor-toolbar"].addEventListener("click", event => {
+        const button = event.target.closest("[data-command]");
+        if (button) window.formatEpisodeText(button.dataset.command);
+      });
+      elements["heading-style"].addEventListener("change", event => {
+        if (event.target.value) window.formatEpisodeText("heading", event.target.value);
+        event.target.value = "";
+      });
+      elements["font-family"].addEventListener("change", event => {
+        if (event.target.value) window.formatEpisodeText("fontName", event.target.value);
+        event.target.value = "";
+      });
+      elements["font-size"].addEventListener("change", event => {
+        if (event.target.value) window.formatEpisodeText("fontSize", event.target.value);
+        event.target.value = "";
+      });
+      elements["font-color"].addEventListener("input", event => window.formatEpisodeText("foreColor", event.target.value));
+      elements["text-align"].addEventListener("change", event => {
+        if (event.target.value) window.formatEpisodeText("align", event.target.value);
+        event.target.value = "";
+      });
+
+      if (!isAdmin()) {
+        setStatus(elements["page-status"], "Accès réservé à l’administrateur. Connectez-vous puis revenez sur cette page.", true);
+        elements["new-series"].disabled = true;
+        return;
+      }
+
+      document.documentElement.dataset.theme = localStorage.getItem("bentoul_stories_theme") || "light";
+      loadRows().then(() => {
+        const action = params.get("action");
+        const allowedActions = ["newSeries", "addEpisode", "editEpisode", "editSeries"];
+        if (allowedActions.includes(action)) openForm(action, params.get("series"), params.get("episode"));
+      }).catch(error => {
+        console.error(error);
+        setStatus(elements["page-status"], `Échec du chargement : ${error.message}`, true);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -27,7 +27,7 @@ function updateAdminNavigationVisibility() {
 
 window.addEventListener("bcreation-session-changed", updateAdminNavigationVisibility);
 
-if (!document.querySelector("#accueil")) {
+if (!document.querySelector("#accueil") && !document.body.hasAttribute("data-no-global-nav")) {
   const pageNavigation = document.createElement("nav");
   pageNavigation.className = "bentoul-global-nav";
   pageNavigation.setAttribute("aria-label", "Navigation BENTOUL");
@@ -35,8 +35,8 @@ if (!document.querySelector("#accueil")) {
     ["Accueil", "index.html"],
     ["Boutique", "pages/bentoul.html"],
     ["Séries", "pages/series.html"],
-    ["Benamoura", "benamoura.html"],
-    ["Administration", "pages/serieAdm.html"]
+    ["Benamoura", "pages/benamoura.html"],
+    ["Administration", "adm/serieAdm.html"]
   ].forEach(([label, path]) => {
     const link = document.createElement("a");
     link.href = new URL(path, APP_BASE_URL).href;
@@ -788,6 +788,33 @@ const styles = `
     margin: 0;
   }
 
+  .ad-slot {
+    position: relative;
+    display: grid;
+    min-height: 110px;
+    place-content: center;
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    color: #64748b;
+    background: #f8fafc;
+    text-align: center;
+  }
+
+  .ad-slot p {
+    margin: 0;
+  }
+
+  .ad-slot-label {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: .7rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
   @media (max-width: 900px) {
     .header,
     .layout,
@@ -1072,12 +1099,13 @@ document.body.innerHTML = `
 `;
 
 const currentPagePath = window.location.pathname.toLowerCase();
+const normalizedPagePath = currentPagePath.replace(/\/+$/, "") || "/";
 const pageNavigation = [
-  { selector: "[data-home-nav]", path: "index.html", current: currentPagePath.endsWith("/index.html") },
-  { selector: "[data-catalog-nav]", path: "pages/bentoul.html", current: currentPagePath.endsWith("/pages/bentoul.html") },
-  { selector: "[data-series-nav]", path: "pages/series.html", current: currentPagePath.endsWith("/pages/series.html") },
-  { selector: "[data-benamoura-nav]", path: "benamoura.html", current: currentPagePath.endsWith("/benamoura.html") },
-  { selector: "[data-series-admin-nav]", path: "pages/serieAdm.html", current: currentPagePath.endsWith("/pages/serieadm.html") }
+  { selector: "[data-home-nav]", path: "index.html", current: normalizedPagePath === "/" || normalizedPagePath === "/index.html" },
+  { selector: "[data-catalog-nav]", path: "pages/bentoul.html", current: normalizedPagePath.endsWith("/pages/bentoul.html") },
+  { selector: "[data-series-nav]", path: "pages/series.html", current: normalizedPagePath.endsWith("/pages/series.html") },
+  { selector: "[data-benamoura-nav]", path: "pages/benamoura.html", current: normalizedPagePath.endsWith("/pages/benamoura.html") },
+  { selector: "[data-series-admin-nav]", path: "adm/serieAdm.html", current: normalizedPagePath === "/adm/serieadm.html" }
 ];
 
 pageNavigation.forEach(({ selector, path, current }) => {
