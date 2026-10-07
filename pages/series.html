@@ -378,9 +378,63 @@
 
     .series-card-actions {
       display: flex;
+      flex: 1;
       flex-wrap: wrap;
       justify-content: flex-end;
       gap: 8px;
+    }
+
+    .series-card-actions .series-open-btn {
+      flex: 1;
+      min-height: 46px;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), #A855F7 58%, #EC4899);
+      color: #FFFFFF !important;
+      box-shadow: 0 7px 16px rgba(124, 58, 237, 0.22);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .series-card-actions .series-open-btn:hover {
+      background: linear-gradient(135deg, var(--primary-hover), #9333EA 58%, #DB2777);
+      box-shadow: 0 10px 22px rgba(124, 58, 237, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .series-card-actions .series-share-btn {
+      flex: 0 0 46px;
+      width: 46px;
+      min-height: 46px;
+      padding: 8px;
+      border-color: var(--border-color);
+      border-radius: 14px;
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    .series-card-actions .series-open-btn:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--primary) 35%, transparent);
+      outline-offset: 3px;
+    }
+
+    .series-open-btn-arrow {
+      display: inline-grid;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .series-open-btn:hover .series-open-btn-arrow {
+      transform: translateX(2px);
     }
 
     .resume-banner {
@@ -583,6 +637,17 @@
       gap: 6px;
     }
 
+    .reader-speech-btn {
+      min-height: 42px;
+      padding: 9px 14px;
+      border-radius: 13px;
+      white-space: nowrap;
+    }
+
+    .reader-speech-btn[aria-pressed="true"] {
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+    }
+
     .reader-header {
       text-align: center;
       margin-bottom: 30px;
@@ -622,6 +687,13 @@
     .reader-content p {
       margin-bottom: 1.6em;
       text-align: justify;
+      border-radius: 8px;
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .reader-content .speech-active {
+      background: var(--primary-light);
+      box-shadow: 0 0 0 8px var(--primary-light);
     }
 
     .episode-audio {
@@ -954,6 +1026,14 @@
         font-size: 0.78rem;
       }
 
+      .home-view .series-card-actions .series-share-btn {
+        flex-basis: 42px;
+        width: 42px;
+        min-height: 42px;
+        padding: 6px;
+        font-size: 1rem;
+      }
+
       .episode-list {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 7px;
@@ -1016,6 +1096,7 @@
     }
   </style>
   <script src="episode-editor.js"></script>
+  <script src="series-additions.js"></script>
   <script>
     (() => {
     /* ==========================================================================
@@ -1024,6 +1105,47 @@
     // Remplacez l'URL ci-dessous par celle générée via "Déployer > Nouveau déploiement > Application Web" dans Apps Script
     const API_URL = "https://script.google.com/macros/s/AKfycbxUu3Fy_VKO7qcNrVYwH3p79OY7mrklGlV0uW3YyctQtOeA2CyiagR4sAHe-IUbzFWhNw/exec";
     const TARGET_SHEET = "Series";
+    const additionalSeries = window.BENTOUL_ADDITIONAL_SERIES;
+
+    const requestedSeries = {
+      id: 3,
+      title: "Je vis pour toi",
+      category: "Romance",
+      cover: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=1200&q=85",
+      description: "Lila, illustratrice, et Adam, libraire, se rapprochent au fil de rencontres inattendues. Mais leurs rêves les entraînent dans des directions différentes : pourront-ils s’aimer sans renoncer à eux-mêmes ?",
+      episodes: [
+        {
+          id: 1,
+          title: "Un billet dans la pluie",
+          imageUrl: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
+          content: "<p>La pluie surprit Lila à la sortie de la petite librairie de la rue des Tilleuls. Elle posa son carnet sur le comptoir pour protéger ses dessins et, dans la précipitation, oublia une feuille entre les pages d’un vieux roman.</p><p>Adam la rattrapa au coin de la rue, trempé lui aussi. Sur le papier, il avait découvert le croquis d’une fenêtre éclairée, avec ces mots : « Un endroit où l’on peut recommencer. » Il lui rendit la feuille sans poser de questions. Lila sourit, gênée. Avant de repartir, elle lui demanda le nom du livre qu’il tenait. Adam le lui tendit : « Gardez-le. J’aimerais bien savoir ce que vous en penserez. »</p>"
+        },
+        {
+          id: 2,
+          title: "Le café des promesses",
+          imageUrl: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=900&q=80",
+          content: "<p>Une semaine plus tard, Lila revint à la librairie avec le roman annoté de petits dessins. Adam l’attendait devant la porte, deux cafés à la main. Ils s’installèrent près de la fenêtre et parlèrent jusqu’à la fermeture : de voyages, de leurs familles et de ce qu’ils auraient aimé oser plus tôt.</p><p>Adam lui confia qu’il rêvait de transformer l’arrière-boutique en atelier de lecture pour le quartier. Lila lui avoua qu’elle envoyait son portfolio à des maisons d’édition, sans jamais croire qu’on lui répondrait. « Alors on se promet une chose », dit-il. « On essaie vraiment. » Ils se serrèrent la main, mais gardèrent leurs doigts enlacés une seconde de plus que nécessaire.</p>"
+        },
+        {
+          id: 3,
+          title: "Ce que le silence cache",
+          imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
+          content: "<p>Le téléphone de Lila vibra au milieu d’un dîner. Une maison d’édition de Lyon voulait la rencontrer et lui proposait un contrat de six mois. Elle relut le message trois fois, le cœur partagé entre la joie et la peur. Adam remarqua son trouble, mais elle n’arriva pas à lui expliquer tout de suite.</p><p>Le lendemain, elle apprit par une voisine qu’Adam envisageait de vendre la librairie. Quand elle lui demanda pourquoi il ne lui avait rien dit, il baissa les yeux : la boutique perdait de l’argent et il ne voulait pas l’inquiéter. « Tu me demandes de te faire confiance, mais tu me tiens à distance », répondit-elle. Aucun des deux ne trouva les mots pour réparer le silence.</p>"
+        },
+        {
+          id: 4,
+          title: "À deux pas de l’aube",
+          imageUrl: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80",
+          content: "<p>La veille du départ de Lila, Adam l’attendait devant la gare. Il n’avait pas préparé de grand discours. Il lui tendit seulement une enveloppe : à l’intérieur, le dessin de la librairie rénovée, avec une petite salle de lecture et une table près de la fenêtre. « Je vais essayer de la sauver. Mais je ne veux pas que tu restes pour moi. »</p><p>Lila sentit ses yeux s’embuer. Elle lui raconta enfin pour le contrat, puis lui demanda pourquoi il avait gardé son projet secret. Adam reconnut qu’il avait eu peur d’échouer devant elle. Ils décidèrent de ne pas choisir à la place de l’autre : elle partirait tenter sa chance, et ils s’appelleraient chaque soir. À l’aube, elle monta dans le train en lui promettant de revenir.</p>"
+        },
+        {
+          id: 5,
+          title: "La place près de la fenêtre",
+          imageUrl: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80",
+          content: "<p>Deux mois passèrent. Lila apprit à vivre dans une ville nouvelle, entre les échéances et les premiers livres qu’elle illustrait. Adam, lui, organisa ses lectures du samedi. La librairie ne ressemblait pas encore au dessin, mais les enfants du quartier avaient déjà adopté la grande table près de la vitrine.</p><p>Le jour de la première séance, Lila poussa la porte avec une valise et son carnet sous le bras. Adam resta un instant sans bouger, puis lui montra la place qu’il lui avait réservée. Elle n’était pas revenue abandonner son rêve : son contrat était prolongé et elle avait une semaine de congé. « Je ne vis pas à travers toi », lui dit-elle en souriant, « mais j’ai envie de construire quelque chose avec toi. » Adam prit sa main. Cette fois, aucun des deux ne garda ses espoirs pour soi.</p>"
+        }
+      ]
+    };
 
     /* Données de secours (au cas où l'API est hors ligne ou vide) */
     let seriesData = [
@@ -1059,7 +1181,9 @@
             content: "<p>Le réveil numérique passa à 00:00. Aussitôt, une vibration stridente secoua la table de chevet de Thomas...</p>"
           }
         ]
-      }
+      },
+      requestedSeries,
+      ...additionalSeries
     ];
 
     /* ==========================================================================
@@ -1086,6 +1210,7 @@
 
     document.documentElement.setAttribute("data-theme", state.theme);
     document.documentElement.style.setProperty("--reader-font-size", state.fontSize + "px");
+    let speechPlayback = null;
 
     function getUserSession() {
       try {
@@ -1186,6 +1311,13 @@
 
           if (resultList.length > 0) {
             seriesData = resultList;
+            const localSeries = [requestedSeries, ...additionalSeries];
+            localSeries.forEach((localItem, index) => {
+              if (!seriesData.some(series => series.title.trim().toLocaleLowerCase() === localItem.title.trim().toLocaleLowerCase())) {
+                const nextId = Math.max(0, ...seriesData.map(series => series.id)) + index + 1;
+                seriesData.push({ ...localItem, id: nextId });
+              }
+            });
             state.isLiveConnected = true;
             showToast("Séries synchronisées avec Google Sheets");
           }
@@ -1194,6 +1326,19 @@
         console.warn("Impossible de synchroniser avec Google Sheets, utilisation des données locales :", err);
       } finally {
         state.isLoading = false;
+        const sharedSeriesTitle = new URLSearchParams(window.location.search).get("serie");
+        if (sharedSeriesTitle) {
+          const sharedSeries = seriesData.find(series =>
+            createSeriesSlug(series.title) === sharedSeriesTitle.trim().toLocaleLowerCase() ||
+            series.title.trim().toLocaleLowerCase() === sharedSeriesTitle.trim().toLocaleLowerCase()
+          );
+          if (sharedSeries) {
+            state.view = "series";
+            state.currentSeriesId = sharedSeries.id;
+          } else {
+            showToast("La série de ce lien est introuvable.");
+          }
+        }
         renderView();
       }
     }
@@ -1708,6 +1853,98 @@
       document.documentElement.style.setProperty("--reader-font-size", state.fontSize + "px");
     }
 
+    function updateSpeechButton() {
+      const button = document.getElementById("reader-speech-button");
+      if (!button) return;
+      const isPaused = speechPlayback?.paused;
+      const isPlaying = Boolean(speechPlayback && !isPaused);
+      const label = isPaused ? "Reprendre" : isPlaying ? "Pause" : "Écouter l’épisode";
+      const icon = isPaused ? "▶" : isPlaying ? "Ⅱ" : "🔊";
+      button.innerHTML = `<span aria-hidden="true">${icon}</span><span>${label}</span>`;
+      button.setAttribute("aria-label", label === "Pause" ? "Mettre la lecture vocale en pause" : label === "Reprendre" ? "Reprendre la lecture vocale" : "Écouter l’épisode à voix haute");
+      button.setAttribute("aria-pressed", String(isPlaying));
+    }
+
+    function speakCurrentBlock(playback) {
+      if (speechPlayback !== playback) return;
+      if (playback.index >= playback.blocks.length) {
+        speechPlayback = null;
+        document.querySelectorAll(".reader-content .speech-active").forEach(element => element.classList.remove("speech-active"));
+        updateSpeechButton();
+        return;
+      }
+
+      const block = playback.blocks[playback.index];
+      const utterance = new window.SpeechSynthesisUtterance(block.text);
+      utterance.lang = "fr-FR";
+      const frenchVoice = window.speechSynthesis.getVoices().find(voice => voice.lang.toLowerCase().startsWith("fr"));
+      if (frenchVoice) utterance.voice = frenchVoice;
+      utterance.onstart = () => {
+        if (speechPlayback !== playback) return;
+        document.querySelectorAll(".reader-content .speech-active").forEach(element => element.classList.remove("speech-active"));
+        block.element.classList.add("speech-active");
+        block.element.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      utterance.onend = () => {
+        if (speechPlayback !== playback || playback.paused) return;
+        playback.index += 1;
+        speakCurrentBlock(playback);
+      };
+      utterance.onerror = event => {
+        if (speechPlayback !== playback || event.error === "canceled" || event.error === "interrupted") return;
+        console.error("La lecture vocale a échoué.", event.error);
+        stopEpisodeSpeech();
+        showToast("La lecture vocale a rencontré une erreur.");
+      };
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function stopEpisodeSpeech() {
+      const wasPlaying = Boolean(speechPlayback);
+      speechPlayback = null;
+      window.speechSynthesis?.cancel();
+      document.querySelectorAll(".reader-content .speech-active").forEach(element => element.classList.remove("speech-active"));
+      updateSpeechButton();
+      return wasPlaying;
+    }
+
+    function toggleEpisodeSpeech() {
+      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        showToast("La lecture vocale n’est pas prise en charge par ce navigateur.");
+        return;
+      }
+
+      if (speechPlayback?.paused) {
+        speechPlayback.paused = false;
+        window.speechSynthesis.resume();
+        updateSpeechButton();
+        return;
+      }
+      if (speechPlayback) {
+        speechPlayback.paused = true;
+        window.speechSynthesis.pause();
+        updateSpeechButton();
+        return;
+      }
+
+      const reader = document.querySelector(".reader-content");
+      if (!reader) return;
+      const blockSelector = "p, h2, h3, h4, li, blockquote";
+      const blocks = Array.from(reader.querySelectorAll(blockSelector))
+        .filter(element => !Array.from(element.querySelectorAll(blockSelector)).length)
+        .map(element => ({ element, text: element.innerText.trim() }))
+        .filter(block => block.text);
+      if (!blocks.length) {
+        showToast("Aucun texte à lire dans cet épisode.");
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      speechPlayback = { blocks, index: 0, paused: false };
+      updateSpeechButton();
+      speakCurrentBlock(speechPlayback);
+    }
+
     function isFavorite(seriesId) {
       return state.favorites.includes(Number(seriesId));
     }
@@ -1756,6 +1993,58 @@
         }).catch(() => {
           showToast("Impossible de copier le lien.");
         });
+      }
+    }
+
+    function createSeriesSlug(title) {
+      return String(title || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLocaleLowerCase()
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "");
+    }
+
+    async function shareSeries(seriesId) {
+      const series = seriesData.find(item => item.id === Number(seriesId));
+      if (!series) {
+        showToast("Série introuvable.");
+        return;
+      }
+
+      const directLink = new URL(window.location.href);
+      directLink.search = `?serie=${createSeriesSlug(series.title)}`;
+      directLink.hash = "";
+      const shareText = [
+        `📚 ${series.title}`,
+        series.description,
+        `📖 ${series.episodes.length} épisodes`,
+        "",
+        "Cliquez sur le lien pour découvrir la série :",
+        directLink.href
+      ].join("\n");
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: `BENTOUL STORIES — ${series.title}`,
+            text: shareText
+          });
+        } catch (error) {
+          if (error.name !== "AbortError") {
+            console.error("Impossible de partager la série.", error);
+            showToast("Impossible de partager la série.");
+          }
+        }
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(shareText);
+        showToast("Le message et le lien de la série ont été copiés.");
+      } catch (error) {
+        console.error("Impossible de copier le lien de la série.", error);
+        showToast("Impossible de copier le lien. Vérifiez les autorisations du navigateur.");
       }
     }
 
@@ -1819,6 +2108,7 @@
        7. MOTEUR DE RENDU (Templates)
        ========================================================================== */
     function renderView() {
+      if (speechPlayback) stopEpisodeSpeech();
       const app = document.getElementById("app");
       const bar = document.getElementById("read-progress-bar");
       if (state.view !== "reader" && bar) bar.style.width = "0%";
@@ -1858,26 +2148,22 @@
     }
 
     function renderHomeHTML() {
-      const categories = ["Toutes", "Amour", "Drame", "Romance", "Mystère"];
+      const categories = ["Toutes", "Amour", "Drame", "Romance", "Mystère", "Aventure", "Fantastique"];
       const filtered = state.selectedCategory === "Toutes"
         ? seriesData
         : seriesData.filter(s => s.category.toLowerCase() === state.selectedCategory.toLowerCase());
 
       return `
         <div class="fade-in home-view">
-          <div class="hero">
-            <h1 class="app-title">BENTOUL STORIES</h1>
-            <p class="app-subtitle">Des histoires à lire, épisode après épisode.</p>
-            ${state.isLiveConnected ? `<div class="badge-live">Connecté à Google Sheets</div>` : ''}
-          </div>
+
 
           <div class="quick-nav">
             ${isAdminUser() ? `<button class="btn btn-primary" onclick="openSerieAdmin('newSeries')">➕ Ajouter une série</button>` : ''}
-            <button class="btn btn-secondary" onclick="showSearch()">🔍 Chercher</button>
-            <button class="btn btn-secondary" onclick="showFavorites()">♡ Favoris</button>
-            <button class="btn btn-secondary" onclick="showHistory()">⏱ Historique</button>
+            <button class="btn btn-secondary" onclick="showSearch()">🔍</button>
+            <button class="btn btn-secondary" onclick="showFavorites()">♡</button>
+            <button class="btn btn-secondary" onclick="showHistory()">⏱</button>
             <button class="btn btn-secondary btn-icon" onclick="toggleDarkMode()">
-              ${state.theme === 'dark' ? '☀️ Clair' : '🌙 Sombre'}
+              ${state.theme === 'dark' ? '☀️' : '🌙'}
             </button>
           </div>
 
@@ -1916,7 +2202,11 @@
                   <div class="card-footer">
                     <span class="card-episodes-count">📚 ${item.episodes.length} épisodes</span>
                     <div class="series-card-actions">
-                      <button class="btn btn-primary" onclick="showSeries(${item.id})">Lire la série</button>
+                      <button class="btn btn-primary series-open-btn" onclick="showSeries(${item.id})">
+                        <span>Découvrir la série</span>
+                        <span class="series-open-btn-arrow" aria-hidden="true">→</span>
+                      </button>
+                      <button class="btn btn-secondary series-share-btn" onclick="shareSeries(${item.id})" aria-label="Partager la série ${escapeHTML(item.title)}" title="Partager la série">↗</button>
                       ${isAdminUser() ? `<button class="btn btn-secondary" onclick="openSeriesEditor(${item.id})">Gérer</button>` : ''}
                     </div>
                   </div>
@@ -1949,6 +2239,7 @@
             <div class="series-detail-actions">
               ${isAdminUser() ? `<button class="btn btn-secondary" onclick="openSeriesEditor(${series.id})">✏️ Gérer la série</button>` : ''}
               ${isAdminUser() ? `<button class="btn btn-primary" onclick="openSerieAdminForCurrent('addEpisode')">➕ Ajouter un épisode</button>` : ''}
+              <button class="btn btn-secondary" onclick="shareSeries(${series.id})">↗ Partager la série</button>
               <button class="btn btn-secondary" onclick="toggleFavorite(${series.id})">
                 ${fav ? '♥ Retirer' : '♡ Favoris'}
               </button>
@@ -2009,6 +2300,9 @@
         <div class="reader-view fade-in">
           <div class="reader-toolbar">
             <button class="btn btn-secondary" onclick="showSeries(${series.id})">← Épisodes</button>
+            <button class="btn btn-primary reader-speech-btn" id="reader-speech-button" type="button" onclick="toggleEpisodeSpeech()" aria-label="Écouter l’épisode à voix haute" aria-pressed="false">
+              <span aria-hidden="true">🔊</span><span>Écouter l’épisode</span>
+            </button>
             
             <div class="reader-actions">
               <button class="btn btn-secondary btn-icon" onclick="changeFontSize(-2)">A−</button>
@@ -2328,7 +2622,9 @@
       showHome,
       showReader,
       showSearch,
+      shareSeries,
       showSeries,
+      toggleEpisodeSpeech,
       toggleDarkMode,
       toggleFavorite
     });

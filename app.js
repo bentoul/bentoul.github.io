@@ -1,3 +1,92 @@
+const APP_BASE_URL = new URL("./", document.currentScript.src);
+
+function hasAdministratorSession() {
+  try {
+    const session = JSON.parse(sessionStorage.getItem("bcreation-user-session") || "null");
+    const role = String(session?.user?.role || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z]/g, "");
+    return Boolean(
+      session?.token &&
+      ["admin", "administrator", "administrateur", "superadmin"].includes(role)
+    );
+  } catch (error) {
+    return false;
+  }
+}
+
+function updateAdminNavigationVisibility() {
+  const isAdmin = hasAdministratorSession();
+  document.querySelectorAll("[data-admin-nav]").forEach((link) => {
+    link.hidden = !isAdmin;
+  });
+}
+
+window.addEventListener("bcreation-session-changed", updateAdminNavigationVisibility);
+
+if (!document.querySelector("#accueil")) {
+  const pageNavigation = document.createElement("nav");
+  pageNavigation.className = "bentoul-global-nav";
+  pageNavigation.setAttribute("aria-label", "Navigation BENTOUL");
+  [
+    ["Accueil", "index.html"],
+    ["Boutique", "pages/bentoul.html"],
+    ["Séries", "pages/series.html"],
+    ["Benamoura", "benamoura.html"],
+    ["Administration", "pages/serieAdm.html"]
+  ].forEach(([label, path]) => {
+    const link = document.createElement("a");
+    link.href = new URL(path, APP_BASE_URL).href;
+    link.textContent = label;
+    if (label === "Administration") link.dataset.adminNav = "";
+    if (window.location.pathname.toLowerCase() === new URL(link.href).pathname.toLowerCase()) {
+      link.setAttribute("aria-current", "page");
+    }
+    pageNavigation.append(link);
+  });
+  const pageNavigationStyles = document.createElement("style");
+  pageNavigationStyles.textContent = `
+    .bentoul-global-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: .5rem;
+    }
+    .bentoul-global-nav a {
+      display: inline-flex;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
+      padding: .55rem .8rem;
+      border: 1px solid #eadde3;
+      border-radius: .7rem;
+      color: #6c5260;
+      background: #fff;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .bentoul-global-nav a[hidden] { display: none; }
+    .bentoul-global-nav a:hover,
+    .bentoul-global-nav a[aria-current="page"] {
+      border-color: #d6a8b8;
+      color: #7b2948;
+      background: #fff3f6;
+    }
+    @media (max-width: 700px) {
+      .bentoul-global-nav { gap: .35rem; }
+      .bentoul-global-nav a { min-height: 36px; padding: .45rem .55rem; font-size: .78rem; }
+    }
+  `;
+  document.head.append(pageNavigationStyles);
+  const navigationHost = document.querySelector(".topbar") || document.querySelector(".page-shell") || document.body;
+  navigationHost.append(pageNavigation);
+  updateAdminNavigationVisibility();
+} else {
 const API_URL = (window.APP_CONFIG && window.APP_CONFIG.apiUrl || "https://script.google.com/macros/s/AKfycbxUu3Fy_VKO7qcNrVYwH3p79OY7mrklGlV0uW3YyctQtOeA2CyiagR4sAHe-IUbzFWhNw/exec").trim();
 const SESSION_KEY = "bcreation-user-session";
 const DEFAULT_AVATAR = `data:image/svg+xml,${encodeURIComponent(
@@ -923,11 +1012,12 @@ document.body.innerHTML = `
       </div>
 
       <h2>Navigation</h2>
-      <nav>
-        <a href="#accueil" aria-current="page">Accueil</a>
+      <nav aria-label="Pages de BENTOUL">
+        <a href="#" data-home-nav>Accueil</a>
         <a href="#" data-catalog-nav>Boutique</a>
-        <a href="#tableau-de-bord">Tableau de bord</a>
-        <a href="#parametres">Paramètres</a>
+        <a href="#" data-series-nav>Séries</a>
+        <a href="#" data-benamoura-nav>Benamoura</a>
+        <a href="#" data-series-admin-nav data-admin-nav>Administration des séries</a>
       </nav>
 
       <div style="padding:1rem;">
@@ -981,12 +1071,21 @@ document.body.innerHTML = `
   </footer>
 `;
 
-const catalogNavigationLink = document.querySelector("[data-catalog-nav]");
-const isCatalogPage = window.location.pathname.toLowerCase().endsWith("/pages/bentoul.html");
-catalogNavigationLink.href = new URL(
-  isCatalogPage ? "./bentoul.html" : "./pages/bentoul.html",
-  window.location.href
-).href;
+const currentPagePath = window.location.pathname.toLowerCase();
+const pageNavigation = [
+  { selector: "[data-home-nav]", path: "index.html", current: currentPagePath.endsWith("/index.html") },
+  { selector: "[data-catalog-nav]", path: "pages/bentoul.html", current: currentPagePath.endsWith("/pages/bentoul.html") },
+  { selector: "[data-series-nav]", path: "pages/series.html", current: currentPagePath.endsWith("/pages/series.html") },
+  { selector: "[data-benamoura-nav]", path: "benamoura.html", current: currentPagePath.endsWith("/benamoura.html") },
+  { selector: "[data-series-admin-nav]", path: "pages/serieAdm.html", current: currentPagePath.endsWith("/pages/serieadm.html") }
+];
+
+pageNavigation.forEach(({ selector, path, current }) => {
+  const link = document.querySelector(selector);
+  link.href = new URL(path, APP_BASE_URL).href;
+  if (current) link.setAttribute("aria-current", "page");
+});
+updateAdminNavigationVisibility();
 
 document.getElementById("current-year").textContent =
   new Date().getFullYear();
@@ -1221,3 +1320,4 @@ authForm.addEventListener("submit", async (event) => {
 });
 
 restoreUserSession();
+}
