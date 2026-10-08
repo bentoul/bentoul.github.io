@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Statistiques du site — BENTOUL</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap">
+  <style>
+    :root { color-scheme: light; font-family: "Plus Jakarta Sans", Arial, sans-serif; color: #172033; background: #f4f6fa; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 32px 16px; }
+    main { width: min(100%, 1040px); margin: auto; }
+    h1, h2, p { margin-top: 0; }
+    h1 { margin-bottom: 8px; }
+    .muted, .hint { color: #64748b; }
+    .panel, .metric { padding: 20px; border: 1px solid #e2e8f0; border-radius: 14px; background: #fff; }
+    .panel { margin-top: 18px; }
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-top: 22px; }
+    .metric strong { display: block; margin-top: 6px; font-size: 2rem; }
+    form { display: grid; gap: 12px; max-width: 420px; }
+    label { display: grid; gap: 6px; font-weight: 600; }
+    input, select, button { min-height: 42px; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font: inherit; }
+    button { border-color: #6d28d9; background: #6d28d9; color: #fff; font-weight: 700; cursor: pointer; }
+    button.secondary { border-color: #cbd5e1; background: #fff; color: #172033; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .toolbar-actions { display: flex; gap: 8px; align-items: center; }
+    .status { min-height: 1.5em; color: #b91c1c; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #e2e8f0; overflow-wrap: anywhere; }
+    th { color: #475569; font-size: .85rem; }
+    .chart { display: grid; gap: 8px; }
+    .chart-row { display: grid; grid-template-columns: 90px minmax(60px, 1fr) 38px; gap: 10px; align-items: center; font-size: .85rem; }
+    .bar-track { height: 12px; overflow: hidden; border-radius: 99px; background: #ede9fe; }
+    .bar { height: 100%; border-radius: inherit; background: #7c3aed; }
+    [hidden] { display: none !important; }
+    @media (max-width: 560px) { body { padding: 20px 12px; } .panel { padding: 15px; } th, td { padding: 8px 4px; font-size: .82rem; } }
+  </style>
+</head>
+<body>
+  <main>
+    <p><a href="serieAdm.html">← Retour à l’administration des séries</a></p>
+    <h1>Statistiques du site</h1>
+    <p class="muted">Visites enregistrées après consentement aux statistiques anonymes.</p>
+
+    <section class="panel" id="login-panel">
+      <h2>Connexion administrateur</h2>
+      <form id="login-form">
+        <label for="email">Adresse e-mail administrateur
+          <input id="email" type="email" autocomplete="username" required>
+        </label>
+        <label for="password">Mot de passe
+          <input id="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Se connecter</button>
+        <p class="status" id="login-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="toolbar">
+        <p class="hint">Les visiteurs uniques sont estimés par navigateur; les visiteurs qui refusent le suivi ne sont pas comptés.</p>
+        <div class="toolbar-actions">
+          <label for="period">Période
+            <select id="period">
+              <option value="7">7 derniers jours</option>
+              <option value="30" selected>30 derniers jours</option>
+              <option value="all">Depuis le début</option>
+            </select>
+          </label>
+          <button class="secondary" id="logout" type="button">Déconnexion</button>
+        </div>
+      </div>
+      <p class="status" id="dashboard-status" role="status" aria-live="polite"></p>
+      <div class="metrics">
+        <article class="metric">Pages vues<strong id="total-views">0</strong></article>
+        <article class="metric">Visiteurs uniques<strong id="unique-visitors">0</strong></article>
+        <article class="metric">Page la plus consultée<strong id="top-page" style="font-size:1rem;overflow-wrap:anywhere">—</strong></article>
+      </div>
+      <section class="panel">
+        <h2>Activité — 14 derniers jours</h2>
+        <div id="daily-chart" class="chart"></div>
+      </section>
+      <section class="panel">
+        <h2>Pages les plus consultées</h2>
+        <table><thead><tr><th>Page</th><th>Vues</th><th>Visiteurs uniques</th></tr></thead><tbody id="pages-table"></tbody></table>
+      </section>
+      <section class="panel">
+        <h2>Origine des visites</h2>
+        <table><thead><tr><th>Site référent</th><th>Visites</th></tr></thead><tbody id="referrers-table"></tbody></table>
+      </section>
+    </section>
+  </main>
+  <script src="../analytics-config.js"></script>
+  <script src="visites.js"></script>
+</body>
+</html>
