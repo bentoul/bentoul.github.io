@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.bentoul.com/sitemap.xml
+Sitemap: https://bentoul.github.io/sitemap.xml
