@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><title>Bentoul Creation</title></head>
+<body>
+  <p>Redirection vers Bentoul Creation…</p>
+  <script>
+    const route = window.location.pathname.replace(/^\/+|\/+$/g, '');
+    window.location.replace('/?route=' + encodeURIComponent(route || 'accueil'));
+  </script>
+</body>
+</html>
