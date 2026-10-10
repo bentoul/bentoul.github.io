@@ -1,0 +1,148 @@
+/* Dashboard Bentoul ------------------------------------------------------- */
+
+:root {
+  --primary: #4f46e5;
+  --text: #172033;
+  --line: #e5e7ef;
+  --muted: #68738a;
+  --surface: #ffffff;
+  --background: #f5f7fb;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; max-width: 100%; overflow-x: hidden; }
+body { margin: 0; color: var(--text); background: var(--background); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+
+/* En-tête et actions globales -------------------------------------------- */
+.top {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px;
+  color: #fff;
+  background: #111827;
+}
+.top h1 { margin: 0; font-size: 1.1rem; }
+.top small { color: #cbd5e1; }
+.top-actions { 
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-end; 
+  gap: 8px; flex-wrap: nowrap; }
+.top-actions .field { min-width: 100%; }
+.top-actions .field label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.top-actions input { 
+  width: 25px; 
+  height: 25px; 
+  padding: 0; 
+  color: #0b3de2; 
+  background: #1f2937; 
+  border: 1px solid #475569; 
+  border-radius: 7px; 
+  transition: width .2s ease, padding .2s ease; 
+}
+.top-actions input:focus { width: 220px; padding: 4px 7px; outline: 2px solid #818cf8; outline-offset: 1px; }
+.top-actions input::placeholder { color: #006aec; }
+.icon-btn { 
+  display: inline-grid; 
+  place-items: center; 
+  width: 25px; 
+  height: 25px; 
+  padding: 0; 
+  font-size: 1rem;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  line-height: 1; 
+}
+
+/* Structure générale ------------------------------------------------------ */
+.wrap { max-width: 1180px; margin: 22px auto; padding: 0 18px; }
+.toolbar, .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 8px 28px #1e293b0c; }
+.toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 14px; }
+.status { margin-left: auto; color: var(--muted); font-size: .86rem; }
+.grid { display: block; }
+.grid > .panel:last-child { width: 100%; }
+.panel { padding: 18px; }
+.panel h2 { margin: 0 0 14px; font-size: 1rem; }
+
+/* Boutons, champs et messages -------------------------------------------- */
+.btn, .tabs button { padding: 10px 13px; color: #25304a; background: #fff; border: 1px solid var(--line); border-radius: 10px; font-weight: 700; }
+.btn.primary, .tabs button.active { color: #fff; background: var(--primary); border-color: var(--primary); }
+.btn.danger { color: #b91c1c; }
+.field { display: grid; gap: 5px; }
+.field label { color: #4b5563; font-size: .78rem; font-weight: 700; }
+.field input, .field textarea, .field select { width: 100%; padding: 10px; background: #fff; border: 1px solid var(--line); border-radius: 9px; }
+.field textarea { min-height: 90px; resize: vertical; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+.hidden { display: none !important; }
+.empty { padding: 20px; color: var(--muted); text-align: center; }
+.message { display: grid; gap: 10px; }
+.message-head { display: flex; justify-content: space-between; gap: 10px; font-size: .8rem; }
+.message-text { padding: 10px; white-space: pre-wrap; background: #f7f8fc; border-radius: 10px; }
+.badge { padding: 4px 8px; color: #c2410c; background: #fff7ed; border-radius: 99px; font-size: .7rem; }
+.badge.done { color: #047857; background: #ecfdf5; }
+.row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; }
+.list { display: grid; gap: 10px; }
+.meta { color: var(--muted); font-size: .78rem; line-height: 1.45; white-space: pre-line; }
+.actions { display: flex; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
+.actions button { padding: 7px 9px; font-size: .78rem; }
+
+/* Éditeur riche ----------------------------------------------------------- */
+.editor-layout { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.editor-main { min-width: 0; }
+.editor-toolbar { display: flex; align-items: center; gap: 6px; width: 100%; max-width: 100%; overflow-x: auto; padding: 8px 10px; background: #fff; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; box-shadow: 0 4px 14px #1720330b; }
+.toolbar-group { display: flex; align-items: center; gap: 3px; flex: 0 0 auto; padding-right: 8px; margin-right: 2px; white-space: nowrap; border-right: 1px solid var(--line); }
+.toolbar-group:last-child { padding-right: 0; border-right: 0; }
+.editor-toolbar button { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; color: #334155; background: transparent; border: 1px solid transparent; border-radius: 7px; font-weight: 700; }
+.editor-toolbar button:hover, .editor-toolbar button:focus-visible { background: #eef2ff; border-color: #c7d2fe; outline: 0; }
+.editor-toolbar select { height: 32px; padding: 0 8px; background: #fff; border: 1px solid var(--line); border-radius: 7px; color: #334155; font-weight: 650; }
+.editor-toolbar .collection-select { min-width: 105px; color: var(--primary); background: #eef2ff; border-color: #c7d2fe; }
+.font-select { min-width: 112px; }
+.size-select { min-width: 82px; }
+.color-palette { display: flex; align-items: center; gap: 3px; }
+.color-palette button { width: 18px; height: 18px; border: 2px solid #fff; border-radius: 50%; outline: 1px solid #cbd5e1; }
+.rich-editor { width: calc(100% - 4px); min-height: 430px; max-height: calc(100vh - 250px); margin: 2px; padding: 2px; overflow-y: auto; overflow-wrap: anywhere; white-space: pre-wrap; background: #fff; border: 1px solid #dbe2ea; border-radius: 8px; line-height: 1.7; outline: 0; }
+.rich-editor:focus { border-color: #a5b4fc; box-shadow: 0 0 0 3px #4f46e51a; }
+.rich-editor:empty::before { content: attr(data-placeholder); color: #94a3b8; }
+.editor-status { margin-top: 8px; color: var(--muted); font-size: .75rem; }
+
+/* Panneaux coulissants ---------------------------------------------------- */
+.drawer-backdrop { position: fixed; inset: 0; z-index: 29; width: 100%; height: 100%; padding: 0; background: #0f172a66; border: 0; opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+.drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+#listPanel, .editor-sidebar { position: fixed; z-index: 30; top: 0; bottom: 0; width: min(420px, 92vw); margin: 0; overflow: auto; background: #fff; border-radius: 0; box-shadow: 10px 0 32px #0f172a2b; transition: transform .22s ease; }
+#listPanel { left: 0; transform: translateX(-105%); }
+#listPanel.open { transform: translateX(0); }
+.editor-sidebar { right: 0; width: min(360px, 92vw); transform: translateX(105%); }
+.editor-sidebar.open { transform: translateX(0); }
+.drawer-close { float: right; padding: 6px 9px; }
+.editor-sidebar h3 { margin: 0 0 10px; font-size: .84rem; }
+.editor-sidebar .field { margin-bottom: 10px; }
+.editor-sidebar .field input[readonly] { color: #64748b; background: #eef2ff; }
+
+/* Sur grand écran, l'éditeur reste compact et centré. */
+@media (min-width: 721px) {
+  .editor-main { width: 40%; margin: 0 auto; }
+}
+
+/* Responsive -------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .top { align-items: flex-start; flex-direction: column; }
+  .top-actions { width: 100%; justify-content: stretch; }
+  .top-actions .field { flex: 1; min-width: 150px; }
+  .toolbar { display: none; }
+  .wrap { width: 100%; margin: 0; padding: 0; }
+  .panel { width: 100%; padding: 12px; border-right: 0; border-left: 0; border-radius: 0; }
+  .editor-toolbar { border-right: 0; border-left: 0; border-radius: 0; }
+  .editor-main { width: 100%; }
+  .rich-editor { width: calc(100% - 4px); min-height: calc(100vh - 230px); max-height: calc(100vh - 190px); padding: 2px; border-right: 1px solid #dbe2ea; border-left: 1px solid #dbe2ea; border-radius: 8px; }
+  .form-actions { padding: 0 12px 12px; }
+}
+@media (max-width: 540px) { .form-grid { grid-template-columns: 1fr; } .field.full { grid-column: auto; } .status { width: 100%; margin-left: 0; } }

@@ -578,7 +578,7 @@
             background: var(--surface);
             box-shadow: 0 10px 28px rgba(15, 23, 42, 0.07);
         }
-        .boutique-detail-view[hidden], .boutique-confirmation[hidden] { display: none; }
+        #shopList[hidden], .boutique-detail-view[hidden], .boutique-confirmation[hidden] { display: none !important; }
         .boutique-detail-image {
             display: block;
             width: 100%;
@@ -1079,6 +1079,42 @@
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
+        /* ================= TYPOGRAPHIE RESPONSIVE ================= */
+        /* Une taille fluide améliore la lecture sur mobile, tablette et desktop. */
+        html { font-size: clamp(15px, 0.25vw + 14px, 18px); }
+        body { font-size: 1rem; line-height: 1.6; }
+        .shop-name, .histoire-card .shop-name { font-size: clamp(1.05rem, 1.6vw, 1.45rem); line-height: 1.25; }
+        .shop-meta, .astuce-short-description, .histoire-subtitle { font-size: clamp(.9rem, 1.1vw, 1.05rem); line-height: 1.6; }
+        .astuce-detail-description, .histoire-content, .boutique-detail-description { font-size: clamp(.98rem, 1.25vw, 1.15rem); line-height: 1.75; overflow-wrap: anywhere; }
+        .rich-post-content { white-space: pre-wrap; }
+        .rich-post-content p { margin: 0 0 1em; }
+        .rich-post-content ul, .rich-post-content ol { padding-left: 1.4em; }
+        .rich-post-content img { max-width: 100%; height: auto; border-radius: 12px; }
+        .rich-post-content a { overflow-wrap: anywhere; }
+        @media (max-width: 480px) {
+            html { font-size: 15px; }
+            .shop-name, .histoire-card .shop-name { font-size: 1.08rem; }
+            .astuce-detail-description, .histoire-content, .boutique-detail-description { font-size: 1rem; line-height: 1.7; }
+        }
+        /* ================= CHARGEMENT DES ONGLETS ================= */
+        .tab-loading {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            background: rgba(248, 250, 252, .78);
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+            transition: opacity .2s ease, visibility .2s ease;
+            backdrop-filter: blur(3px);
+        }
+        .tab-loading.is-visible { opacity: 1; visibility: visible; pointer-events: auto; }
+        .tab-loading-card { display: grid; justify-items: center; gap: 12px; min-width: 150px; padding: 20px; color: var(--primary); background: #fff; border: 1px solid #e0e7ff; border-radius: 18px; box-shadow: 0 14px 40px rgba(30, 41, 59, .14); }
+        .tab-loading-spinner { width: 32px; height: 32px; border: 3px solid #c7d2fe; border-top-color: var(--primary); border-radius: 50%; animation: tab-spin .7s linear infinite; }
+        .tab-loading-text { font-size: .82rem; font-weight: 700; }
+        @keyframes tab-spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -1201,7 +1237,7 @@
                     <span class="section-title">Astuces publiées</span>
                 </div>
                 <div id="tipsList" aria-live="polite">
-                    <p id="tipsLoading" style="padding:20px; text-align:center; color:var(--text-muted);">Chargement des astuces depuis Google Sheets...</p>
+                    <p id="tipsLoading" style="padding:20px; text-align:center; color:var(--text-muted);">Chargement des astuces...</p>
                     <p id="tipsError" style="padding:20px; text-align:center; color:var(--danger);" hidden></p>
                     <p id="tipsEmpty" style="padding:20px; text-align:center; color:var(--text-muted);" hidden>Aucune astuce n’est encore publiée dans la feuille ASTUCES.</p>
                 </div>
@@ -1214,7 +1250,7 @@
                     <span class="section-title">SMS, Conseils & Histoires</span>
                 </div>
                 <div id="histoireList" aria-live="polite">
-                    <p id="histoireLoading" style="padding:20px; text-align:center; color:var(--text-muted);">Chargement des contenus depuis Google Sheets...</p>
+                    <p id="histoireLoading" style="padding:20px; text-align:center; color:var(--text-muted);">Chargement des contenus...</p>
                     <p id="histoireError" style="padding:20px; text-align:center; color:var(--danger);" hidden></p>
                     <p id="histoireEmpty" style="padding:20px; text-align:center; color:var(--text-muted);" hidden>Aucun contenu n’est encore publié dans la feuille HISTOIRE.</p>
                 </div>
@@ -1250,7 +1286,7 @@
                             <i class="fa-solid fa-circle-user" style="font-size:1.5rem; color:var(--primary);"></i>
                             <div>
                                 <strong id="authStatusTitle" style="display:block; font-size:.9rem;">Connexion ou inscription</strong>
-                                <span id="authStatusText" style="display:block; color:var(--text-muted); font-size:.73rem; margin-top:3px;">Vos données de compte sont enregistrées dans Google Sheets.</span>
+                                <span id="authStatusText" style="display:block; color:var(--text-muted); font-size:.73rem; margin-top:3px;">Vos données de compte sont enregistrées de manière sécurisée.</span>
                             </div>
                         </div>
                         <div id="authFormContainer">
@@ -1358,7 +1394,7 @@
             </div>
         </div>
 
-        <!-- ================= MODALE PROFIL & GOOGLE SHEET ================= -->
+        <!-- ================= MODALE PROFIL ================= -->
         <div class="modal-wrap" id="userModal">
             <div class="modal-box">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
@@ -1377,15 +1413,23 @@
                     <label class="form-label">Solde de Points</label>
                     <input type="number" id="userPointsInput" class="form-control" value="150" readonly>
                 </div>
-                <button class="btn btn-full" onclick="saveUserProfile()"><i class="fa-solid fa-arrows-rotate"></i> Synchroniser avec Google Sheet</button>
+                <button class="btn btn-full" onclick="saveUserProfile()"><i class="fa-solid fa-arrows-rotate"></i> Synchroniser mon profil</button>
             </div>
         </div>
     </div>
 
-    <!-- ================= JAVASCRIPT ================= -->
+        <!-- Chargement affiché pendant la transition entre les onglets. -->
+        <div class="tab-loading" id="tabLoading" role="status" aria-live="polite" aria-label="Chargement en cours">
+            <div class="tab-loading-card">
+                <span class="tab-loading-spinner" aria-hidden="true"></span>
+                <span class="tab-loading-text">Chargement...</span>
+            </div>
+        </div>
+
+        <!-- ================= JAVASCRIPT ================= -->
     <script>
-        // ================= CONFIGURATION GOOGLE SHEETS =================
-        // Collez l'URL de votre Web App Google Apps Script ci-dessous
+        // ================= CONFIGURATION DU SERVICE DISTANT =================
+        // Endpoint utilisé par l'application.
         const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxktx6aHTYhN8t0trTXA5_pu8Bn8fTz2Y40ggpT6pYfgESeiLuxsnnf5tZEpWBBvBl/exec";
         let isSignupMode = false;
         let isAuthenticated = localStorage.getItem('devmaster_authenticated') === 'true' &&
@@ -1396,6 +1440,62 @@
         let boutiqueItems = [];
         let currentBoutiqueItem = null;
         let histoireItems = [];
+
+        // Stockage local de l'onglet actif pour conserver la navigation après actualisation.
+        const TAB_PREFERENCE_DB = 'bentoul-preferences';
+        const TAB_PREFERENCE_STORE = 'navigation';
+        const TAB_PREFERENCE_KEY = 'active-tab';
+
+        function openTabPreferenceDatabase_() {
+            return new Promise((resolve, reject) => {
+                if (!('indexedDB' in window)) {
+                    reject(new Error('IndexedDB indisponible dans ce navigateur.'));
+                    return;
+                }
+                const request = window.indexedDB.open(TAB_PREFERENCE_DB, 1);
+                request.onupgradeneeded = () => {
+                    if (!request.result.objectStoreNames.contains(TAB_PREFERENCE_STORE)) {
+                        request.result.createObjectStore(TAB_PREFERENCE_STORE);
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        async function saveActiveTab_(tabId) {
+            try {
+                const database = await openTabPreferenceDatabase_();
+                const transaction = database.transaction(TAB_PREFERENCE_STORE, 'readwrite');
+                transaction.objectStore(TAB_PREFERENCE_STORE).put(tabId, TAB_PREFERENCE_KEY);
+                transaction.oncomplete = () => database.close();
+                transaction.onerror = () => database.close();
+            } catch (error) {
+                console.warn('Impossible de mémoriser l’onglet actif :', error);
+            }
+        }
+
+        async function readActiveTab_() {
+            try {
+                const database = await openTabPreferenceDatabase_();
+                return await new Promise((resolve, reject) => {
+                    const request = database.transaction(TAB_PREFERENCE_STORE, 'readonly')
+                        .objectStore(TAB_PREFERENCE_STORE)
+                        .get(TAB_PREFERENCE_KEY);
+                    request.onsuccess = () => {
+                        database.close();
+                        resolve(request.result || null);
+                    };
+                    request.onerror = () => {
+                        database.close();
+                        reject(request.error);
+                    };
+                });
+            } catch (error) {
+                console.warn('Impossible de lire l’onglet mémorisé :', error);
+                return null;
+            }
+        }
 
         // Profil Utilisateur Local
         let userProfile = {
@@ -1421,7 +1521,7 @@
         }
 
         // Initialisation
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             updatePointsUI();
             document.getElementById('userNameInput').value = userProfile.name;
             document.getElementById('userEmailInput').value = userProfile.email;
@@ -1430,9 +1530,13 @@
             loadShopCatalog();
             loadBoutiqueCatalog();
             loadHistoireCatalog();
-            switchTab(getTabFromLocation_(), false);
+            const storedTab = await readActiveTab_();
+            const initialTab = storedTab && document.getElementById(storedTab)
+                ? storedTab
+                : getTabFromLocation_();
+            switchTab(initialTab, false);
             
-            // Synchronisation auto au démarrage si l'URL Apps Script est configurée
+            // Synchronisation automatique au démarrage si le service est configuré.
             if (isAuthenticated && (userProfile.username || userProfile.email) &&
                 GOOGLE_SHEET_SCRIPT_URL && GOOGLE_SHEET_SCRIPT_URL !== "VOTRE_URL_WEB_APP_GOOGLE_APPS_SCRIPT") {
                 syncFromGoogleSheet();
@@ -1460,7 +1564,26 @@
             return ROUTE_TABS[route] || 'tab-home';
         }
 
+        let tabLoadingTimer = null;
+
+        function showTabLoading() {
+            const loader = document.getElementById('tabLoading');
+            if (!loader) return;
+            clearTimeout(tabLoadingTimer);
+            loader.classList.add('is-visible');
+        }
+
+        function hideTabLoading(delay = 350) {
+            const loader = document.getElementById('tabLoading');
+            if (!loader) return;
+            clearTimeout(tabLoadingTimer);
+            tabLoadingTimer = setTimeout(() => loader.classList.remove('is-visible'), delay);
+        }
+
         function switchTab(tabId, updateUrl = true) {
+            if (!document.getElementById(tabId)) tabId = 'tab-home';
+            saveActiveTab_(tabId);
+            showTabLoading();
             document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
 
@@ -1476,10 +1599,11 @@
             if (TAB_ROUTES[tabId] && (updateUrl || new URLSearchParams(window.location.search).has('route'))) {
                 const route = TAB_ROUTES[tabId];
                 const pageUrl = window.location.protocol === 'file:'
-                    ? `${window.location.pathname.replace(/[^/]*$/, '')}${route}`
+                    ? `${window.location.pathname}?route=${encodeURIComponent(route)}`
                     : `/${route}`;
                 window.history[updateUrl ? 'pushState' : 'replaceState']({ tab: tabId }, '', pageUrl);
             }
+            hideTabLoading();
         }
 
         window.addEventListener('popstate', () => switchTab(getTabFromLocation_(), false));
@@ -1543,7 +1667,7 @@
                 : "Connexion ou inscription";
             document.getElementById('authStatusText').textContent = isAuthenticated
                 ? `Connecté en tant que @${userProfile.username}`
-                : "Vos données de compte sont enregistrées dans Google Sheets.";
+                : "Vos données de compte sont enregistrées de manière sécurisée.";
             document.getElementById('accountCreditCount').textContent = `${userProfile.points} crédits`;
             document.getElementById('profileDisplayName').textContent = userProfile.name;
             document.getElementById('profileDisplayUsername').textContent = `@${userProfile.username}`;
@@ -1579,7 +1703,7 @@
                 });
                 const result = await response.json();
                 if (result.status === "success" && !result.user) {
-                    throw new Error("Le script Google Apps Script déployé ne gère pas encore l'inscription par nom d'utilisateur. Enregistrez Code.gs puis déployez une nouvelle version de l'application Web.");
+                    throw new Error("Le service distant ne gère pas encore cette inscription. Réessayez plus tard.");
                 }
                 if (result.status !== "success" || !result.user) {
                     throw new Error(result.message || (signupMode
@@ -1617,7 +1741,7 @@
             } catch (error) {
                 console.error("Erreur d'authentification Google Sheets:", error);
                 document.getElementById('authMessage').textContent = error.name === "TypeError"
-                    ? "Connexion au service impossible. Vérifiez le déploiement Google Apps Script et réessayez."
+                    ? "Connexion au service impossible. Réessayez plus tard."
                     : error.message || "Une erreur est survenue. Réessayez.";
             } finally {
                 button.disabled = false;
@@ -1823,7 +1947,7 @@
             } catch (loadError) {
                 console.error("Erreur de chargement de l’onglet BOUTIQUE:", loadError);
                 loading.hidden = true;
-                error.textContent = loadError.message || "Impossible de charger les documents depuis Google Sheets.";
+                error.textContent = loadError.message || "Impossible de charger les documents pour le moment.";
                 error.hidden = false;
             }
         }
@@ -1847,7 +1971,7 @@
             const details = createShopElement('div', 'shop-details');
             details.appendChild(createShopElement('span', `badge ${category === 'pdf' ? 'badge-pdf' : category === 'apk' ? 'badge-apk' : 'badge-it'}`, item.type || "Document"));
             details.appendChild(createShopElement('div', 'shop-name', item.title || "Document sans titre"));
-            details.appendChild(createShopElement('p', 'shop-meta boutique-description', item.description || "Aucune description."));
+            details.appendChild(createRichPostElement('p', 'shop-meta boutique-description', item.description || "Aucune description."));
             const price = createShopElement('span', 'boutique-price');
             price.appendChild(createShopElement('i', 'fa-solid fa-coins'));
             price.appendChild(document.createTextNode(` ${Number(item.credits) || 0} crédits`));
@@ -1867,6 +1991,19 @@
             return card;
         }
 
+        // Retourne à la liste et nettoie le détail actuellement affiché.
+        function closeBoutiqueDetail_() {
+            const list = document.getElementById('shopList');
+            const detail = document.getElementById('boutiqueDetailView');
+            if (!list || !detail) return;
+            detail.hidden = true;
+            detail.replaceChildren();
+            detail.setAttribute('aria-hidden', 'true');
+            list.hidden = false;
+            list.setAttribute('aria-hidden', 'false');
+            currentBoutiqueItem = null;
+        }
+
         function openBoutiqueDetail(itemId) {
             const item = boutiqueItems.find(product => String(product.id) === String(itemId));
             if (!item) {
@@ -1879,11 +2016,7 @@
             detail.replaceChildren();
             const backButton = createShopElement('button', 'btn btn-sm btn-outline astuce-back-button', "← Retour à la boutique");
             backButton.type = "button";
-            backButton.addEventListener('click', () => {
-                detail.hidden = true;
-                list.hidden = false;
-                currentBoutiqueItem = null;
-            });
+            backButton.addEventListener('click', closeBoutiqueDetail_);
             detail.appendChild(backButton);
             detail.appendChild(createShopElement('span', 'badge badge-it', item.type || "Document"));
             detail.appendChild(createShopElement('h2', 'shop-name', item.title || "Document sans titre"));
@@ -1897,7 +2030,7 @@
                     detail.appendChild(image);
                 }
             }
-            detail.appendChild(createShopElement('div', 'boutique-detail-description', item.description || "Aucune description disponible."));
+            detail.appendChild(createRichPostElement('div', 'boutique-detail-description', item.description || "Aucune description disponible."));
             detail.appendChild(createShopElement('p', 'boutique-price', `Prix : ${Number(item.credits) || 0} crédits · Votre solde : ${Number(userProfile.points) || 0} crédits`));
 
             if (item.unlocked) {
@@ -1939,8 +2072,11 @@
                 detail.appendChild(unlockButton);
             }
             list.hidden = true;
+            list.setAttribute('aria-hidden', 'true');
             detail.hidden = false;
+            detail.setAttribute('aria-hidden', 'false');
             detail.scrollIntoView({ behavior: "smooth", block: "start" });
+            backButton.focus({ preventScroll: true });
         }
 
         async function unlockBoutiqueItem(item, button) {
@@ -1984,11 +2120,7 @@
                 currentBoutiqueItem = unlockedItem;
                 const backButton = createShopElement('button', 'btn btn-sm btn-outline astuce-back-button', "← Retour à la boutique");
                 backButton.type = "button";
-                backButton.addEventListener('click', () => {
-                    detail.hidden = true;
-                    document.getElementById('shopList').hidden = false;
-                    currentBoutiqueItem = null;
-                });
+                backButton.addEventListener('click', closeBoutiqueDetail_);
                 detail.appendChild(backButton);
                 detail.appendChild(createShopElement('span', 'badge badge-it', unlockedItem.type || "Document"));
                 detail.appendChild(createShopElement('h2', 'shop-name', unlockedItem.title || "Document sans titre"));
@@ -1998,7 +2130,7 @@
                     image.alt = `Image : ${unlockedItem.title}`;
                     detail.appendChild(image);
                 }
-                detail.appendChild(createShopElement('div', 'boutique-detail-description', unlockedItem.description || "Aucune description disponible."));
+                detail.appendChild(createRichPostElement('div', 'boutique-detail-description', unlockedItem.description || "Aucune description disponible."));
                 detail.appendChild(createShopElement('p', 'boutique-price', `Débloqué · Solde : ${userProfile.points} crédits`));
                 appendBoutiqueDocumentActions(detail, unlockedItem);
                 const card = Array.from(document.querySelectorAll('#shopList .boutique-card'))
@@ -2070,6 +2202,77 @@
             return "other";
         }
 
+        /* ================= CONTENU HTML DES POSTS ================= */
+        // Les descriptions peuvent contenir le HTML produit par l'éditeur.
+        // On conserve uniquement les balises et attributs utiles et sûrs.
+        function sanitizePostHtml(value) {
+            const template = document.createElement('template');
+            template.innerHTML = String(value || '');
+            const allowedTags = new Set([
+                'A', 'B', 'BLOCKQUOTE', 'BR', 'CODE', 'EM', 'H2', 'H3', 'H4',
+                'I', 'IMG', 'LI', 'OL', 'P', 'PRE', 'S', 'SPAN', 'STRONG',
+                'U', 'UL'
+            ]);
+
+            // Supprime les marqueurs de commentaires ajoutés par certains éditeurs.
+            const commentWalker = document.createTreeWalker(template.content, NodeFilter.SHOW_COMMENT);
+            const comments = [];
+            while (commentWalker.nextNode()) comments.push(commentWalker.currentNode);
+            comments.forEach(comment => comment.remove());
+
+            template.content.querySelectorAll('script, style, iframe, object, embed, form').forEach(node => node.remove());
+            template.content.querySelectorAll('*').forEach(node => {
+                if (!allowedTags.has(node.tagName)) {
+                    node.replaceWith(...Array.from(node.childNodes));
+                    return;
+                }
+
+                Array.from(node.attributes).forEach(attribute => {
+                    const name = attribute.name.toLowerCase();
+                    if (name === 'style' && node.tagName !== 'IMG') {
+                        const safeStyles = attribute.value
+                            .split(';')
+                            .map(rule => rule.trim())
+                            .filter(rule => /^(color|background-color|font-size|font-family|text-align|font-weight)\s*:/i.test(rule))
+                            .join('; ');
+                        if (safeStyles) node.setAttribute('style', safeStyles);
+                        else node.removeAttribute('style');
+                        return;
+                    }
+                    if (node.tagName === 'A' && ['href', 'target', 'rel'].includes(name)) return;
+                    if (node.tagName === 'IMG' && ['src', 'alt', 'loading', 'width', 'height'].includes(name)) return;
+                    node.removeAttribute(attribute.name);
+                });
+
+                if (node.tagName === 'A') {
+                    const href = safeResourceUrl(node.getAttribute('href'));
+                    if (!href) node.removeAttribute('href');
+                    else {
+                        node.setAttribute('href', href);
+                        node.setAttribute('target', '_blank');
+                        node.setAttribute('rel', 'noopener noreferrer');
+                    }
+                }
+                if (node.tagName === 'IMG') {
+                    const src = safeResourceUrl(node.getAttribute('src'));
+                    if (!src) node.remove();
+                    else {
+                        node.setAttribute('src', src);
+                        node.setAttribute('loading', 'lazy');
+                    }
+                }
+            });
+            return template.innerHTML;
+        }
+
+        function createRichPostElement(tagName, className, html) {
+            const element = document.createElement(tagName);
+            if (className) element.className = className;
+            element.classList.add('rich-post-content');
+            element.innerHTML = sanitizePostHtml(html);
+            return element;
+        }
+
         function createShopElement(tagName, className, text) {
             const element = document.createElement(tagName);
             if (className) element.className = className;
@@ -2082,6 +2285,7 @@
             if (!url) return "";
             try {
                 const parsed = new URL(url, window.location.href);
+                if (parsed.protocol === "file:" && /^(?:\.\/)?images\//i.test(url)) return parsed.href;
                 return parsed.protocol === "https:" || parsed.protocol === "http:" ? parsed.href : "";
             } catch (error) {
                 return "";
@@ -2134,7 +2338,7 @@
                 const result = await response.json();
                 if (result.status !== "success" || !Array.isArray(result.items)) {
                     throw new Error(result.message || (result.status === "invalid_action"
-                        ? "Le déploiement Apps Script actuel ne contient pas encore la synchronisation ASTUCES. Redéployez Code.gs avec une nouvelle version."
+                        ? "Le service distant ne contient pas encore les astuces. Réessayez plus tard."
                         : "Réponse invalide de la feuille ASTUCES."));
                 }
                 tipsLoading.hidden = true;
@@ -2156,7 +2360,7 @@
             } catch (error) {
                 console.error("Erreur de chargement de la boutique ASTUCES:", error);
                 tipsLoading.hidden = true;
-                tipsError.textContent = error.message || "Impossible de charger les astuces depuis Google Sheets.";
+                tipsError.textContent = error.message || "Impossible de charger les astuces pour le moment.";
                 tipsError.hidden = false;
             }
         }
@@ -2196,7 +2400,7 @@
             } catch (loadError) {
                 console.error("Erreur de chargement de l’onglet HISTOIRE:", loadError);
                 loading.hidden = true;
-                error.textContent = loadError.message || "Impossible de charger les contenus depuis Google Sheets.";
+                error.textContent = loadError.message || "Impossible de charger les contenus pour le moment.";
                 error.hidden = false;
             }
         }
@@ -2212,7 +2416,7 @@
             card.dataset.viewed = String(Boolean(item.myViewed));
             card.appendChild(createShopElement('span', 'badge badge-love', item.type || "Contenu"));
             card.appendChild(createShopElement('h3', 'shop-name', item.title || "Sans titre"));
-            if (item.subtitle) card.appendChild(createShopElement('p', 'histoire-subtitle', item.subtitle));
+            if (item.subtitle) card.appendChild(createRichPostElement('p', 'histoire-subtitle', item.subtitle));
             const stats = createShopElement('p', 'shop-meta histoire-stats',
                 `Vues ${card.dataset.visits} · J’aime ${card.dataset.likes} · Partages ${card.dataset.shares}`);
             card.appendChild(stats);
@@ -2274,8 +2478,8 @@
             detail.appendChild(back);
             detail.appendChild(createShopElement('span', 'badge badge-love', item.type || "Contenu"));
             detail.appendChild(createShopElement('h2', 'shop-name', item.title || "Sans titre"));
-            if (item.subtitle) detail.appendChild(createShopElement('p', 'histoire-subtitle', item.subtitle));
-            detail.appendChild(createShopElement('div', 'histoire-content', item.content || "Aucun contenu disponible."));
+            if (item.subtitle) detail.appendChild(createRichPostElement('p', 'histoire-subtitle', item.subtitle));
+            detail.appendChild(createRichPostElement('div', 'histoire-content', item.content || "Aucun contenu disponible."));
             const audioUrl = safeResourceUrl(item.audioUrl);
             if (audioUrl) {
                 const audio = document.createElement('audio');
@@ -2472,7 +2676,7 @@
             const details = createShopElement('div', 'shop-details');
             details.appendChild(createShopElement('span', `badge ${category === 'pdf' ? 'badge-pdf' : category === 'apk' ? 'badge-apk' : category === 'blogger' ? '' : 'badge-it'}`, labels[category]));
             details.appendChild(createShopElement('div', 'shop-name', item.title || "Ressource sans titre"));
-            const shortDescription = createShopElement(
+            const shortDescription = createRichPostElement(
                 'div',
                 `shop-meta${isAstuce ? ' astuce-short-description' : ''}`,
                 item.shortDescription || item.description || ""
@@ -2487,8 +2691,7 @@
                 });
                 details.appendChild(readMoreButton);
             } else if (item.description && item.shortDescription && item.description !== item.shortDescription) {
-                const description = createShopElement('p', 'shop-meta', item.description);
-                description.style.whiteSpace = "pre-line";
+                const description = createRichPostElement('p', 'shop-meta', item.description);
                 details.appendChild(description);
             }
 
@@ -2552,9 +2755,9 @@
                 }
             }
             if (item.shortDescription) {
-                detailView.appendChild(createShopElement('p', 'shop-meta astuce-detail-description', item.shortDescription));
+                detailView.appendChild(createRichPostElement('p', 'shop-meta astuce-detail-description', item.shortDescription));
             }
-            detailView.appendChild(createShopElement('div', 'astuce-detail-description',
+            detailView.appendChild(createRichPostElement('div', 'astuce-detail-description',
                 item.description || item.shortDescription || "Aucune description disponible."));
             const destination = safeResourceUrl(item.redirectUrl) || safeResourceUrl(item.videoUrl);
             if (destination) {
@@ -2808,17 +3011,17 @@
                     updateAuthUI();
                     loadBoutiqueCatalog();
                 } else if (isAuthenticated) {
-                    showToast("Compte introuvable dans Google Sheets.");
+                    showToast("Compte introuvable.");
                 }
             } catch (err) {
-                console.error("Erreur de connexion Google Sheet:", err);
+                console.error("Erreur de connexion au service distant:", err);
             }
         }
 
         // 2. Transmettre les points, transactions et messages vers Google Sheet
         async function sendSupportMessageToGoogleSheet(message) {
             if (!GOOGLE_SHEET_SCRIPT_URL || GOOGLE_SHEET_SCRIPT_URL.includes("VOTRE_URL_WEB_APP")) {
-                throw new Error("URL Google Apps Script non configurée.");
+                throw new Error("Service distant non configuré.");
             }
 
             const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, {
@@ -2860,7 +3063,7 @@
                     body: JSON.stringify(payload)
                 });
             } catch (err) {
-                console.error("Erreur d'envoi vers Google Sheet:", err);
+                console.error("Erreur d'envoi vers le service distant:", err);
             }
         }
     </script>
