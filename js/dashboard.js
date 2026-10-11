@@ -1,7 +1,7 @@
 /* Dashboard Bentoul - logique de l'administration ----------------------- */
 
 // Même Web App que le site principal et que l'application Android.
-const API = "https://script.google.com/macros/s/AKfycbwDbd83T09iwFxnmURA1h-xHZhWNnsyN4FtzSkBIdIacmJCtYWvUJAKthaBS4ZTCAK9/exec";
+const API = "https://script.google.com/macros/s/AKfycbz7OXzg92XhseNWBL5qrBVmJLea8IJXsL26mIkbl_gkup05D24D-nwC9AxCA90X5c5w/exec";
 const $ = (selector) => document.querySelector(selector);
 
 // Champs utilisés par chaque collection du dashboard.
@@ -17,11 +17,15 @@ const definitions = {
   boutique: {
     label: "Boutique",
     fields: [["ID", "Identifiant"], ["TITREQ", "Titre"], ["DESCRIPTION", "Description", "textarea"], ["IMAGE", "Image"], ["URDOENLOAD", "Lien de téléchargement"], ["CREDITS", "Crédits", "number"], ["TYPE", "Type"]]
+  },
+  blog: {
+    label: "Blog",
+    fields: [["ID", "Identifiant"], ["TITRE", "Titre"], ["IMAGE", "Image"], ["CONTENU", "Contenu", "textarea"], ["HASHTAGS", "Hashtags"], ["DATE", "Date de publication"]]
   }
 };
 
 // Etat de l'interface.
-let data = { astuces: [], histoire: [], boutique: [], messages: [], update: [], analytics: { totalVisits: 0, uniqueVisitors: 0, byPage: [], byCountry: [], recent: [] } };
+let data = { astuces: [], histoire: [], boutique: [], blog: [], messages: [], update: [], analytics: { totalVisits: 0, uniqueVisitors: 0, byPage: [], byCountry: [], recent: [] } };
 let tab = "astuces";
 let editing = null;
 let updatePanelVisible = false;
@@ -59,6 +63,7 @@ async function load() {
       astuces: output.astuces || [],
       histoire: output.histoire || [],
       boutique: output.boutique || [],
+      blog: output.blog || [],
       messages: output.messages || [],
       update: output.update || [],
       analytics: output.analytics || { totalVisits: 0, uniqueVisitors: 0, byPage: [], byCountry: [], recent: [] }
@@ -284,7 +289,9 @@ function createButton(label, className, onClick) {
 }
 
 function editorKey() {
-  return tab === "histoire" ? "CONTNUE" : "DESCRIPTION";
+  if (tab === "histoire") return "CONTNUE";
+  if (tab === "blog") return "CONTENU";
+  return "DESCRIPTION";
 }
 
 function renderForm() {
