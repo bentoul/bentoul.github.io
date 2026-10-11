@@ -1,6 +1,7 @@
 /* Dashboard Bentoul - logique de l'administration ----------------------- */
 
-const API = "https://script.google.com/macros/s/AKfycbzAX4YuzRIx8OxWMd5ggA-Lu_Ou1AaVeBAfKlgxGtQ5DpaOiu0ODT_WmdARaVLZj8en/exec";
+// Même Web App que le site principal et que l'application Android.
+const API = "https://script.google.com/macros/s/AKfycbwDbd83T09iwFxnmURA1h-xHZhWNnsyN4FtzSkBIdIacmJCtYWvUJAKthaBS4ZTCAK9/exec";
 const $ = (selector) => document.querySelector(selector);
 
 // Champs utilisés par chaque collection du dashboard.
@@ -20,9 +21,10 @@ const definitions = {
 };
 
 // Etat de l'interface.
-let data = { astuces: [], histoire: [], boutique: [], messages: [] };
+let data = { astuces: [], histoire: [], boutique: [], messages: [], update: [], analytics: { totalVisits: 0, uniqueVisitors: 0, byPage: [], byCountry: [], recent: [] } };
 let tab = "astuces";
 let editing = null;
+let updatePanelVisible = false;
 
 // -------------------------------------------------------------------------
 // Utilitaires et communication avec Google Apps Script
@@ -57,7 +59,9 @@ async function load() {
       astuces: output.astuces || [],
       histoire: output.histoire || [],
       boutique: output.boutique || [],
-      messages: output.messages || []
+      messages: output.messages || [],
+      update: output.update || [],
+      analytics: output.analytics || { totalVisits: 0, uniqueVisitors: 0, byPage: [], byCountry: [], recent: [] }
     };
     localStorage.setItem("devmaster_username", username());
     render();
@@ -73,6 +77,145 @@ async function load() {
 function render() {
   renderList();
   renderForm();
+  renderUpdatePanel();
+  renderAnalytics();
+}
+
+function renderAnalytics() {
+  const analytics = data.analytics || {};
+  const setText = (selector, value) => { const element = $(selector); if (element) element.textContent = text(value); };
+  setText("#analyticsTotal", analytics.totalVisits || 0);
+  setText("#analyticsVisitors", analytics.uniqueVisitors || 0);
+  setText("#analyticsMostVisited", analytics.mostVisited ? `${analytics.mostVisited.name} (${analytics.mostVisited.count})` : "-");
+  const pagesTable = $("#analyticsPages");
+  if (pagesTable) {
+    pagesTable.replaceChildren();
+    if (!analytics.byPage || !analytics.byPage.length) {
+      pagesTable.innerHTML = '<tr><td colspan="4" class="empty">Aucune visite.</td></tr>';
+    } else {
+      analytics.byPage.forEach((item) => {
+        const row = document.createElement("tr");
+        const countries = (item.countries || []).slice(0, 3).map((country) => `${country.name} (${country.count})`).join(", ") || "Inconnu";
+        [item.name, item.count, countries, item.lastDate || "-"] .forEach((value) => {
+          const cell = document.createElement("td");
+          cell.textContent = text(value);
+          row.appendChild(cell);
+        });
+        pagesTable.appendChild(row);
+      });
+    }
+  }
+  function renderCounts(selector, items, empty) {
+    const list = $(selector);
+    if (!list) return;
+    list.replaceChildren();
+    if (!items || !items.length) { list.innerHTML = `<div class="empty">${empty}</div>`; return; }
+    items.forEach((item) => {
+      const row = document.createElement("div");
+      row.className = "row analytics-row";
+      row.innerHTML = "<strong></strong><span></span>";
+      row.querySelector("strong").textContent = item.name;
+      row.querySelector("span").textContent = `${item.count} visite${item.count > 1 ? "s" : ""}`;
+      list.appendChild(row);
+    });
+  }
+  renderCounts("#analyticsCountries", analytics.byCountry, "Aucun pays.");
+  const recent = $("#analyticsRecent");
+  if (!recent) return;
+  recent.replaceChildren();
+  (analytics.recent || []).forEach((visit) => {
+    const row = document.createElement("div");
+    row.className = "row analytics-row";
+    row.innerHTML = "<span></span><strong></strong>";
+    row.querySelector("span").textContent = visit.date || "";
+    row.querySelector("strong").textContent = `${visit.page || "-"} · ${visit.country || "Inconnu"}`;
+    recent.appendChild(row);
+  });
+  if (!recent.children.length) recent.innerHTML = '<div class="empty">Aucune visite.</div>';
+}
+
+function renderUpdatePanel() {
+  const list = $("#updateList");
+  if (!list) return;
+  list.replaceChildren();
+  if (!data.update.length) {
+    list.innerHTML = '<div class="empty">Aucune version enregistrée.</div>';
+    return;
+  }
+  data.update.slice().reverse().forEach((item) => {
+    const row = document.createElement("article");
+    row.className = "update-row";
+    const details = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = `Version ${item.VERSION_NAME || item.VERSION_CODE}`;
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = `Code ${item.VERSION_CODE || "-"} · ${item.ACTIVE === "TRUE" ? "Active" : "Inactive"}${item.FORCE_UPDATE === "TRUE" ? " · Obligatoire" : ""}`;
+    const url = document.createElement("div");
+    url.className = "meta";
+    url.textContent = item.DOWNLOAD_URL || "URL APK absente";
+    details.append(title, meta, url);
+    const actions = document.createElement("div");
+    actions.className = "actions";
+    actions.appendChild(createButton("Modifier", "btn", () => editUpdate(item)));
+    row.append(details, actions);
+    list.appendChild(row);
+  });
+}
+
+function showUpdatePanel() {
+  updatePanelVisible = true;
+  hideAnalyticsPanel();
+  closeDrawers();
+  $(".grid").classList.add("hidden");
+  $("#updatePanel").classList.remove("hidden");
+  $("#updateAppTopBtn").classList.add("active");
+  renderUpdatePanel();
+}
+
+function showAnalyticsPanel() {
+  updatePanelVisible = false;
+  closeDrawers();
+  $(".grid").classList.add("hidden");
+  $("#updatePanel").classList.add("hidden");
+  $("#analyticsPanel").classList.remove("hidden");
+  $("#analyticsTopBtn").classList.add("active");
+  renderAnalytics();
+}
+
+function hideAnalyticsPanel() {
+  $(".grid").classList.remove("hidden");
+  $("#analyticsPanel").classList.add("hidden");
+  $("#analyticsTopBtn").classList.remove("active");
+}
+
+function hideUpdatePanel() {
+  updatePanelVisible = false;
+  $(".grid").classList.remove("hidden");
+  $("#updatePanel").classList.add("hidden");
+  $("#updateAppTopBtn").classList.remove("active");
+}
+
+function resetUpdateForm() {
+  $("#updateRow").value = "";
+  $("#updateVersionCode").value = "";
+  $("#updateVersionName").value = "";
+  $("#updateDownloadUrl").value = "";
+  $("#updateMessage").value = "";
+  $("#updateActive").checked = true;
+  $("#updateForce").checked = false;
+}
+
+function editUpdate(item) {
+  showUpdatePanel();
+  $("#updateRow").value = item.row || "";
+  $("#updateVersionCode").value = item.VERSION_CODE || "";
+  $("#updateVersionName").value = item.VERSION_NAME || "";
+  $("#updateDownloadUrl").value = item.DOWNLOAD_URL || "";
+  $("#updateMessage").value = item.MESSAGE || "";
+  $("#updateActive").checked = String(item.ACTIVE).toUpperCase() === "TRUE";
+  $("#updateForce").checked = String(item.FORCE_UPDATE).toUpperCase() === "TRUE";
+  $("#updateVersionCode").focus();
 }
 
 function renderList() {
@@ -271,6 +414,7 @@ function openOptions() {
 function setupNavigation() {
   const select = $("#collectionSelect");
   select.addEventListener("change", () => {
+    hideUpdatePanel();
     tab = select.value;
     editing = null;
     render();
@@ -279,8 +423,15 @@ function setupNavigation() {
   $("#optionsBtn").addEventListener("click", openOptions);
   $("#listCloseBtn").addEventListener("click", closeDrawers);
   drawerBackdrop.addEventListener("click", closeDrawers);
+  $("#updateAppTopBtn").addEventListener("click", showUpdatePanel);
+  $("#analyticsTopBtn").addEventListener("click", showAnalyticsPanel);
+  $("#closeAnalyticsBtn").addEventListener("click", hideAnalyticsPanel);
+  $("#closeUpdateBtn").addEventListener("click", hideUpdatePanel);
+  $("#newUpdateBtn").addEventListener("click", resetUpdateForm);
   document.querySelectorAll("[data-tab]").forEach((button) => {
     button.addEventListener("click", () => {
+      hideUpdatePanel();
+      hideAnalyticsPanel();
       tab = button.dataset.tab;
       select.value = tab;
       editing = null;
@@ -450,6 +601,35 @@ $("#editorForm").addEventListener("submit", async (event) => {
     editing = null;
     say("Ressource enregistrée.");
     await load();
+  } catch (error) {
+    say(error.message, true);
+  }
+});
+
+$("#updateForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const values = {
+    VERSION_CODE: $("#updateVersionCode").value,
+    VERSION_NAME: $("#updateVersionName").value.trim(),
+    DOWNLOAD_URL: $("#updateDownloadUrl").value.trim(),
+    MESSAGE: $("#updateMessage").value.trim(),
+    ACTIVE: $("#updateActive").checked ? "TRUE" : "FALSE",
+    FORCE_UPDATE: $("#updateForce").checked ? "TRUE" : "FALSE"
+  };
+  try {
+    await api(API, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({
+        action: "dashboardUpdateSave",
+        username: username(),
+        row: $("#updateRow").value || 0,
+        values
+      })
+    });
+    say("Version de l’application enregistrée.");
+    await load();
+    showUpdatePanel();
   } catch (error) {
     say(error.message, true);
   }

@@ -61,6 +61,7 @@ button { cursor: pointer; }
   align-items: center;
   line-height: 1; 
 }
+.analytics-icon { width: 16px; height: 16px; display: block; }
 
 /* Structure générale ------------------------------------------------------ */
 .wrap { max-width: 1180px; margin: 22px auto; padding: 0 18px; }
@@ -83,6 +84,43 @@ button { cursor: pointer; }
 .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .form-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
 .hidden { display: none !important; }
+
+/* Panneau d’administration des versions Android. */
+.update-panel { margin-top: 18px; }
+.analytics-panel { margin-top: 18px; }
+.analytics-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 20px; }
+.analytics-card { display: grid; gap: 4px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fbfdff; }
+.analytics-card strong { color: var(--primary); font-size: 1.8rem; }
+.analytics-card span { color: var(--muted); font-size: .8rem; }
+.analytics-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-bottom: 20px; }
+.analytics-panel h3 { margin: 0 0 10px; font-size: .95rem; }
+.analytics-row { align-items: center; padding: 9px 12px; font-size: .85rem; }
+.analytics-row span { color: var(--muted); font-size: .78rem; }
+.analytics-table-wrap { margin-bottom: 20px; overflow-x: auto; }
+.analytics-table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+.analytics-table th, .analytics-table td { padding: 11px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+.analytics-table th { color: var(--muted); font-size: .75rem; text-transform: uppercase; }
+.analytics-table td:nth-child(2) { color: var(--primary); font-weight: 800; }
+.update-panel-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+.update-panel-header h2 { margin: 4px 0 6px; }
+.eyebrow { color: var(--primary); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.muted { margin: 0; color: var(--muted); font-size: .88rem; }
+.update-form { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: #fbfdff; }
+.update-form .full { grid-column: 1 / -1; }
+.check-field { display: flex; align-items: center; gap: 8px; padding: 10px 0; color: #334155; font-weight: 700; }
+.check-field input { width: 18px; height: 18px; accent-color: var(--primary); }
+.update-history { margin-top: 22px; }
+.update-history h3 { margin: 0 0 10px; font-size: .95rem; }
+.update-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; margin-bottom: 8px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.update-row strong { color: var(--primary); }
+.update-row .meta { margin-top: 4px; overflow-wrap: anywhere; }
+.update-row .actions { flex: 0 0 auto; }
+@media (max-width: 640px) {
+  .analytics-cards, .analytics-columns { grid-template-columns: 1fr; }
+  .update-panel-header { flex-direction: column; }
+  .update-row { align-items: flex-start; flex-direction: column; }
+  .update-row .actions { width: 100%; }
+}
 .empty { padding: 20px; color: var(--muted); text-align: center; }
 .message { display: grid; gap: 10px; }
 .message-head { display: flex; justify-content: space-between; gap: 10px; font-size: .8rem; }
@@ -137,7 +175,9 @@ button { cursor: pointer; }
   .top { align-items: flex-start; flex-direction: column; }
   .top-actions { width: 100%; justify-content: stretch; }
   .top-actions .field { flex: 1; min-width: 150px; }
-  .toolbar { display: none; }
+  .toolbar { display: flex; align-items: flex-start; overflow-x: auto; margin-bottom: 0; padding: 10px; border-radius: 0; }
+  .tabs { display: flex; flex: 0 0 auto; gap: 6px; white-space: nowrap; }
+  .tabs button { padding: 8px 10px; font-size: .72rem; }
   .wrap { width: 100%; margin: 0; padding: 0; }
   .panel { width: 100%; padding: 12px; border-right: 0; border-left: 0; border-radius: 0; }
   .editor-toolbar { border-right: 0; border-left: 0; border-radius: 0; }

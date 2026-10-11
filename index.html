@@ -1430,7 +1430,7 @@
     <script>
         // ================= CONFIGURATION DU SERVICE DISTANT =================
         // Endpoint utilisé par l'application.
-        const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxktx6aHTYhN8t0trTXA5_pu8Bn8fTz2Y40ggpT6pYfgESeiLuxsnnf5tZEpWBBvBl/exec";
+        const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvHEy11XcBxSKh57Ad4P99cIbZW4D_JOpBADIZjki8L6RIaT_e-bqD6dbvU4ajf-M0/exec"
         let isSignupMode = false;
         let isAuthenticated = localStorage.getItem('devmaster_authenticated') === 'true' &&
             Boolean(localStorage.getItem('devmaster_username'));
@@ -1604,6 +1604,42 @@
                 window.history[updateUrl ? 'pushState' : 'replaceState']({ tab: tabId }, '', pageUrl);
             }
             hideTabLoading();
+            trackSiteVisit_(tabId);
+        }
+
+        // Statistiques anonymes : un seul enregistrement par visiteur et par onglet.
+        async function getVisitorCountry_() {
+            const cached = localStorage.getItem('bentoul_visitor_country');
+            if (cached) return cached;
+            try {
+                const response = await fetch('https://ipapi.co/json/', { credentials: 'omit' });
+                const data = await response.json();
+                const country = String(data.country_name || data.country || 'Inconnu').slice(0, 80);
+                localStorage.setItem('bentoul_visitor_country', country);
+                return country;
+            } catch (error) {
+                return 'Inconnu';
+            }
+        }
+
+        async function trackSiteVisit_(tabId) {
+            if (!GOOGLE_SHEET_SCRIPT_URL || GOOGLE_SHEET_SCRIPT_URL.includes('VOTRE_URL_WEB_APP')) return;
+            const page = TAB_ROUTES[tabId];
+            if (!page) return;
+            const sentKey = `bentoul_site_visit_sent_${page}`;
+            if (sessionStorage.getItem(sentKey)) return;
+            const country = await getVisitorCountry_();
+            try {
+                const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'trackSiteVisit', page, country, visitorKey: getAstuceViewerKey() })
+                });
+                const result = await response.json();
+                if (result.status === 'success' || result.status === 'already_viewed') sessionStorage.setItem(sentKey, '1');
+            } catch (error) {
+                console.error('Erreur de suivi de visite:', error);
+            }
         }
 
         window.addEventListener('popstate', () => switchTab(getTabFromLocation_(), false));

@@ -17,18 +17,19 @@
       <button class="btn icon-btn" id="listOpenBtn" type="button" title="Ouvrir la liste" aria-label="Ouvrir la liste" aria-expanded="false" aria-controls="listPanel">☷</button>
       <button class="btn icon-btn" id="optionsBtn" type="button" title="Ouvrir les options" aria-label="Ouvrir les options" aria-expanded="false" aria-controls="editorSidebar">⚙</button>
       <button class="btn primary icon-btn" id="refreshBtn" type="button" title="Actualiser" aria-label="Actualiser">↻</button>
+      <button class="btn icon-btn" id="analyticsTopBtn" type="button" title="Voir les visites" aria-label="Voir les visites">
+        <svg class="analytics-icon" aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+          <path d="M4 19V5m0 14h16M7 15l3-4 3 2 5-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="7" cy="15" r="1" fill="currentColor"/><circle cx="10" cy="11" r="1" fill="currentColor"/><circle cx="13" cy="13" r="1" fill="currentColor"/><circle cx="18" cy="6" r="1" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="btn icon-btn" id="updateAppTopBtn" type="button" title="Gérer les mises à jour" aria-label="Gérer les mises à jour">↥</button>
     </div>
   </header>
 
   <main class="wrap">
     <!-- Barre de statut : les onglets sont pilotés par le sélecteur de l'éditeur -->
     <section class="toolbar">
-      <div class="tabs">
-        <button class="active" data-tab="astuces" type="button">ASTUCES</button>
-        <button data-tab="histoire" type="button">HISTOIRE</button>
-        <button data-tab="boutique" type="button">BOUTIQUE</button>
-        <button data-tab="messages" type="button">MESSAGES</button>
-      </div>
       <span class="status" id="status">Entrez votre compte ADMIN puis actualisez.</span>
     </section>
 
@@ -87,6 +88,77 @@
         </form>
         <div class="hidden" id="replyBox"></div>
       </section>
+    </section>
+
+    <section class="panel analytics-panel hidden" id="analyticsPanel" aria-labelledby="analyticsTitle">
+      <div class="update-panel-header">
+        <div>
+          <span class="eyebrow">Statistiques anonymes</span>
+          <h2 id="analyticsTitle">Visites du site</h2>
+          <p class="muted">Une seule visite comptée par navigateur et par onglet.</p>
+        </div>
+        <button class="btn" id="closeAnalyticsBtn" type="button">Retour au contenu</button>
+      </div>
+      <div class="analytics-cards">
+        <div class="analytics-card"><strong id="analyticsTotal">0</strong><span>visites uniques</span></div>
+        <div class="analytics-card"><strong id="analyticsVisitors">0</strong><span>visiteurs uniques</span></div>
+        <div class="analytics-card"><strong id="analyticsMostVisited">-</strong><span>onglet le plus visité</span></div>
+      </div>
+      <div class="analytics-table-wrap">
+        <h3>Visites par onglet</h3>
+        <table class="analytics-table">
+          <thead><tr><th>Page / onglet</th><th>Nombre de fois</th><th>Pays</th><th>Dernière visite</th></tr></thead>
+          <tbody id="analyticsPages"></tbody>
+        </table>
+      </div>
+      <div class="analytics-columns"><div><h3>Visites par pays</h3><div class="list" id="analyticsCountries"></div></div></div>
+      <h3>Visites récentes</h3>
+      <div class="list" id="analyticsRecent"></div>
+    </section>
+
+    <!-- Administration des versions Android -->
+    <section class="panel update-panel hidden" id="updatePanel" aria-labelledby="updatePanelTitle">
+      <div class="update-panel-header">
+        <div>
+          <span class="eyebrow">Administration</span>
+          <h2 id="updatePanelTitle">Mise à jour de l’application</h2>
+          <p class="muted">Publiez une version Android et contrôlez le message affiché aux utilisateurs.</p>
+        </div>
+        <button class="btn" id="closeUpdateBtn" type="button">Retour au contenu</button>
+      </div>
+
+      <form id="updateForm" class="update-form">
+        <input id="updateRow" type="hidden">
+        <div class="form-grid">
+          <div class="field">
+            <label for="updateVersionCode">Code version</label>
+            <input id="updateVersionCode" type="number" min="1" step="1" required placeholder="Ex. 2">
+          </div>
+          <div class="field">
+            <label for="updateVersionName">Nom version</label>
+            <input id="updateVersionName" required placeholder="Ex. 1.1">
+          </div>
+          <div class="field full">
+            <label for="updateDownloadUrl">URL HTTPS directe de l’APK</label>
+            <input id="updateDownloadUrl" type="url" required placeholder="https://exemple.com/admBentoul-1.1.apk">
+          </div>
+          <div class="field full">
+            <label for="updateMessage">Message de mise à jour</label>
+            <textarea id="updateMessage" rows="4" placeholder="Une nouvelle version de l’application est disponible."></textarea>
+          </div>
+          <label class="check-field"><input id="updateActive" type="checkbox" checked> Version active</label>
+          <label class="check-field"><input id="updateForce" type="checkbox"> Mise à jour obligatoire</label>
+        </div>
+        <div class="form-actions">
+          <button class="btn" id="newUpdateBtn" type="button">Nouvelle version</button>
+          <button class="btn primary" type="submit">Enregistrer la version</button>
+        </div>
+      </form>
+
+      <div class="update-history">
+        <h3>Versions enregistrées</h3>
+        <div class="list" id="updateList"></div>
+      </div>
     </section>
   </main>
 
