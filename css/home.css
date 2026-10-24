@@ -1,0 +1,348 @@
+
+/* ==========================================
+   BENTOUL — ACCUEIL
+========================================== */
+
+.home-page {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 100%;
+}
+
+.home-greeting h1 {
+    margin: 8px 0;
+    font-size: clamp(22px, 3vw, 28px);
+    letter-spacing: -0.8px;
+}
+
+.home-greeting p,
+.home-section-heading p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+.home-eyebrow,
+.hero-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--primary);
+}
+
+.home-hero {
+    position: relative;
+    overflow: hidden;
+    padding: 25px 20px;
+    border-radius: 22px;
+    color: #fff;
+    background:
+        radial-gradient(circle at 100% 0%,
+            rgba(59, 130, 246, 0.5), transparent 42%),
+        linear-gradient(145deg, #172554, #111827);
+}
+
+.home-hero .hero-label {
+    color: #bfdbfe;
+    line-height: 1.6;
+}
+
+.home-hero h2 {
+    max-width: 340px;
+    margin: 16px 0 12px;
+    font-size: clamp(27px, 4vw, 38px);
+    line-height: 1.12;
+    letter-spacing: -1px;
+}
+
+.home-hero h2 span {
+    color: #93c5fd;
+}
+
+.home-hero p {
+    max-width: 380px;
+    margin: 0;
+    color: #dbeafe;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.hero-actions {
+    margin-top: 20px;
+}
+
+.home-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 12px;
+    color: #fff;
+    background: #2563eb;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.home-primary-btn:active {
+    transform: scale(.98);
+}
+
+.hero-platforms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 20px;
+}
+
+.hero-platforms span {
+    padding: 8px 10px;
+    border: 1px solid rgba(255,255,255,.17);
+    border-radius: 10px;
+    background: rgba(255,255,255,.08);
+    font-size: 12px;
+}
+
+.home-section {
+    min-width: 0;
+}
+
+.home-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.home-section-heading h2 {
+    margin: 0 0 5px;
+    font-size: 20px;
+    letter-spacing: -.5px;
+}
+
+.home-text-btn {
+    flex-shrink: 0;
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.home-category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-category-card {
+    position: relative;
+    min-width: 0;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: #fff;
+    color: var(--text);
+    text-align: left;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.home-category-card:active {
+    transform: scale(.98);
+}
+
+.category-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    font-size: 23px;
+}
+
+.category-blue .category-icon {
+    background: #eff6ff;
+}
+
+.category-green .category-icon {
+    background: #f0fdf4;
+}
+
+.category-purple .category-icon {
+    background: #f5f3ff;
+}
+
+.category-orange .category-icon {
+    background: #fff7ed;
+}
+
+.home-category-card strong {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.category-description {
+    color: var(--text-muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.category-arrow {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    color: #9ca3af;
+}
+
+.home-series-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.home-series-card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    background: #fff;
+}
+
+.series-image {
+    display: block;
+    width: 100%;
+    height: 145px;
+    object-fit: cover;
+    background: #f3f4f6;
+}
+
+.series-info {
+    padding: 15px;
+}
+
+.series-category {
+    color: var(--primary);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+.series-info h3 {
+    margin: 9px 0 7px;
+    font-size: 18px;
+}
+
+.series-info p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.series-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.episode-count {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.series-open-btn {
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.home-tip-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 17px;
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    background: #eff6ff;
+}
+
+.tip-icon {
+    font-size: 25px;
+}
+
+.home-tip-box h3 {
+    margin: 0 0 7px;
+    font-size: 14px;
+}
+
+.home-tip-box p {
+    margin: 0;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.home-footer {
+    padding: 10px 0 4px;
+    text-align: center;
+}
+
+.home-footer strong {
+    color: var(--primary);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.home-footer p {
+    color: var(--text-muted);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+@media (min-width: 769px) {
+    .home-series-card {
+        display: grid;
+        grid-template-columns: 125px minmax(0, 1fr);
+    }
+
+    .series-image {
+        height: 100%;
+        min-height: 180px;
+    }
+
+    .home-category-card:hover {
+        box-shadow: 0 5px 20px rgba(0,0,0,.05);
+    }
+}
+
+@media (max-width: 380px) {
+    .home-category-card {
+        padding: 11px;
+    }
+
+    .home-hero {
+        padding: 21px 16px;
+    }
+
+    .series-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
