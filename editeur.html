@@ -2,16 +2,25 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
 <meta name="theme-color" content="#2563eb">
 <title>Éditeur BENTOUL CREATION</title>
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:15px;background:#f1f5f9;color:#172033;font-family:Arial,sans-serif}
-.app{max-width:1100px;margin:auto}
+html,body{height:100%}
+body{
+    margin:0;padding:15px;background:#f1f5f9;color:#172033;font-family:Arial,sans-serif;
+    height:100vh;
+    height:100dvh;
+    overflow:hidden
+}
+.app{
+    max-width:1100px;margin:0 auto;width:100%;height:100%;
+    display:flex;flex-direction:column;min-height:0
+}
 h2{font-size:21px;margin:0 0 15px}
-.setting{display:flex;flex-wrap:nowrap;gap:8px;margin-bottom:12px}
+.setting{display:flex;flex-wrap:nowrap;gap:8px;margin-bottom:12px;flex-shrink:0}
 .setting select,.setting input{
     min-width:0;width:100%;height:42px;padding:0 10px;
     border:1px solid #d5dce8;border-radius:8px;background:#fff;outline:none
@@ -23,7 +32,8 @@ h2{font-size:21px;margin:0 0 15px}
 
 .toolbar{
     display:flex;flex-wrap:wrap;gap:5px;padding:9px;background:#fff;
-    border:1px solid #d5dce8;border-radius:10px 10px 0 0
+    border:1px solid #d5dce8;border-radius:10px 10px 0 0;
+    flex-shrink:0
 }
 .toolbar button,.toolbar select,.toolbar input[type="color"]{
     height:34px;min-width:34px;padding:0 9px;border:1px solid #e2e8f0;
@@ -33,10 +43,15 @@ h2{font-size:21px;margin:0 0 15px}
 .toolbar .separator{width:1px;background:#d5dce8;margin:2px 4px}
 
 .editor{
-    display:block;width:100%;min-height:420px;padding:20px;
+    display:block;width:100%;
+    flex:1 1 0;
+    min-height:0;
+    padding:20px;
     background:#fff;border:1px solid #d5dce8;border-top:0;
     border-radius:0 0 10px 10px;outline:none;line-height:1.8;
-    overflow-wrap:anywhere;white-space:normal
+    overflow-wrap:anywhere;white-space:normal;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch
 }
 .editor:focus{box-shadow:inset 0 0 0 1px #93c5fd}
 .editor img{max-width:100%;height:auto;border-radius:8px;margin:8px 0}
@@ -46,15 +61,18 @@ h2{font-size:21px;margin:0 0 15px}
 }
 .hidden{display:none!important}
 
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;flex-shrink:0}
 .btn{border:0;padding:11px 16px;border-radius:8px;font-weight:bold;cursor:pointer}
 .btn-primary{background:#2563eb;color:white}
 .btn-secondary{background:#e2e8f0;color:#172033}
 .btn:disabled{opacity:.6;cursor:wait}
 
 #message{
+    position: fixed;top: 50%;left: 50%;transform: translateX(-50%);
     display:none;margin:12px 0;padding:12px;border-radius:8px;
-    font-size:14px;overflow-wrap:anywhere
+    font-size:14px;overflow-wrap:anywhere;
+    cursor:pointer;
+    touch-action:manipulation
 }
 #message.success{display:block;background:#dcfce7;color:#166534}
 #message.error{display:block;background:#fee2e2;color:#991b1b}
@@ -62,16 +80,23 @@ h2{font-size:21px;margin:0 0 15px}
 
 @media(max-width:700px){
     body{padding:10px}
-    .setting{flex-wrap:wrap}
-    .setting select,.setting input{flex:1 1 calc(50% - 8px)}
-    .editor{min-height:350px;padding:14px}
+    .setting{flex-wrap:wrap;margin-bottom:8px}
+    .setting #serie,
+    .setting #episode,
+    .setting #NomSerie,
+    .setting #titre,
+    .setting #statut{flex:1 1 calc(50% - 8px)}
+    .toolbar{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:6px}
+    .toolbar>*{flex:0 0 auto}
+    .editor{padding:14px}
+    .actions{margin-top:8px}
+    .actions .btn{flex:1}
 }
 </style>
 </head>
 
 <body>
 <div class="app">
-    <h2>Éditeur BENTOUL CREATION</h2>
 
     <div id="message" role="status" aria-live="polite"></div>
 
@@ -130,12 +155,76 @@ h2{font-size:21px;margin:0 0 15px}
         <button type="button" id="undoBtn" title="Annuler">↶</button>
         <button type="button" id="redoBtn" title="Rétablir">↷</button>
 
+        <button type="button" id="cleanTextBtn" title="Supprimer toutes les balises HTML">
+  🧹</button>
+            <button type="button" id="toggleViewHtml" title="Basculer entre éditeur texte et HTML">
+    &lt;/&gt; Voir HTML
+</button>
+
         <input type="file" id="imageFile" accept="image/*" hidden>
     </div>
 
     <div class="editor" id="editor" contenteditable="true"
          role="textbox" aria-label="Contenu"
          aria-multiline="true"></div>
+
+         <textarea id="htmlSource"
+    class="html-source hidden"
+    spellcheck="false"
+    autocapitalize="off"
+    autocomplete="off"
+    autocorrect="off"
+    aria-label="Code source HTML"
+    placeholder="Modifie ton code HTML ici..."></textarea>
+    <style>
+        /* ÉDITEUR DE CODE HTML */
+/* ÉDITEUR HTML : RETOUR À LA LIGNE ET COLORATION */
+.html-source {
+    display: block;
+    width: 100%;
+    flex: 1 1 0;
+    min-height: 0;
+    height: auto;
+    padding: 20px;
+    resize: none;
+    border: 1px solid #1e293b;
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    outline: none;
+
+    background: #0b1020;
+    color: #f8fafc;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.7;
+
+    /* Empêcher le défilement horizontal */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    tab-size: 2;
+}
+
+.html-source:focus {
+    box-shadow: inset 0 0 0 1px #3b82f6;
+}
+
+#toggleViewHtml {
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-weight: bold;
+}
+
+@media(max-width:700px) {
+    .html-source {
+        padding: 14px;
+        font-size: 13px;
+    }
+}
+    </style>
 
     <div class="actions">
         <button type="button" class="btn btn-primary" id="saveBtn">
@@ -161,6 +250,8 @@ let currentEpisodeId = "";
 let currentImageData = "";
 let currentMode = "serie"; // "serie" ou "episode"
 
+
+
 /* MESSAGES */
 function message(text,type="info"){
     $("message").textContent = text;
@@ -172,6 +263,15 @@ function clearMessage(){
     $("message").className = "";
 }
 
+/* FERMER LE MESSAGE EN LE TOUCHANT */
+$("message").addEventListener("click", clearMessage);
+
+$("message").addEventListener("keydown", event => {
+    if(event.key === "Enter" || event.key === " "){
+        event.preventDefault();
+        clearMessage();
+    }
+});
 /* MISE À JOUR DE L'AFFICHAGE DU MODE */
 function updateUI(){
     const isSerie = currentMode === "serie";
@@ -464,11 +564,12 @@ function extractFirstImage(html){
 async function saveContent(){
     clearMessage();
 
-    const serieSelectValue = $("serie").value;
-    const episodeSelectValue = $("episode").value;
     const nomSerie = $("NomSerie").value.trim();
     const titreEpisode = $("titre").value.trim();
-    const contenu = $("editor").innerHTML;
+    const contenu = htmlViewActive
+    ? $("htmlSource").value
+    : $("editor").innerHTML;
+
     const statut = $("statut").value;
 
     const firstImg = extractFirstImage(contenu);
@@ -570,6 +671,141 @@ async function saveContent(){
         updateUI();
     }
 }
+
+/* BASCULER ENTRE L'ÉDITEUR VISUEL ET LE CODE HTML */
+let htmlViewActive = false;
+
+$("toggleViewHtml").addEventListener("click", function () {
+    const visualEditor = $("editor");
+    const htmlEditor = $("htmlSource");
+    const toggleButton = $("toggleViewHtml");
+
+    if (!htmlViewActive) {
+        // Passer de l'éditeur visuel au code source.
+        htmlEditor.value = visualEditor.innerHTML;
+
+        visualEditor.classList.add("hidden");
+        htmlEditor.classList.remove("hidden");
+
+        toggleButton.innerHTML = "📝 Éditeur texte";
+        toggleButton.title = "Retourner à l'éditeur visuel";
+
+        htmlViewActive = true;
+        htmlEditor.focus();
+
+        message("Mode HTML activé. Tu peux modifier le code source.", "info");
+
+    } else {
+        // Appliquer le HTML modifié à l'éditeur visuel.
+        visualEditor.innerHTML = htmlEditor.value;
+
+        htmlEditor.classList.add("hidden");
+        visualEditor.classList.remove("hidden");
+
+        toggleButton.innerHTML = "&lt;/&gt; Voir HTML";
+        toggleButton.title = "Basculer vers le code HTML";
+
+        htmlViewActive = false;
+        visualEditor.focus();
+
+        message("Les modifications HTML ont été appliquées.", "success");
+    }
+});
+
+/* SUPPRIMER TOUTES LES BALISES SAUF IMG ET A */
+$("cleanTextBtn").addEventListener("click", function () {
+    if (!confirm(
+        "Supprimer toutes les balises HTML sauf les liens et les images ?"
+    )) {
+        return;
+    }
+
+    const editor = $("editor");
+
+    // Copier le contenu pour le nettoyer.
+    const temp = document.createElement("div");
+    temp.innerHTML = editor.innerHTML;
+
+    // Ajouter des retours à la ligne avant de retirer les balises
+    // structurelles, pour éviter de coller tous les paragraphes.
+    temp.querySelectorAll("br").forEach(el => {
+        el.replaceWith(document.createTextNode("\n"));
+    });
+
+    temp.querySelectorAll(
+        "p, div, h1, h2, h3, h4, h5, h6, li, blockquote, tr"
+    ).forEach(el => {
+        el.appendChild(document.createTextNode("\n"));
+    });
+
+    // Parcourir les éléments de l'intérieur vers l'extérieur.
+    // Seules les balises <a> et <img> sont conservées.
+    function nettoyer(parent) {
+        Array.from(parent.childNodes).forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                nettoyer(node);
+
+                const tag = node.tagName.toLowerCase();
+
+                if (tag !== "a" && tag !== "img") {
+                    // Retirer la balise en gardant son contenu.
+                    node.replaceWith(...Array.from(node.childNodes));
+                } else if (tag === "a") {
+                    // Garder les attributs utiles du lien.
+                    Array.from(node.attributes).forEach(attr => {
+                        if (!["href", "target", "rel", "title", "download"]
+                            .includes(attr.name.toLowerCase())) {
+                            node.removeAttribute(attr.name);
+                        }
+                    });
+                } else if (tag === "img") {
+                    // Garder les informations nécessaires à l'image.
+                    Array.from(node.attributes).forEach(attr => {
+                        if (![
+                            "src", "alt", "title", "width", "height",
+                            "loading", "srcset", "sizes"
+                        ].includes(attr.name.toLowerCase())) {
+                            node.removeAttribute(attr.name);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    nettoyer(temp);
+
+    // Nettoyer les espaces et les retours à la ligne excessifs.
+    function nettoyerTexte(node) {
+        Array.from(node.childNodes).forEach(child => {
+            if (child.nodeType === Node.TEXT_NODE) {
+                child.textContent = child.textContent
+                    .replace(/\u00a0/g, " ")
+                    .replace(/[ \t]+/g, " ");
+            } else if (child.nodeType === Node.ELEMENT_NODE &&
+                       child.tagName.toLowerCase() === "a") {
+                // Ne pas modifier le contenu du lien.
+            } else if (child.nodeType === Node.ELEMENT_NODE &&
+                       child.tagName.toLowerCase() === "img") {
+                // Conserver l'image.
+            } else {
+                nettoyerTexte(child);
+            }
+        });
+    }
+
+    nettoyerTexte(temp);
+
+    // Récupérer le contenu nettoyé.
+    editor.innerHTML = temp.innerHTML;
+
+    message(
+        "Formatage terminé : toutes les balises ont été supprimées sauf <a> et <img>.",
+        "success"
+    );
+
+    editor.focus();
+});
 
 /* OUTILS DE FORMATAGE */
 document.querySelectorAll("[data-command]").forEach(button=>{

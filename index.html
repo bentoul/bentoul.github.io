@@ -3,9 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="BENTOUL CREATION : séries, épisodes et communauté.">
-  <title>BENTOUL CREATION</title>
+  <meta name="theme-color" content="#2563eb">
+  <meta name="description" content="BENTOUL CREATION : découvre des séries, lis des épisodes, partage tes impressions et rejoins notre communauté. Des histoires à suivre et à partager en ligne.">
+  <meta name="keywords" content="BENTOUL CREATION, séries, épisodes, histoires, lecture en ligne, séries haïtiennes, histoires d'amour, communauté, épisodes gratuits">
+  <meta name="author" content="BENTOUL CREATION">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="application-name" content="BENTOUL CREATION">
+  <meta name="apple-mobile-web-app-title" content="BENTOUL CREATION">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <title>BENTOUL CREATION — Séries et épisodes en ligne</title>
+
+  <!-- URL principale du site -->
+  <link rel="canonical" href="https://bentoul.github.io/">
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <link rel="shortcut icon" href="images/logo.png">
+  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="preload" as="image" href="images/home.jpg">
+
+  <!-- Open Graph : aperçu lors du partage sur Facebook, WhatsApp et autres réseaux -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BENTOUL CREATION">
+  <meta property="og:title" content="BENTOUL CREATION — Séries et épisodes en ligne">
+  <meta property="og:description" content="Découvre des séries, lis des épisodes, partage tes impressions et rejoins la communauté BENTOUL CREATION.">
+  <meta property="og:url" content="https://bentoul.github.io/">
+  <meta property="og:image" content="https://bentoul.github.io/images/home.jpg">
+  <meta property="og:image:secure_url" content="https://bentoul.github.io/images/home.jpg">
+  <meta property="og:image:alt" content="BENTOUL CREATION — séries et épisodes">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BENTOUL CREATION — Séries et épisodes en ligne">
+  <meta name="twitter:description" content="Découvre des séries et des épisodes, et partage tes impressions avec BENTOUL CREATION.">
+  <meta name="twitter:image" content="https://bentoul.github.io/images/home.jpg">
+  <meta name="twitter:image:alt" content="BENTOUL CREATION — séries et épisodes">
+
+  <!-- Données structurées pour les moteurs de recherche -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "BENTOUL CREATION",
+    "alternateName": "Bentoul Creation",
+    "url": "https://bentoul.github.io/",
+    "description": "Découvre des séries, lis des épisodes et rejoins la communauté BENTOUL CREATION.",
+    "inLanguage": "fr",
+    "publisher": {
+      "@type": "Organization",
+      "name": "BENTOUL CREATION",
+      "url": "https://bentoul.github.io/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://bentoul.github.io/images/logo.png"
+      }
+    },
+    "image": "https://bentoul.github.io/images/home.jpg"
+  }
+  </script>
 
   <!-- Font Awesome pour les icônes modernes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -80,15 +139,13 @@
       text-align: center;
     }
 
-    .brand-icon {
-      width: 32px;
-      height: 32px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: var(--primary);
-      border-radius: 10px;
-      font-size: 14px;
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      display: block;
+      object-fit: contain;
+      border-radius: 9px;
     }
 
     .header-actions {
@@ -199,9 +256,11 @@
       padding: 28px 22px;
       color: white;
       background:
-        radial-gradient(circle at 100% 0, #3b82f680, transparent 45%),
+        linear-gradient(100deg, rgba(15, 23, 42, .94), rgba(17, 24, 39, .70)),
+        url("images/home.jpg") center / cover no-repeat,
         linear-gradient(145deg, #172554, #111827);
       border-radius: 22px;
+      background-color: #172554;
     }
 
     .welcome-icon {
@@ -543,6 +602,37 @@
       color: var(--primary-dark);
     }
 
+    /* VERROUILLAGE DES ÉPISODES PAYANTS */
+    .episode-lock-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 9px;
+      color: #fff;
+      background: rgba(153, 27, 27, .92);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .episode-free-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 3;
+      padding: 6px 9px;
+      color: #fff;
+      background: rgba(21, 128, 61, .92);
+      border-radius: 9px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
     .episode-content {
       overflow-wrap: anywhere;
       line-height: 1.85;
@@ -791,7 +881,7 @@
     </button>
 
     <div class="brand">
-      <span class="brand-icon"><i class="fa-solid fa-play"></i></span>
+      <img class="brand-logo" src="images/logo.png" alt="Logo BENTOUL CREATION" width="34" height="34" fetchpriority="high">
       <span>BENTOUL CREATION</span>
     </div>
 
@@ -829,10 +919,10 @@
 
   <main id="app-content">
 
-    <section class="page active" id="page-home">
+    <section class="page active" id="page-home" aria-labelledby="home-title">
       <div class="welcome-card">
         <span class="welcome-icon"><i class="fa-solid fa-sparkles"></i></span>
-        <h1>BENTOUL CREATION</h1>
+        <h1 id="home-title">BENTOUL CREATION</h1>
         <p>Découvre nos séries, nos épisodes et partage tes impressions.</p>
         <button type="button" class="btn-primary" data-page="series">
           <i class="fa-solid fa-compass"></i> Découvrir les séries
@@ -1196,6 +1286,30 @@
 
     function currentUsername() {
       return String(value(currentUser, "username", "Username"));
+    }
+
+    function isEpisodeLocked(episode) {
+      const locked = value(episode, "verrouille", "locked", "isLocked");
+      return locked === true || String(locked).toLowerCase() === "true" || locked === 1 || String(locked) === "1";
+    }
+
+    function isEpisodeFree(episode) {
+      const free = value(episode, "gratuit", "free", "isFree");
+      return free === true || String(free).toLowerCase() === "true" || free === 1 || String(free) === "1";
+    }
+
+    async function refreshCurrentUser() {
+      if (!currentUser || !currentUserId()) return;
+      try {
+        const result = await api({ type: "getUser", id: currentUserId() });
+        if (result && result.user) {
+          currentUser = result.user;
+          sessionStorage.setItem("bentoulUser", JSON.stringify(currentUser));
+          window.updateAuthUI(currentUser);
+        }
+      } catch (error) {
+        // Conserver la session locale si le serveur est temporairement indisponible.
+      }
     }
 
     window.showMessage = function(message, isError = false) {
@@ -1648,7 +1762,10 @@
       container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des épisodes...</p>';
 
       try {
-        const result = await getData("getEpisodes", { seriesId: String(id) });
+        const result = await getData("getEpisodes", {
+          seriesId: String(id),
+          userId: currentUser ? currentUserId() : ""
+        });
 
         /* ORDRE FEUILLE : épisodes dans l'ordre de la feuille (1ère ligne en premier) */
         episodeList = sheetOrder(listFrom(result, [
@@ -1672,17 +1789,28 @@
           const number = cleanText(value(
             episode, "numero", "Numero", "numEpisode", "episodeNumber"
           ));
+          const locked = isEpisodeLocked(episode);
+          const free = isEpisodeFree(episode);
+          const alreadyBought = String(value(episode, "achete", "purchased")) === "true";
+          const creditCost = Number(value(episode, "coutCredits", "creditCost")) || (locked ? 1 : 0);
+          const cardDescription = locked
+            ? `Épisode verrouillé. Débloque-le pour ${creditCost} crédit${creditCost > 1 ? "s" : ""}.`
+            : (textPreview || (free ? "Épisode gratuit." : "Épisode débloqué sur ton compte."));
 
           return `
             <article class="content-card">
               <div class="card-media-wrapper">
+                ${locked
+                  ? `<span class="episode-lock-badge"><i class="fa-solid fa-lock"></i> ${creditCost} crédit</span>`
+                  : (free
+                    ? '<span class="episode-free-badge"><i class="fa-solid fa-unlock"></i> Gratuit</span>'
+                    : (alreadyBought ? '<span class="episode-free-badge"><i class="fa-solid fa-check"></i> Débloqué</span>' : ""))}
                 <img class="card-image"
                   src="${escapeHTML(image)}"
                   alt="${escapeHTML(title)}"
                   loading="lazy"
                   referrerpolicy="no-referrer">
                 
-                <!-- Titre remonté sur l'image avec fond dégradé transparent -->
                 <div class="card-title-overlay">
                   ${number ? `<span class="episode-number-badge">Épisode ${escapeHTML(number)}</span>` : ""}
                   <h3>${escapeHTML(title)}</h3>
@@ -1690,16 +1818,17 @@
               </div>
 
               <div class="card-body">
-                <p class="card-description">${escapeHTML(textPreview)}</p>
+                <p class="card-description">${escapeHTML(cardDescription)}</p>
 
                 ${interactionBar(episode, "episode")}
 
                 <button type="button"
                   class="arrow-action-btn open-episode"
                   data-id="${escapeHTML(episodeId)}"
-                  title="Ouvrir l'épisode"
-                  aria-label="Ouvrir l'épisode">
-                  <i class="fa-solid fa-arrow-right"></i>
+                  data-locked="${locked ? "true" : "false"}"
+                  title="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}"
+                  aria-label="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}">
+                  <i class="fa-solid ${locked ? "fa-lock" : "fa-arrow-right"}"></i>
                 </button>
               </div>
             </article>
@@ -1707,7 +1836,13 @@
         }).join("");
 
         container.querySelectorAll(".open-episode").forEach(button => {
-          button.addEventListener("click", () => openEpisode(button.dataset.id));
+          button.addEventListener("click", () => {
+            if (button.dataset.locked === "true") {
+              purchaseEpisodeAndOpen(button.dataset.id);
+            } else {
+              openEpisode(button.dataset.id);
+            }
+          });
         });
 
         attachReactions(container);
@@ -1724,6 +1859,75 @@
        DÉTAIL D'UN ÉPISODE + BOUTON ÉPISODE SUIVANT
     ======================================================= */
 
+    async function purchaseEpisodeAndOpen(id) {
+      if (!currentUser) {
+        window.showMessage("Connecte-toi pour débloquer cet épisode.", true);
+        window.navigateTo("auth");
+        return;
+      }
+
+      const episode = episodeList.find(item => episodeIdOf(item) === String(id));
+      if (!episode) {
+        window.showMessage("Épisode introuvable.", true);
+        return;
+      }
+
+      if (isEpisodeFree(episode) || !isEpisodeLocked(episode)) {
+        await openEpisode(id);
+        return;
+      }
+
+      const cost = Number(value(episode, "coutCredits", "creditCost")) || 1;
+      const balance = Number(value(currentUser, "credits", "Credits")) || 0;
+      const confirmed = window.confirm(`Débloquer « ${episodeTitle(episode)} » pour ${cost} crédit${cost > 1 ? "s" : ""} ?
+Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
+      if (!confirmed) return;
+
+      const button = document.querySelector(`.open-episode[data-id="${CSS.escape(String(id))}"]`);
+      if (button) button.disabled = true;
+
+      try {
+        const result = await api({
+          type: "purchaseEpisode",
+          userId: currentUserId(),
+          episodeId: String(id)
+        });
+
+        if (result.status !== "success") {
+          throw new Error(result.message || "Impossible de débloquer cet épisode.");
+        }
+
+        if (result.user) {
+          currentUser = result.user;
+        } else if (result.credits !== undefined) {
+          currentUser.credits = Number(result.credits) || 0;
+        }
+        sessionStorage.setItem("bentoulUser", JSON.stringify(currentUser));
+        window.updateAuthUI(currentUser);
+        window.renderProfile();
+
+        // Recharger les épisodes depuis le serveur pour confirmer le déblocage enregistré.
+        const seriesId = parentSeriesIdOf(episode) || (currentSeries ? seriesIdOf(currentSeries) : "");
+        const refreshed = await getData("getEpisodes", {
+          seriesId,
+          userId: currentUserId()
+        });
+        episodeList = sheetOrder(listFrom(refreshed, ["episodes", "Episodes", "data", "result"]));
+        currentSeriesEpisodes = episodeList.filter(ep => !parentSeriesIdOf(ep) || parentSeriesIdOf(ep) === String(seriesId));
+
+        const unlockedEpisode = episodeList.find(item => episodeIdOf(item) === String(id));
+        if (!unlockedEpisode || isEpisodeLocked(unlockedEpisode) || !rawContent(unlockedEpisode)) {
+          throw new Error("L'achat a été envoyé, mais le serveur n'a pas confirmé le contenu débloqué. Actualise la liste des épisodes.");
+        }
+
+        window.showMessage(result.message || "Épisode débloqué avec succès.");
+        await openEpisode(id);
+      } catch (error) {
+        window.showMessage(error.message || "Échec du déblocage.", true);
+        if (button) button.disabled = false;
+      }
+    }
+
     async function openEpisode(id) {
       currentEpisode = episodeList.find(
         episode => episodeIdOf(episode) === String(id)
@@ -1731,6 +1935,11 @@
 
       if (!currentEpisode) {
         window.showMessage("Épisode introuvable.", true);
+        return;
+      }
+
+      if (isEpisodeLocked(currentEpisode)) {
+        await purchaseEpisodeAndOpen(id);
         return;
       }
 
@@ -2158,6 +2367,7 @@
     window.updateAuthUI(currentUser);
 
     (async function initAppContent() {
+      await refreshCurrentUser();
       await loadSeries();
       await openSharedContent();
     })();
