@@ -811,11 +811,48 @@
       color: var(--primary);
     }
 
-    @media (min-width: 769px) {
+    /* ==============================================================
+       LARGEUR SUR PC : 50% DE L'ÉCRAN CENTRÉ (HEADER, MAIN, FOOTER)
+    ============================================================== */
+    @media (min-width: 1024px) {
       #app-content {
-        max-width: 1000px;
+        width: 50% !important;
+        max-width: 50% !important;
+        margin: 0 auto !important;
       }
 
+      #app-header {
+        width: 50% !important;
+        left: 25% !important;
+        right: 25% !important;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+      }
+
+      #app-footer {
+        width: 50% !important;
+        left: 25% !important;
+        right: 25% !important;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+      }
+
+      #app-sidebar {
+        left: calc(25% - 280px);
+      }
+
+      #app-sidebar.open {
+        transform: translateX(280px);
+      }
+
+      #app-message {
+        width: 50% !important;
+        left: 25% !important;
+        right: 25% !important;
+      }
+    }
+
+    @media (min-width: 769px) {
       .content-grid {
         gap: 16px;
       }
@@ -1071,6 +1108,9 @@
       <span>Profil</span>
     </button>
   </footer>
+
+  <!-- SCRIPT ANALYTICS & STATISTIQUES DE VISITE -->
+  <script src="js/visite.js"></script>
 
   <script>
   "use strict";
