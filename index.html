@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +6,9 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="description" content="BENTOUL CREATION : séries, épisodes et communauté.">
   <title>BENTOUL CREATION</title>
+
+  <!-- Font Awesome pour les icônes modernes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
     :root {
@@ -54,15 +56,15 @@
       display: none !important;
     }
 
+    /* HEADER : Menu à gauche, Titre centré, Compte à droite */
     #app-header {
       position: fixed;
       inset: 0 0 auto;
       z-index: 100;
       min-height: 60px;
-      display: flex;
+      display: grid;
+      grid-template-columns: 48px 1fr 48px;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
       padding: 10px 16px;
       background: #fff;
       border-bottom: 1px solid var(--border);
@@ -71,34 +73,46 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 9px;
+      justify-content: center;
+      gap: 8px;
       font-weight: 800;
       letter-spacing: -.4px;
+      text-align: center;
     }
 
     .brand-icon {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
       display: grid;
       place-items: center;
       color: white;
       background: var(--primary);
-      border-radius: 12px;
+      border-radius: 10px;
+      font-size: 14px;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 7px;
+      justify-content: flex-end;
     }
 
     .icon-btn {
-      min-height: 38px;
-      padding: 8px 11px;
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       color: var(--text);
       background: white;
       border: 1px solid var(--border);
       border-radius: 10px;
+      font-size: 16px;
+      padding: 0;
+    }
+
+    .icon-btn:hover {
+      background: #f1f5f9;
     }
 
     #app-sidebar {
@@ -129,7 +143,9 @@
 
     .sidebar-link {
       width: 100%;
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 12px;
       margin: 4px 0;
       padding: 13px;
       text-align: left;
@@ -137,6 +153,11 @@
       background: transparent;
       border: 0;
       border-radius: 10px;
+    }
+
+    .sidebar-link i {
+      width: 20px;
+      text-align: center;
     }
 
     .sidebar-link:hover,
@@ -231,7 +252,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       min-height: 40px;
       padding: 10px 14px;
       border: 0;
@@ -256,12 +277,16 @@
     }
 
     .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       margin-bottom: 14px;
-      padding: 10px 12px;
+      padding: 10px 14px;
       color: var(--primary);
       background: white;
       border: 1px solid var(--border);
       border-radius: 10px;
+      font-weight: bold;
     }
 
     .tab-switch {
@@ -327,7 +352,6 @@
       line-height: 1.6;
     }
 
-    /* Grille : deux colonnes minimum, même sur mobile. */
     .content-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -337,6 +361,7 @@
     }
 
     .content-card {
+      position: relative;
       display: flex;
       flex-direction: column;
       min-width: 0;
@@ -347,12 +372,81 @@
       box-shadow: 0 2px 8px #0f172a05;
     }
 
+    /* CONTENEUR DE L'IMAGE AVEC TITRE SUPERPOSÉ EN BAS */
+    .card-media-wrapper {
+      position: relative;
+      width: 100%;
+      background: #0f172a;
+      overflow: hidden;
+    }
+
     .card-image {
       display: block;
       width: 100%;
-      height: 135px;
+      height: 190px;
       object-fit: cover;
       background: #e2e8f0;
+      transition: transform 0.25s ease;
+    }
+
+    .content-card:hover .card-image {
+      transform: scale(1.03);
+    }
+
+    /* BADGE EPISODES SUR LA SÉRIE */
+    .badge-episodes {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 2;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    /* TITRE REMONTÉ SUR L'IMAGE AVEC DÉGRADÉ TRANSPARENT */
+    .card-title-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px 10px 8px;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.45) 60%, transparent 100%);
+      color: #ffffff;
+      z-index: 2;
+    }
+
+    .card-title-overlay h3 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #ffffff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+    }
+
+    .card-title-overlay .episode-number-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 800;
+      color: #93c5fd;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      letter-spacing: .5px;
     }
 
     .card-body {
@@ -365,14 +459,6 @@
       padding: 12px;
     }
 
-    .card-body h3 {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.4;
-      overflow-wrap: anywhere;
-    }
-
-    /* Description limitée à deux lignes dans les cartes. */
     .card-description {
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -387,19 +473,11 @@
       white-space: normal;
     }
 
-    .episode-label {
-      color: var(--primary);
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .5px;
-    }
-
     .interaction-bar {
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       margin-top: auto;
     }
 
@@ -407,14 +485,18 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
+      gap: 5px;
       min-width: 0;
-      padding: 8px 7px;
+      padding: 8px 9px;
       color: #334155;
       background: #f8fafc;
       border: 1px solid var(--border);
       border-radius: 9px;
-      font-size: 11px;
+      font-size: 12px;
+    }
+
+    .reaction-btn i {
+      font-size: 13px;
     }
 
     .reaction-btn.selected {
@@ -423,28 +505,99 @@
       border-color: #93c5fd;
     }
 
-    .card-body > .btn-primary {
+    /* BOUTONS FLÈCHE AVEC ANIMATION CONTINUE SANS FOND */
+    .arrow-action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       width: 100%;
-      margin-top: 2px;
-      padding: 10px 7px;
-      font-size: 12px;
-      overflow-wrap: anywhere;
+      background: transparent !important;
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      padding: 1px !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      margin-bottom: 0 !important;
+      margin-top: 4px;
+      color: var(--primary);
+      font-size: 19px;
+      cursor: pointer;
     }
 
-    .episode-image {
-      display: block;
-      width: 100%;
-      max-height: 420px;
-      margin: 16px 0;
-      object-fit: contain;
-      border-radius: 12px;
-      background: #f1f5f9;
+    .arrow-action-btn i {
+      display: inline-block;
+      animation: arrowBounce 1.25s infinite ease-in-out;
+    }
+
+    @keyframes arrowBounce {
+      0%, 100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(6px);
+      }
+    }
+
+    .arrow-action-btn:hover i {
+      color: var(--primary-dark);
     }
 
     .episode-content {
       overflow-wrap: anywhere;
-      white-space: pre-wrap;
-      line-height: 1.8;
+      line-height: 1.85;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .episode-content h1,
+    .episode-content h2,
+    .episode-content h3,
+    .episode-content h4 {
+      margin: 20px 0 10px;
+      color: var(--text);
+      line-height: 1.35;
+    }
+
+    .episode-content h1 { font-size: 24px; }
+    .episode-content h2 { font-size: 20px; }
+    .episode-content h3 { font-size: 17px; }
+
+    .episode-content p {
+      margin: 12px 0;
+    }
+
+    .episode-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 14px 0;
+      display: block;
+    }
+
+    .episode-content blockquote {
+      margin: 16px 0;
+      padding: 12px 18px;
+      background: #f8fafc;
+      border-left: 4px solid var(--primary);
+      border-radius: 4px;
+      font-style: italic;
+      color: #334155;
+    }
+
+    .episode-content ul,
+    .episode-content ol {
+      padding-left: 24px;
+      margin: 12px 0;
+    }
+
+    .episode-content li {
+      margin: 6px 0;
+    }
+
+    .episode-content a {
+      color: var(--primary);
+      text-decoration: underline;
     }
 
     .comment-card {
@@ -474,7 +627,17 @@
       margin-bottom: 12px;
       background: #eff6ff;
       border-radius: 50%;
-      font-size: 28px;
+      font-size: 26px;
+      color: var(--primary);
+    }
+
+    /* CONTENEUR BOUTON EPISODE SUIVANT */
+    .next-episode-container {
+      margin: 18px 0 6px;
+      padding-top: 14px;
+      border-top: 1px dashed var(--border);
+      display: flex;
+      justify-content: flex-end;
     }
 
     #app-message {
@@ -518,12 +681,20 @@
     .footer-link {
       flex: 1;
       min-width: 0;
-      padding: 9px 4px;
+      padding: 7px 4px;
       color: var(--text-muted);
       background: transparent;
       border: 0;
       border-radius: 10px;
       font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .footer-link i {
+      font-size: 17px;
     }
 
     .footer-link.active {
@@ -536,6 +707,9 @@
       grid-column: 1 / -1;
       color: var(--text-muted);
       padding: 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .error {
@@ -557,15 +731,15 @@
       }
 
       .card-image {
-        height: 180px;
+        height: 220px;
       }
 
       .card-body {
         padding: 16px;
       }
 
-      .card-body h3 {
-        font-size: 17px;
+      .card-title-overlay h3 {
+        font-size: 16px;
       }
     }
 
@@ -580,7 +754,7 @@
       }
 
       .card-image {
-        height: 100px;
+        height: 140px;
       }
 
       .card-body {
@@ -588,12 +762,12 @@
         padding: 9px;
       }
 
-      .card-body h3 {
-        font-size: 13px;
+      .card-title-overlay h3 {
+        font-size: 12px;
       }
 
       .reaction-btn {
-        padding: 7px 5px;
+        padding: 6px 5px;
         font-size: 10px;
       }
 
@@ -610,34 +784,45 @@
 
 <body id="body">
 
+  <!-- HEADER : Menu à gauche | Titre au milieu | Compte/Profil à droite -->
   <header id="app-header">
+    <button type="button" class="icon-btn" id="menu-toggle" aria-label="Ouvrir le menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+
     <div class="brand">
-      <span class="brand-icon">✦</span>
+      <span class="brand-icon"><i class="fa-solid fa-play"></i></span>
       <span>BENTOUL CREATION</span>
     </div>
 
     <div class="header-actions">
-      <button type="button" class="icon-btn" id="menu-toggle"
-        aria-label="Ouvrir le menu">☰</button>
+      <button type="button" class="icon-btn" data-page="auth" data-guest-only aria-label="Compte">
+        <i class="fa-regular fa-user"></i>
+      </button>
 
-      <button type="button" class="icon-btn" data-page="auth"
-        data-guest-only>Compte</button>
-
-      <button type="button" class="icon-btn" data-page="profile"
-        data-user-only hidden>Profil</button>
+      <button type="button" class="icon-btn" data-page="profile" data-user-only hidden aria-label="Profil">
+        <i class="fa-solid fa-user-check"></i>
+      </button>
     </div>
   </header>
 
   <aside id="app-sidebar" aria-label="Navigation">
     <div class="sidebar-title">Menu principal</div>
-    <button type="button" class="sidebar-link" data-page="home">⌂ Accueil</button>
-    <button type="button" class="sidebar-link" data-page="series">▦ Séries</button>
-    <button type="button" class="sidebar-link" data-page="auth"
-      data-guest-only>⇥ Connexion / Inscription</button>
-    <button type="button" class="sidebar-link" data-page="profile"
-      data-user-only hidden>♙ Mon profil</button>
-    <button type="button" class="sidebar-link" id="sidebar-logout"
-      data-user-only hidden>↪ Déconnexion</button>
+    <button type="button" class="sidebar-link" data-page="home">
+      <i class="fa-solid fa-house"></i> <span>Accueil</span>
+    </button>
+    <button type="button" class="sidebar-link" data-page="series">
+      <i class="fa-solid fa-film"></i> <span>Séries</span>
+    </button>
+    <button type="button" class="sidebar-link" data-page="auth" data-guest-only>
+      <i class="fa-solid fa-arrow-right-to-bracket"></i> <span>Connexion / Inscription</span>
+    </button>
+    <button type="button" class="sidebar-link" data-page="profile" data-user-only hidden>
+      <i class="fa-solid fa-user"></i> <span>Mon profil</span>
+    </button>
+    <button type="button" class="sidebar-link" id="sidebar-logout" data-user-only hidden>
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Déconnexion</span>
+    </button>
   </aside>
 
   <div id="sidebar-overlay" hidden></div>
@@ -646,39 +831,38 @@
 
     <section class="page active" id="page-home">
       <div class="welcome-card">
-        <span class="welcome-icon">✦</span>
+        <span class="welcome-icon"><i class="fa-solid fa-sparkles"></i></span>
         <h1>BENTOUL CREATION</h1>
         <p>Découvre nos séries, nos épisodes et partage tes impressions.</p>
         <button type="button" class="btn-primary" data-page="series">
-          Découvrir les séries
+          <i class="fa-solid fa-compass"></i> Découvrir les séries
         </button>
       </div>
     </section>
 
     <section class="page" id="page-auth">
-      <button type="button" class="back-btn" data-page="home">← Retour</button>
+      <button type="button" class="back-btn" data-page="home">
+        <i class="fa-solid fa-arrow-left"></i> Retour
+      </button>
 
       <div class="panel">
         <h2>Ton compte</h2>
 
         <div class="tab-switch">
-          <button type="button" class="auth-tab active"
-            data-auth-tab="login">Connexion</button>
-          <button type="button" class="auth-tab"
-            data-auth-tab="register">Inscription</button>
+          <button type="button" class="auth-tab active" data-auth-tab="login">Connexion</button>
+          <button type="button" class="auth-tab" data-auth-tab="register">Inscription</button>
         </div>
 
         <form id="login-form">
           <label for="login-username">Nom d'utilisateur</label>
-          <input id="login-username" name="username" required
-            autocomplete="username">
+          <input id="login-username" name="username" required autocomplete="username">
 
           <label for="login-pin">PIN à 6 chiffres</label>
-          <input id="login-pin" name="pin" type="password"
-            inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
-            autocomplete="current-password" required>
+          <input id="login-pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="current-password" required>
 
-          <button class="btn-primary" type="submit">Se connecter</button>
+          <button class="btn-primary" type="submit">
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Se connecter
+          </button>
         </form>
 
         <form id="register-form" hidden>
@@ -686,28 +870,23 @@
           <input id="reg-name" name="nom" required autocomplete="name">
 
           <label for="reg-username">Nom d'utilisateur</label>
-          <input id="reg-username" name="username" minlength="3"
-            maxlength="30" pattern="[A-Za-z0-9_.-]+" required
-            autocomplete="username">
+          <input id="reg-username" name="username" minlength="3" maxlength="30" pattern="[A-Za-z0-9_.-]+" required autocomplete="username">
 
           <label for="reg-pin">Créer un PIN à 6 chiffres</label>
-          <input id="reg-pin" name="pin" type="password"
-            inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
-            autocomplete="new-password" required>
+          <input id="reg-pin" name="pin" type="password" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="new-password" required>
 
           <label for="reg-email">Adresse email</label>
-          <input id="reg-email" name="email" type="email"
-            required autocomplete="email">
+          <input id="reg-email" name="email" type="email" required autocomplete="email">
 
           <label for="reg-phone">Numéro de téléphone</label>
-          <input id="reg-phone" name="numero" type="tel"
-            required autocomplete="tel">
+          <input id="reg-phone" name="numero" type="tel" required autocomplete="tel">
 
           <label for="reg-referral">Code de parrainage (facultatif)</label>
-          <input id="reg-referral" name="codeParrain"
-            placeholder="Code de parrainage">
+          <input id="reg-referral" name="codeParrain" placeholder="Code de parrainage">
 
-          <button class="btn-primary" type="submit">Créer mon compte</button>
+          <button class="btn-primary" type="submit">
+            <i class="fa-solid fa-user-plus"></i> Créer mon compte
+          </button>
           <p class="hint">Ton compte reçoit 10 crédits de bienvenue.</p>
         </form>
       </div>
@@ -719,24 +898,24 @@
           <h2>Nos séries</h2>
           <p>Choisis une série pour voir ses épisodes.</p>
         </div>
-        <button type="button" class="btn-secondary"
-          id="refresh-series">Actualiser</button>
+        <button type="button" class="btn-secondary" id="refresh-series">
+          <i class="fa-solid fa-rotate"></i> Actualiser
+        </button>
       </div>
       <div id="series-container" class="content-grid"></div>
     </section>
 
     <section class="page" id="page-episodes">
       <button type="button" class="back-btn" id="back-to-series">
-        ← Retour aux séries
+        <i class="fa-solid fa-arrow-left"></i> Retour aux séries
       </button>
-      <div id="selected-series"></div>
-      <h2>Épisodes</h2>
+      <h2 id="episodes-title-header">Épisodes</h2>
       <div id="episodes-container" class="content-grid"></div>
     </section>
 
     <section class="page" id="page-episode">
       <button type="button" class="back-btn" id="back-to-episodes">
-        ← Retour aux épisodes
+        <i class="fa-solid fa-arrow-left"></i> Retour aux épisodes
       </button>
 
       <article id="episode-detail" class="panel"></article>
@@ -746,13 +925,13 @@
 
         <div class="interaction-bar">
           <button type="button" class="reaction-btn" id="episode-like">
-            👍 J'aime <span id="episode-likes">0</span>
+            <i class="fa-regular fa-thumbs-up"></i> J'aime <span id="episode-likes">0</span>
           </button>
           <button type="button" class="reaction-btn" id="episode-dislike">
-            👎 Je n'aime pas <span id="episode-dislikes">0</span>
+            <i class="fa-regular fa-thumbs-down"></i> Je n'aime pas <span id="episode-dislikes">0</span>
           </button>
           <button type="button" class="reaction-btn" id="episode-share">
-            ↗ Partager <span id="episode-shares">0</span>
+            <i class="fa-solid fa-share-nodes"></i> Partager <span id="episode-shares">0</span>
           </button>
         </div>
 
@@ -761,9 +940,10 @@
 
         <form id="comment-form">
           <label for="comment-text">Écrire un commentaire</label>
-          <textarea id="comment-text" rows="3" maxlength="2000"
-            placeholder="Partage ton avis..." required></textarea>
-          <button class="btn-primary" type="submit">Publier</button>
+          <textarea id="comment-text" rows="3" maxlength="2000" placeholder="Partage ton avis..." required></textarea>
+          <button class="btn-primary" type="submit">
+            <i class="fa-solid fa-paper-plane"></i> Publier
+          </button>
         </form>
       </div>
     </section>
@@ -774,7 +954,7 @@
         <div id="profile-content">
           <p>Connecte-toi pour consulter ton profil.</p>
           <button class="btn-primary" type="button" data-page="auth">
-            Connexion / Inscription
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Connexion / Inscription
           </button>
         </div>
       </div>
@@ -784,31 +964,32 @@
   </main>
 
   <footer id="app-footer">
-    <button type="button" class="footer-link active" data-page="home">⌂<br>Accueil</button>
-    <button type="button" class="footer-link" data-page="series">▦<br>Séries</button>
-    <button type="button" class="footer-link" data-page="auth"
-      data-guest-only>♙<br>Compte</button>
-    <button type="button" class="footer-link" data-page="profile"
-      data-user-only hidden>♙<br>Profil</button>
+    <button type="button" class="footer-link active" data-page="home">
+      <i class="fa-solid fa-house"></i>
+      <span>Accueil</span>
+    </button>
+    <button type="button" class="footer-link" data-page="series">
+      <i class="fa-solid fa-film"></i>
+      <span>Séries</span>
+    </button>
+    <button type="button" class="footer-link" data-page="auth" data-guest-only>
+      <i class="fa-regular fa-user"></i>
+      <span>Compte</span>
+    </button>
+    <button type="button" class="footer-link" data-page="profile" data-user-only hidden>
+      <i class="fa-solid fa-user-check"></i>
+      <span>Profil</span>
+    </button>
   </footer>
 
   <script>
   "use strict";
 
-  /* =========================================================
-     CONFIGURATION
-     Remplace cette URL par l'URL de ton Apps Script.
-     Si tu as déjà un config.js qui définit apiRequest,
-     conserve ta fonction existante et supprime la définition
-     apiRequest ci-dessous pour éviter les doublons.
-  ========================================================= */
-
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwnXxgxwYl-o8h04mgy1vGznM4iGZxd3XU9wDyajD-Fv50VOCp5P7gjboW-xapa4OPC/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxibR5pQfiW9x8dSCiqMU61vm8Da_8Vb87PhxfT6222NPRkFix2sjYbvhAOAJEWRHfH/exec";
 
   if (typeof window.apiRequest !== "function") {
     window.apiRequest = async function(payload, method = "POST") {
-      if (!APPS_SCRIPT_URL ||
-          APPS_SCRIPT_URL === "URL_DE_TON_APPS_SCRIPT") {
+      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === "URL_DE_TON_APPS_SCRIPT") {
         throw new Error("Configure l'URL de ton Apps Script.");
       }
 
@@ -840,6 +1021,7 @@
 
     let seriesList = [];
     let episodeList = [];
+    let currentSeriesEpisodes = []; // Liste filtrée des épisodes de la série ouverte
     let commentList = [];
     let currentSeries = null;
     let currentEpisode = null;
@@ -855,13 +1037,12 @@
     }
 
     /* =========================
-       OUTILS
+       OUTILS & TRAITEMENT HTML
     ========================= */
 
     function value(object, ...keys) {
       for (const key of keys) {
-        if (object && object[key] !== undefined &&
-            object[key] !== null) {
+        if (object && object[key] !== undefined && object[key] !== null) {
           return object[key];
         }
       }
@@ -898,12 +1079,36 @@
         .trim();
     }
 
+    function sanitizeHTML(html) {
+      if (!html) return "";
+      let clean = String(html)
+        .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, "")
+        .replace(/<iframe\b[^>]*>[\s\S]*?<\/iframe\s*>/gi, "")
+        .replace(/\son\w+=["'][^"']*["']/gi, "")
+        .replace(/\son\w+=[^\s>]+/gi, "");
+
+      return clean;
+    }
+
+    function rawContent(item) {
+      return String(value(item,
+        "contenu", "Contenu", "contenuHTML", "ContenuHTML",
+        "description", "Description", "texte", "Texte"
+      ) || "");
+    }
+
     function listFrom(result, keys) {
       if (Array.isArray(result)) return result;
       for (const key of keys) {
         if (Array.isArray(result?.[key])) return result[key];
       }
       return [];
+    }
+
+    /* ORDRE FEUILLE : le Code.gs renvoie les épisodes à l'envers (reverse),
+       on les remet dans l'ordre de la feuille : 1ère ligne en haut, puis on descend. */
+    function sheetOrder(list) {
+      return list.slice().reverse();
     }
 
     function seriesIdOf(series) {
@@ -945,22 +1150,34 @@
       )) || "Épisode sans titre";
     }
 
-    function description(item) {
-      return cleanText(value(item,
-        "description", "Description", "resume",
-        "Résumé", "contenu", "Contenu", "texte", "Texte"
-      ));
+    function formatDriveUrl(url) {
+      if (!url) return "";
+      let str = String(url).trim();
+
+      if (str.indexOf("lh3.googleusercontent.com") !== -1) return str;
+
+      let match = str.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+      if (!match) match = str.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+      if (!match) match = str.match(/\/d\/([a-zA-Z0-9_-]+)/);
+
+      if (match && match[1]) {
+        return "https://lh3.googleusercontent.com/d/" + match[1];
+      }
+      return str;
     }
 
     function imageURL(item) {
-      const url = String(value(item,
+      let url = String(value(item,
         "image", "Image", "imageUrl", "ImageURL", "urlImage"
       )).trim();
 
+      if (!url) return "";
+
+      url = formatDriveUrl(url);
+
       try {
         const parsed = new URL(url, location.href);
-        return ["http:", "https:"].includes(parsed.protocol)
-          ? parsed.href : "";
+        return ["http:", "https:"].includes(parsed.protocol) ? parsed.href : "";
       } catch {
         return "";
       }
@@ -1013,8 +1230,8 @@
       return result;
     }
 
-    async function getData(action) {
-      const result = await api({ action }, "GET");
+    async function getData(action, extraParams = {}) {
+      const result = await api({ action, ...extraParams }, "GET");
       return result?.data ?? result;
     }
 
@@ -1092,7 +1309,7 @@
     };
 
     /* =========================
-       LIKES, DISLIKES, PARTAGES
+       LIKES, DISLIKES, PARTAGES (ICÔNES AWESOME)
     ========================= */
 
     function interactionBar(item, type) {
@@ -1100,15 +1317,18 @@
         <div class="interaction-bar">
           <button type="button" class="reaction-btn"
             data-react="like" data-type="${type}">
-            👍 <span>${count(item, "likes", "Likes", "Jaime", "j_aime")}</span>
+            <i class="fa-regular fa-thumbs-up"></i>
+            <span>${count(item, "likes", "Likes", "Jaime", "j_aime")}</span>
           </button>
           <button type="button" class="reaction-btn"
             data-react="dislike" data-type="${type}">
-            👎 <span>${count(item, "dislikes", "Dislikes", "JeNaimePas")}</span>
+            <i class="fa-regular fa-thumbs-down"></i>
+            <span>${count(item, "dislikes", "Dislikes", "JeNaimePas")}</span>
           </button>
           <button type="button" class="reaction-btn"
             data-react="share" data-type="${type}">
-            ↗ Partager <span>${count(item, "shares", "Shares", "Partages", "partages")}</span>
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>${count(item, "shares", "Shares", "Partages", "partages")}</span>
           </button>
         </div>
       `;
@@ -1174,6 +1394,15 @@
             }
 
             button.classList.add("selected");
+            const icon = button.querySelector("i");
+            if (icon && action === "like") {
+              icon.classList.remove("fa-regular");
+              icon.classList.add("fa-solid");
+            } else if (icon && action === "dislike") {
+              icon.classList.remove("fa-regular");
+              icon.classList.add("fa-solid");
+            }
+
             window.showMessage("Réaction enregistrée.");
           } catch (error) {
             window.showMessage(error.message, true);
@@ -1215,13 +1444,12 @@
     }
 
     /* =========================
-       PARTAGE AVEC TEXTE COMPLET
+       PARTAGE
     ========================= */
 
     function directContentURL(type, contentId) {
       const url = new URL(location.href);
       url.hash = "";
-
       url.searchParams.delete("serie");
       url.searchParams.delete("episode");
 
@@ -1235,17 +1463,14 @@
     }
 
     async function shareContent(item, type, contentId, button) {
-      const title = type === "series"
-        ? seriesTitle(item)
-        : episodeTitle(item);
-
-      const fullDescription = description(item);
+      const title = type === "series" ? seriesTitle(item) : episodeTitle(item);
+      const textSummary = cleanText(rawContent(item));
       const shareUrl = directContentURL(type, contentId);
 
       const shareText = [
         title,
         "",
-        fullDescription || "Découvre ce contenu sur BENTOUL CREATION.",
+        textSummary || "Découvre ce contenu sur BENTOUL CREATION.",
         "",
         "Lire la suite sur BENTOUL CREATION :",
         shareUrl
@@ -1308,10 +1533,7 @@
           counter.textContent = String(Number(counter.textContent || 0) + 1);
         }
       } catch (error) {
-        window.showMessage(
-          "Le partage a réussi, mais le compteur n'a pas été enregistré.",
-          true
-        );
+        // Ignorer l'échec silencieusement
       }
     }
 
@@ -1323,11 +1545,16 @@
       const container = $("#series-container");
       if (!container) return;
 
-      container.innerHTML = '<p class="loading">Chargement des séries...</p>';
+      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des séries...</p>';
 
       try {
-        const result = await getData("getSeries");
-        seriesList = listFrom(result, ["series", "Series", "data", "result"]);
+        const [resultSeries, resultEpisodes] = await Promise.all([
+          getData("getSeries"),
+          getData("getEpisodes").catch(() => [])
+        ]);
+
+        seriesList = listFrom(resultSeries, ["series", "Series", "data", "result"]);
+        episodeList = listFrom(resultEpisodes, ["episodes", "Episodes", "data", "result"]);
 
         if (!seriesList.length) {
           container.innerHTML = "<p>Aucune série disponible actuellement.</p>";
@@ -1337,34 +1564,44 @@
         container.innerHTML = seriesList.map(series => {
           const id = seriesIdOf(series);
           const title = seriesTitle(series);
-          const text = description(series);
-          const image = imageURL(series);
+          const textPreview = cleanText(rawContent(series));
+          const image = imageURL(series) || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%231e293b"/></svg>';
+
+          // Calcul du nombre d'épisodes pour cette série
+          const countEpisodes = episodeList.filter(
+            ep => parentSeriesIdOf(ep) === id
+          ).length;
+
+          const episodeBadgeText = countEpisodes > 0 
+            ? `<span class="badge-episodes"><i class="fa-solid fa-list-ol"></i> ${countEpisodes} ép.</span>` 
+            : "";
 
           return `
             <article class="content-card">
-              ${image ? `
+              <div class="card-media-wrapper">
+                ${episodeBadgeText}
                 <img class="card-image"
                   src="${escapeHTML(image)}"
                   alt="${escapeHTML(title)}"
-                  loading="lazy">
-              ` : ""}
+                  loading="lazy"
+                  referrerpolicy="no-referrer">
+                
+                <!-- Titre remonté sur l'image avec fond transparent sombre -->
+                <div class="card-title-overlay">
+                  <h3>${escapeHTML(title)}</h3>
+                </div>
+              </div>
 
               <div class="card-body">
-                <h3>${escapeHTML(title)}</h3>
-                <p class="card-description">${escapeHTML(text)}</p>
+                <p class="card-description">${escapeHTML(textPreview)}</p>
                 ${interactionBar(series, "series")}
 
                 <button type="button"
-                  class="btn-primary open-series"
-                  data-id="${escapeHTML(id)}">
-                  Voir les épisodes
-                </button>
-
-                <button type="button"
-                  class="btn-secondary share-direct"
-                  data-type="series"
-                  data-id="${escapeHTML(id)}">
-                  ↗ Partager la série
+                  class="arrow-action-btn open-series"
+                  data-id="${escapeHTML(id)}"
+                  title="Voir les épisodes"
+                  aria-label="Voir les épisodes">
+                  <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
             </article>
@@ -1373,15 +1610,6 @@
 
         container.querySelectorAll(".open-series").forEach(button => {
           button.addEventListener("click", () => openSeries(button.dataset.id));
-        });
-
-        container.querySelectorAll(".share-direct").forEach(button => {
-          button.addEventListener("click", () => {
-            const item = seriesList.find(
-              series => seriesIdOf(series) === button.dataset.id
-            );
-            if (item) shareContent(item, "series", seriesIdOf(item), button);
-          });
         });
 
         attachReactions(container);
@@ -1409,88 +1637,69 @@
       }
 
       const seriesTitleText = seriesTitle(currentSeries);
-      const seriesDescription = description(currentSeries);
-
-      $("#selected-series").innerHTML = `
-        <div class="panel">
-          <h2>${escapeHTML(seriesTitleText)}</h2>
-          <p class="episode-content">${escapeHTML(seriesDescription)}</p>
-          ${interactionBar(currentSeries, "series")}
-          <button type="button" class="btn-secondary share-selected-series">
-            ↗ Partager cette série
-          </button>
-        </div>
-      `;
-
-      $("#selected-series .share-selected-series")
-        .addEventListener("click", event => {
-          shareContent(
-            currentSeries,
-            "series",
-            seriesIdOf(currentSeries),
-            event.currentTarget
-          );
-        });
+      const titleHeader = $("#episodes-title-header");
+      if (titleHeader) {
+        titleHeader.textContent = "Épisodes de : " + seriesTitleText;
+      }
 
       window.navigateTo("episodes");
 
       const container = $("#episodes-container");
-      container.innerHTML = '<p class="loading">Chargement des épisodes...</p>';
+      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des épisodes...</p>';
 
       try {
-        const result = await getData("getEpisodes");
-        episodeList = listFrom(result, [
-          "episodes", "Episodes", "data", "result"
-        ]);
+        const result = await getData("getEpisodes", { seriesId: String(id) });
 
-        const filtered = episodeList.filter(
-          episode => parentSeriesIdOf(episode) === String(id)
+        /* ORDRE FEUILLE : épisodes dans l'ordre de la feuille (1ère ligne en premier) */
+        episodeList = sheetOrder(listFrom(result, [
+          "episodes", "Episodes", "data", "result"
+        ]));
+
+        currentSeriesEpisodes = episodeList.filter(
+          episode => !parentSeriesIdOf(episode) || parentSeriesIdOf(episode) === String(id)
         );
 
-        if (!filtered.length) {
+        if (!currentSeriesEpisodes.length) {
           container.innerHTML = "<p>Aucun épisode disponible pour cette série.</p>";
-          attachReactions($("#selected-series"));
           return;
         }
 
-        container.innerHTML = filtered.map(episode => {
+        container.innerHTML = currentSeriesEpisodes.map(episode => {
           const episodeId = episodeIdOf(episode);
           const title = episodeTitle(episode);
-          const text = description(episode);
-          const image = imageURL(episode);
+          const textPreview = cleanText(rawContent(episode));
+          const image = imageURL(episode) || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%231e293b"/></svg>';
           const number = cleanText(value(
             episode, "numero", "Numero", "numEpisode", "episodeNumber"
           ));
 
           return `
             <article class="content-card">
-              ${image ? `
+              <div class="card-media-wrapper">
                 <img class="card-image"
                   src="${escapeHTML(image)}"
                   alt="${escapeHTML(title)}"
-                  loading="lazy">
-              ` : ""}
+                  loading="lazy"
+                  referrerpolicy="no-referrer">
+                
+                <!-- Titre remonté sur l'image avec fond dégradé transparent -->
+                <div class="card-title-overlay">
+                  ${number ? `<span class="episode-number-badge">Épisode ${escapeHTML(number)}</span>` : ""}
+                  <h3>${escapeHTML(title)}</h3>
+                </div>
+              </div>
 
               <div class="card-body">
-                <span class="episode-label">
-                  ${number ? "Épisode " + escapeHTML(number) : "Épisode"}
-                </span>
-                <h3>${escapeHTML(title)}</h3>
-                <p class="card-description">${escapeHTML(text)}</p>
+                <p class="card-description">${escapeHTML(textPreview)}</p>
 
                 ${interactionBar(episode, "episode")}
 
                 <button type="button"
-                  class="btn-primary open-episode"
-                  data-id="${escapeHTML(episodeId)}">
-                  Ouvrir l'épisode
-                </button>
-
-                <button type="button"
-                  class="btn-secondary share-direct"
-                  data-type="episode"
-                  data-id="${escapeHTML(episodeId)}">
-                  ↗ Partager l'épisode
+                  class="arrow-action-btn open-episode"
+                  data-id="${escapeHTML(episodeId)}"
+                  title="Ouvrir l'épisode"
+                  aria-label="Ouvrir l'épisode">
+                  <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
             </article>
@@ -1501,19 +1710,7 @@
           button.addEventListener("click", () => openEpisode(button.dataset.id));
         });
 
-        container.querySelectorAll(".share-direct").forEach(button => {
-          button.addEventListener("click", () => {
-            const item = episodeList.find(
-              episode => episodeIdOf(episode) === button.dataset.id
-            );
-            if (item) {
-              shareContent(item, "episode", episodeIdOf(item), button);
-            }
-          });
-        });
-
         attachReactions(container);
-        attachReactions($("#selected-series"));
       } catch (error) {
         container.textContent = "";
         const message = document.createElement("p");
@@ -1523,9 +1720,9 @@
       }
     }
 
-    /* =========================
-       DÉTAIL D'UN ÉPISODE
-    ========================= */
+    /* =======================================================
+       DÉTAIL D'UN ÉPISODE + BOUTON ÉPISODE SUIVANT
+    ======================================================= */
 
     async function openEpisode(id) {
       currentEpisode = episodeList.find(
@@ -1538,8 +1735,7 @@
       }
 
       const title = episodeTitle(currentEpisode);
-      const text = description(currentEpisode);
-      const image = imageURL(currentEpisode);
+      const htmlContent = sanitizeHTML(rawContent(currentEpisode));
 
       const rawVideo = String(value(
         currentEpisode, "video", "Video",
@@ -1557,42 +1753,46 @@
         safeVideo = "";
       }
 
+      // Recherche de l'épisode suivant dans la série en cours
+      const currentIdx = currentSeriesEpisodes.findIndex(
+        ep => episodeIdOf(ep) === String(id)
+      );
+      const nextEpisode = (currentIdx !== -1 && currentIdx < currentSeriesEpisodes.length - 1)
+        ? currentSeriesEpisodes[currentIdx + 1]
+        : null;
+
       $("#episode-detail").innerHTML = `
         <h2>${escapeHTML(title)}</h2>
 
-        ${image ? `
-          <img class="episode-image"
-            src="${escapeHTML(image)}"
-            alt="${escapeHTML(title)}">
-        ` : ""}
-
-        <div class="episode-content">${escapeHTML(text)}</div>
+        <div class="episode-content">${htmlContent}</div>
 
         ${safeVideo ? `
-          <p>
+          <p style="margin-top:16px;">
             <a href="${escapeHTML(safeVideo)}"
               target="_blank" rel="noopener noreferrer">
-              ▶ Ouvrir la vidéo ou le contenu
+              <i class="fa-solid fa-circle-play"></i> Ouvrir la vidéo ou le contenu
             </a>
           </p>
         ` : ""}
 
-        ${interactionBar(currentEpisode, "episode")}
+        ${nextEpisode ? `
+          <div class="next-episode-container">
+            <button type="button" class="btn-primary" id="btn-next-episode" data-next-id="${escapeHTML(episodeIdOf(nextEpisode))}">
+              Épisode suivant (${escapeHTML(episodeTitle(nextEpisode))}) <i class="fa-solid fa-forward"></i>
+            </button>
+          </div>
+        ` : ""}
 
-        <button type="button" class="btn-secondary share-episode-detail">
-          ↗ Partager cet épisode
-        </button>
+        ${interactionBar(currentEpisode, "episode")}
       `;
 
-      $("#episode-detail .share-episode-detail")
-        .addEventListener("click", event => {
-          shareContent(
-            currentEpisode,
-            "episode",
-            episodeIdOf(currentEpisode),
-            event.currentTarget
-          );
+      // Écouteur pour l'épisode suivant
+      const nextBtn = $("#btn-next-episode");
+      if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+          openEpisode(nextBtn.dataset.nextId);
         });
+      }
 
       window.navigateTo("episode");
       attachReactions($("#episode-detail"));
@@ -1634,17 +1834,17 @@
       const container = $("#comments-container");
       if (!container || !currentEpisode) return;
 
-      container.innerHTML = '<p class="loading">Chargement des commentaires...</p>';
+      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des commentaires...</p>';
 
       try {
-        const result = await getData("getComments");
+        const id = episodeIdOf(currentEpisode);
+        const result = await getData("getComments", { episodeId: id });
         commentList = listFrom(result, [
           "comments", "commentaires", "Commentaires", "data", "result"
         ]);
 
-        const id = episodeIdOf(currentEpisode);
         const filtered = commentList.filter(
-          comment => commentEpisodeIdOf(comment) === id
+          comment => !commentEpisodeIdOf(comment) || commentEpisodeIdOf(comment) === id
         );
 
         if (!filtered.length) {
@@ -1658,7 +1858,7 @@
           )) || "Utilisateur";
 
           const text = cleanText(value(
-            comment, "texte", "Texte", "commentaire",
+            comment, "message", "Message", "texte", "Texte", "commentaire",
             "Commentaire", "text", "contenu", "Contenu"
           ));
 
@@ -1668,9 +1868,9 @@
 
           return `
             <article class="comment-card">
-              <strong>${escapeHTML(username)}</strong>
+              <strong><i class="fa-regular fa-user"></i> ${escapeHTML(username)}</strong>
               <p>${escapeHTML(text)}</p>
-              ${date ? `<small>${escapeHTML(date)}</small>` : ""}
+              ${date ? `<small><i class="fa-regular fa-clock"></i> ${escapeHTML(date)}</small>` : ""}
             </article>
           `;
         }).join("");
@@ -1711,6 +1911,7 @@
           contentType: "episode",
           userId: currentUserId(),
           username: currentUsername(),
+          message: text,
           texte: text,
           text
         });
@@ -1831,7 +2032,7 @@
         container.innerHTML = `
           <p>Tu n'es pas connecté.</p>
           <button type="button" class="btn-primary" data-page="auth">
-            Connexion / Inscription
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Connexion / Inscription
           </button>
         `;
         return;
@@ -1845,13 +2046,13 @@
       )) || "Non disponible";
 
       container.innerHTML = `
-        <div class="profile-avatar">👤</div>
+        <div class="profile-avatar"><i class="fa-solid fa-user-circle"></i></div>
         <h3>${escapeHTML(name)}</h3>
         <p>@${escapeHTML(username)}</p>
         <p>Crédits : <strong>${escapeHTML(credits)}</strong></p>
         <p>Code de parrainage : <strong>${escapeHTML(referral)}</strong></p>
         <button id="profile-logout" class="btn-secondary" type="button">
-          Se déconnecter
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Se déconnecter
         </button>
       `;
 
@@ -1910,9 +2111,11 @@
 
         if (sharedEpisodeId) {
           const result = await getData("getEpisodes");
-          episodeList = listFrom(result, [
+
+          /* ORDRE FEUILLE : même ordre que dans la feuille */
+          episodeList = sheetOrder(listFrom(result, [
             "episodes", "Episodes", "data", "result"
-          ]);
+          ]));
 
           const episode = episodeList.find(
             item => episodeIdOf(item) === String(sharedEpisodeId)
@@ -1930,6 +2133,12 @@
           currentSeries = seriesList.find(
             item => seriesIdOf(item) === parentId
           ) || null;
+
+          if (currentSeries) {
+            currentSeriesEpisodes = episodeList.filter(
+              ep => parentSeriesIdOf(ep) === parentId
+            );
+          }
 
           await openEpisode(sharedEpisodeId);
         }
