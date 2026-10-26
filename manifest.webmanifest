@@ -1,24 +1,60 @@
 {
-  "name": "Bentoul Creation",
-  "short_name": "Bentoul",
-  "description": "Documents pratiques, astuces IT, guides et ressources numériques.",
+  "name": "BENTOUL CREATION",
+  "short_name": "BENTOUL",
+  "description": "Découvre des séries, lis des épisodes et rejoins la communauté BENTOUL CREATION.",
   "lang": "fr",
-  "start_url": "./",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/accueil",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#4f46e5",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary",
+  "background_color": "#f5f7fb",
+  "theme_color": "#2563eb",
+  "categories": ["entertainment", "books", "education"],
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "images/logo.png",
+      "src": "/images/pwa-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "images/logo.png",
+      "src": "/images/pwa-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/images/pwa-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Séries",
+      "short_name": "Séries",
+      "description": "Parcourir toutes les séries",
+      "url": "/serie",
+      "icons": [{ "src": "/images/pwa-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Épisodes",
+      "short_name": "Épisodes",
+      "description": "Parcourir tous les épisodes",
+      "url": "/episode",
+      "icons": [{ "src": "/images/pwa-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mon compte",
+      "short_name": "Compte",
+      "description": "Connexion, profil et crédits",
+      "url": "/compte",
+      "icons": [{ "src": "/images/pwa-192.png", "sizes": "192x192" }]
     }
   ]
 }

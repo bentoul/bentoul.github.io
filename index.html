@@ -13,15 +13,17 @@
   <meta name="application-name" content="BENTOUL CREATION">
   <meta name="apple-mobile-web-app-title" content="BENTOUL CREATION">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
   <title>BENTOUL CREATION — Séries et épisodes en ligne</title>
 
   <!-- URL principale du site -->
   <link rel="canonical" href="https://bentoul.github.io/">
+  <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" type="image/png" href="images/logo.png">
   <link rel="shortcut icon" href="images/logo.png">
-  <link rel="apple-touch-icon" href="images/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
   <link rel="preload" as="image" href="images/home.jpg">
 
   <!-- Open Graph : aperçu lors du partage sur Facebook, WhatsApp et autres réseaux -->
@@ -811,6 +813,52 @@
       color: var(--primary);
     }
 
+    a.brand,
+    a.icon-btn,
+    a.sidebar-link,
+    a.footer-link,
+    a.btn-primary {
+      text-decoration: none;
+    }
+
+    a.brand {
+      color: var(--text);
+    }
+
+    .episode-series-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 3px;
+      color: #bfdbfe;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .install-card {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 18px;
+    }
+
+    .install-card h3 {
+      margin: 0 0 4px;
+    }
+
+    .install-card p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .install-card .btn-primary {
+      margin-top: 0;
+    }
+
     /* ==============================================================
        LARGEUR SUR PC : 50% DE L'ÉCRAN CENTRÉ (HEADER, MAIN, FOOTER)
     ============================================================== */
@@ -917,35 +965,41 @@
       <i class="fa-solid fa-bars"></i>
     </button>
 
-    <div class="brand">
+    <a class="brand" href="/accueil" data-page="home" aria-label="BENTOUL CREATION — Accueil">
       <img class="brand-logo" src="images/logo.png" alt="Logo BENTOUL CREATION" width="34" height="34" fetchpriority="high">
       <span>BENTOUL CREATION</span>
-    </div>
+    </a>
 
     <div class="header-actions">
-      <button type="button" class="icon-btn" data-page="auth" data-guest-only aria-label="Compte">
+      <a class="icon-btn" href="/compte" data-page="auth" data-guest-only aria-label="Compte">
         <i class="fa-regular fa-user"></i>
-      </button>
+      </a>
 
-      <button type="button" class="icon-btn" data-page="profile" data-user-only hidden aria-label="Profil">
+      <a class="icon-btn" href="/compte" data-page="profile" data-user-only hidden aria-label="Profil">
         <i class="fa-solid fa-user-check"></i>
-      </button>
+      </a>
     </div>
   </header>
 
   <aside id="app-sidebar" aria-label="Navigation">
     <div class="sidebar-title">Menu principal</div>
-    <button type="button" class="sidebar-link" data-page="home">
+    <a class="sidebar-link" href="/accueil" data-page="home">
       <i class="fa-solid fa-house"></i> <span>Accueil</span>
-    </button>
-    <button type="button" class="sidebar-link" data-page="series">
+    </a>
+    <a class="sidebar-link" href="/serie" data-page="series">
       <i class="fa-solid fa-film"></i> <span>Séries</span>
-    </button>
-    <button type="button" class="sidebar-link" data-page="auth" data-guest-only>
+    </a>
+    <a class="sidebar-link" href="/episode" data-page="all-episodes">
+      <i class="fa-solid fa-play"></i> <span>Épisodes</span>
+    </a>
+    <a class="sidebar-link" href="/compte" data-page="auth" data-guest-only>
       <i class="fa-solid fa-arrow-right-to-bracket"></i> <span>Connexion / Inscription</span>
-    </button>
-    <button type="button" class="sidebar-link" data-page="profile" data-user-only hidden>
+    </a>
+    <a class="sidebar-link" href="/compte" data-page="profile" data-user-only hidden>
       <i class="fa-solid fa-user"></i> <span>Mon profil</span>
+    </a>
+    <button type="button" class="sidebar-link" id="install-app" data-install-app hidden>
+      <i class="fa-solid fa-mobile-screen-button"></i> <span>Installer l'application</span>
     </button>
     <button type="button" class="sidebar-link" id="sidebar-logout" data-user-only hidden>
       <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Déconnexion</span>
@@ -961,8 +1015,18 @@
         <span class="welcome-icon"><i class="fa-solid fa-sparkles"></i></span>
         <h1 id="home-title">BENTOUL CREATION</h1>
         <p>Découvre nos séries, nos épisodes et partage tes impressions.</p>
-        <button type="button" class="btn-primary" data-page="series">
+        <a class="btn-primary" href="/serie" data-page="series">
           <i class="fa-solid fa-compass"></i> Découvrir les séries
+        </a>
+      </div>
+
+      <div class="panel install-card" id="install-card" hidden>
+        <div>
+          <h3><i class="fa-solid fa-mobile-screen-button"></i> Installer l'application</h3>
+          <p>Accède à BENTOUL CREATION depuis ton écran d'accueil, comme une application.</p>
+        </div>
+        <button type="button" class="btn-primary" data-install-app>
+          <i class="fa-solid fa-download"></i> Installer
         </button>
       </div>
     </section>
@@ -1032,6 +1096,19 @@
       <div id="series-container" class="content-grid"></div>
     </section>
 
+    <section class="page" id="page-all-episodes">
+      <div class="section-heading">
+        <div>
+          <h2>Tous les épisodes</h2>
+          <p>Parcours les épisodes de toutes les séries.</p>
+        </div>
+        <button type="button" class="btn-secondary" id="refresh-episodes">
+          <i class="fa-solid fa-rotate"></i> Actualiser
+        </button>
+      </div>
+      <div id="all-episodes-container" class="content-grid"></div>
+    </section>
+
     <section class="page" id="page-episodes">
       <button type="button" class="back-btn" id="back-to-series">
         <i class="fa-solid fa-arrow-left"></i> Retour aux séries
@@ -1091,22 +1168,26 @@
   </main>
 
   <footer id="app-footer">
-    <button type="button" class="footer-link active" data-page="home">
+    <a class="footer-link active" href="/accueil" data-page="home">
       <i class="fa-solid fa-house"></i>
       <span>Accueil</span>
-    </button>
-    <button type="button" class="footer-link" data-page="series">
+    </a>
+    <a class="footer-link" href="/serie" data-page="series">
       <i class="fa-solid fa-film"></i>
       <span>Séries</span>
-    </button>
-    <button type="button" class="footer-link" data-page="auth" data-guest-only>
+    </a>
+    <a class="footer-link" href="/episode" data-page="all-episodes">
+      <i class="fa-solid fa-play"></i>
+      <span>Épisodes</span>
+    </a>
+    <a class="footer-link" href="/compte" data-page="auth" data-guest-only>
       <i class="fa-regular fa-user"></i>
       <span>Compte</span>
-    </button>
-    <button type="button" class="footer-link" data-page="profile" data-user-only hidden>
+    </a>
+    <a class="footer-link" href="/compte" data-page="profile" data-user-only hidden>
       <i class="fa-solid fa-user-check"></i>
       <span>Profil</span>
-    </button>
+    </a>
   </footer>
 
   <!-- SCRIPT ANALYTICS & STATISTIQUES DE VISITE -->
@@ -1151,6 +1232,7 @@
 
     let seriesList = [];
     let episodeList = [];
+    let allEpisodesList = [];
     let currentSeriesEpisodes = []; // Liste filtrée des épisodes de la série ouverte
     let commentList = [];
     let currentSeries = null;
@@ -1280,6 +1362,134 @@
       )) || "Épisode sans titre";
     }
 
+    function safeDecode(text) {
+      try {
+        return decodeURIComponent(String(text || ""));
+      } catch {
+        return String(text || "");
+      }
+    }
+
+    function slugify(text) {
+      return String(text || "")
+        .replace(/[œŒ]/g, "oe")
+        .replace(/[æÆ]/g, "ae")
+        .replace(/ß/g, "ss")
+        .replace(/&/g, " et ")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/['’`´]/g, "-")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 80);
+    }
+
+    function shortContentId(id) {
+      const compact = String(id || "")
+        .replace(/^(SERIE|EPISODE|EP)[_-]?/i, "")
+        .replace(/[^a-z0-9]/gi, "")
+        .toLowerCase();
+
+      return compact.slice(0, 8) || "contenu";
+    }
+
+    function uniqueSlug(item, list, titleOf, idOf) {
+      const base = slugify(titleOf(item)) || "contenu";
+      const sameTitle = (list || []).filter(
+        other => (slugify(titleOf(other)) || "contenu") === base
+      );
+
+      return sameTitle.length > 1 ? base + "-" + shortContentId(idOf(item)) : base;
+    }
+
+    function seriesSlug(series) {
+      return uniqueSlug(series, seriesList, seriesTitle, seriesIdOf);
+    }
+
+    function episodeSlug(episode) {
+      const source = allEpisodesList.length ? allEpisodesList : episodeList;
+      return uniqueSlug(episode, source, episodeTitle, episodeIdOf);
+    }
+
+    function seriesSlugMatches(series, slug) {
+      const wanted = safeDecode(slug).trim().toLowerCase();
+      if (!wanted) return false;
+
+      if (wanted === seriesSlug(series).toLowerCase()) return true;
+
+      const base = slugify(seriesTitle(series)) || "contenu";
+      const id = seriesIdOf(series);
+
+      if (wanted === base) {
+        const sameTitle = seriesList.filter(
+          item => (slugify(seriesTitle(item)) || "contenu") === base
+        );
+        return sameTitle.length <= 1;
+      }
+
+      return (
+        wanted === id.toLowerCase() ||
+        wanted === base + "-" + shortContentId(id)
+      );
+    }
+
+    function episodeSlugMatches(episode, slug) {
+      const wanted = safeDecode(slug).trim().toLowerCase();
+      if (!wanted) return false;
+
+      if (wanted === episodeSlug(episode).toLowerCase()) return true;
+
+      const base = slugify(episodeTitle(episode)) || "contenu";
+      const id = episodeIdOf(episode);
+
+      if (wanted === base) {
+        const source = allEpisodesList.length ? allEpisodesList : episodeList;
+        const sameTitle = source.filter(
+          item => (slugify(episodeTitle(item)) || "contenu") === base
+        );
+        return sameTitle.length <= 1;
+      }
+
+      return (
+        wanted === id.toLowerCase() ||
+        wanted === base + "-" + shortContentId(id)
+      );
+    }
+
+    function findSeriesBySlug(slug) {
+      return seriesList.find(series => seriesSlugMatches(series, slug)) || null;
+    }
+
+    function findEpisodeBySlug(slug) {
+      const source = allEpisodesList.length ? allEpisodesList : episodeList;
+      return source.find(episode => episodeSlugMatches(episode, slug)) || null;
+    }
+
+    function findEpisodeById(id) {
+      const wanted = String(id);
+
+      return (
+        allEpisodesList.find(episode => episodeIdOf(episode) === wanted) ||
+        episodeList.find(episode => episodeIdOf(episode) === wanted) ||
+        currentSeriesEpisodes.find(episode => episodeIdOf(episode) === wanted) ||
+        (currentEpisode && episodeIdOf(currentEpisode) === wanted ? currentEpisode : null) ||
+        null
+      );
+    }
+
+    function mergeEpisodesIntoAll(list) {
+      (list || []).forEach(episode => {
+        const id = episodeIdOf(episode);
+        if (!id) return;
+
+        const index = allEpisodesList.findIndex(item => episodeIdOf(item) === id);
+
+        if (index !== -1) allEpisodesList[index] = episode;
+        else allEpisodesList.push(episode);
+      });
+    }
+
     function formatDriveUrl(url) {
       if (!url) return "";
       let str = String(url).trim();
@@ -1398,7 +1608,202 @@
       $("#sidebar-overlay").hidden = true;
     }
 
-    window.navigateTo = function(page) {
+    function routeForPage(page) {
+      if (page === "home") return "/accueil";
+      if (page === "series") return "/serie";
+      if (page === "all-episodes") return "/episode";
+
+      if (page === "episodes") {
+        return currentSeries
+          ? "/serie/" + encodeURIComponent(seriesSlug(currentSeries))
+          : "/serie";
+      }
+
+      if (page === "episode") {
+        return currentEpisode
+          ? "/episode/" + encodeURIComponent(episodeSlug(currentEpisode))
+          : "/episode";
+      }
+
+      if (page === "auth" || page === "profile") return "/compte";
+
+      return "/accueil";
+    }
+
+    function pageTitleFor(page) {
+      if (page === "home") return "BENTOUL CREATION — Séries et épisodes en ligne";
+      if (page === "series") return "Séries — BENTOUL CREATION";
+      if (page === "all-episodes") return "Tous les épisodes — BENTOUL CREATION";
+
+      if (page === "episodes") {
+        return currentSeries
+          ? seriesTitle(currentSeries) + " — BENTOUL CREATION"
+          : "Épisodes — BENTOUL CREATION";
+      }
+
+      if (page === "episode") {
+        return currentEpisode
+          ? episodeTitle(currentEpisode) + " — BENTOUL CREATION"
+          : "Épisode — BENTOUL CREATION";
+      }
+
+      if (page === "auth") return "Compte — BENTOUL CREATION";
+      if (page === "profile") return "Mon profil — BENTOUL CREATION";
+
+      return "BENTOUL CREATION";
+    }
+
+    function updatePageMeta(page) {
+      document.title = pageTitleFor(page);
+
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) {
+        try {
+          canonical.href = new URL(routeForPage(page), location.origin).toString();
+        } catch {
+          // URL invalide : conserver la valeur actuelle.
+        }
+      }
+    }
+
+    function routeFromLocation() {
+      let path = location.pathname;
+
+      if (location.hash.indexOf("#/") === 0) {
+        path = location.hash.slice(1);
+      }
+
+      const cleanPath = path.replace(/\/+$/, "") || "/";
+      const segments = cleanPath.split("/").filter(Boolean).map(safeDecode);
+      const params = new URLSearchParams(location.search);
+      const legacySeries = params.get("serie");
+      const legacyEpisode = params.get("episode");
+
+      if (!segments.length) {
+        if (legacySeries) return { page: "series-detail", slug: legacySeries };
+        if (legacyEpisode) return { page: "episode", slug: legacyEpisode };
+        return { page: "home" };
+      }
+
+      const first = segments[0].toLowerCase();
+
+      if (first === "accueil" || first === "home") return { page: "home" };
+
+      if (first === "serie" || first === "series") {
+        return segments[1]
+          ? { page: "series-detail", slug: segments[1] }
+          : { page: "series" };
+      }
+
+      if (first === "episode" || first === "episodes") {
+        return segments[1]
+          ? { page: "episode", slug: segments[1] }
+          : { page: "all-episodes" };
+      }
+
+      if (
+        first === "compte" ||
+        first === "profil" ||
+        first === "profile" ||
+        first === "auth" ||
+        first === "connexion"
+      ) {
+        return { page: "compte" };
+      }
+
+      return { page: "home" };
+    }
+
+    function consumeRouteParam() {
+      const params = new URLSearchParams(location.search);
+      const rawRoute = params.get("__route");
+      if (!rawRoute) return;
+
+      try {
+        const target = new URL(rawRoute, location.origin);
+
+        if (target.origin !== location.origin) {
+          throw new Error("Route refusée");
+        }
+
+        history.replaceState(null, "", target.pathname + target.search + target.hash);
+      } catch {
+        history.replaceState(null, "", "/");
+      }
+    }
+
+    async function applyRoute(historyMode = "replace") {
+      if (!seriesList.length) {
+        await loadSeries();
+      }
+
+      const route = routeFromLocation();
+
+      if (route.page === "home") {
+        window.navigateTo("home", { history: historyMode });
+        return;
+      }
+
+      if (route.page === "series") {
+        window.navigateTo("series", { history: historyMode });
+        return;
+      }
+
+      if (route.page === "all-episodes") {
+        if (!allEpisodesList.length) {
+          try {
+            await loadAllEpisodes();
+          } catch (error) {
+            window.showMessage(error.message, true);
+          }
+        }
+
+        window.navigateTo("all-episodes", { history: historyMode });
+        return;
+      }
+
+      if (route.page === "compte") {
+        window.navigateTo(currentUser ? "profile" : "auth", { history: historyMode });
+        return;
+      }
+
+      if (route.page === "series-detail") {
+        const series = findSeriesBySlug(route.slug);
+
+        if (!series) {
+          window.showMessage("Cette série est introuvable.", true);
+          window.navigateTo("series", { history: "replace" });
+          return;
+        }
+
+        await openSeries(seriesIdOf(series), { history: historyMode });
+        return;
+      }
+
+      if (route.page === "episode") {
+        let episode = findEpisodeBySlug(route.slug);
+
+        if (!episode) {
+          try {
+            await loadAllEpisodes();
+          } catch (error) {
+            window.showMessage(error.message, true);
+          }
+
+          episode = findEpisodeBySlug(route.slug);
+        }
+
+        if (!episode) {
+          window.showMessage("Cet épisode est introuvable ou indisponible.", true);
+          window.navigateTo("all-episodes", { history: "replace" });
+          return;
+        }
+
+        await openEpisodeFromAnywhere(episode, { history: historyMode });
+      }
+    }
+
+    window.navigateTo = function(page, options = {}) {
       if (page === "auth" && currentUser) page = "profile";
 
       const target = $("#page-" + page);
@@ -1418,17 +1823,66 @@
       closeSidebar();
 
       if (page === "series") loadSeries();
+
+      if (page === "all-episodes") {
+        if (allEpisodesList.length) {
+          renderAllEpisodes();
+        } else {
+          loadAllEpisodes()
+            .then(renderAllEpisodes)
+            .catch(error => {
+              const container = $("#all-episodes-container");
+              if (container) container.textContent = error.message;
+            });
+        }
+      }
+
       if (page === "profile") window.renderProfile();
 
+      const historyMode = options.history === undefined ? "push" : options.history;
+
+      if (historyMode !== "none") {
+        const nextURL = routeForPage(page);
+        const currentURL = location.pathname + location.search + location.hash;
+
+        if (nextURL && nextURL !== currentURL) {
+          try {
+            window.history[
+              historyMode === "replace" ? "replaceState" : "pushState"
+            ]({ page }, "", nextURL);
+          } catch {
+            // Certains navigateurs bloquent la mise à jour d'URL : ignorer.
+          }
+        }
+      }
+
+      updatePageMeta(page);
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
     document.addEventListener("click", event => {
       const button = event.target.closest("[data-page]");
-      if (button) {
-        event.preventDefault();
-        window.navigateTo(button.dataset.page);
+      if (!button) return;
+
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
       }
+
+      event.preventDefault();
+      window.navigateTo(button.dataset.page);
+    });
+
+    window.addEventListener("popstate", () => {
+      applyRoute("none").catch(error => {
+        window.showMessage(error.message || "Navigation impossible.", true);
+      });
     });
 
     $("#menu-toggle").addEventListener("click", () => {
@@ -1588,9 +2042,7 @@
       if (card) {
         const openButton = card.querySelector(".open-episode");
         if (openButton) {
-          return episodeList.find(item =>
-            episodeIdOf(item) === openButton.dataset.id
-          ) || null;
+          return findEpisodeById(openButton.dataset.id);
         }
       }
 
@@ -1602,18 +2054,21 @@
     ========================= */
 
     function directContentURL(type, contentId) {
-      const url = new URL(location.href);
-      url.hash = "";
-      url.searchParams.delete("serie");
-      url.searchParams.delete("episode");
+      const base = location.origin + "/";
 
       if (type === "series") {
-        url.searchParams.set("serie", contentId);
-      } else {
-        url.searchParams.set("episode", contentId);
+        const series = seriesList.find(
+          item => seriesIdOf(item) === String(contentId)
+        );
+        const slug = series ? seriesSlug(series) : String(contentId || "serie");
+
+        return base + "serie/" + encodeURIComponent(slug);
       }
 
-      return url.toString();
+      const episode = findEpisodeById(contentId);
+      const slug = episode ? episodeSlug(episode) : String(contentId || "episode");
+
+      return base + "episode/" + encodeURIComponent(slug);
     }
 
     async function shareContent(item, type, contentId, button) {
@@ -1704,11 +2159,16 @@
       try {
         const [resultSeries, resultEpisodes] = await Promise.all([
           getData("getSeries"),
-          getData("getEpisodes").catch(() => [])
+          getData("getEpisodes", {
+            userId: currentUser ? currentUserId() : ""
+          }).catch(() => [])
         ]);
 
         seriesList = listFrom(resultSeries, ["series", "Series", "data", "result"]);
-        episodeList = listFrom(resultEpisodes, ["episodes", "Episodes", "data", "result"]);
+        allEpisodesList = sheetOrder(
+          listFrom(resultEpisodes, ["episodes", "Episodes", "data", "result"])
+        );
+        episodeList = allEpisodesList.slice();
 
         if (!seriesList.length) {
           container.innerHTML = "<p>Aucune série disponible actuellement.</p>";
@@ -1777,10 +2237,178 @@
     }
 
     /* =========================
+       CARTES D'ÉPISODES
+    ========================= */
+
+    function seriesForEpisode(episode) {
+      const seriesId = parentSeriesIdOf(episode);
+      if (!seriesId) return null;
+
+      return seriesList.find(item => seriesIdOf(item) === seriesId) || null;
+    }
+
+    function episodeCardHTML(episode, options = {}) {
+      const episodeId = episodeIdOf(episode);
+      const title = episodeTitle(episode);
+      const textPreview = cleanText(rawContent(episode));
+      const image = imageURL(episode) || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%231e293b"/></svg>';
+      const number = cleanText(value(
+        episode, "numero", "Numero", "numEpisode", "episodeNumber"
+      ));
+      const locked = isEpisodeLocked(episode);
+      const free = isEpisodeFree(episode);
+      const alreadyBought = String(value(episode, "achete", "purchased")) === "true";
+      const creditCost = Number(value(episode, "coutCredits", "creditCost")) || (locked ? 1 : 0);
+      const cardDescription = locked
+        ? `Épisode verrouillé. Débloque-le pour ${creditCost} crédit${creditCost > 1 ? "s" : ""}.`
+        : (textPreview || (free ? "Épisode gratuit." : "Épisode débloqué sur ton compte."));
+
+      const parentSeries = options.showSeries ? seriesForEpisode(episode) : null;
+      const parentTitle = parentSeries ? seriesTitle(parentSeries) : "";
+
+      return `
+        <article class="content-card">
+          <div class="card-media-wrapper">
+            ${locked
+              ? `<span class="episode-lock-badge"><i class="fa-solid fa-lock"></i> ${creditCost} crédit</span>`
+              : (free
+                ? '<span class="episode-free-badge"><i class="fa-solid fa-unlock"></i> Gratuit</span>'
+                : (alreadyBought ? '<span class="episode-free-badge"><i class="fa-solid fa-check"></i> Débloqué</span>' : ""))}
+            <img class="card-image"
+              src="${escapeHTML(image)}"
+              alt="${escapeHTML(title)}"
+              loading="lazy"
+              referrerpolicy="no-referrer">
+
+            <div class="card-title-overlay">
+              ${parentTitle ? `<span class="episode-series-badge"><i class="fa-solid fa-film"></i> ${escapeHTML(parentTitle)}</span>` : ""}
+              ${number ? `<span class="episode-number-badge">Épisode ${escapeHTML(number)}</span>` : ""}
+              <h3>${escapeHTML(title)}</h3>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <p class="card-description">${escapeHTML(cardDescription)}</p>
+
+            ${interactionBar(episode, "episode")}
+
+            <button type="button"
+              class="arrow-action-btn open-episode"
+              data-id="${escapeHTML(episodeId)}"
+              data-locked="${locked ? "true" : "false"}"
+              title="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}"
+              aria-label="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}">
+              <i class="fa-solid ${locked ? "fa-lock" : "fa-arrow-right"}"></i>
+            </button>
+          </div>
+        </article>
+      `;
+    }
+
+    function bindEpisodeCards(container) {
+      if (!container) return;
+
+      container.querySelectorAll(".open-episode").forEach(button => {
+        if (button.dataset.bound === "true") return;
+        button.dataset.bound = "true";
+
+        button.addEventListener("click", () => {
+          if (button.dataset.locked === "true") {
+            purchaseEpisodeAndOpen(button.dataset.id);
+          } else {
+            openEpisode(button.dataset.id);
+          }
+        });
+      });
+    }
+
+    function setEpisodeContext(episode) {
+      const parentId = parentSeriesIdOf(episode);
+      const parent = parentId
+        ? seriesList.find(series => seriesIdOf(series) === parentId)
+        : null;
+
+      if (parent) currentSeries = parent;
+
+      if (parentId) {
+        const source = allEpisodesList.length ? allEpisodesList : episodeList;
+        const related = source.filter(item => parentSeriesIdOf(item) === parentId);
+
+        if (related.length) currentSeriesEpisodes = related;
+      }
+
+      if (!currentSeriesEpisodes.some(item => episodeIdOf(item) === episodeIdOf(episode))) {
+        currentSeriesEpisodes = currentSeriesEpisodes.concat([episode]);
+      }
+    }
+
+    async function loadAllEpisodes() {
+      const result = await getData("getEpisodes", {
+        userId: currentUser ? currentUserId() : ""
+      });
+
+      const list = sheetOrder(listFrom(result, [
+        "episodes", "Episodes", "data", "result"
+      ]));
+
+      if (list.length) {
+        allEpisodesList = list;
+        episodeList = list.slice();
+      }
+
+      return allEpisodesList;
+    }
+
+    function renderAllEpisodes() {
+      const container = $("#all-episodes-container");
+      if (!container) return;
+
+      if (!allEpisodesList.length) {
+        container.innerHTML = "<p>Aucun épisode disponible actuellement.</p>";
+        return;
+      }
+
+      container.innerHTML = allEpisodesList
+        .map(episode => episodeCardHTML(episode, { showSeries: true }))
+        .join("");
+
+      bindEpisodeCards(container);
+      attachReactions(container);
+    }
+
+    async function refreshEpisodesForIdentity() {
+      const openSeriesId = currentSeries ? seriesIdOf(currentSeries) : "";
+
+      await loadAllEpisodes();
+      currentSeriesEpisodes = [];
+
+      if (!openSeriesId) return;
+
+      const result = await getData("getEpisodes", {
+        seriesId: openSeriesId,
+        userId: currentUser ? currentUserId() : ""
+      });
+
+      const list = sheetOrder(listFrom(result, [
+        "episodes", "Episodes", "data", "result"
+      ]));
+
+      mergeEpisodesIntoAll(list);
+      currentSeriesEpisodes = allEpisodesList.filter(
+        episode => parentSeriesIdOf(episode) === openSeriesId
+      );
+    }
+
+    async function openEpisodeFromAnywhere(episode, options = {}) {
+      setEpisodeContext(episode);
+      await openEpisode(episodeIdOf(episode), options);
+    }
+
+    /* =========================
        ÉPISODES D'UNE SÉRIE
     ========================= */
 
-    async function openSeries(id) {
+    async function openSeries(id, options = {}) {
       currentSeries = seriesList.find(
         series => seriesIdOf(series) === String(id)
       );
@@ -1796,7 +2424,7 @@
         titleHeader.textContent = "Épisodes de : " + seriesTitleText;
       }
 
-      window.navigateTo("episodes");
+      window.navigateTo("episodes", options);
 
       const container = $("#episodes-container");
       container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des épisodes...</p>';
@@ -1816,74 +2444,18 @@
           episode => !parentSeriesIdOf(episode) || parentSeriesIdOf(episode) === String(id)
         );
 
+        mergeEpisodesIntoAll(episodeList);
+
         if (!currentSeriesEpisodes.length) {
           container.innerHTML = "<p>Aucun épisode disponible pour cette série.</p>";
           return;
         }
 
-        container.innerHTML = currentSeriesEpisodes.map(episode => {
-          const episodeId = episodeIdOf(episode);
-          const title = episodeTitle(episode);
-          const textPreview = cleanText(rawContent(episode));
-          const image = imageURL(episode) || 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="%231e293b"/></svg>';
-          const number = cleanText(value(
-            episode, "numero", "Numero", "numEpisode", "episodeNumber"
-          ));
-          const locked = isEpisodeLocked(episode);
-          const free = isEpisodeFree(episode);
-          const alreadyBought = String(value(episode, "achete", "purchased")) === "true";
-          const creditCost = Number(value(episode, "coutCredits", "creditCost")) || (locked ? 1 : 0);
-          const cardDescription = locked
-            ? `Épisode verrouillé. Débloque-le pour ${creditCost} crédit${creditCost > 1 ? "s" : ""}.`
-            : (textPreview || (free ? "Épisode gratuit." : "Épisode débloqué sur ton compte."));
+        container.innerHTML = currentSeriesEpisodes
+          .map(episode => episodeCardHTML(episode))
+          .join("");
 
-          return `
-            <article class="content-card">
-              <div class="card-media-wrapper">
-                ${locked
-                  ? `<span class="episode-lock-badge"><i class="fa-solid fa-lock"></i> ${creditCost} crédit</span>`
-                  : (free
-                    ? '<span class="episode-free-badge"><i class="fa-solid fa-unlock"></i> Gratuit</span>'
-                    : (alreadyBought ? '<span class="episode-free-badge"><i class="fa-solid fa-check"></i> Débloqué</span>' : ""))}
-                <img class="card-image"
-                  src="${escapeHTML(image)}"
-                  alt="${escapeHTML(title)}"
-                  loading="lazy"
-                  referrerpolicy="no-referrer">
-                
-                <div class="card-title-overlay">
-                  ${number ? `<span class="episode-number-badge">Épisode ${escapeHTML(number)}</span>` : ""}
-                  <h3>${escapeHTML(title)}</h3>
-                </div>
-              </div>
-
-              <div class="card-body">
-                <p class="card-description">${escapeHTML(cardDescription)}</p>
-
-                ${interactionBar(episode, "episode")}
-
-                <button type="button"
-                  class="arrow-action-btn open-episode"
-                  data-id="${escapeHTML(episodeId)}"
-                  data-locked="${locked ? "true" : "false"}"
-                  title="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}"
-                  aria-label="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}">
-                  <i class="fa-solid ${locked ? "fa-lock" : "fa-arrow-right"}"></i>
-                </button>
-              </div>
-            </article>
-          `;
-        }).join("");
-
-        container.querySelectorAll(".open-episode").forEach(button => {
-          button.addEventListener("click", () => {
-            if (button.dataset.locked === "true") {
-              purchaseEpisodeAndOpen(button.dataset.id);
-            } else {
-              openEpisode(button.dataset.id);
-            }
-          });
-        });
+        bindEpisodeCards(container);
 
         attachReactions(container);
       } catch (error) {
@@ -1899,21 +2471,21 @@
        DÉTAIL D'UN ÉPISODE + BOUTON ÉPISODE SUIVANT
     ======================================================= */
 
-    async function purchaseEpisodeAndOpen(id) {
+    async function purchaseEpisodeAndOpen(id, options = {}) {
       if (!currentUser) {
         window.showMessage("Connecte-toi pour débloquer cet épisode.", true);
         window.navigateTo("auth");
         return;
       }
 
-      const episode = episodeList.find(item => episodeIdOf(item) === String(id));
+      const episode = findEpisodeById(id);
       if (!episode) {
         window.showMessage("Épisode introuvable.", true);
         return;
       }
 
       if (isEpisodeFree(episode) || !isEpisodeLocked(episode)) {
-        await openEpisode(id);
+        await openEpisode(id, options);
         return;
       }
 
@@ -1953,33 +2525,39 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
           userId: currentUserId()
         });
         episodeList = sheetOrder(listFrom(refreshed, ["episodes", "Episodes", "data", "result"]));
-        currentSeriesEpisodes = episodeList.filter(ep => !parentSeriesIdOf(ep) || parentSeriesIdOf(ep) === String(seriesId));
+        mergeEpisodesIntoAll(episodeList);
 
-        const unlockedEpisode = episodeList.find(item => episodeIdOf(item) === String(id));
+        if (seriesId) {
+          currentSeriesEpisodes = allEpisodesList.filter(
+            ep => parentSeriesIdOf(ep) === String(seriesId)
+          );
+        }
+
+        const unlockedEpisode = findEpisodeById(id);
         if (!unlockedEpisode || isEpisodeLocked(unlockedEpisode) || !rawContent(unlockedEpisode)) {
           throw new Error("L'achat a été envoyé, mais le serveur n'a pas confirmé le contenu débloqué. Actualise la liste des épisodes.");
         }
 
         window.showMessage(result.message || "Épisode débloqué avec succès.");
-        await openEpisode(id);
+        await openEpisode(id, options);
       } catch (error) {
         window.showMessage(error.message || "Échec du déblocage.", true);
         if (button) button.disabled = false;
       }
     }
 
-    async function openEpisode(id) {
-      currentEpisode = episodeList.find(
-        episode => episodeIdOf(episode) === String(id)
-      );
+    async function openEpisode(id, options = {}) {
+      currentEpisode = findEpisodeById(id);
 
       if (!currentEpisode) {
         window.showMessage("Épisode introuvable.", true);
         return;
       }
 
+      setEpisodeContext(currentEpisode);
+
       if (isEpisodeLocked(currentEpisode)) {
-        await purchaseEpisodeAndOpen(id);
+        await purchaseEpisodeAndOpen(id, options);
         return;
       }
 
@@ -2043,7 +2621,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
         });
       }
 
-      window.navigateTo("episode");
+      window.navigateTo("episode", options);
       attachReactions($("#episode-detail"));
       updateEpisodeCounters();
       await loadComments();
@@ -2212,6 +2790,12 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
         sessionStorage.setItem("bentoulUser", JSON.stringify(currentUser));
         window.updateAuthUI(currentUser);
 
+        try {
+          await refreshEpisodesForIdentity();
+        } catch {
+          // La connexion reste valide même si les épisodes ne se rechargent pas.
+        }
+
         $("#login-form").reset();
         window.showMessage("Connexion réussie.");
         window.navigateTo("profile");
@@ -2315,6 +2899,8 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
       window.renderProfile();
       window.navigateTo("home");
       window.showMessage("Tu es déconnecté.");
+
+      refreshEpisodesForIdentity().catch(() => {});
     }
 
     $("#sidebar-logout").addEventListener("click", logout);
@@ -2325,79 +2911,111 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
     $("#refresh-series").addEventListener("click", loadSeries);
 
+    $("#refresh-episodes").addEventListener("click", () => {
+      allEpisodesList = [];
+
+      loadAllEpisodes()
+        .then(renderAllEpisodes)
+        .catch(error => window.showMessage(error.message, true));
+    });
+
     $("#back-to-series").addEventListener("click", () => {
       window.navigateTo("series");
     });
 
     $("#back-to-episodes").addEventListener("click", () => {
       if (currentSeries) {
-        openSeries(seriesIdOf(currentSeries));
+        openSeries(seriesIdOf(currentSeries), { history: "replace" });
       } else {
         window.navigateTo("series");
       }
     });
 
     /* =========================
-       OUVERTURE DES LIENS DIRECTS
+       APPLICATION INSTALLABLE (PWA)
     ========================= */
 
-    async function openSharedContent() {
-      const params = new URLSearchParams(location.search);
-      const sharedSeriesId = params.get("serie");
-      const sharedEpisodeId = params.get("episode");
+    let deferredInstallPrompt = null;
 
-      if (!sharedSeriesId && !sharedEpisodeId) return;
-
-      try {
-        if (!seriesList.length) {
-          await loadSeries();
-        }
-
-        if (sharedSeriesId) {
-          await openSeries(sharedSeriesId);
-          return;
-        }
-
-        if (sharedEpisodeId) {
-          const result = await getData("getEpisodes");
-
-          /* ORDRE FEUILLE : même ordre que dans la feuille */
-          episodeList = sheetOrder(listFrom(result, [
-            "episodes", "Episodes", "data", "result"
-          ]));
-
-          const episode = episodeList.find(
-            item => episodeIdOf(item) === String(sharedEpisodeId)
-          );
-
-          if (!episode) {
-            window.showMessage(
-              "Cet épisode est introuvable ou indisponible.",
-              true
-            );
-            return;
-          }
-
-          const parentId = parentSeriesIdOf(episode);
-          currentSeries = seriesList.find(
-            item => seriesIdOf(item) === parentId
-          ) || null;
-
-          if (currentSeries) {
-            currentSeriesEpisodes = episodeList.filter(
-              ep => parentSeriesIdOf(ep) === parentId
-            );
-          }
-
-          await openEpisode(sharedEpisodeId);
-        }
-      } catch (error) {
-        window.showMessage(
-          "Impossible d'ouvrir le lien partagé : " + error.message,
-          true
-        );
-      }
+    function isStandaloneApp() {
+      return (
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true
+      );
     }
+
+    function isIOSDevice() {
+      return (
+        /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+      );
+    }
+
+    function updateInstallUI() {
+      const standalone = isStandaloneApp();
+      const showHint = !standalone && (!!deferredInstallPrompt || isIOSDevice());
+
+      document.querySelectorAll("[data-install-app]").forEach(button => {
+        button.hidden = !showHint;
+      });
+
+      const card = $("#install-card");
+      if (card) card.hidden = !showHint;
+    }
+
+    async function promptInstall() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+
+        try {
+          await deferredInstallPrompt.userChoice;
+        } catch {
+          // L'utilisateur a fermé la boîte de dialogue d'installation.
+        }
+
+        deferredInstallPrompt = null;
+        updateInstallUI();
+        return;
+      }
+
+      if (isIOSDevice()) {
+        window.alert(
+          "Sur iPhone ou iPad : touche le bouton Partager, puis « Sur l'écran d'accueil »."
+        );
+        return;
+      }
+
+      window.showMessage(
+        "Utilise le menu de ton navigateur pour installer l'application.",
+        true
+      );
+    }
+
+    document.querySelectorAll("[data-install-app]").forEach(button => {
+      button.addEventListener("click", promptInstall);
+    });
+
+    window.addEventListener("beforeinstallprompt", event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      updateInstallUI();
+    });
+
+    window.addEventListener("appinstalled", () => {
+      deferredInstallPrompt = null;
+      updateInstallUI();
+      window.showMessage("Application installée.");
+    });
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js", { scope: "/" }).catch(() => {
+          // Le site reste utilisable sans service worker.
+        });
+      });
+    }
+
+    updateInstallUI();
 
     /* =========================
        INITIALISATION
@@ -2407,12 +3025,14 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
     window.updateAuthUI(currentUser);
 
     (async function initAppContent() {
+      consumeRouteParam();
       await refreshCurrentUser();
       await loadSeries();
-      await openSharedContent();
+      await applyRoute("replace");
     })();
 
   })();
   </script>
 </body>
 </html>
+
