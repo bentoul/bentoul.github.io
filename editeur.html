@@ -40,6 +40,10 @@ h2{font-size:21px;margin:0 0 15px}
     border-radius:6px;background:#f8fafc;cursor:pointer
 }
 .toolbar button:hover{background:#dbeafe}
+.toolbar button.is-active{background:#bfdbfe;border-color:#60a5fa;color:#1d4ed8}
+.toolbar button svg{display:block;margin:0 auto}
+.toolbar select#fontFamily{max-width:128px}
+.toolbar select#fontSize{max-width:92px}
 .toolbar .separator{width:1px;background:#d5dce8;margin:2px 4px}
 
 .editor{
@@ -124,16 +128,52 @@ h2{font-size:21px;margin:0 0 15px}
         </select>
     </div>
 
-    <div class="toolbar">
-        <button type="button" data-command="bold" title="Gras"><b>G</b></button>
-        <button type="button" data-command="italic" title="Italique"><i>I</i></button>
-        <button type="button" data-command="underline" title="Souligné"><u>S</u></button>
+    <div class="toolbar" id="richToolbar">
+        <button type="button" data-command="bold" title="Gras" aria-label="Gras" aria-pressed="false"><b>G</b></button>
+        <button type="button" data-command="italic" title="Italique" aria-label="Italique" aria-pressed="false"><i>I</i></button>
+        <button type="button" data-command="underline" title="Souligné" aria-label="Souligné" aria-pressed="false"><u>S</u></button>
 
         <span class="separator"></span>
 
-        <button type="button" data-command="justifyLeft" title="Aligner à gauche">☰</button>
-        <button type="button" data-command="justifyCenter" title="Centrer">≡</button>
-        <button type="button" data-command="justifyRight" title="Aligner à droite">☷</button>
+        <select id="fontFamily" aria-label="Police du texte" title="Police du texte">
+            <option value="">Police</option>
+            <option value="Arial, sans-serif">Arial</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="Verdana, sans-serif">Verdana</option>
+            <option value="Tahoma, sans-serif">Tahoma</option>
+            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+            <option value="'Times New Roman', serif">Times New Roman</option>
+            <option value="'Courier New', monospace">Courier New</option>
+            <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+            <option value="Impact, sans-serif">Impact</option>
+            <option value="Garamond, serif">Garamond</option>
+        </select>
+
+        <select id="fontSize" aria-label="Taille du texte" title="Taille du texte">
+            <option value="">Taille</option>
+            <option value="1">10 px</option>
+            <option value="2">13 px</option>
+            <option value="3">16 px</option>
+            <option value="4">18 px</option>
+            <option value="5">24 px</option>
+            <option value="6">32 px</option>
+            <option value="7">48 px</option>
+        </select>
+
+        <span class="separator"></span>
+
+        <button type="button" data-command="justifyLeft" title="Aligner à gauche" aria-label="Aligner à gauche" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 3.5h12M2 6.5h8M2 9.5h12M2 12.5h8"/></svg>
+        </button>
+        <button type="button" data-command="justifyCenter" title="Centrer" aria-label="Centrer" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 3.5h12M4 6.5h8M2 9.5h12M4 12.5h8"/></svg>
+        </button>
+        <button type="button" data-command="justifyRight" title="Aligner à droite" aria-label="Aligner à droite" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 3.5h12M6 6.5h8M2 9.5h12M6 12.5h8"/></svg>
+        </button>
+        <button type="button" data-command="justifyFull" title="Justifier" aria-label="Justifier" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 3.5h12M2 6.5h12M2 9.5h12M2 12.5h12"/></svg>
+        </button>
 
         <span class="separator"></span>
 
@@ -168,49 +208,135 @@ h2{font-size:21px;margin:0 0 15px}
          role="textbox" aria-label="Contenu"
          aria-multiline="true"></div>
 
-         <textarea id="htmlSource"
-    class="html-source hidden"
-    spellcheck="false"
-    autocapitalize="off"
-    autocomplete="off"
-    autocorrect="off"
-    aria-label="Code source HTML"
-    placeholder="Modifie ton code HTML ici..."></textarea>
+    <div class="html-editor hidden" id="htmlEditorWrap">
+        <div class="html-toolbar">
+            <button type="button" id="formatHtmlBtn" title="Indenter chaque balise sur sa ligne">✨ Formater</button>
+            <span class="html-hint">Chaque balise sur sa ligne, indentation automatique</span>
+            <button type="button" id="backToVisualBtn" title="Revenir à l'éditeur visuel">📝 Éditeur visuel</button>
+        </div>
+        <div class="html-code">
+            <pre class="html-highlight" id="htmlHighlight" aria-hidden="true"></pre>
+            <textarea id="htmlSource"
+                class="html-source"
+                wrap="soft"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                autocorrect="off"
+                aria-label="Code source HTML"
+                placeholder="Modifie ton code HTML ici..."></textarea>
+        </div>
+    </div>
+
     <style>
-        /* ÉDITEUR DE CODE HTML */
-/* ÉDITEUR HTML : RETOUR À LA LIGNE ET COLORATION */
-.html-source {
-    display: block;
-    width: 100%;
+/* ÉDITEUR DE CODE HTML */
+.html-editor {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 0;
     min-height: 0;
-    height: auto;
-    padding: 20px;
-    resize: none;
+}
+
+.html-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 9px;
+    background: #111827;
+    border: 1px solid #1e293b;
+    border-bottom: 0;
+    border-radius: 10px 10px 0 0;
+    flex-shrink: 0;
+    color: #cbd5e1;
+    font-size: 12px;
+}
+
+.html-toolbar button {
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    background: #1e293b;
+    color: #e2e8f0;
+    font-weight: 700;
+    cursor: pointer;
+    flex: 0 0 auto;
+}
+
+.html-toolbar button:hover { background: #334155; }
+.html-toolbar #backToVisualBtn { margin-left: auto; }
+
+.html-hint {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: .65;
+}
+
+.html-code {
+    position: relative;
+    flex: 1 1 0;
+    min-height: 0;
     border: 1px solid #1e293b;
     border-top: 0;
     border-radius: 0 0 10px 10px;
-    outline: none;
-
     background: #0b1020;
-    color: #f8fafc;
+    overflow: hidden;
+}
 
+.html-highlight,
+.html-source {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    border: 0;
+    border-radius: 0;
     font-family: Consolas, "Courier New", monospace;
     font-size: 14px;
     line-height: 1.7;
-
-    /* Empêcher le défilement horizontal */
+    tab-size: 2;
+    letter-spacing: normal;
+    text-align: left;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
     word-break: break-word;
-    overflow-x: hidden;
-    overflow-y: auto;
-    tab-size: 2;
 }
 
-.html-source:focus {
-    box-shadow: inset 0 0 0 1px #3b82f6;
+/* Le surligneur est derrière le textarea : le texte tapé reste invisible,
+   seule la coloration est affichée. */
+.html-highlight {
+    overflow: hidden;
+    pointer-events: none;
+    color: #e2e8f0;
+    background: transparent;
 }
+
+.html-source {
+    background: transparent;
+    color: transparent;
+    caret-color: #f8fafc;
+    resize: none;
+    outline: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.html-source::selection {
+    background: rgba(59, 130, 246, .45);
+    color: transparent;
+}
+
+.html-source:focus { box-shadow: none; }
+
+.tok-tag { color: #f87171; font-weight: 600; }
+.tok-attr { color: #4ade80; }
+.tok-string { color: #86efac; }
+.tok-comment { color: #94a3b8; font-style: italic; }
+.tok-doctype { color: #fbbf24; }
 
 #toggleViewHtml {
     background: #dbeafe;
@@ -219,10 +345,13 @@ h2{font-size:21px;margin:0 0 15px}
 }
 
 @media(max-width:700px) {
+    .html-highlight,
     .html-source {
         padding: 14px;
         font-size: 13px;
     }
+    .html-toolbar { padding: 6px; }
+    .html-hint { display: none; }
 }
     </style>
 
@@ -560,15 +689,45 @@ function extractFirstImage(html){
     return img ? img.src : "";
 }
 
+/* CONVERTIR LES ANCIENNES BALISES <font> EN STYLES PROPRES */
+const LEGACY_FONT_SIZES = {
+    1: "10px", 2: "13px", 3: "16px", 4: "18px",
+    5: "24px", 6: "32px", 7: "48px"
+};
+
+function normalizeLegacyFonts(html){
+    if(!/<font[\s>]/i.test(html)) return html;
+
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+
+    temp.querySelectorAll("font").forEach(font => {
+        const span = document.createElement("span");
+        const face = font.getAttribute("face");
+        const size = font.getAttribute("size");
+        const color = font.getAttribute("color");
+
+        if(face) span.style.fontFamily = face;
+        if(size && LEGACY_FONT_SIZES[size]) span.style.fontSize = LEGACY_FONT_SIZES[size];
+        if(color) span.style.color = color;
+
+        while(font.firstChild) span.appendChild(font.firstChild);
+        font.replaceWith(span);
+    });
+
+    return temp.innerHTML;
+}
+
 /* ENREGISTRER OU METTRE À JOUR UNE SÉRIE OU UN ÉPISODE */
 async function saveContent(){
     clearMessage();
 
     const nomSerie = $("NomSerie").value.trim();
     const titreEpisode = $("titre").value.trim();
-    const contenu = htmlViewActive
-    ? $("htmlSource").value
-    : $("editor").innerHTML;
+    const rawContenu = htmlViewActive
+        ? $("htmlSource").value
+        : $("editor").innerHTML;
+    const contenu = htmlViewActive ? rawContenu : normalizeLegacyFonts(rawContenu);
 
     const statut = $("statut").value;
 
@@ -675,40 +834,284 @@ async function saveContent(){
 /* BASCULER ENTRE L'ÉDITEUR VISUEL ET LE CODE HTML */
 let htmlViewActive = false;
 
-$("toggleViewHtml").addEventListener("click", function () {
+function escapeHtml(value){
+    return String(value).replace(/[&<>]/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;"
+    })[character]);
+}
+
+function highlightHtmlTag(token){
+    const match = token.match(/^(<\/?)([a-zA-Z][\w:-]*)([\s\S]*?)(\/?>)$/);
+
+    if(!match){
+        return `<span class="tok-tag">${escapeHtml(token)}</span>`;
+    }
+
+    const [, opening, name, rest, closing] = match;
+    let html = `<span class="tok-tag">${escapeHtml(opening + name)}</span>`;
+    const attributePattern =
+        /([a-zA-Z_:@][-a-zA-Z0-9_:.@]*)(\s*=\s*)("[^"]*"|'[^']*'|[^\s"'<>`]+)?|(\s+)/g;
+    let index = 0;
+    let attribute;
+
+    while((attribute = attributePattern.exec(rest)) !== null){
+        if(attribute.index > index){
+            html += escapeHtml(rest.slice(index, attribute.index));
+        }
+
+        if(attribute[4]){
+            html += attribute[0];
+        }else{
+            html += `<span class="tok-attr">${escapeHtml(attribute[1])}</span>`;
+            if(attribute[2]) html += escapeHtml(attribute[2]);
+            if(attribute[3]) html += `<span class="tok-string">${escapeHtml(attribute[3])}</span>`;
+        }
+
+        index = attributePattern.lastIndex;
+    }
+
+    if(index < rest.length) html += escapeHtml(rest.slice(index));
+
+    html += `<span class="tok-tag">${escapeHtml(closing)}</span>`;
+    return html;
+}
+
+const HTML_TOKEN_SOURCE =
+    "<" + "!--[\\s\\S]*?-->|<!DOCTYPE[^>]*>|<\\/?[a-zA-Z][^>]*>|[^<]+|<";
+
+function tokenizeHtml(source){
+    return String(source).match(new RegExp(HTML_TOKEN_SOURCE, "g")) || [];
+}
+
+function highlightHtml(source){
+    const tokens = tokenizeHtml(source);
+
+    return tokens.map(token => {
+        if(token.startsWith("<" + "!--")){
+            return `<span class="tok-comment">${escapeHtml(token)}</span>`;
+        }
+        if(/^<!doctype/i.test(token)){
+            return `<span class="tok-doctype">${escapeHtml(token)}</span>`;
+        }
+        if(token.startsWith("<")){
+            return highlightHtmlTag(token);
+        }
+        return escapeHtml(token);
+    }).join("");
+}
+
+function syncHtmlScroller(){
+    const source = $("htmlSource");
+    const highlight = $("htmlHighlight");
+    if(!source || !highlight) return;
+
+    const paddingRight = parseFloat(window.getComputedStyle(source).paddingRight) || 0;
+    const scrollbarWidth = Math.max(source.offsetWidth - source.clientWidth, 0);
+
+    highlight.style.paddingRight = (paddingRight + scrollbarWidth) + "px";
+    highlight.scrollTop = source.scrollTop;
+    highlight.scrollLeft = source.scrollLeft;
+}
+
+function renderHtmlHighlight(){
+    const source = $("htmlSource");
+    const highlight = $("htmlHighlight");
+    if(!source || !highlight) return;
+
+    highlight.innerHTML = highlightHtml(source.value);
+    syncHtmlScroller();
+}
+
+/* FORMATAGE : UNE BALISE PAR LIGNE, INDENTÉE SELON SON ORDRE D'IMBRICATION */
+const HTML_INLINE_TAGS = new Set([
+    "a", "abbr", "b", "bdi", "bdo", "br", "cite", "code", "data", "del",
+    "dfn", "em", "font", "i", "img", "ins", "kbd", "mark", "q", "s",
+    "samp", "small", "span", "strong", "sub", "sup", "time", "u", "var", "wbr"
+]);
+
+const HTML_VOID_TAGS = new Set([
+    "area", "base", "br", "col", "embed", "hr", "img", "input",
+    "link", "meta", "param", "source", "track", "wbr"
+]);
+
+function formatHtml(source){
+    const tokens = tokenizeHtml(source);
+
+    const lines = [];
+    let depth = 0;
+    let buffer = "";
+
+    const indent = () => "  ".repeat(Math.max(depth, 0));
+
+    const flush = () => {
+        const text = buffer.replace(/\s+/g, " ").trim();
+        if(text) lines.push(indent() + text);
+        buffer = "";
+    };
+
+    for(let i = 0; i < tokens.length; i++){
+        const token = tokens[i];
+
+        if(token.startsWith("<" + "!--")){
+            flush();
+            token.split(/\r?\n/).forEach(line => {
+                if(line.trim()) lines.push(indent() + line.trim());
+            });
+            continue;
+        }
+
+        if(/^<!doctype/i.test(token)){
+            flush();
+            lines.push(indent() + token.trim());
+            continue;
+        }
+
+        if(token.startsWith("<")){
+            const match = token.match(/^<\s*(\/)?\s*([a-zA-Z][\w:-]*)/);
+
+            if(!match){
+                buffer += token;
+                continue;
+            }
+
+            const isClosing = Boolean(match[1]);
+            const name = match[2].toLowerCase();
+
+            /* Les balises inline restent avec leur texte pour ne pas
+               modifier l'affichage de l'article. */
+            if(HTML_INLINE_TAGS.has(name)){
+                buffer += token;
+                continue;
+            }
+
+            flush();
+
+            if(isClosing){
+                depth = Math.max(depth - 1, 0);
+                lines.push(indent() + token.trim());
+                continue;
+            }
+
+            if(HTML_VOID_TAGS.has(name) || /\/>\s*$/.test(token)){
+                lines.push(indent() + token.trim());
+                continue;
+            }
+
+            /* Le contenu de pre, textarea, script et style
+               est laissé intact. */
+            if(["pre", "textarea", "script", "style"].includes(name)){
+                let raw = "";
+                let closeIndex = -1;
+                const closingPattern = new RegExp("^<\\/\\s*" + name + "\\s*>$", "i");
+
+                for(let j = i + 1; j < tokens.length; j++){
+                    if(closingPattern.test(tokens[j].trim())){
+                        closeIndex = j;
+                        break;
+                    }
+                    raw += tokens[j];
+                }
+
+                if(closeIndex !== -1){
+                    lines.push(
+                        indent() + token.trim() + raw + tokens[closeIndex].trim()
+                    );
+                    i = closeIndex;
+                    continue;
+                }
+            }
+
+            lines.push(indent() + token.trim());
+            depth++;
+            continue;
+        }
+
+        buffer += token;
+    }
+
+    flush();
+
+    return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function setHtmlView(active){
     const visualEditor = $("editor");
     const htmlEditor = $("htmlSource");
-    const toggleButton = $("toggleViewHtml");
+    const htmlWrap = $("htmlEditorWrap");
+    const richToolbar = $("richToolbar");
 
-    if (!htmlViewActive) {
-        // Passer de l'éditeur visuel au code source.
+    if(active === htmlViewActive) return;
+
+    if(active){
         htmlEditor.value = visualEditor.innerHTML;
 
         visualEditor.classList.add("hidden");
-        htmlEditor.classList.remove("hidden");
-
-        toggleButton.innerHTML = "📝 Éditeur texte";
-        toggleButton.title = "Retourner à l'éditeur visuel";
+        richToolbar.classList.add("hidden");
+        htmlWrap.classList.remove("hidden");
 
         htmlViewActive = true;
-        htmlEditor.focus();
+        renderHtmlHighlight();
 
-        message("Mode HTML activé. Tu peux modifier le code source.", "info");
+        window.requestAnimationFrame(() => {
+            syncHtmlScroller();
+            htmlEditor.focus();
+        });
 
-    } else {
-        // Appliquer le HTML modifié à l'éditeur visuel.
+        message("Mode HTML activé : balises en rouge, attributs en vert.", "info");
+    }else{
         visualEditor.innerHTML = htmlEditor.value;
 
-        htmlEditor.classList.add("hidden");
+        htmlWrap.classList.add("hidden");
+        richToolbar.classList.remove("hidden");
         visualEditor.classList.remove("hidden");
-
-        toggleButton.innerHTML = "&lt;/&gt; Voir HTML";
-        toggleButton.title = "Basculer vers le code HTML";
 
         htmlViewActive = false;
         visualEditor.focus();
+        updateToolbarState();
 
         message("Les modifications HTML ont été appliquées.", "success");
+    }
+}
+
+$("toggleViewHtml").addEventListener("click", () => setHtmlView(!htmlViewActive));
+$("backToVisualBtn").addEventListener("click", () => setHtmlView(false));
+
+$("htmlSource").addEventListener("input", renderHtmlHighlight);
+$("htmlSource").addEventListener("scroll", syncHtmlScroller, { passive: true });
+window.addEventListener("resize", syncHtmlScroller);
+
+$("formatHtmlBtn").addEventListener("click", () => {
+    const source = $("htmlSource");
+    const formatted = formatHtml(source.value);
+
+    if(formatted === source.value){
+        message("Le HTML est déjà formaté.", "info");
+        return;
+    }
+
+    source.value = formatted;
+    source.scrollTop = 0;
+    renderHtmlHighlight();
+    message("HTML formaté : une balise par ligne, indentation automatique.", "success");
+});
+
+$("htmlSource").addEventListener("keydown", event => {
+    if((event.ctrlKey || event.metaKey) && event.shiftKey &&
+       event.key.toLowerCase() === "f"){
+        event.preventDefault();
+        $("formatHtmlBtn").click();
+        return;
+    }
+
+    if(event.key === "Tab"){
+        event.preventDefault();
+        const source = $("htmlSource");
+        const start = source.selectionStart;
+        const end = source.selectionEnd;
+        source.setRangeText("  ", start, end, "end");
+        renderHtmlHighlight();
     }
 });
 
@@ -808,16 +1211,63 @@ $("cleanTextBtn").addEventListener("click", function () {
 });
 
 /* OUTILS DE FORMATAGE */
-document.querySelectorAll("[data-command]").forEach(button=>{
+try{
+    document.execCommand("styleWithCSS", false, true);
+}catch(error){}
+
+const commandButtons = Array.from(document.querySelectorAll("[data-command]"));
+
+function updateToolbarState(){
+    if(htmlViewActive) return;
+
+    commandButtons.forEach(button => {
+        let active = false;
+        try{
+            active = document.queryCommandState(button.dataset.command);
+        }catch(error){}
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", active ? "true" : "false");
+    });
+}
+
+commandButtons.forEach(button=>{
+    button.addEventListener("mousedown", event => event.preventDefault());
     button.addEventListener("click",()=>{
         $("editor").focus();
         document.execCommand(button.dataset.command,false,null);
+        updateToolbarState();
     });
+});
+
+document.addEventListener("selectionchange", () => {
+    const selection = window.getSelection();
+    if(selection && selection.anchorNode &&
+       $("editor").contains(selection.anchorNode)){
+        updateToolbarState();
+    }
+});
+
+$("editor").addEventListener("keyup", updateToolbarState);
+$("editor").addEventListener("mouseup", updateToolbarState);
+
+$("fontFamily").addEventListener("change", function(){
+    if(!this.value) return;
+    $("editor").focus();
+    document.execCommand("fontName", false, this.value);
+    updateToolbarState();
+});
+
+$("fontSize").addEventListener("change", function(){
+    if(!this.value) return;
+    $("editor").focus();
+    document.execCommand("fontSize", false, this.value);
+    updateToolbarState();
 });
 
 $("formatBlock").addEventListener("change",function(){
     $("editor").focus();
     document.execCommand("formatBlock",false,this.value);
+    updateToolbarState();
 });
 
 $("listBtn").addEventListener("click",()=>{
