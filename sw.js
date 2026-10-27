@@ -1,4 +1,6 @@
-const CACHE_NAME = "bentoul-creation-v1";
+const CACHE_NAME = "bentoul-creation-v2";
+
+const APP_ROUTE = /^\/(?:accueil|home|serie|series|episode|episodes|compte|profil|profile|auth|connexion)(?:\/|$)/i;
 
 const APP_SHELL = [
   "/",
@@ -39,6 +41,51 @@ self.addEventListener("activate", event => {
   );
 });
 
+async function refreshShell(cache) {
+  try {
+    const response = await fetch("/index.html", { cache: "no-store" });
+    if (response && response.ok) {
+      await cache.put("/index.html", response.clone());
+    }
+  } catch {
+    // Le shell en cache reste utilisé si le réseau est indisponible.
+  }
+}
+
+async function handleNavigation(event) {
+  const url = new URL(event.request.url);
+  const cache = await caches.open(CACHE_NAME);
+  const isShellRoute =
+    url.pathname === "/" ||
+    url.pathname === "/index.html" ||
+    APP_ROUTE.test(url.pathname);
+
+  if (isShellRoute) {
+    const cachedShell = await cache.match("/index.html");
+
+    if (cachedShell) {
+      event.waitUntil(refreshShell(cache));
+      return cachedShell;
+    }
+  }
+
+  try {
+    const response = await fetch(event.request);
+
+    if (response && response.ok) {
+      if (url.pathname === "/" || url.pathname === "/index.html") {
+        await cache.put("/index.html", response.clone());
+      }
+
+      return response;
+    }
+
+    return (await cache.match("/index.html")) || response;
+  } catch {
+    return (await cache.match("/index.html")) || Response.error();
+  }
+}
+
 self.addEventListener("fetch", event => {
   const request = event.request;
 
@@ -49,32 +96,7 @@ self.addEventListener("fetch", event => {
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          if (response.ok) {
-            const copy = response.clone();
-            caches
-              .open(CACHE_NAME)
-              .then(cache => {
-                cache.put("/index.html", copy.clone()).catch(() => {});
-                cache.put("/", copy).catch(() => {});
-              })
-              .catch(() => {});
-
-            return response;
-          }
-
-          return caches
-            .match("/index.html")
-            .then(cached => cached || response);
-        })
-        .catch(async () => {
-          const cached =
-            (await caches.match("/index.html")) || (await caches.match("/"));
-          return cached || Response.error();
-        })
-    );
+    event.respondWith(handleNavigation(event));
     return;
   }
 

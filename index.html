@@ -4,6 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#2563eb">
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add("route-loading");
+
+      function hideRouteLoader() {
+        if (!root.classList.contains("route-loading")) return;
+        root.classList.remove("route-loading");
+
+        var loader = document.getElementById("route-loader");
+        if (!loader) return;
+
+        loader.classList.add("is-hidden");
+        window.setTimeout(function () { loader.remove(); }, 320);
+      }
+
+      window.hideRouteLoader = hideRouteLoader;
+      window.__routePending = false;
+
+      window.setTimeout(function () {
+        if (!window.__routePending) hideRouteLoader();
+      }, 12000);
+
+      window.setTimeout(hideRouteLoader, 60000);
+    })();
+  </script>
   <meta name="description" content="BENTOUL CREATION : découvre des séries, lis des épisodes, partage tes impressions et rejoins notre communauté. Des histoires à suivre et à partager en ligne.">
   <meta name="keywords" content="BENTOUL CREATION, séries, épisodes, histoires, lecture en ligne, séries haïtiennes, histoires d'amour, communauté, épisodes gratuits">
   <meta name="author" content="BENTOUL CREATION">
@@ -21,10 +47,10 @@
   <!-- URL principale du site -->
   <link rel="canonical" href="https://bentoul.github.io/">
   <link rel="manifest" href="/manifest.webmanifest">
-  <link rel="icon" type="image/png" href="images/logo.png">
-  <link rel="shortcut icon" href="images/logo.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-  <link rel="preload" as="image" href="images/home.jpg">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+  <link rel="shortcut icon" href="/images/logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="preload" as="image" href="/images/home.jpg">
 
   <!-- Open Graph : aperçu lors du partage sur Facebook, WhatsApp et autres réseaux -->
   <meta property="og:type" content="website">
@@ -117,6 +143,62 @@
       display: none !important;
     }
 
+    html.route-loading body {
+      overflow: hidden;
+    }
+
+    #route-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 24px;
+      background: var(--background);
+      transition: opacity .22s ease, visibility .22s ease;
+    }
+
+    #route-loader.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .route-loader-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      box-shadow: 0 12px 30px #2563eb26;
+      animation: routeLoaderPulse 1.5s ease-in-out infinite;
+    }
+
+    .route-loader-spinner {
+      width: 26px;
+      height: 26px;
+      border: 3px solid #dbeafe;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: routeLoaderSpin .8s linear infinite;
+    }
+
+    .route-loader-text {
+      margin: 0;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    @keyframes routeLoaderSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes routeLoaderPulse {
+      50% { transform: scale(1.05); }
+    }
+
     /* HEADER : Menu à gauche, Titre centré, Compte à droite */
     #app-header {
       position: fixed;
@@ -124,8 +206,9 @@
       z-index: 100;
       min-height: 60px;
       display: grid;
-      grid-template-columns: 48px 1fr 48px;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
       align-items: center;
+      gap: 8px;
       padding: 10px 16px;
       background: #fff;
       border-bottom: 1px solid var(--border);
@@ -136,9 +219,17 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      min-width: 0;
       font-weight: 800;
       letter-spacing: -.4px;
       text-align: center;
+    }
+
+    .brand-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .brand-logo {
@@ -154,6 +245,43 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .credits-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 11px;
+      color: #92400e;
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fcd34d;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+
+    .credits-chip i {
+      color: #d97706;
+      font-size: 13px;
+    }
+
+    .credits-chip strong {
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .credits-chip-label {
+      color: #a16207;
+      font-weight: 600;
+    }
+
+    .credits-chip:hover {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
     }
 
     .icon-btn {
@@ -259,7 +387,7 @@
       color: white;
       background:
         linear-gradient(100deg, rgba(15, 23, 42, .94), rgba(17, 24, 39, .70)),
-        url("images/home.jpg") center / cover no-repeat,
+        url("/images/home.jpg") center / cover no-repeat,
         linear-gradient(145deg, #172554, #111827);
       border-radius: 22px;
       background-color: #172554;
@@ -859,6 +987,37 @@
       margin-top: 0;
     }
 
+    .ad-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin: 16px 0;
+      padding: 10px;
+      overflow: hidden;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .ad-label {
+      align-self: flex-end;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .ad-slot iframe {
+      width: 300px;
+      max-width: 100%;
+      height: 250px;
+      display: block;
+      border: 0;
+      background: transparent;
+    }
+
     /* ==============================================================
        LARGEUR SUR PC : 50% DE L'ÉCRAN CENTRÉ (HEADER, MAIN, FOOTER)
     ============================================================== */
@@ -918,6 +1077,32 @@
       }
     }
 
+    @media (max-width: 430px) {
+      .brand-name-long {
+        display: none;
+      }
+
+      .brand {
+        gap: 6px;
+        font-size: 13px;
+      }
+
+      .brand-logo {
+        width: 30px;
+        height: 30px;
+        flex-basis: 30px;
+      }
+
+      .credits-chip {
+        gap: 5px;
+        padding: 0 9px;
+      }
+
+      .credits-chip-label {
+        display: none;
+      }
+    }
+
     @media (max-width: 380px) {
       #app-content {
         padding-right: 9px;
@@ -955,9 +1140,16 @@
       }
     }
   </style>
+  <noscript><style>#route-loader { display: none !important; }</style></noscript>
 </head>
 
 <body id="body">
+
+  <div id="route-loader" role="status" aria-live="polite" aria-label="Chargement de la page">
+    <img class="route-loader-logo" src="/images/logo.png" alt="" width="64" height="64">
+    <div class="route-loader-spinner" aria-hidden="true"></div>
+    <p class="route-loader-text">Chargement…</p>
+  </div>
 
   <!-- HEADER : Menu à gauche | Titre au milieu | Compte/Profil à droite -->
   <header id="app-header">
@@ -966,11 +1158,17 @@
     </button>
 
     <a class="brand" href="/accueil" data-page="home" aria-label="BENTOUL CREATION — Accueil">
-      <img class="brand-logo" src="images/logo.png" alt="Logo BENTOUL CREATION" width="34" height="34" fetchpriority="high">
-      <span>BENTOUL CREATION</span>
+      <img class="brand-logo" src="/images/logo.png" alt="Logo BENTOUL CREATION" width="34" height="34" fetchpriority="high">
+      <span class="brand-name">BENTOUL<span class="brand-name-long"> CREATION</span></span>
     </a>
 
     <div class="header-actions">
+      <a class="credits-chip" href="/compte" data-page="profile" data-user-only hidden aria-label="Mes crédits">
+        <i class="fa-solid fa-coins"></i>
+        <strong id="header-credits">0</strong>
+        <span class="credits-chip-label">crédits</span>
+      </a>
+
       <a class="icon-btn" href="/compte" data-page="auth" data-guest-only aria-label="Compte">
         <i class="fa-regular fa-user"></i>
       </a>
@@ -1028,6 +1226,13 @@
         <button type="button" class="btn-primary" data-install-app>
           <i class="fa-solid fa-download"></i> Installer
         </button>
+      </div>
+
+      <div class="ad-slot">
+        <span class="ad-label">Publicité</span>
+        <iframe src="/ad-frame.html" title="Publicité" width="300" height="250"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"></iframe>
       </div>
     </section>
 
@@ -1124,6 +1329,13 @@
 
       <article id="episode-detail" class="panel"></article>
 
+      <div class="ad-slot">
+        <span class="ad-label">Publicité</span>
+        <iframe src="/ad-frame.html" title="Publicité" width="300" height="250"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"></iframe>
+      </div>
+
       <div class="panel">
         <h3>Donne ton avis</h3>
 
@@ -1176,10 +1388,6 @@
       <i class="fa-solid fa-film"></i>
       <span>Séries</span>
     </a>
-    <a class="footer-link" href="/episode" data-page="all-episodes">
-      <i class="fa-solid fa-play"></i>
-      <span>Épisodes</span>
-    </a>
     <a class="footer-link" href="/compte" data-page="auth" data-guest-only>
       <i class="fa-regular fa-user"></i>
       <span>Compte</span>
@@ -1191,7 +1399,7 @@
   </footer>
 
   <!-- SCRIPT ANALYTICS & STATISTIQUES DE VISITE -->
-  <script src="js/visite.js"></script>
+  <script src="/js/visite.js"></script>
 
   <script>
   "use strict";
@@ -1653,17 +1861,250 @@
       return "BENTOUL CREATION";
     }
 
+    const SITE_URL = "https://bentoul.github.io";
+    const DEFAULT_DESCRIPTION = "BENTOUL CREATION : découvre des séries, lis des épisodes, partage tes impressions et rejoins notre communauté.";
+    const DEFAULT_OG_IMAGE = SITE_URL + "/images/home.jpg";
+
+    function truncateText(text, maxLength = 160) {
+      const clean = cleanText(text).replace(/\s+/g, " ").trim();
+      if (!clean) return "";
+      if (clean.length <= maxLength) return clean;
+      return clean.slice(0, maxLength - 1).replace(/\s+\S*$/, "") + "…";
+    }
+
+    function socialImageURL(url) {
+      if (!url) return DEFAULT_OG_IMAGE;
+
+      if (url.indexOf("lh3.googleusercontent.com/d/") !== -1) {
+        return url.split("=")[0] + "=w1200-h630-p-k-no-nu";
+      }
+
+      return url;
+    }
+
+    function isoDate(text) {
+      const raw = String(text || "").trim();
+      if (/^\d{4}-\d{2}-\d{2}/.test(raw)) return raw.slice(0, 10);
+
+      const match = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+      return match ? match[3] + "-" + match[2] + "-" + match[1] : "";
+    }
+
+    function breadcrumbLD(items) {
+      return {
+        "@type": "BreadcrumbList",
+        "itemListElement": items.map((item, index) => ({
+          "@type": "ListItem",
+          "position": index + 1,
+          "name": item.name,
+          "item": item.url
+        }))
+      };
+    }
+
+    function pageMetaFor(page) {
+      const routePath = routeForPage(page).replace(/\/+$/, "");
+      const url = page === "home"
+        ? SITE_URL + "/"
+        : SITE_URL + routePath + "/";
+      const meta = {
+        title: pageTitleFor(page),
+        description: DEFAULT_DESCRIPTION,
+        url: url,
+        image: DEFAULT_OG_IMAGE,
+        type: "website",
+        robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        jsonLd: null
+      };
+
+      if (page === "auth" || page === "profile") {
+        meta.description = page === "profile"
+          ? "Gère ton compte BENTOUL CREATION, consulte tes crédits et ton code de parrainage."
+          : "Connecte-toi ou crée ton compte BENTOUL CREATION pour débloquer les épisodes.";
+        meta.robots = "noindex, follow";
+      }
+
+      if (page === "series") {
+        meta.description = "Découvre toutes les séries BENTOUL CREATION et choisis l'histoire que tu veux suivre.";
+      }
+
+      if (page === "all-episodes") {
+        meta.description = "Parcours tous les épisodes BENTOUL CREATION, gratuits ou à débloquer avec tes crédits.";
+        meta.jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Tous les épisodes",
+          "description": meta.description,
+          "url": url,
+          "inLanguage": "fr",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "BENTOUL CREATION",
+            "url": SITE_URL + "/"
+          }
+        };
+      }
+
+      if (page === "episodes" && currentSeries) {
+        const title = seriesTitle(currentSeries);
+        const image = socialImageURL(imageURL(currentSeries));
+        const seriesUrl = SITE_URL + "/serie/" + encodeURIComponent(seriesSlug(currentSeries)) + "/";
+        const description = truncateText(rawContent(currentSeries), 160)
+          || `Découvre les épisodes de la série ${title} sur BENTOUL CREATION.`;
+
+        meta.title = title + " — Séries | BENTOUL CREATION";
+        meta.description = description;
+        meta.image = image;
+        meta.jsonLd = {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "CreativeWorkSeries",
+              "name": title,
+              "description": description,
+              "image": image,
+              "url": seriesUrl,
+              "inLanguage": "fr",
+              "author": {
+                "@type": "Organization",
+                "name": "BENTOUL CREATION",
+                "url": SITE_URL + "/"
+              }
+            },
+            breadcrumbLD([
+              { name: "Accueil", url: SITE_URL + "/" },
+              { name: "Séries", url: SITE_URL + "/serie" },
+              { name: title, url: seriesUrl }
+            ])
+          ]
+        };
+      }
+
+      if (page === "episode" && currentEpisode) {
+        const title = episodeTitle(currentEpisode);
+        const parent = seriesForEpisode(currentEpisode) || currentSeries;
+        const seriesName = parent ? seriesTitle(parent) : "";
+        const number = cleanText(value(
+          currentEpisode, "numero", "Numero", "numEpisode", "episodeNumber"
+        ));
+        const image = socialImageURL(imageURL(currentEpisode));
+        const contentText = truncateText(rawContent(currentEpisode), 160);
+        const description = contentText
+          || `Épisode${number ? " " + number : ""}${seriesName ? " de la série " + seriesName : ""}. Découvre-le sur BENTOUL CREATION.`;
+
+        meta.title = title + (seriesName ? " — " + seriesName : "") + " | BENTOUL CREATION";
+        meta.description = description;
+        meta.image = image;
+        meta.type = "article";
+
+        const article = {
+          "@type": "Article",
+          "headline": title,
+          "description": description,
+          "image": [image],
+          "url": url,
+          "mainEntityOfPage": { "@type": "WebPage", "@id": url },
+          "inLanguage": "fr",
+          "author": {
+            "@type": "Organization",
+            "name": "BENTOUL CREATION",
+            "url": SITE_URL + "/"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "BENTOUL CREATION",
+            "logo": {
+              "@type": "ImageObject",
+              "url": SITE_URL + "/images/logo.png"
+            }
+          }
+        };
+
+        const published = isoDate(value(currentEpisode, "date", "Date"));
+        if (published) article.datePublished = published;
+
+        const crumbs = [
+          { name: "Accueil", url: SITE_URL + "/" },
+          { name: "Séries", url: SITE_URL + "/serie" }
+        ];
+
+        if (parent) {
+          const seriesUrl = SITE_URL + "/serie/" + encodeURIComponent(seriesSlug(parent)) + "/";
+          article.isPartOf = {
+            "@type": "CreativeWorkSeries",
+            "name": seriesName,
+            "url": seriesUrl
+          };
+          crumbs.push({ name: seriesName, url: seriesUrl });
+        }
+
+        crumbs.push({ name: title, url: url });
+
+        meta.jsonLd = {
+          "@context": "https://schema.org",
+          "@graph": [article, breadcrumbLD(crumbs)]
+        };
+      }
+
+      return meta;
+    }
+
+    function setMetaContent(attribute, name, content) {
+      let tag = document.head.querySelector(`meta[${attribute}="${name}"]`);
+
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute(attribute, name);
+        document.head.appendChild(tag);
+      }
+
+      tag.setAttribute("content", content);
+    }
+
+    function updateStructuredData(data) {
+      document.querySelectorAll("script[data-page-jsonld]").forEach(script => script.remove());
+      if (!data) return;
+
+      const script = document.createElement("script");
+      script.type = "application/ld+json";
+      script.setAttribute("data-page-jsonld", "true");
+      script.textContent = JSON.stringify(data);
+      document.head.appendChild(script);
+    }
+
     function updatePageMeta(page) {
-      document.title = pageTitleFor(page);
+      const meta = pageMetaFor(page);
+      document.title = meta.title;
 
       const canonical = document.querySelector('link[rel="canonical"]');
-      if (canonical) {
-        try {
-          canonical.href = new URL(routeForPage(page), location.origin).toString();
-        } catch {
-          // URL invalide : conserver la valeur actuelle.
-        }
+      if (canonical) canonical.href = meta.url;
+
+      setMetaContent("name", "description", meta.description);
+      setMetaContent("name", "robots", meta.robots);
+      setMetaContent("name", "googlebot", meta.robots);
+      setMetaContent("property", "og:type", meta.type);
+      setMetaContent("property", "og:title", meta.title);
+      setMetaContent("property", "og:description", meta.description);
+      setMetaContent("property", "og:url", meta.url);
+      setMetaContent("property", "og:image", meta.image);
+      setMetaContent("property", "og:image:secure_url", meta.image);
+      setMetaContent("property", "og:image:alt", meta.title);
+
+      setMetaContent("name", "twitter:card", "summary_large_image");
+      setMetaContent("name", "twitter:title", meta.title);
+      setMetaContent("name", "twitter:description", meta.description);
+      setMetaContent("name", "twitter:image", meta.image);
+      setMetaContent("name", "twitter:image:alt", meta.title);
+
+      if (meta.image.indexOf("=w1200-h630-p-k-no-nu") !== -1) {
+        setMetaContent("property", "og:image:width", "1200");
+        setMetaContent("property", "og:image:height", "630");
+      } else {
+        document.querySelectorAll('meta[property="og:image:width"], meta[property="og:image:height"]')
+          .forEach(tag => tag.remove());
       }
+
+      updateStructuredData(meta.jsonLd);
     }
 
     function routeFromLocation() {
@@ -1733,10 +2174,6 @@
     }
 
     async function applyRoute(historyMode = "replace") {
-      if (!seriesList.length) {
-        await loadSeries();
-      }
-
       const route = routeFromLocation();
 
       if (route.page === "home") {
@@ -1744,7 +2181,16 @@
         return;
       }
 
+      if (route.page === "compte") {
+        window.navigateTo(currentUser ? "profile" : "auth", { history: historyMode });
+        return;
+      }
+
       if (route.page === "series") {
+        if (!seriesList.length) {
+          await loadSeries();
+        }
+
         window.navigateTo("series", { history: historyMode });
         return;
       }
@@ -1762,12 +2208,15 @@
         return;
       }
 
-      if (route.page === "compte") {
-        window.navigateTo(currentUser ? "profile" : "auth", { history: historyMode });
-        return;
-      }
-
       if (route.page === "series-detail") {
+        if (!seriesList.length) {
+          try {
+            await loadSeriesList();
+          } catch (error) {
+            window.showMessage(error.message, true);
+          }
+        }
+
         const series = findSeriesBySlug(route.slug);
 
         if (!series) {
@@ -1782,16 +2231,20 @@
 
       if (route.page === "episode") {
         let episode = findEpisodeBySlug(route.slug);
+        const pending = [];
 
-        if (!episode) {
+        if (!episode) pending.push(loadAllEpisodes());
+        if (!seriesList.length) pending.push(loadSeriesList());
+
+        if (pending.length) {
           try {
-            await loadAllEpisodes();
+            await Promise.all(pending);
           } catch (error) {
             window.showMessage(error.message, true);
           }
-
-          episode = findEpisodeBySlug(route.slug);
         }
+
+        episode = findEpisodeBySlug(route.slug);
 
         if (!episode) {
           window.showMessage("Cet épisode est introuvable ou indisponible.", true);
@@ -1822,7 +2275,7 @@
 
       closeSidebar();
 
-      if (page === "series") loadSeries();
+      if (page === "series" && !seriesList.length) loadSeries();
 
       if (page === "all-episodes") {
         if (allEpisodesList.length) {
@@ -1857,6 +2310,7 @@
       }
 
       updatePageMeta(page);
+      if (typeof window.hideRouteLoader === "function") window.hideRouteLoader();
       window.scrollTo({ top: 0, behavior: "smooth" });
     };
 
@@ -1905,6 +2359,17 @@
       });
     });
 
+    function updateHeaderCredits(user) {
+      const counter = $("#header-credits");
+      if (!counter) return;
+
+      const credits = Number(value(user, "credits", "Credits")) || 0;
+      counter.textContent = String(credits);
+
+      const chip = counter.closest(".credits-chip");
+      if (chip) chip.setAttribute("aria-label", "Mes crédits : " + credits);
+    }
+
     window.updateAuthUI = function(user) {
       currentUser = user || null;
       document.querySelectorAll("[data-guest-only]").forEach(element => {
@@ -1914,6 +2379,7 @@
         element.hidden = !currentUser;
       });
       document.body.classList.toggle("user-connected", !!currentUser);
+      updateHeaderCredits(currentUser);
     };
 
     /* =========================
@@ -2149,6 +2615,15 @@
     /* =========================
        CHARGEMENT DES SÉRIES
     ========================= */
+
+    async function loadSeriesList() {
+      const result = await getData("getSeries");
+      const list = listFrom(result, ["series", "Series", "data", "result"]);
+
+      if (list.length) seriesList = list;
+
+      return seriesList;
+    }
 
     async function loadSeries() {
       const container = $("#series-container");
@@ -3026,9 +3501,17 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
     (async function initAppContent() {
       consumeRouteParam();
-      await refreshCurrentUser();
-      await loadSeries();
-      await applyRoute("replace");
+      window.__routePending = true;
+
+      try {
+        refreshCurrentUser().catch(() => {});
+        await applyRoute("replace");
+      } catch (error) {
+        window.showMessage(error.message || "Chargement impossible.", true);
+      } finally {
+        window.__routePending = false;
+        if (typeof window.hideRouteLoader === "function") window.hideRouteLoader();
+      }
     })();
 
   })();

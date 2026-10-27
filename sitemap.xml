@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://bentoul.github.io/</loc><lastmod>2026-10-27</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://bentoul.github.io/serie/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bentoul.github.io/episode/</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://bentoul.github.io/serie/libere-ton-telephone-avec-drive/</loc><lastmod>2026-10-24</lastmod><changefreq>weekly</changefreq><priority>0.8</priority><image:image><image:loc>https://lh3.googleusercontent.com/d/121S6IddRknHIhbhbM4dW0GnCu4Ic3Qxu=w1200-h630-p-k-no-nu</image:loc><image:title>Libère Ton Téléphone avec Drive</image:title></image:image></url>
+  <url><loc>https://bentoul.github.io/episode/le-grand-nettoyage/</loc><lastmod>2026-10-26</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><image:image><image:loc>https://lh3.googleusercontent.com/d/15kalVuC_a9nGylRUVEEg57j91DE7fiBv=w1200-h630-p-k-no-nu</image:loc><image:title>Le Grand Nettoyage 📱❌</image:title></image:image></url>
+  <url><loc>https://bentoul.github.io/episode/le-premier-transfert/</loc><lastmod>2026-10-24</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><image:image><image:loc>https://lh3.googleusercontent.com/d/14RMrqA1zaRNb3sYdjYaZMqOAl-GFkk0u=w1200-h630-p-k-no-nu</image:loc><image:title>Le Premier Transfert 📂</image:title></image:image></url>
+  <url><loc>https://bentoul.github.io/episode/l-art-de-l-organisation/</loc><lastmod>2026-10-24</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><image:image><image:loc>https://lh3.googleusercontent.com/d/1Y6JbI8BfEt6-kcEWB9tkIomCryaUSlTb=w1200-h630-p-k-no-nu</image:loc><image:title>L'Art de l'Organisation 🗂️</image:title></image:image></url>
+  <url><loc>https://bentoul.github.io/episode/le-partage-magique/</loc><lastmod>2026-10-24</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><image:image><image:loc>https://lh3.googleusercontent.com/d/1vKxEkCTw_hBCss0oaYRo75URVMGwJbgH=w1200-h630-p-k-no-nu</image:loc><image:title>Le Partage Magique 🔗✈️</image:title></image:image></url>
+  <url><loc>https://bentoul.github.io/episode/le-super-pouvoir-du-cloud/</loc><lastmod>2026-10-24</lastmod><changefreq>weekly</changefreq><priority>0.7</priority><image:image><image:loc>https://lh3.googleusercontent.com/d/10NRJymJrvx35FzX4S34YW9OA5jY1EOg_=w1200-h630-p-k-no-nu</image:loc><image:title>Le Super-Pouvoir du Cloud 🌍🔒</image:title></image:image></url>
+</urlset>

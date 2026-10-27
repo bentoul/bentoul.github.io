@@ -1,5 +1,13 @@
 User-agent: *
 Allow: /
+Disallow: /compte
+Disallow: /editeur.html
+Disallow: /ad-frame.html
 
-# Ajoutez ici l'URL absolue de votre sitemap lorsque le nom de domaine sera connu :
-# Sitemap: https://votre-domaine.com/sitemap.xml
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: Mediapartners-Google
+Allow: /
+
+Sitemap: https://bentoul.github.io/sitemap.xml
