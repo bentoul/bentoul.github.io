@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#245b45">
+  <title>BENTAMOURA WEB — Mon profil</title>
+  <meta name="description" content="Questionnaire sentimental Benamoura en 4 étapes, rattaché au compte Bentoul.">
+  <!-- SEO : remplace https://TON-DOMAINE par ton domaine (og:image exige une URL absolue) -->
+  <link rel="canonical" href="profile.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="BENTAMOURA WEB">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://TON-DOMAINE/profile.html">
+  <meta property="og:title" content="BENTAMOURA WEB — Mon profil">
+  <meta property="og:description" content="Questionnaire sentimental Benamoura en 4 étapes, rattaché au compte Bentoul.">
+  <meta property="og:image" content="https://TON-DOMAINE/images/seo/profile.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Questionnaire sentimental BENTAMOURA en 4 étapes">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BENTAMOURA WEB — Mon profil">
+  <meta name="twitter:description" content="Questionnaire sentimental Benamoura en 4 étapes, rattaché au compte Bentoul.">
+  <meta name="twitter:image" content="https://TON-DOMAINE/images/seo/profile.png">
+  <meta name="twitter:image:alt" content="Questionnaire sentimental BENTAMOURA en 4 étapes">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BENTAMOURA WEB — Mon profil","url":"profile.html","inLanguage":"fr-FR","description":"Questionnaire sentimental Benamoura en 4 étapes, rattaché au compte Bentoul.","isPartOf":{"@type":"WebSite","name":"BENTAMOURA WEB","url":"index.html"},"primaryImageOfPage":{"@type":"ImageObject","url":"images/seo/profile.png","width":1200,"height":630}}</script>
+  <link rel="stylesheet" href="app.css">
+  <script src="config.js"></script>
+  <script>
+    document.addEventListener("btm:ready", () => {
+      const { esc, auth, ui, benamoura, isConfigured } = window.BTM;
+
+      if (!isConfigured("benamoura")) {
+        document.getElementById("wizard").innerHTML = ui.empty("🔌", "API Amour non configurée", "Renseigne l'URL /exec de benamoura.gs dans config.js.");
+        return;
+      }
+      if (!auth.user) {
+        document.getElementById("wizard").innerHTML = ui.empty("◎", "Connexion requise", "Ton profil amoureux est rattaché à ton compte Bentoul : un seul compte pour tous les espaces.",
+          `<a class="btn" href="user.html?next=profile.html">Se connecter</a>`);
+        return;
+      }
+
+      const form = document.getElementById("profile-form");
+      const steps = Array.from(form.querySelectorAll("[data-step]"));
+      const dots = Array.from(document.querySelectorAll(".step-dot"));
+      let current = 0;
+
+      function show(index) {
+        current = index;
+        steps.forEach((s, i) => s.classList.toggle("hidden", i !== index));
+        dots.forEach((d, i) => {
+          d.classList.toggle("current", i === index);
+          d.classList.toggle("done", i < index);
+        });
+        document.getElementById("btn-prev").classList.toggle("hidden", index === 0);
+        const nextBtn = document.getElementById("btn-next");
+        const sendBtn = document.getElementById("btn-send");
+        nextBtn.classList.toggle("hidden", index === steps.length - 1);
+        sendBtn.classList.toggle("hidden", index !== steps.length - 1);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      const required = {
+        0: ["nom", "email", "telephone", "pays", "ville", "age", "genre", "orientation"],
+        1: ["statutAmoureux", "relationRecherchee", "presentation"],
+        2: ["genreRecherche", "ageMinRecherche", "ageMaxRecherche"]
+      };
+
+      const isGroup = (field) => field && !field.tagName && typeof field.length === "number";
+
+      function markInvalid(field, empty) {
+        if (isGroup(field)) {
+          const box = field[0] && field[0].closest(".choice-grid");
+          if (box) box.classList.toggle("invalid", empty);
+          return;
+        }
+        field.setAttribute("aria-invalid", empty ? "true" : "false");
+      }
+
+      function validate(index) {
+        let ok = true;
+        (required[index] || []).forEach(name => {
+          const field = form.elements[name];
+          if (!field) return;
+          const empty = !String(field.value || "").trim();
+          markInvalid(field, empty);
+          if (empty) ok = false;
+        });
+        if (index === 0) {
+          const age = Number(form.elements.age.value);
+          if (age && (age < 18 || age > 120)) { ui.toast("Le profil est réservé aux 18 ans et plus.", "err"); ok = false; }
+          const email = String(form.elements.email.value || "");
+          if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { ui.toast("Adresse email invalide.", "err"); ok = false; }
+        }
+        if (index === 2) {
+          const min = Number(form.elements.ageMinRecherche.value), max = Number(form.elements.ageMaxRecherche.value);
+          if (min < 18 || max < min || max > 120) { ui.toast("Tranche d'âge recherchée invalide (18 → 120, max ≥ min).", "err"); ok = false; }
+        }
+        if (!ok) ui.toast("Complète les champs surlignés de cette étape.", "err");
+        return ok;
+      }
+
+      /* Orientation → rôle (délégation : form.elements.orientation est une RadioNodeList) */
+      const roleField = document.getElementById("role-field");
+      const syncRole = () => {
+        const gay = form.elements.orientation.value === "Homosexuel";
+        roleField.classList.toggle("hidden", !gay);
+        if (!gay) form.elements.role.value = "";
+      };
+      form.addEventListener("change", (e) => { if (e.target.name === "orientation") syncRole(); });
+
+      document.getElementById("btn-next").addEventListener("click", () => { if (validate(current)) show(current + 1); });
+      document.getElementById("btn-prev").addEventListener("click", () => show(Math.max(0, current - 1)));
+      dots.forEach((d, i) => d.addEventListener("click", () => { if (i < current) show(i); }));
+
+      /* ---------- CHARGEMENT DU PROFIL EXISTANT ---------- */
+      const state = document.getElementById("profile-state");
+      form.elements.nom.value = auth.user.nom || "";
+      form.elements.email.value = auth.user.email || "";
+      form.elements.telephone.value = auth.user.numero || "";
+
+      benamoura.myProfile().then(res => {
+        if (!res || !res.found || !res.data) {
+          state.className = "notice info";
+          state.innerHTML = `<div>♡</div><div><b>Nouveau profil</b>Rattaché automatiquement à <strong>@${esc(auth.user.username)}</strong>. Tes nom, email et téléphone sont pré-remplis depuis ton compte.</div>`;
+          show(0);
+          return;
+        }
+        const p = res.data;
+        BTM.fillForm(form, p);
+        if (Array.isArray(p.interetsSouhaites)) form.elements.interetsSouhaites.value = p.interetsSouhaites.join(", ");
+        syncRole();
+        state.className = "notice ok";
+        state.innerHTML = `<div>✓</div><div><b>Profil chargé</b>${esc(p.nom || "")} · 👍 ${Number(p.likes) || 0} likes · 👎 ${Number(p.dislikes) || 0} · créé le ${esc(p.date || "")}. Modifie et renvoie pour mettre à jour la même ligne.</div>
+          <a class="btn sm ghost" href="rencontres.html">Voir les autres profils</a>`;
+        show(0);
+      }).catch(err => { ui.error(err); show(0); });
+
+      /* ---------- ENVOI ---------- */
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        for (let i = 0; i < steps.length; i++) {
+          if (!validate(i)) { show(i); return; }
+        }
+        if (form.elements.consentement.checked !== true) { show(steps.length - 1); return ui.toast("Le consentement est obligatoire.", "err"); }
+        const btn = document.getElementById("btn-send");
+        ui.busy(btn, true, "Enregistrement…");
+        const payload = {};
+        Array.from(form.elements).forEach(field => { if (field.name) payload[field.name] = field.type === "checkbox" ? field.checked : field.value; });
+        payload.age = Number(payload.age) || 0;
+        payload.ageMinRecherche = Number(payload.ageMinRecherche) || 0;
+        payload.ageMaxRecherche = Number(payload.ageMaxRecherche) || 0;
+        payload.consentement = "Oui";
+        try {
+          const res = await benamoura.saveProfile(payload);
+          if (res.status !== "success") throw new Error(res.message);
+          ui.toast(res.message || "Profil enregistré", "ok");
+          state.className = "notice ok";
+          state.innerHTML = `<div>✓</div><div><b>${esc(res.message || "Profil enregistré")}</b>Identifiant technique : <code>${esc(res.id || "")}</code> · compte <strong>@${esc(auth.user.username)}</strong>.</div>
+            <a class="btn sm" href="rencontres.html">Découvrir les autres</a>`;
+        } catch (err) { ui.error(err); }
+        ui.busy(btn, false);
+      });
+
+      show(0);
+    });
+  </script>
+</head>
+<body class="body-layout">
+  <div class="page-head">
+    <h1>Mon profil amoureux</h1>
+    <p>Espace Benamoura · questionnaire en 4 étapes. Tout est enregistré sur la même ligne de la feuille Profile, liée à ton compte Bentoul.</p>
+  </div>
+
+  <div class="notice info" id="profile-state"><div>◎</div><div>Chargement…</div></div>
+
+  <div id="wizard" style="margin-top:18px">
+    <div class="stepper">
+      <button class="step-dot" type="button"><i></i><small>1 · IDENTITÉ</small></button>
+      <button class="step-dot" type="button"><i></i><small>2 · SITUATION</small></button>
+      <button class="step-dot" type="button"><i></i><small>3 · RECHERCHE</small></button>
+      <button class="step-dot" type="button"><i></i><small>4 · CONSENTEMENT</small></button>
+    </div>
+
+    <form id="profile-form" class="card" novalidate>
+      <!-- 1 · IDENTITÉ -->
+      <section data-step>
+        <div class="field-row">
+          <div class="field"><label for="f-nom">Nom <span>*</span></label><input class="input" id="f-nom" name="nom" required></div>
+          <div class="field"><label for="f-age">Âge <span>*</span></label><input class="input" id="f-age" name="age" type="number" min="18" max="120" required></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-email">Email <span>*</span></label><input class="input" id="f-email" name="email" type="email" required><small class="hint">Jamais affiché publiquement.</small></div>
+          <div class="field"><label for="f-tel">Téléphone <span>*</span></label><input class="input" id="f-tel" name="telephone" type="tel" required><small class="hint">Jamais affiché publiquement.</small></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-pays">Pays <span>*</span></label><input class="input" id="f-pays" name="pays" placeholder="Maroc" required></div>
+          <div class="field"><label for="f-ville">Ville <span>*</span></label><input class="input" id="f-ville" name="ville" placeholder="Casablanca" required></div>
+        </div>
+        <div class="field"><label for="f-adresse">Adresse / quartier</label><input class="input" id="f-adresse" name="adresse" placeholder="Optionnel, privé"></div>
+        <div class="field">
+          <label>Genre <span>*</span></label>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="genre" value="Femme"><span>Femme</span></label>
+            <label class="choice"><input type="radio" name="genre" value="Homme"><span>Homme</span></label>
+            <label class="choice"><input type="radio" name="genre" value="Autre"><span>Autre</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Orientation <span>*</span></label>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="orientation" value="Hétérosexuel"><span>Hétérosexuel</span></label>
+            <label class="choice"><input type="radio" name="orientation" value="Homosexuel"><span>Homosexuel</span></label>
+            <label class="choice"><input type="radio" name="orientation" value="Bisexuel"><span>Bisexuel</span></label>
+          </div>
+        </div>
+        <div class="field hidden" id="role-field">
+          <label>Rôle <small class="hint">(obligatoire si homosexuel)</small></label>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="role" value="Actif"><span>Actif</span></label>
+            <label class="choice"><input type="radio" name="role" value="Passif"><span>Passif</span></label>
+            <label class="choice"><input type="radio" name="role" value="Versatile"><span>Versatile</span></label>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2 · SITUATION -->
+      <section data-step class="hidden">
+        <div class="field-row">
+          <div class="field"><label for="f-statut">Statut amoureux <span>*</span></label>
+            <select class="select" id="f-statut" name="statutAmoureux">
+              <option value="">Choisir…</option><option>Célibataire</option><option>En couple</option><option>Divorcé(e)</option><option>Veuf(ve)</option><option>En situation compliquée</option>
+            </select></div>
+          <div class="field"><label for="f-enfants">Enfants</label>
+            <select class="select" id="f-enfants" name="enfants">
+              <option value="">Choisir…</option><option>Aucun</option><option>1 enfant</option><option>2 enfants</option><option>3 enfants et plus</option><option>En attente</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="f-rel">Relation recherchée <span>*</span></label>
+          <select class="select" id="f-rel" name="relationRecherchee">
+            <option value="">Choisir…</option><option>Relation sérieuse</option><option>Sérieuse</option><option>Mariage</option><option>Amitié</option><option>Rencontres occasionnelles</option>
+          </select></div>
+        <div class="field"><label for="f-pres">Présentation <span>*</span></label>
+          <textarea class="textarea" id="f-pres" name="presentation" maxlength="1200" placeholder="Quelques lignes pour te décrire honnêtement…"></textarea></div>
+        <div class="field"><label for="f-interets">Centres d'intérêt</label>
+          <input class="input" id="f-interets" name="interets" placeholder="voyage, lecture, foot, cuisine (séparés par des virgules)"></div>
+        <div class="field-row">
+          <div class="field"><label for="f-musique">Musique</label><input class="input" id="f-musique" name="musique" placeholder="Rai, rap, chaâbi…"></div>
+          <div class="field"><label for="f-habitudes">Habitudes</label><input class="input" id="f-habitudes" name="habitudes" placeholder="Tôt levé, sport, café…"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-perso">Personnalité</label><input class="input" id="f-perso" name="personnalite" placeholder="Calme, directe, drôle"></div>
+          <div class="field"><label for="f-valeurs">Valeurs</label><input class="input" id="f-valeurs" name="valeurs" placeholder="Honnêteté, famille, respect"></div>
+        </div>
+      </section>
+
+      <!-- 3 · RECHERCHE -->
+      <section data-step class="hidden">
+        <div class="field"><label for="f-gre">Genre recherché <span>*</span></label>
+          <div class="choice-grid">
+            <label class="choice"><input type="radio" name="genreRecherche" value="Femme"><span>Femme</span></label>
+            <label class="choice"><input type="radio" name="genreRecherche" value="Homme"><span>Homme</span></label>
+            <label class="choice"><input type="radio" name="genreRecherche" value="Les deux"><span>Les deux</span></label>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-amin">Âge minimum recherché <span>*</span></label><input class="input" id="f-amin" name="ageMinRecherche" type="number" min="18" max="120" value="18"></div>
+          <div class="field"><label for="f-amax">Âge maximum recherché <span>*</span></label><input class="input" id="f-amax" name="ageMaxRecherche" type="number" min="18" max="120" value="45"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-lieu">Lieu de recherche</label><input class="input" id="f-lieu" name="lieuRecherche" placeholder="Même ville, tout le pays…"></div>
+          <div class="field"><label for="f-dist">Distance acceptée</label>
+            <select class="select" id="f-dist" name="distance"><option value="">Choisir…</option><option>Quartier</option><option>Ville</option><option>Région</option><option>Pays</option><option>Peu importe</option></select></div>
+        </div>
+        <div class="field"><label for="f-qualites">Qualités recherchées</label><input class="input" id="f-qualites" name="qualitesRecherchees" placeholder="Sincère, ambitieux, doux…"></div>
+        <div class="field"><label for="f-isouhaites">Intérêts souhaités</label><input class="input" id="f-isouhaites" name="interetsSouhaites" placeholder="Cinéma, randonnée, cuisine…"></div>
+        <div class="field-row">
+          <div class="field"><label for="f-imp">Importance de la relation</label>
+            <select class="select" id="f-imp" name="importanceRelation"><option value="">Choisir…</option><option>Priorité absolue</option><option>Très important</option><option>Important</option><option>Secondaire</option></select></div>
+          <div class="field"><label for="f-comm">Communication préférée</label>
+            <select class="select" id="f-comm" name="communication"><option value="">Choisir…</option><option>Messages écrits</option><option>Appels vocaux</option><option>Visio</option><option>Rencontre en personne</option></select></div>
+        </div>
+        <div class="field"><label for="f-nn">Non négociable</label><textarea class="textarea" id="f-nn" name="nonNegociables" style="min-height:80px" placeholder="Ce que tu n'accepterais jamais…"></textarea></div>
+        <div class="field-row">
+          <div class="field"><label for="f-projets">Projets</label><input class="input" id="f-projets" name="projets" placeholder="Voyager, créer une famille, entreprise…"></div>
+          <div class="field"><label for="f-comp">En complément</label><input class="input" id="f-comp" name="complement" placeholder="Ce que tu attends de plus…"></div>
+        </div>
+      </section>
+
+      <!-- 4 · CONSENTEMENT -->
+      <section data-step class="hidden">
+        <div class="notice warn"><div>!</div><div><b>Avant d'envoyer</b>Ton prénom, ton âge, ta ville et tes réponses de présentation sont visibles par les autres utilisateurs dans l'onglet Profils. Ton email, ton téléphone et ton adresse restent privés (jamais renvoyés par l'API).</div></div>
+        <div class="switch-row" style="margin-top:16px">
+          <input type="checkbox" id="f-cons" name="consentement">
+          <p><strong>Je consens librement</strong>Je suis majeur(e), les informations sont vraies et j'accepte la publication de mon profil dans l'espace Benamoura liée à @<span id="who">@mon-compte</span>.</p>
+        </div>
+        <div class="divide"></div>
+        <p class="small muted">Envoi depuis le compte unique <strong><span id="who2">@mon-compte</span></strong> — le profil est créé la première fois, puis mis à jour sur la même ligne.</p>
+      </section>
+
+      <div class="btn-row" style="margin-top:22px">
+        <button class="btn ghost" id="btn-prev" type="button">← Précédent</button>
+        <button class="btn" id="btn-next" type="button">Continuer →</button>
+        <button class="btn rose hidden" id="btn-send" type="submit">Publier mon profil</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("btm:ready", () => {
+      const name = window.BTM.auth.user ? window.BTM.auth.user.username : "mon-compte";
+      document.getElementById("who").textContent = "@" + name;
+      document.getElementById("who2").textContent = "@" + name;
+    });
+  </script>
+  <script src="app.js" defer></script>
+</body>
+</html>

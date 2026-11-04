@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#245b45">
+  <title>BENTAMOURA WEB — Séries d'amour</title>
+  <meta name="description" content="Espace Amour BENTAMOURA : les séries publiées dans la feuille Series de benamoura.gs, leurs épisodes, leurs vues et leurs commentaires.">
+  <!-- SEO : remplace https://TON-DOMAINE par ton domaine (og:image exige une URL absolue) -->
+  <link rel="canonical" href="benamoura.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BENTAMOURA WEB">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://TON-DOMAINE/benamoura.html">
+  <meta property="og:title" content="BENTAMOURA WEB — Séries d'amour">
+  <meta property="og:description" content="Espace Amour BENTAMOURA : les séries publiées dans la feuille Series de benamoura.gs, leurs épisodes, leurs vues et leurs commentaires.">
+  <meta property="og:image" content="https://TON-DOMAINE/images/seo/benamoura.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Espace Amour BENTAMOURA : séries et épisodes d'amour">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BENTAMOURA WEB — Séries d'amour">
+  <meta name="twitter:description" content="Espace Amour BENTAMOURA : les séries publiées dans la feuille Series de benamoura.gs, leurs épisodes, leurs vues et leurs commentaires.">
+  <meta name="twitter:image" content="https://TON-DOMAINE/images/seo/benamoura.png">
+  <meta name="twitter:image:alt" content="Espace Amour BENTAMOURA : séries et épisodes d'amour">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BENTAMOURA WEB — Séries d'amour","url":"benamoura.html","inLanguage":"fr-FR","description":"Espace Amour BENTAMOURA : les séries publiées dans la feuille Series de benamoura.gs, leurs épisodes, leurs vues et leurs commentaires.","isPartOf":{"@type":"WebSite","name":"BENTAMOURA WEB","url":"index.html"},"primaryImageOfPage":{"@type":"ImageObject","url":"images/seo/benamoura.png","width":1200,"height":630}}</script>
+  <link rel="stylesheet" href="app.css">
+  <script src="config.js"></script>
+  <script>
+    document.addEventListener("btm:ready", () => {
+      const { ICON, auth, ui, benamoura, isConfigured, mediaCatalog, creditBadge, creditPaywall } = window.BTM;
+
+      const listBox = document.getElementById("series-list");
+      const head = document.getElementById("head-sub");
+      const creditsBtn = document.getElementById("hdr-credits");
+
+      function paintCredits() {
+        creditsBtn.classList.remove("hidden");
+        if (!auth.user) { creditsBtn.textContent = "Se connecter"; return; }
+        const n = auth.credits;
+        creditsBtn.textContent = n + " crédit" + (n > 1 ? "s" : "");
+      }
+      paintCredits();
+      if (auth.user) auth.refresh().then(paintCredits);
+      document.addEventListener("btm:signed-in", paintCredits);
+      document.addEventListener("btm:signed-out", paintCredits);
+
+      if (!isConfigured("benamoura")) {
+        listBox.innerHTML = ui.empty(ICON.heart, "API Amour non configurée", "Colle l'URL /exec de benamoura.gs dans config.js.");
+        head.textContent = "Les séries d'amour viennent de la feuille Series du spreadsheet Benamoura.";
+        return;
+      }
+
+      const catalogue = mediaCatalog({
+        which: "benamoura",
+        api: benamoura,
+        grid: listBox,
+        accent: "rose",
+        seriesLabel: "Série d'amour",
+        seriesSubtitle: () => "3 épisodes gratuits, puis 1 crédit par épisode",
+        showStatus: true,
+        commentAuthor: (c) => c.pseudo || c.username || "",
+        filter: (s) => String(s.statut || "Publié") === "Publié",
+        episodeBadge: creditBadge,
+
+        /* Épisodes payants : mêmes crédits Bentoul que dans l'espace Tech. */
+        episodeGuard: creditPaywall({ space: "amour", onCredits: paintCredits }),
+
+        emptyTitle: "Aucune série d'amour",
+        emptyText: "Ajoute une ligne dans la feuille Series de benamoura.gs (statut « Publié ») pour la voir ici.",
+        onLoaded: (list) => {
+          head.textContent = `${list.length} série${list.length > 1 ? "s" : ""} d'amour publiée${list.length > 1 ? "s" : ""} · les 3 premiers épisodes de chaque série sont gratuits, ensuite 1 crédit par épisode.`;
+        }
+      });
+
+      document.getElementById("btn-reload").addEventListener("click", () => catalogue.load());
+      catalogue.load();
+    });
+  </script>
+</head>
+<body class="body-layout">
+  <div class="page-head page-row">
+    <div>
+      <h1>Séries d'amour</h1>
+      <p id="head-sub">Chargement des séries publiées sur Benamoura…</p>
+    </div>
+    <div class="btn-row">
+      <a class="btn ghost sm" href="rencontres.html">Voir les profils</a>
+      <button class="btn ghost sm" id="btn-reload" type="button">Actualiser</button>
+      <a class="btn soft sm hidden" id="hdr-credits" href="user.html"></a>
+    </div>
+  </div>
+
+  <div class="media-grid" id="series-list"><div class="skeleton block"></div><div class="skeleton block"></div><div class="skeleton block"></div><div class="skeleton block"></div></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

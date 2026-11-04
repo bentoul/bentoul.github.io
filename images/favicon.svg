@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="BENTAMOURA WEB">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#194633"/>
+      <stop offset="1" stop-color="#2f7056"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" fill="url(#bg)"/>
+  <path fill="#c9a24d" d="M13 29.1A9.5 9.5 0 0 1 32 29.1A9.5 9.5 0 0 1 51 29.1C51 37.8 40.4 45.4 32 50C23.6 45.4 13 37.8 13 29.1Z"/>
+</svg>

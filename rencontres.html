@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#245b45">
+  <title>BENTAMOURA WEB — Profils de rencontre</title>
+  <meta name="description" content="Découverte des profils Benamoura : recherche, filtres, pourcentage de compatibilité et fiche détaillée.">
+  <!-- SEO : remplace https://TON-DOMAINE par ton domaine (og:image exige une URL absolue) -->
+  <link rel="canonical" href="rencontres.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BENTAMOURA WEB">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://TON-DOMAINE/rencontres.html">
+  <meta property="og:title" content="BENTAMOURA WEB — Profils de rencontre">
+  <meta property="og:description" content="Découverte des profils Benamoura : recherche, filtres, pourcentage de compatibilité et fiche détaillée.">
+  <meta property="og:image" content="https://TON-DOMAINE/images/seo/rencontres.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Profils de rencontre BENTAMOURA avec pourcentage de compatibilité">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BENTAMOURA WEB — Profils de rencontre">
+  <meta name="twitter:description" content="Découverte des profils Benamoura : recherche, filtres, pourcentage de compatibilité et fiche détaillée.">
+  <meta name="twitter:image" content="https://TON-DOMAINE/images/seo/rencontres.png">
+  <meta name="twitter:image:alt" content="Profils de rencontre BENTAMOURA avec pourcentage de compatibilité">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BENTAMOURA WEB — Profils de rencontre","url":"rencontres.html","inLanguage":"fr-FR","description":"Découverte des profils Benamoura : recherche, filtres, pourcentage de compatibilité et fiche détaillée.","isPartOf":{"@type":"WebSite","name":"BENTAMOURA WEB","url":"index.html"},"primaryImageOfPage":{"@type":"ImageObject","url":"images/seo/rencontres.png","width":1200,"height":630}}</script>
+  <link rel="stylesheet" href="app.css">
+  <script src="config.js"></script>
+  <script>
+    document.addEventListener("btm:ready", () => {
+      const { esc, plain, initials, auth, ui, benamoura, analytics, isConfigured } = window.BTM;
+
+      const listBox = document.getElementById("profiles-list");
+      const head = document.getElementById("head-sub");
+      const filterBar = document.getElementById("filters");
+      const searchField = document.getElementById("search");
+      const stateBar = document.getElementById("my-state");
+
+      let profiles = [];
+      let me = null;
+      let filters = { genre: "Tous", relation: "Toutes", sort: "recent" };
+
+      if (!isConfigured("benamoura")) {
+        listBox.innerHTML = ui.empty("🔌", "API Amour non configurée", "Colle l'URL /exec de benamoura.gs dans config.js.");
+        head.textContent = "Les profils viennent de la feuille Profile du spreadsheet Benamoura.";
+        return;
+      }
+
+      /* ---------- Compatibilité calculée côté client ---------- */
+      const list = (value) => String(value || "").split(/[,;\n•]/).map(s => s.trim().toLowerCase()).filter(Boolean);
+      const shared = (a, b) => {
+        const X = list(a), Y = list(b);
+        if (!X.length || !Y.length) return 0;
+        const hit = X.filter(x => Y.some(y => y.includes(x) || x.includes(y))).length;
+        return hit / Math.min(X.length, Y.length);
+      };
+
+      function compatibility(p) {
+        if (!me) return null;
+        let score = 0;
+        const myAge = Number(me.age) || 0, theirAge = Number(p.age) || 0;
+        const minT = Number(p.ageMinRecherche) || 0, maxT = Number(p.ageMaxRecherche) || 0;
+        const minM = Number(me.ageMinRecherche) || 0, maxM = Number(me.ageMaxRecherche) || 0;
+        if (myAge && minT && myAge >= minT && myAge <= maxT) score += 22;
+        if (theirAge && minM && theirAge >= minM && theirAge <= maxM) score += 22;
+        if (p.genreRecherche && me.genre && p.genreRecherche === me.genre) score += 15;
+        if (p.genre && me.genreRecherche && p.genre === me.genreRecherche) score += 15;
+        if (me.ville && p.ville && String(me.ville).toLowerCase() === String(p.ville).toLowerCase()) score += 10;
+        else if (me.pays && p.pays && String(me.pays).toLowerCase() === String(p.pays).toLowerCase()) score += 5;
+        if (me.relationRecherchee && p.relationRecherchee && me.relationRecherchee === p.relationRecherchee) score += 8;
+        score += Math.round(shared(me.interets, p.interetsSouhaites) * 6);
+        score += Math.round(shared(p.interets, me.interetsSouhaites) * 6);
+        if (me.statutAmoureux && p.statutAmoureux && /célibataire/i.test(me.statutAmoureux) === /célibataire/i.test(p.statutAmoureux)) score += 4;
+        return Math.max(5, Math.min(100, score));
+      }
+
+      /* ---------- Filtrage + affichage ---------- */
+      // Les feuilles Google renvoient des dates en "jj/mm/aaaa hh:mm:ss" : new Date() ne les parse pas.
+      function stamp(value) {
+        const fr = String(value || "").match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[ ,]+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
+        if (fr) return new Date(+fr[3], +fr[2] - 1, +fr[1], +(fr[4] || 0), +(fr[5] || 0), +(fr[6] || 0)).getTime();
+        const t = Date.parse(String(value || ""));
+        return isNaN(t) ? 0 : t;
+      }
+
+      function filtered() {
+        const q = String(searchField.value || "").trim().toLowerCase();
+        const norm = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        return profiles.filter(p => {
+          if (filters.genre !== "Tous" && norm(p.genre) !== norm(filters.genre)) return false;
+          if (filters.relation !== "Toutes" && norm(p.relationRecherchee) !== norm(filters.relation)) return false;
+          if (!q) return true;
+          const hay = norm([p.nom, p.ville, p.pays, p.presentation, p.interets, p.personnalite, p.relationRecherchee].join(" "));
+          return hay.includes(norm(q));
+        }).sort((a, b) => {
+          if (filters.sort === "likes") return (Number(b.likes) || 0) - (Number(a.likes) || 0);
+          if (filters.sort === "match") return (compatibility(b) || 0) - (compatibility(a) || 0);
+          if (filters.sort === "age") return (Number(a.age) || 0) - (Number(b.age) || 0);
+          return stamp(b.date) - stamp(a.date);
+        });
+      }
+
+      function drawList() {
+        const rows = filtered();
+        if (!profiles.length) {
+          listBox.innerHTML = ui.empty("💞", "Aucun profil publié", "La feuille Profile de benamoura.gs est encore vide. Le premier profil se crée en 4 étapes depuis « Ma fiche ».",
+            `<a class="btn sm" href="profile.html">Créer mon profil</a>`);
+          head.textContent = "Zéro profil pour l'instant.";
+          return;
+        }
+        if (!rows.length) {
+          listBox.innerHTML = ui.empty("🔍", "Aucun résultat", "Élargis la recherche ou enlève un filtre.");
+          head.textContent = `${profiles.length} profil${profiles.length > 1 ? "s" : ""} publié${profiles.length > 1 ? "s" : ""} · aucune correspondance avec tes filtres.`;
+          return;
+        }
+        listBox.innerHTML = rows.map(p => {
+          const match = compatibility(p);
+          return `<article class="card media-card card-tap" data-open="${esc(p.id)}">
+            <div class="cover"><div class="fallback" style="background:linear-gradient(135deg,var(--love),#d98ba0)">${esc(initials(p.nom))}</div></div>
+            <div class="body">
+              <h3>${esc(p.nom)} <span class="muted" style="font-weight:500">${p.age ? "· " + esc(p.age) : ""}</span></h3>
+              <p class="excerpt">${esc(plain(p.presentation, 96) || "Profil Benamoura")}</p>
+              <div class="meta">
+                <span>📍 ${esc([p.ville, p.pays].filter(Boolean).join(", ") || "Non renseigné")}</span>
+                <span>❤ ${Number(p.likes) || 0}</span>
+                ${match !== null ? `<span class="badge rose">${match}% match</span>` : ""}
+              </div>
+            </div>
+          </article>`;
+        }).join("");
+        head.textContent = `${rows.length} profil${rows.length > 1 ? "s" : ""} sur ${profiles.length} · ${me ? "compatibilité calculée depuis ta fiche." : "connecte ta fiche pour voir le % de match."}`;
+      }
+
+      function drawFilters() {
+        const genres = ["Tous", ...Array.from(new Set(profiles.map(p => p.genre).filter(Boolean)))];
+        const relations = ["Toutes", ...Array.from(new Set(profiles.map(p => p.relationRecherchee).filter(Boolean)))];
+        const chip = (group, value, label) =>
+          `<button type="button" class="chip${filters[group] === value ? " active" : ""}" data-group="${group}" data-value="${esc(value)}">${esc(label)}</button>`;
+        filterBar.innerHTML = [
+          ...genres.map(g => chip("genre", g, g === "Tous" ? "Tous les genres" : g)),
+          ...relations.map(r => chip("relation", r, r === "Toutes" ? "Toutes les intentions" : r)),
+          `<button type="button" class="chip${filters.sort === "recent" ? " active" : ""}" data-group="sort" data-value="recent">Récents</button>`,
+          `<button type="button" class="chip${filters.sort === "match" ? " active" : ""}" data-group="sort" data-value="match">Match</button>`,
+          `<button type="button" class="chip${filters.sort === "likes" ? " active" : ""}" data-group="sort" data-value="likes">Populaires</button>`,
+          `<button type="button" class="chip${filters.sort === "age" ? " active" : ""}" data-group="sort" data-value="age">Âge</button>`
+        ].join("");
+      }
+
+      function drawState() {
+        if (!auth.user) {
+          stateBar.className = "notice info";
+          stateBar.innerHTML = `<div>♡</div><div><b>Tu explores en invité</b>Crée ton profil en 4 étapes pour débloquer le pourcentage de compatibilité.</div>
+            <a class="btn sm ghost" href="user.html?next=${encodeURIComponent("profile.html")}">Créer un compte</a>`;
+          return;
+        }
+        stateBar.className = "notice " + (me ? "ok" : "warn");
+        stateBar.innerHTML = me
+          ? `<div>✓</div><div><b>Ta fiche est publiée</b>@${esc(me.username || auth.username)} · ${Number(me.likes) || 0} likes reçus.</div>
+             <a class="btn sm ghost" href="profile.html">Modifier</a>`
+          : `<div>!</div><div><b>Aucune fiche amoureuse</b>Ton compte existe, mais rien n'est encore publié dans la feuille Profile.</div>
+             <a class="btn sm" href="profile.html">Créer ma fiche</a>`;
+      }
+
+      /* ---------- Fiche détaillée ---------- */
+      function openProfile(id) {
+        const p = profiles.find(x => x.id === id);
+        if (!p) return;
+        analytics("Vue profil", p.nom || p.username || "", p.id, "benamoura");
+        const match = compatibility(p);
+        const sheet = ui.sheet({
+          title: `${p.nom || "Profil"}${p.age ? " · " + p.age + " ans" : ""}`,
+          subtitle: [p.ville, p.pays].filter(Boolean).join(", ") || "Localisation non renseignée"
+        });
+        const tags = (value) => {
+          const arr = String(value || "").split(/[,;\n]/).map(s => s.trim()).filter(Boolean);
+          return arr.length ? `<div class="tag-list">${arr.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>` : "";
+        };
+        const block = (label, value) => value ? `<div><h4 style="font-size:12px;color:var(--muted);letter-spacing:.5px;margin:0 0 6px">${label}</h4>${value}</div>` : "";
+        const txt = (value) => value ? `<p style="margin:0;font-size:13.5px;line-height:1.7">${esc(value)}</p>` : "";
+
+        sheet.body.innerHTML = `
+          <div class="profile-card" style="grid-template-columns:auto minmax(0,1fr) auto">
+            <span class="avatar rose xl">${esc(initials(p.nom))}</span>
+            <div class="who">
+              <h3>@${esc(p.username || "anonyme")}</h3>
+              <p>${esc([p.genre, p.orientation, p.statutAmoureux].filter(Boolean).join(" · ") || "Profil Benamoura")}</p>
+              <p style="white-space:normal">${esc(p.relationRecherchee || "")}</p>
+            </div>
+            <div class="match">${match !== null ? `<strong>${match}%</strong><small>COMPATIBILITÉ</small>` : `<strong>${Number(p.likes) || 0}</strong><small>LIKES</small>`}</div>
+          </div>
+          <div class="divide"></div>
+          ${block("Se présenter", txt(plain(p.presentation, 900)))}
+          <div class="divide"></div>
+          <dl class="kv">
+            <div><dt>ÂGE</dt><dd>${p.age ? esc(p.age) + " ans" : "—"}</dd></div>
+            <div><dt>ENFANTS</dt><dd>${esc(p.enfants || "—")}</dd></div>
+            <div><dt>CHERCHE</dt><dd>${esc([p.genreRecherche, p.ageMinRecherche && p.ageMaxRecherche ? p.ageMinRecherche + "–" + p.ageMaxRecherche + " ans" : ""].filter(Boolean).join(" · ") || "—")}</dd></div>
+            <div><dt>LIEU RECHERCHÉ</dt><dd>${esc(p.lieuRecherche || "—")}</dd></div>
+          </dl>
+          ${block("Centres d'intérêt", tags(p.interets))}
+          ${block("Musique", tags(p.musique))}
+          ${block("Personnalité", tags(p.personnalite))}
+          ${block("Valeurs", tags(p.valeurs))}
+          ${block("Habitudes", tags(p.habitudes))}
+          ${block("Qualités recherchées", tags(p.qualitesRecherchees))}
+          ${block("Intérêts souhaités", tags(p.interetsSouhaites))}
+          ${block("Non négociable", txt(p.nonNegociables))}
+          ${block("Importance de la relation", txt(p.importanceRelation))}
+          ${block("Communication", txt(p.communication))}
+          ${block("Distance acceptée", txt(p.distance))}
+          ${block("Projets", txt(p.projets))}
+          ${block("Ce qui me rend complémentaire", txt(p.complement))}
+          <p class="muted small" style="margin-top:18px">Publié le ${esc(p.date || "—")} · ${Number(p.likes) || 0} likes, ${Number(p.dislikes) || 0} dislikes.</p>`;
+      }
+
+      /* ---------- Chargement ---------- */
+      function load() {
+        listBox.innerHTML = ui.cards(4);
+        Promise.all([benamoura.profiles(), auth.user ? benamoura.myProfile() : Promise.resolve(null)])
+          .then(([res, mine]) => {
+            if (res.status !== "success") throw new Error(res.message);
+            profiles = res.data || [];
+            me = mine && mine.status === "success" && mine.found ? mine.data : null;
+            drawFilters();
+            drawState();
+            drawList();
+            const deep = new URLSearchParams(location.search).get("profil");
+            if (deep) openProfile(deep);
+          })
+          .catch(err => { listBox.innerHTML = ui.empty("⚠️", "Chargement impossible", ui.error(err)); });
+      }
+
+      filterBar.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-group]");
+        if (!btn) return;
+        filters[btn.dataset.group] = btn.dataset.value;
+        drawFilters();
+        drawList();
+      });
+      searchField.addEventListener("input", drawList);
+      listBox.addEventListener("click", (e) => {
+        const card = e.target.closest("[data-open]");
+        if (card) openProfile(card.dataset.open);
+      });
+      document.getElementById("btn-reload").addEventListener("click", load);
+
+      drawState();
+      load();
+    });
+  </script>
+</head>
+<body class="body-layout">
+  <div class="page-head page-row">
+    <div>
+      <h1>Profils de rencontre</h1>
+      <p id="head-sub">Chargement des profils publiés sur Benamoura…</p>
+    </div>
+    <div class="btn-row">
+      <a class="btn ghost sm" href="benamoura.html">Séries d'amour</a>
+      <a class="btn sm" href="profile.html">Ma fiche</a>
+    </div>
+  </div>
+
+  <div class="notice info" id="my-state"></div>
+
+  <div class="card flat" style="margin-top:16px;padding:14px 16px">
+    <div class="field" style="margin-bottom:12px">
+      <label for="search">Rechercher</label>
+      <input class="input" id="search" type="search" placeholder="Nom, ville, centre d'intérêt…">
+    </div>
+    <div class="chip-row" id="filters"></div>
+  </div>
+
+  <div class="page-row" style="margin-top:16px;align-items:center">
+    <small class="muted">Les coordonnées privées (email, téléphone, adresse) ne sont jamais transmises par l'API.</small>
+    <button class="btn ghost sm" id="btn-reload" type="button">Actualiser</button>
+  </div>
+
+  <div class="grid cols-2" id="profiles-list" style="margin-top:14px">
+    <div class="skeleton block"></div><div class="skeleton block"></div>
+    <div class="skeleton block"></div><div class="skeleton block"></div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

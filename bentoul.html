@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#245b45">
+  <title>BENTAMOURA WEB — Espace Tech</title>
+  <meta name="description" content="Espace Tech BENTAMOURA (bentoul.gs) : séries, épisodes débloqués avec des crédits, likes et commentaires.">
+  <!-- SEO : remplace https://TON-DOMAINE par ton domaine (og:image exige une URL absolue) -->
+  <link rel="canonical" href="bentoul.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BENTAMOURA WEB">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:url" content="https://TON-DOMAINE/bentoul.html">
+  <meta property="og:title" content="BENTAMOURA WEB — Espace Tech">
+  <meta property="og:description" content="Espace Tech BENTAMOURA (bentoul.gs) : séries, épisodes débloqués avec des crédits, likes et commentaires.">
+  <meta property="og:image" content="https://TON-DOMAINE/images/seo/bentoul.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Espace Tech BENTAMOURA : séries, épisodes et crédits">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BENTAMOURA WEB — Espace Tech">
+  <meta name="twitter:description" content="Espace Tech BENTAMOURA (bentoul.gs) : séries, épisodes débloqués avec des crédits, likes et commentaires.">
+  <meta name="twitter:image" content="https://TON-DOMAINE/images/seo/bentoul.png">
+  <meta name="twitter:image:alt" content="Espace Tech BENTAMOURA : séries, épisodes et crédits">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="images/favicon-64.png" sizes="64x64" type="image/png">
+  <link rel="apple-touch-icon" href="images/favicon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"BENTAMOURA WEB — Espace Tech","url":"bentoul.html","inLanguage":"fr-FR","description":"Espace Tech BENTAMOURA (bentoul.gs) : séries, épisodes débloqués avec des crédits, likes et commentaires.","isPartOf":{"@type":"WebSite","name":"BENTAMOURA WEB","url":"index.html"},"primaryImageOfPage":{"@type":"ImageObject","url":"images/seo/bentoul.png","width":1200,"height":630}}</script>
+  <link rel="stylesheet" href="app.css">
+  <script src="config.js"></script>
+  <script>
+    document.addEventListener("btm:ready", () => {
+      const { ICON, auth, ui, bentoul, isConfigured, mediaCatalog, creditBadge, creditPaywall } = window.BTM;
+
+      const listBox = document.getElementById("series-list");
+      const head = document.getElementById("head-sub");
+      const creditsBtn = document.getElementById("hdr-credits");
+
+      function paintCredits() {
+        creditsBtn.classList.remove("hidden");
+        if (!auth.user) { creditsBtn.textContent = "Se connecter"; return; }
+        const n = auth.credits;
+        creditsBtn.textContent = n + " crédit" + (n > 1 ? "s" : "");
+      }
+      paintCredits();
+      if (auth.user) auth.refresh().then(paintCredits);
+      document.addEventListener("btm:signed-in", paintCredits);
+      document.addEventListener("btm:signed-out", paintCredits);
+
+      if (!isConfigured("bentoul")) {
+        listBox.innerHTML = ui.empty(ICON.tech, "API Tech non configurée", "Colle l'URL /exec de bentoul.gs dans config.js.");
+        head.textContent = "Ajoute l'adresse de ton déploiement Google Apps Script pour charger les séries.";
+        return;
+      }
+
+      const catalogue = mediaCatalog({
+        which: "bentoul",
+        api: bentoul,
+        grid: listBox,
+        accent: "tech",
+        seriesLabel: "Série Tech",
+        seriesSubtitle: () => "3 épisodes gratuits, puis 1 crédit par épisode",
+        reverseEpisodes: true,
+        emptyTitle: "Aucune série publiée",
+        emptyText: "Les séries apparaissent dès qu'une ligne est ajoutée dans la feuille Series avec le statut « Publié ».",
+        episodeBadge: creditBadge,
+
+        /* Épisodes payants : la carte de déblocage remplace le lecteur (mécanique partagée avec l'Amour). */
+        episodeGuard: creditPaywall({ space: "tech", onCredits: paintCredits }),
+
+        onLoaded: (list) => {
+          head.textContent = `${list.length} série${list.length > 1 ? "s" : ""} publiée${list.length > 1 ? "s" : ""} · les 3 premiers épisodes de chaque série sont gratuits, ensuite 1 crédit par épisode.`;
+        }
+      });
+
+      document.getElementById("btn-reload").addEventListener("click", () => catalogue.load());
+      catalogue.load();
+    });
+  </script>
+</head>
+<body class="body-layout">
+  <div class="page-head page-row">
+    <div>
+      <h1>Espace Tech</h1>
+      <p id="head-sub">Chargement des séries publiées sur Bentoul Création…</p>
+    </div>
+    <div class="btn-row">
+      <button class="btn ghost sm" id="btn-reload" type="button">Actualiser</button>
+      <a class="btn soft sm hidden" id="hdr-credits" href="user.html"></a>
+    </div>
+  </div>
+
+  <div class="media-grid" id="series-list"><div class="skeleton block"></div><div class="skeleton block"></div><div class="skeleton block"></div><div class="skeleton block"></div></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

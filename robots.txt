@@ -1,13 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /compte
-Disallow: /editeur.html
-Disallow: /ad-frame.html
 
-User-agent: AdsBot-Google
-Allow: /
-
-User-agent: Mediapartners-Google
-Allow: /
-
-Sitemap: https://bentoul.github.io/sitemap.xml
+# Remplace https://TON-DOMAINE par ton domaine réel (dossier bentamoura/ = racine du site).
+Sitemap: https://TON-DOMAINE/sitemap.xml
