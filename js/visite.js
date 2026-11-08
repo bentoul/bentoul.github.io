@@ -1,7 +1,12 @@
 /**
  * BENTOUL CREATION — visite.js
  * Gestion et envoi des statistiques de visite vers Google Sheets (doPost -> action: "analytics")
- */
+id pour bloquer
+
+VIS_vrdwmnsomvpaoo6y
+VIS_jftrhvonmvq1nc9x
+VIS_h5b8o78lmvoa6bof
+*/
 (function () {
   "use strict";
 
