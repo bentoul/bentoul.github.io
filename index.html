@@ -30,8 +30,8 @@
       window.setTimeout(hideRouteLoader, 60000);
     })();
   </script>
-  <meta name="description" content="BENTOUL CREATION : découvre des séries, lis des épisodes, partage tes impressions et rejoins notre communauté. Des histoires à suivre et à partager en ligne.">
-  <meta name="keywords" content="BENTOUL CREATION, séries, épisodes, histoires, lecture en ligne, séries haïtiennes, histoires d'amour, communauté, épisodes gratuits">
+  <meta name="description" content="BENTOUL CREATION : découvre des cours, suis des leçons, partage tes impressions et rejoins notre communauté. Des cours et des astuces à suivre en ligne.">
+  <meta name="keywords" content="BENTOUL CREATION, cours, leçons, astuces, lecture en ligne, cours haïtiens, communauté, leçons gratuites">
   <meta name="author" content="BENTOUL CREATION">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="googlebot" content="index, follow">
@@ -42,7 +42,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
 
-  <title>BENTOUL CREATION — Séries et épisodes en ligne</title>
+  <title>BENTOUL CREATION — Cours et leçons en ligne</title>
 
   <!-- URL principale du site -->
   <link rel="canonical" href="https://bentoul.github.io/">
@@ -55,21 +55,21 @@
   <!-- Open Graph : aperçu lors du partage sur Facebook, WhatsApp et autres réseaux -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="BENTOUL CREATION">
-  <meta property="og:title" content="BENTOUL CREATION — Séries et épisodes en ligne">
-  <meta property="og:description" content="Découvre des séries, lis des épisodes, partage tes impressions et rejoins la communauté BENTOUL CREATION.">
+  <meta property="og:title" content="BENTOUL CREATION — Cours et leçons en ligne">
+  <meta property="og:description" content="Découvre des cours, suis des leçons, partage tes impressions et rejoins la communauté BENTOUL CREATION.">
   <meta property="og:url" content="https://bentoul.github.io/">
   <meta property="og:image" content="https://bentoul.github.io/images/home.jpg">
   <meta property="og:image:secure_url" content="https://bentoul.github.io/images/home.jpg">
-  <meta property="og:image:alt" content="BENTOUL CREATION — séries et épisodes">
+  <meta property="og:image:alt" content="BENTOUL CREATION — cours et leçons">
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:locale" content="fr_FR">
 
   <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="BENTOUL CREATION — Séries et épisodes en ligne">
-  <meta name="twitter:description" content="Découvre des séries et des épisodes, et partage tes impressions avec BENTOUL CREATION.">
+  <meta name="twitter:title" content="BENTOUL CREATION — Cours et leçons en ligne">
+  <meta name="twitter:description" content="Découvre des cours et des leçons, et partage tes impressions avec BENTOUL CREATION.">
   <meta name="twitter:image" content="https://bentoul.github.io/images/home.jpg">
-  <meta name="twitter:image:alt" content="BENTOUL CREATION — séries et épisodes">
+  <meta name="twitter:image:alt" content="BENTOUL CREATION — cours et leçons">
 
   <!-- Données structurées pour les moteurs de recherche -->
   <script type="application/ld+json">
@@ -79,7 +79,7 @@
     "name": "BENTOUL CREATION",
     "alternateName": "Bentoul Creation",
     "url": "https://bentoul.github.io/",
-    "description": "Découvre des séries, lis des épisodes et rejoins la communauté BENTOUL CREATION.",
+    "description": "Découvre des cours, suis des leçons et rejoins la communauté BENTOUL CREATION.",
     "inLanguage": "fr",
     "publisher": {
       "@type": "Organization",
@@ -108,6 +108,7 @@
       --background: #f5f7fb;
       --danger: #dc2626;
       --radius: 16px;
+      --footer-height: 62px;
     }
 
     * {
@@ -300,6 +301,33 @@
 
     .icon-btn:hover {
       background: #f1f5f9;
+    }
+
+    .admin-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 40px;
+      padding: 0 11px;
+      color: #fff;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid #0f172a;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .4px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .admin-chip i {
+      font-size: 12px;
+      color: #93c5fd;
+    }
+
+    .admin-chip:hover {
+      background: linear-gradient(135deg, #334155, #1e293b);
     }
 
     #app-sidebar {
@@ -732,6 +760,263 @@
       color: var(--primary-dark);
     }
 
+    /* BLOG */
+    .blog-card {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .blog-card:hover {
+      text-decoration: none;
+    }
+
+    .blog-category-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      z-index: 2;
+      padding: 5px 9px;
+      color: #fff;
+      background: rgba(37, 99, 235, .92);
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 8px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .4px;
+      text-transform: uppercase;
+    }
+
+    .blog-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .blog-card-meta i {
+      margin-right: 3px;
+      color: var(--primary);
+    }
+
+    .blog-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    #blog-container {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-article {
+      padding: 14px;
+    }
+
+    .blog-article-head h1 {
+      margin: 8px 0 10px;
+      font-size: 24px;
+      line-height: 1.25;
+      letter-spacing: -.4px;
+      overflow-wrap: anywhere;
+    }
+
+    .blog-category {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      color: var(--primary);
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .blog-article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-bottom: 14px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .blog-article-meta i {
+      margin-right: 4px;
+      color: var(--primary);
+    }
+
+    .blog-article-cover {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1200 / 630;
+      object-fit: cover;
+      margin: 0 0 16px;
+      background: #e2e8f0;
+      border-radius: 12px;
+    }
+
+    .blog-article-body {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-wrap: anywhere;
+    }
+
+    .blog-article-body h2 {
+      margin: 22px 0 8px;
+      font-size: 18px;
+      line-height: 1.3;
+    }
+
+    .blog-article-body p {
+      margin: 12px 0;
+    }
+
+    .blog-article-body ul {
+      margin: 10px 0 14px;
+      padding-left: 20px;
+    }
+
+    .blog-article-body li {
+      margin: 6px 0;
+    }
+
+    .blog-article-body a {
+      color: var(--primary);
+    }
+
+    .blog-tip {
+      margin: 18px 0;
+      padding: 12px 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .blog-tip strong {
+      color: var(--primary-dark);
+    }
+
+    .blog-share {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .blog-share h3,
+    .blog-related h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .blog-share-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .blog-share-actions .reaction-btn {
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .blog-share-actions .share-facebook {
+      color: #1877f2;
+    }
+
+    .blog-share-actions .share-whatsapp {
+      color: #15803d;
+    }
+
+    .blog-share-actions .share-x {
+      color: #0f172a;
+    }
+
+    .blog-article-cta {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .blog-article-cta h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .blog-article-cta p {
+      margin: 0 0 12px;
+      color: var(--text-muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .blog-related {
+      margin-top: 22px;
+    }
+
+    .blog-related-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .blog-related-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      color: var(--text);
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+
+    .blog-related-item:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .blog-related-item i {
+      color: var(--primary);
+    }
+
+    @media (min-width: 769px) {
+      #blog-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .blog-article {
+        padding: 22px;
+      }
+
+      .blog-article-head h1 {
+        font-size: 30px;
+      }
+
+      .blog-article-body {
+        font-size: 16px;
+      }
+    }
+
     /* VERROUILLAGE DES ÉPISODES PAYANTS */
     .episode-lock-badge {
       position: absolute;
@@ -864,7 +1149,7 @@
       position: fixed;
       z-index: 200;
       right: 16px;
-      bottom: 82px;
+      bottom: 88px;
       left: 16px;
       display: none;
       max-width: 520px;
@@ -890,6 +1175,7 @@
       position: fixed;
       z-index: 90;
       inset: auto 0 0;
+      min-height: var(--footer-height);
       display: flex;
       justify-content: space-around;
       gap: 4px;
@@ -965,6 +1251,350 @@
       text-transform: uppercase;
     }
 
+    /* ==============================================================
+       ÉPISODES EN MODE HORIZONTAL : IMAGE À GAUCHE, TEXTE À DROITE
+    ============================================================== */
+    .episode-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .episode-row {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      align-items: stretch;
+      min-height: 132px;
+    }
+
+    .episode-thumb {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      background: #0f172a;
+    }
+
+    .episode-thumb img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 132px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+
+    .episode-row .episode-lock-badge,
+    .episode-row .episode-free-badge {
+      top: 6px;
+      left: 6px;
+      padding: 4px 7px;
+      font-size: 10px;
+    }
+
+    .episode-row-body {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+      padding: 10px 12px;
+    }
+
+    .episode-row-body h3 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+    }
+
+    .episode-row-body .episode-series-badge {
+      margin-bottom: 0;
+      color: var(--primary);
+    }
+
+    .episode-row-body .episode-number-badge {
+      display: block;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .episode-row-body .card-description {
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      font-size: 12px;
+    }
+
+    .episode-row-body .interaction-bar {
+      margin-top: 2px;
+    }
+
+    .episode-row-body .arrow-action-btn {
+      margin-top: 0;
+      font-size: 16px;
+    }
+
+    /* ==============================================================
+       TABLEAU DE BORD ADMINISTRATION
+    ============================================================== */
+    .admin-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding: 20px;
+      color: #fff;
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      border-radius: 20px;
+    }
+
+    .admin-header h2 {
+      margin: 6px 0;
+      color: #fff;
+      font-size: 26px;
+    }
+
+    .admin-header p {
+      max-width: 540px;
+      margin: 0;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .admin-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #93c5fd;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .admin-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .admin-period {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .admin-period select {
+      min-height: 40px;
+      padding: 8px 10px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .admin-status {
+      min-height: 18px;
+      margin: 0 0 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .admin-status.error {
+      color: var(--danger);
+    }
+
+    .admin-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .admin-metric {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 14px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .admin-metric span {
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+
+    .admin-metric strong {
+      font-size: 26px;
+      line-height: 1.15;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .admin-metric small {
+      color: var(--text-muted);
+      font-size: 10px;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .admin-panel {
+      margin: 0;
+      padding: 16px;
+    }
+
+    .admin-panel h3 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .admin-table th,
+    .admin-table td {
+      padding: 8px 6px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+      overflow-wrap: anywhere;
+    }
+
+    .admin-table th {
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+
+    .admin-table th:last-child,
+    .admin-table td:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .admin-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .admin-chart {
+      display: grid;
+      gap: 7px;
+    }
+
+    .admin-chart-row {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr) 32px;
+      gap: 8px;
+      align-items: center;
+      font-size: 11px;
+    }
+
+    .admin-bar-track {
+      height: 10px;
+      overflow: hidden;
+      background: #e2e8f0;
+      border-radius: 99px;
+    }
+
+    .admin-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #60a5fa, #2563eb);
+      border-radius: inherit;
+    }
+
+    .admin-tools {
+      margin-top: 12px;
+    }
+
+    .admin-tool-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .admin-empty {
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    @media (min-width: 769px) {
+      .episode-row {
+        grid-template-columns: 170px minmax(0, 1fr);
+        min-height: 150px;
+      }
+
+      .episode-thumb img {
+        min-height: 150px;
+      }
+
+      .episode-row-body {
+        gap: 7px;
+        padding: 14px 16px;
+      }
+
+      .episode-row-body h3 {
+        font-size: 17px;
+      }
+
+      .admin-metrics {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .admin-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 380px) {
+      .episode-row {
+        grid-template-columns: 92px minmax(0, 1fr);
+        min-height: 120px;
+      }
+
+      .episode-thumb img {
+        min-height: 120px;
+      }
+
+      .episode-row-body {
+        gap: 3px;
+        padding: 8px 9px;
+      }
+
+      .episode-row-body h3 {
+        font-size: 13px;
+      }
+
+      .episode-row-body .card-description {
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        font-size: 11px;
+      }
+    }
+
     .install-card {
       display: flex;
       flex-wrap: wrap;
@@ -988,34 +1618,38 @@
     }
 
     .ad-slot {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
+      position: relative;
+      height: 50px;
       margin: 16px 0;
-      padding: 10px;
+      padding: 0;
       overflow: hidden;
       background: white;
-      border: 1px solid var(--border);
+      box-shadow: inset 0 0 0 1px var(--border);
       border-radius: var(--radius);
     }
 
-    .ad-label {
-      align-self: flex-end;
-      color: var(--text-muted);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
     .ad-slot iframe {
-      width: 300px;
-      max-width: 100%;
-      height: auto;
       display: block;
+      width: 100%;
+      height: 100%;
       border: 0;
       background: transparent;
+    }
+
+    .ad-label {
+      position: absolute;
+      top: 2px;
+      right: 6px;
+      z-index: 1;
+      padding: 0 3px;
+      color: var(--text-muted);
+      background: #ffffffd9;
+      border-radius: 4px;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      pointer-events: none;
     }
 
     /* ==============================================================
@@ -1163,6 +1797,11 @@
     </a>
 
     <div class="header-actions">
+      <a class="admin-chip" href="/admin" data-page="admin" data-admin-only hidden aria-label="Administration" title="Administration">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>ADM</span>
+      </a>
+
       <a class="credits-chip" href="/compte" data-page="profile" data-user-only hidden aria-label="Mes crédits">
         <i class="fa-solid fa-coins"></i>
         <strong id="header-credits">0</strong>
@@ -1184,11 +1823,14 @@
     <a class="sidebar-link" href="/accueil" data-page="home">
       <i class="fa-solid fa-house"></i> <span>Accueil</span>
     </a>
-    <a class="sidebar-link" href="/serie" data-page="series">
-      <i class="fa-solid fa-film"></i> <span>Séries</span>
+    <a class="sidebar-link" href="/cours" data-page="series">
+      <i class="fa-solid fa-book-open"></i> <span>Cours</span>
     </a>
-    <a class="sidebar-link" href="/episode" data-page="all-episodes">
-      <i class="fa-solid fa-play"></i> <span>Épisodes</span>
+    <a class="sidebar-link" href="/blog" data-page="blog">
+      <i class="fa-solid fa-newspaper"></i> <span>Blog</span>
+    </a>
+    <a class="sidebar-link" href="/admin" data-page="admin" data-admin-only hidden>
+      <i class="fa-solid fa-shield-halved"></i> <span>Administration</span>
     </a>
     <a class="sidebar-link" href="/compte" data-page="auth" data-guest-only>
       <i class="fa-solid fa-arrow-right-to-bracket"></i> <span>Connexion / Inscription</span>
@@ -1212,9 +1854,9 @@
       <div class="welcome-card">
         <span class="welcome-icon"><i class="fa-solid fa-sparkles"></i></span>
         <h1 id="home-title">BENTOUL CREATION</h1>
-        <p>Découvre nos séries, nos épisodes et partage tes impressions.</p>
-        <a class="btn-primary" href="/serie" data-page="series">
-          <i class="fa-solid fa-compass"></i> Découvrir les séries
+        <p>Découvre nos cours, nos leçons et partage tes impressions.</p>
+        <a class="btn-primary" href="/cours" data-page="series">
+          <i class="fa-solid fa-compass"></i> Découvrir les cours
         </a>
       </div>
 
@@ -1290,41 +1932,54 @@
 
     <section class="page" id="page-series">
       <div class="section-heading">
-        <div>
-          <h2>Nos séries</h2>
-          <p>Choisis une série pour voir ses épisodes.</p>
-        </div>
         <button type="button" class="btn-secondary" id="refresh-series">
-          <i class="fa-solid fa-rotate"></i> Actualiser
+          <i class="fa-solid fa-rotate"></i>
         </button>
       </div>
       <div id="series-container" class="content-grid"></div>
     </section>
 
+    <section class="page" id="page-blog">
+      <div class="section-heading">
+        <div>
+          <h2>Blog</h2>
+          <p>Astuces et conseils pour mieux utiliser ton téléphone au quotidien.</p>
+        </div>
+      </div>
+      <div id="blog-container" class="content-grid"></div>
+    </section>
+
+    <section class="page" id="page-blog-article">
+      <button type="button" class="back-btn" data-page="blog">
+        <i class="fa-solid fa-arrow-left"></i> Retour au blog
+      </button>
+      <article id="blog-article-content" class="panel blog-article"></article>
+    </section>
+
     <section class="page" id="page-all-episodes">
       <div class="section-heading">
         <div>
-          <h2>Tous les épisodes</h2>
-          <p>Parcours les épisodes de toutes les séries.</p>
+          <h2>Toutes les leçons</h2>
+          <p>Parcours les leçons de tous les cours.</p>
         </div>
         <button type="button" class="btn-secondary" id="refresh-episodes">
           <i class="fa-solid fa-rotate"></i> Actualiser
         </button>
       </div>
-      <div id="all-episodes-container" class="content-grid"></div>
+      <div id="all-episodes-container" class="episode-list"></div>
     </section>
 
     <section class="page" id="page-episodes">
       <button type="button" class="back-btn" id="back-to-series">
-        <i class="fa-solid fa-arrow-left"></i> Retour aux séries
+        <i class="fa-solid fa-arrow-left"></i> Retour aux cours
       </button>
-      <h2 id="episodes-title-header">Épisodes</h2>
-      <div id="episodes-container" class="content-grid"></div>
+      <h2 id="episodes-title-header">Leçons</h2>
+      <div id="episodes-container" class="episode-list"></div>
     </section>
 
     <section class="page" id="page-episode">
       <button type="button" class="back-btn" id="back-to-episodes">
-        <i class="fa-solid fa-arrow-left"></i> Retour aux épisodes
+        <i class="fa-solid fa-arrow-left"></i> Retour aux leçons
       </button>
 
       <article id="episode-detail" class="panel"></article>
@@ -1376,6 +2031,98 @@
       </div>
     </section>
 
+    <section class="page" id="page-admin" aria-labelledby="admin-title">
+      <div class="admin-header">
+        <div>
+          <span class="admin-eyebrow"><i class="fa-solid fa-shield-halved"></i> Espace administrateur</span>
+          <h2 id="admin-title">Tableau de bord</h2>
+          <p>Suivi réel des visites : nombre de visiteurs, pays, pages et onglets consultés.</p>
+        </div>
+      </div>
+
+      <div class="admin-toolbar">
+        <label class="admin-period" for="admin-period">Période
+          <select id="admin-period">
+            <option value="7">7 derniers jours</option>
+            <option value="30" selected>30 derniers jours</option>
+            <option value="all">Depuis le début</option>
+          </select>
+        </label>
+        <button type="button" class="btn-secondary" id="admin-refresh">
+          <i class="fa-solid fa-rotate"></i> Actualiser
+        </button>
+      </div>
+
+      <p class="admin-status" id="admin-status" role="status" aria-live="polite"></p>
+
+      <div class="admin-metrics">
+        <article class="admin-metric">
+          <span>Visites</span>
+          <strong id="admin-visits">0</strong>
+          <small>Ouvertures du site</small>
+        </article>
+        <article class="admin-metric">
+          <span>Visiteurs uniques</span>
+          <strong id="admin-visitors">0</strong>
+          <small>Navigateurs distincts</small>
+        </article>
+        <article class="admin-metric">
+          <span>Pays</span>
+          <strong id="admin-countries-count">0</strong>
+          <small>Origines détectées</small>
+        </article>
+        <article class="admin-metric">
+          <span>Pages / onglets</span>
+          <strong id="admin-pages-count">0</strong>
+          <small>Vues enregistrées</small>
+        </article>
+      </div>
+
+      <div class="admin-grid">
+        <section class="panel admin-panel">
+          <h3><i class="fa-solid fa-chart-column"></i> Activité récente</h3>
+          <div id="admin-chart" class="admin-chart"></div>
+        </section>
+
+        <section class="panel admin-panel">
+          <h3><i class="fa-solid fa-earth-americas"></i> Pays des visiteurs</h3>
+          <table class="admin-table">
+            <thead><tr><th>Pays</th><th>Visites</th><th>Visiteurs</th></tr></thead>
+            <tbody id="admin-countries-body"></tbody>
+          </table>
+        </section>
+
+        <section class="panel admin-panel">
+          <h3><i class="fa-solid fa-file-lines"></i> Pages et onglets consultés</h3>
+          <table class="admin-table">
+            <thead><tr><th>Page / onglet</th><th>Type</th><th>Vues</th></tr></thead>
+            <tbody id="admin-pages-body"></tbody>
+          </table>
+        </section>
+
+        <section class="panel admin-panel">
+          <h3><i class="fa-solid fa-mobile-screen-button"></i> Appareils et navigateurs</h3>
+          <table class="admin-table">
+            <thead><tr><th>Appareil</th><th>Navigateur</th><th>Visites</th></tr></thead>
+            <tbody id="admin-devices-body"></tbody>
+          </table>
+        </section>
+      </div>
+
+      <section class="panel admin-panel admin-tools">
+        <h3><i class="fa-solid fa-screwdriver-wrench"></i> Outils de gestion</h3>
+        <p class="admin-empty">Modifie les cours et les leçons depuis l'éditeur intégré.</p>
+        <div class="admin-tool-links">
+          <a class="btn-secondary" href="/editeur.html" target="_blank" rel="noopener">
+            <i class="fa-solid fa-pen-to-square"></i> Ouvrir l'éditeur de cours/leçons
+          </a>
+          <a class="btn-secondary" href="/blog" data-page="blog">
+            <i class="fa-solid fa-newspaper"></i> Voir le blog
+          </a>
+        </div>
+      </section>
+    </section>
+
     <div id="app-message" role="status" aria-live="polite"></div>
   </main>
 
@@ -1384,9 +2131,13 @@
       <i class="fa-solid fa-house"></i>
       <span>Accueil</span>
     </a>
-    <a class="footer-link" href="/serie" data-page="series">
-      <i class="fa-solid fa-film"></i>
-      <span>Séries</span>
+    <a class="footer-link" href="/cours" data-page="series">
+      <i class="fa-solid fa-book-open"></i>
+      <span>Cours</span>
+    </a>
+    <a class="footer-link" href="/blog" data-page="blog">
+      <i class="fa-solid fa-newspaper"></i>
+      <span>Blog</span>
     </a>
     <a class="footer-link" href="/compte" data-page="auth" data-guest-only>
       <i class="fa-regular fa-user"></i>
@@ -1405,6 +2156,22 @@
   "use strict";
 
   const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0YxVs92Yrg9Y1cx7I89py6X75IGX8vsuz3PzE24T-LGD9vd8nn0Gz0NSh_Trg1m4/exec";
+
+  // Compte administrateur créé automatiquement dans la base au premier chargement.
+  // L'accès ADM est aussi reconnu côté client via le nom d'utilisateur ci-dessous.
+  const ADMIN_ACCOUNT = {
+    username: "bentouladmin",
+    pin: "202611",
+    nom: "BENTOUL Admin",
+    email: "admin@bentoul.github.io",
+    numero: "+50900000000"
+  };
+
+  window.APP_CONFIG = window.APP_CONFIG || {};
+  window.APP_CONFIG.ADMIN_USERNAMES = Array.from(new Set([
+    ...(window.APP_CONFIG.ADMIN_USERNAMES || []),
+    ADMIN_ACCOUNT.username
+  ]));
 
   if (typeof window.apiRequest !== "function") {
     window.apiRequest = async function(payload, method = "POST") {
@@ -1436,6 +2203,8 @@
   }
 
   (() => {
+    window.__bentoulTracksNavigationEvents = true;
+
     const $ = selector => document.querySelector(selector);
 
     let seriesList = [];
@@ -1445,8 +2214,410 @@
     let commentList = [];
     let currentSeries = null;
     let currentEpisode = null;
+    let currentBlogArticle = null;
     let currentUser = null;
     let messageTimeout = null;
+
+    /* =========================
+       BLOG
+    ========================= */
+
+    // Articles de secours affichés tant que la base ne renvoie pas d'articles.
+    const FALLBACK_BLOG_ARTICLES = [
+      {
+        slug: "securiser-android",
+        title: "5 réglages Android pour sécuriser ton téléphone",
+        description: "Verrouillage, Play Protect, permissions, mises à jour : les 5 réglages Android à activer pour protéger ton téléphone des menaces courantes.",
+        category: "Sécurité",
+        date: "2026-11-23",
+        dateLabel: "23 novembre 2026",
+        readingTime: "4 min",
+        image: "/images/blog-securite-android.jpg",
+        imageAlt: "Téléphone Android protégé par un bouclier",
+        content: `
+          <p>Ton téléphone contient tes messages, tes photos et parfois tes comptes bancaires. Quelques réglages simples suffisent pour le protéger sans compliquer ton quotidien.</p>
+          <h2>1. Active un verrouillage solide</h2>
+          <p>Utilise un code PIN à 6 chiffres, un schéma complexe ou l'empreinte digitale. Évite les codes faciles comme 0000 ou ta date de naissance.</p>
+          <h2>2. Vérifie Google Play Protect</h2>
+          <p>Play Protect analyse les applications avant et après leur installation. Ouvre le Play Store, touche ta photo de profil, puis <strong>Play Protect</strong> et lance une analyse.</p>
+          <h2>3. Contrôle les permissions</h2>
+          <p>Une application de lampe torche n'a pas besoin de lire tes contacts. Dans <strong>Paramètres &gt; Applications &gt; Autorisations</strong>, retire les accès inutiles, surtout à la localisation, aux SMS et au microphone.</p>
+          <h2>4. Installe uniquement depuis le Play Store</h2>
+          <p>Les fichiers APK téléchargés sur des sites inconnus sont la première source de logiciels malveillants. Désactive l'installation de sources inconnues si elle est activée.</p>
+          <h2>5. Garde ton système à jour</h2>
+          <p>Les mises à jour corrigent des failles de sécurité. Active les mises à jour automatiques et installe-les dès que possible, même si elles prennent quelques minutes.</p>
+          <div class="blog-tip"><strong>Astuce :</strong> fais une sauvegarde régulière de tes photos et documents importants. En cas de perte ou de vol, tu pourras tout récupérer.</div>
+        `
+      },
+      {
+        slug: "liberer-stockage-android",
+        title: "Libérer du stockage sur Android sans perdre tes fichiers",
+        description: "Cache, photos, applications inutiles : la méthode simple pour récupérer de l'espace sur ton Android sans effacer ce qui compte.",
+        category: "Stockage",
+        date: "2026-11-20",
+        dateLabel: "20 novembre 2026",
+        readingTime: "5 min",
+        image: "/images/blog-stockage-android.jpg",
+        imageAlt: "Téléphone Android avec espace de stockage libéré",
+        content: `
+          <p>Un message « stockage presque plein » ralentit le téléphone et bloque les mises à jour. Avant de supprimer au hasard, regarde ce qui occupe réellement l'espace.</p>
+          <h2>1. Analyse le stockage</h2>
+          <p>Ouvre <strong>Paramètres &gt; Stockage</strong>. Android classe les fichiers par catégorie : applications, photos, vidéos, audio et autres. Commence par la catégorie la plus lourde.</p>
+          <h2>2. Vide le cache, pas les données</h2>
+          <p>Le cache se recrée automatiquement. Dans <strong>Paramètres &gt; Applications</strong>, choisis une application lourde puis <strong>Stockage &gt; Vider le cache</strong>. Évite « Effacer les données », qui supprime tes comptes et tes réglages.</p>
+          <h2>3. Trie tes photos et vidéos</h2>
+          <p>Les vidéos en 4K prennent énormément de place. Sauvegarde-les sur Google Photos ou Drive, puis supprime les doublons et les captures d'écran inutiles. Pense à vider la corbeille de la galerie.</p>
+          <h2>4. Désinstalle ce que tu n'utilises plus</h2>
+          <p>Les jeux et applications oubliés peuvent peser plusieurs gigaoctets. Désinstalle-les, puis vide le dossier de téléchargements des fichiers APK et PDF déjà consultés.</p>
+          <h2>5. Utilise le cloud pour les gros fichiers</h2>
+          <p>Déplace les documents et les vidéos vers Google Drive. Tu peux les garder accessibles hors ligne seulement quand tu en as besoin, puis libérer l'espace local.</p>
+          <div class="blog-tip"><strong>À retenir :</strong> supprimer le cache et les fichiers inutiles ne touche pas à tes photos. Fais quand même une sauvegarde avant toute suppression importante.</div>
+        `
+      },
+      {
+        slug: "google-drive-organiser",
+        title: "Google Drive : organiser, sauvegarder et partager tes fichiers",
+        description: "Dossiers, noms clairs, droits de partage et sauvegarde : organise ton Google Drive une fois pour toutes et retrouve tes fichiers en quelques secondes.",
+        category: "Cloud",
+        date: "2026-11-18",
+        dateLabel: "18 novembre 2026",
+        readingTime: "5 min",
+        image: "/images/blog-google-drive.jpg",
+        imageAlt: "Dossier Google Drive organisé dans le cloud",
+        content: `
+          <p>Google Drive est pratique, mais sans organisation il devient vite un fouillis. Une méthode simple te fait gagner du temps chaque jour.</p>
+          <h2>1. Crée une arborescence claire</h2>
+          <p>Quelques dossiers suffisent : <strong>Documents</strong>, <strong>Photos</strong>, <strong>Études</strong>, <strong>Administratif</strong>. Évite de créer un dossier pour chaque fichier.</p>
+          <h2>2. Adopte des noms de fichiers réguliers</h2>
+          <p>Utilise un format comme <em>2026-11-23 facture internet.pdf</em>. La date au début classe les fichiers automatiquement et facilite la recherche.</p>
+          <h2>3. Maîtrise les partages</h2>
+          <p>Par défaut, un fichier reste privé. Quand tu partages, choisis <strong>Lecteur</strong> pour consulter, <strong>Commentateur</strong> pour donner un avis, et <strong>Éditeur</strong> seulement aux personnes de confiance.</p>
+          <h2>4. Garde l'essentiel hors ligne</h2>
+          <p>Dans l'application Drive, rends disponibles hors ligne les documents dont tu as besoin sans réseau. Tu évites de télécharger tout le dossier.</p>
+          <h2>5. Sécurise ton compte</h2>
+          <p>Active la validation en deux étapes et vérifie régulièrement les appareils connectés. Un compte compromis expose tous tes fichiers.</p>
+          <div class="blog-tip"><strong>Astuce :</strong> vide la corbeille de Drive de temps en temps. Les fichiers supprimés y restent 30 jours et continuent d'occuper ton espace.</div>
+        `
+      }
+    ];
+
+    const BLOG_FALLBACK_IMAGE = "/images/blog-securite-android.jpg";
+    const ALT_BLOG_API_URL = "https://script.google.com/macros/s/AKfycbyzhytA2z1Ln98MoybT00uwgjVlIUh5qPPpnQjwxXLJYkq6STke9QZ6VQgYMCNEEFGF/exec";
+
+    let blogPosts = [];
+    let blogPostsLoaded = false;
+    let blogPostsPromise = null;
+
+    function blogSlugify(value) {
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 80);
+    }
+
+    function blogDateLabel(value) {
+      const raw = String(value || "").trim();
+      const months = [
+        "janvier", "février", "mars", "avril", "mai", "juin",
+        "juillet", "août", "septembre", "octobre", "novembre", "décembre"
+      ];
+      let year = 0;
+      let month = 0;
+      let day = 0;
+      let match = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+
+      if (match) {
+        year = Number(match[1]);
+        month = Number(match[2]);
+        day = Number(match[3]);
+      } else {
+        match = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+        if (match) {
+          day = Number(match[1]);
+          month = Number(match[2]);
+          year = Number(match[3]);
+        }
+      }
+
+      if (!year || month < 1 || month > 12) return raw;
+      return day + " " + months[month - 1] + " " + year;
+    }
+
+    function normalizeBlogPost(post) {
+      if (!post) return null;
+
+      const title = String(post.titre || post.title || "").trim();
+      if (!title) return null;
+
+      const content = String(post.contenu || post.content || "");
+      const slug = String(post.slug || "").trim() || blogSlugify(title);
+      if (!slug) return null;
+
+      const date = String(post.date || post.dateCreation || "").trim();
+
+      return {
+        id: String(post.id || ""),
+        slug: slug,
+        title: title,
+        description: String(post.description || "").trim() || truncateText(content, 160),
+        category: String(post.categorie || post.category || "Astuce").trim() || "Astuce",
+        date: isoDate(date) || date,
+        dateLabel: blogDateLabel(date),
+        readingTime: String(post.lecture || post.readingTime || "").trim() || "3 min",
+        image: String(post.image || "").trim() || BLOG_FALLBACK_IMAGE,
+        imageAlt: String(post.imageAlt || title),
+        content: content,
+        author: String(post.auteur || post.author || "BENTOUL CREATION").trim() || "BENTOUL CREATION",
+        status: String(post.statut || "Publié")
+      };
+    }
+
+    function mergedBlogArticles() {
+      const merged = blogPosts.slice();
+
+      FALLBACK_BLOG_ARTICLES.forEach(article => {
+        if (!merged.some(item => item.slug === article.slug)) {
+          merged.push(article);
+        }
+      });
+
+      return merged;
+    }
+
+    async function fetchBlogPostsFrom(url) {
+      const target = new URL(url);
+      target.searchParams.set("action", "getBlogPosts");
+      target.searchParams.set("includeDrafts", "false");
+
+      const controller = new AbortController();
+      const timer = window.setTimeout(() => controller.abort(), 6000);
+
+      try {
+        const response = await fetch(target.toString(), {
+          cache: "no-store",
+          redirect: "follow",
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          throw new Error("Erreur HTTP " + response.status);
+        }
+
+        const result = await response.json();
+
+        if (!result || result.status !== "success" || !Array.isArray(result.data)) {
+          throw new Error((result && result.message) || "Réponse blog invalide.");
+        }
+
+        return result.data;
+      } finally {
+        window.clearTimeout(timer);
+      }
+    }
+
+    async function loadBlogPosts(force = false) {
+      if (blogPostsLoaded && !force) return blogPosts;
+      if (blogPostsPromise) return blogPostsPromise;
+
+      blogPostsPromise = (async () => {
+        const sources = [APPS_SCRIPT_URL, ALT_BLOG_API_URL];
+        const attempts = await Promise.allSettled(
+          sources.map(source => fetchBlogPostsFrom(source))
+        );
+        const success = attempts.find(result => result.status === "fulfilled");
+        const rawPosts = success ? success.value : null;
+
+        blogPosts = Array.isArray(rawPosts)
+          ? rawPosts.map(normalizeBlogPost).filter(Boolean)
+          : [];
+        blogPostsLoaded = true;
+        return blogPosts;
+      })();
+
+      try {
+        return await blogPostsPromise;
+      } finally {
+        blogPostsPromise = null;
+      }
+    }
+
+    function findBlogArticle(slug) {
+      return mergedBlogArticles().find(article => article.slug === slug) || null;
+    }
+
+    function blogArticlePath(article) {
+      return "/blog/" + encodeURIComponent(article.slug) + "/";
+    }
+
+    function blogArticleURL(article) {
+      return SITE_URL + blogArticlePath(article);
+    }
+
+    function renderBlogCards(container, articles) {
+      if (!container) return;
+
+      if (!articles.length) {
+        container.innerHTML = '<p class="blog-loading">Aucun article publié pour le moment.</p>';
+        return;
+      }
+
+      container.innerHTML = articles.map(article => `
+        <a class="content-card blog-card" href="${blogArticlePath(article)}" data-blog-slug="${escapeHTML(article.slug)}">
+          <div class="card-media-wrapper">
+            <img class="card-image" src="${escapeHTML(article.image)}" alt="${escapeHTML(article.imageAlt)}" loading="lazy">
+            <span class="blog-category-badge">${escapeHTML(article.category)}</span>
+            <div class="card-title-overlay">
+              <h3>${escapeHTML(article.title)}</h3>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="card-description">${escapeHTML(article.description)}</p>
+            <div class="blog-card-meta">
+              <span><i class="fa-regular fa-calendar"></i>${escapeHTML(article.dateLabel)}</span>
+              <span><i class="fa-regular fa-clock"></i>${escapeHTML(article.readingTime)}</span>
+            </div>
+            <span class="blog-card-cta">Lire l'article <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+      `).join("");
+    }
+
+    async function renderBlogList() {
+      const container = $("#blog-container");
+      if (!container) return;
+
+      // Affiche tout de suite les articles connus (cache local de secours).
+      renderBlogCards(container, mergedBlogArticles());
+
+      await loadBlogPosts();
+
+      const blogPage = $("#page-blog");
+      if (!blogPage || !blogPage.classList.contains("active")) return;
+
+      renderBlogCards(container, mergedBlogArticles());
+      updatePageMeta("blog");
+    }
+
+    function renderBlogArticle(article) {
+      const container = $("#blog-article-content");
+      if (!container || !article) return;
+
+      const url = blogArticleURL(article);
+      const encodedUrl = encodeURIComponent(url);
+      const encodedTitle = encodeURIComponent(article.title);
+      const encodedTitleUrl = encodeURIComponent(article.title + " " + url);
+      const facebook = "https://www.facebook.com/sharer/sharer.php?u=" + encodedUrl;
+      const whatsapp = "https://wa.me/?text=" + encodedTitleUrl;
+      const x = "https://twitter.com/intent/tweet?text=" + encodedTitle + "&url=" + encodedUrl;
+
+      const related = mergedBlogArticles()
+        .filter(item => item.slug !== article.slug)
+        .map(item => `
+          <a class="blog-related-item" href="${blogArticlePath(item)}" data-blog-slug="${escapeHTML(item.slug)}">
+            <i class="fa-solid fa-newspaper"></i>
+            <span>${escapeHTML(item.title)}</span>
+          </a>
+        `).join("");
+
+      container.innerHTML = `
+        <div class="blog-article-head">
+          <span class="blog-category">${escapeHTML(article.category)}</span>
+          <h1>${escapeHTML(article.title)}</h1>
+          <div class="blog-article-meta">
+            <span><i class="fa-regular fa-calendar"></i>${escapeHTML(article.dateLabel)}</span>
+            <span><i class="fa-regular fa-clock"></i>${escapeHTML(article.readingTime)}</span>
+            <span><i class="fa-solid fa-user-shield"></i>${escapeHTML(article.author || "BENTOUL CREATION")}</span>
+          </div>
+        </div>
+        <img class="blog-article-cover" src="${escapeHTML(article.image)}" alt="${escapeHTML(article.imageAlt)}">
+        <div class="blog-article-body">${article.content}</div>
+        <div class="blog-share">
+          <h3>Partager cet article</h3>
+          <div class="blog-share-actions">
+            <a class="reaction-btn share-facebook" href="${facebook}" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-facebook-f"></i> Facebook
+            </a>
+            <a class="reaction-btn share-whatsapp" href="${whatsapp}" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+            <a class="reaction-btn share-x" href="${x}" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-x-twitter"></i> X
+            </a>
+            <button type="button" class="reaction-btn" data-copy-link="${escapeHTML(url)}">
+              <i class="fa-regular fa-copy"></i> Copier le lien
+            </button>
+          </div>
+        </div>
+        <div class="blog-article-cta">
+          <h3>Envie d'aller plus loin ?</h3>
+          <p>Découvre les cours BENTOUL CREATION et progresse à ton rythme.</p>
+          <a class="btn-primary" href="/cours" data-page="series">
+            <i class="fa-solid fa-compass"></i> Découvrir les cours
+          </a>
+        </div>
+        <div class="blog-related">
+          <h3>À lire aussi</h3>
+          <div class="blog-related-list">${related}</div>
+        </div>
+      `;
+    }
+
+    async function openBlogArticle(slug, options = {}) {
+      let article = findBlogArticle(slug);
+
+      if (!article) {
+        await loadBlogPosts();
+        article = findBlogArticle(slug);
+      }
+
+      if (!article) {
+        window.showMessage("Article introuvable.", true);
+        window.navigateTo("blog", { history: "replace" });
+        return;
+      }
+
+      currentBlogArticle = article;
+      window.navigateTo("blog-article", options);
+    }
+
+    function copyBlogLink(button) {
+      const link = button.getAttribute("data-copy-link") || "";
+      const original = button.innerHTML;
+
+      const done = () => {
+        button.innerHTML = '<i class="fa-solid fa-check"></i> Lien copié';
+        window.setTimeout(() => {
+          button.innerHTML = original;
+        }, 1800);
+      };
+
+      const fallback = () => {
+        const field = document.createElement("textarea");
+        field.value = link;
+        field.style.position = "fixed";
+        field.style.opacity = "0";
+        document.body.appendChild(field);
+        field.select();
+
+        try {
+          document.execCommand("copy");
+          done();
+        } catch {
+          // Le presse-papiers n'est pas disponible : ignorer.
+        }
+
+        field.remove();
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(link).then(done).catch(fallback);
+      } else {
+        fallback();
+      }
+    }
 
     try {
       currentUser = JSON.parse(
@@ -1561,13 +2732,13 @@
     function seriesTitle(series) {
       return cleanText(value(series,
         "titre", "Titre", "title", "nom", "Nom"
-      )) || "Série sans titre";
+      )) || "Cours sans titre";
     }
 
     function episodeTitle(episode) {
       return cleanText(value(episode,
         "titre", "Titre", "title", "nom", "Nom"
-      )) || "Épisode sans titre";
+      )) || "Leçon sans titre";
     }
 
     function safeDecode(text) {
@@ -1746,6 +2917,93 @@
       return String(value(currentUser, "username", "Username"));
     }
 
+    /* =========================
+       DÉTECTION DU RÔLE ADMINISTRATEUR
+    ========================= */
+
+    function readLegacyUserSession() {
+      try {
+        const session = JSON.parse(
+          sessionStorage.getItem("bcreation-user-session") || "null"
+        );
+
+        return (
+          session?.user ||
+          session?.session?.user ||
+          session?.data?.user ||
+          null
+        );
+      } catch {
+        return null;
+      }
+    }
+
+    function isTrueFlag(flag) {
+      if (flag === true || flag === 1) return true;
+
+      return ["true", "1", "yes", "oui", "admin", "administrateur"].includes(
+        String(flag ?? "").trim().toLowerCase()
+      );
+    }
+
+    function roleTextFor(user) {
+      return [
+        user?.role, user?.Role, user?.userRole, user?.type, user?.Type,
+        user?.profil, user?.statut, user?.status
+      ]
+        .filter(Boolean)
+        .map(String)
+        .join(" ")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    }
+
+    function isAdminUser(user) {
+      const candidates = [user, readLegacyUserSession()].filter(Boolean);
+
+      for (const candidate of candidates) {
+        if (
+          ["isAdmin", "admin", "is_admin", "administrateur"].some(
+            key => isTrueFlag(candidate[key])
+          )
+        ) {
+          return true;
+        }
+
+        if (
+          /(^|[^a-z])(admin|administrateur|administrator|superadmin|super-admin|owner|proprietaire|root)([^a-z]|$)/.test(
+            roleTextFor(candidate)
+          )
+        ) {
+          return true;
+        }
+
+        const config = window.APP_CONFIG || {};
+        const allowed = [
+          ...(config.ADMIN_USERNAMES || []),
+          ...(config.ADMIN_EMAILS || [])
+        ]
+          .map(item => String(item).trim().toLowerCase())
+          .filter(Boolean);
+
+        if (allowed.length) {
+          const username = String(
+            value(candidate, "username", "Username")
+          ).trim().toLowerCase();
+          const email = String(
+            value(candidate, "email", "Email")
+          ).trim().toLowerCase();
+
+          if (allowed.includes(username) || allowed.includes(email)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
     function isEpisodeLocked(episode) {
       const locked = value(episode, "verrouille", "locked", "isLocked");
       return locked === true || String(locked).toLowerCase() === "true" || locked === 1 || String(locked) === "1";
@@ -1767,6 +3025,40 @@
         }
       } catch (error) {
         // Conserver la session locale si le serveur est temporairement indisponible.
+      }
+    }
+
+    const ADMIN_PROVISION_KEY = "bentoulAdminProvision_v1";
+
+    async function ensureAdminAccount() {
+      try {
+        if (localStorage.getItem(ADMIN_PROVISION_KEY)) return;
+      } catch {
+        return;
+      }
+
+      try {
+        await api({
+          type: "userRegister",
+          nom: ADMIN_ACCOUNT.nom,
+          username: ADMIN_ACCOUNT.username,
+          pin: ADMIN_ACCOUNT.pin,
+          email: ADMIN_ACCOUNT.email,
+          numero: ADMIN_ACCOUNT.numero,
+          codeParrain: "",
+          role: "admin",
+          Role: "admin",
+          isAdmin: true,
+          statut: "admin"
+        });
+      } catch (error) {
+        // Le compte existe déjà ou l'API est indisponible : ne pas bloquer le site.
+      } finally {
+        try {
+          localStorage.setItem(ADMIN_PROVISION_KEY, "1");
+        } catch {
+          // Stockage local indisponible.
+        }
       }
     }
 
@@ -1818,51 +3110,67 @@
 
     function routeForPage(page) {
       if (page === "home") return "/accueil";
-      if (page === "series") return "/serie";
-      if (page === "all-episodes") return "/episode";
+      if (page === "series") return "/cours";
+      if (page === "all-episodes") return "/lesson";
+      if (page === "blog") return "/blog";
+
+      if (page === "blog-article") {
+        return currentBlogArticle
+          ? "/blog/" + encodeURIComponent(currentBlogArticle.slug) + "/"
+          : "/blog";
+      }
 
       if (page === "episodes") {
         return currentSeries
-          ? "/serie/" + encodeURIComponent(seriesSlug(currentSeries))
-          : "/serie";
+          ? "/cours/" + encodeURIComponent(seriesSlug(currentSeries))
+          : "/cours";
       }
 
       if (page === "episode") {
         return currentEpisode
-          ? "/episode/" + encodeURIComponent(episodeSlug(currentEpisode))
-          : "/episode";
+          ? "/lesson/" + encodeURIComponent(episodeSlug(currentEpisode))
+          : "/lesson";
       }
 
       if (page === "auth" || page === "profile") return "/compte";
+      if (page === "admin") return "/admin";
 
       return "/accueil";
     }
 
     function pageTitleFor(page) {
-      if (page === "home") return "BENTOUL CREATION — Séries et épisodes en ligne";
-      if (page === "series") return "Séries — BENTOUL CREATION";
-      if (page === "all-episodes") return "Tous les épisodes — BENTOUL CREATION";
+      if (page === "home") return "BENTOUL CREATION — Cours et leçons en ligne";
+      if (page === "series") return "Cours — BENTOUL CREATION";
+      if (page === "all-episodes") return "Toutes les leçons — BENTOUL CREATION";
+      if (page === "blog") return "Blog — Astuces Android et cloud | BENTOUL CREATION";
+
+      if (page === "blog-article") {
+        return currentBlogArticle
+          ? currentBlogArticle.title + " | Blog BENTOUL CREATION"
+          : "Blog — Astuces Android et cloud | BENTOUL CREATION";
+      }
 
       if (page === "episodes") {
         return currentSeries
           ? seriesTitle(currentSeries) + " — BENTOUL CREATION"
-          : "Épisodes — BENTOUL CREATION";
+          : "Leçons — BENTOUL CREATION";
       }
 
       if (page === "episode") {
         return currentEpisode
           ? episodeTitle(currentEpisode) + " — BENTOUL CREATION"
-          : "Épisode — BENTOUL CREATION";
+          : "Leçon — BENTOUL CREATION";
       }
 
       if (page === "auth") return "Compte — BENTOUL CREATION";
       if (page === "profile") return "Mon profil — BENTOUL CREATION";
+      if (page === "admin") return "Administration — BENTOUL CREATION";
 
       return "BENTOUL CREATION";
     }
 
     const SITE_URL = "https://bentoul.github.io";
-    const DEFAULT_DESCRIPTION = "BENTOUL CREATION : découvre des séries, lis des épisodes, partage tes impressions et rejoins notre communauté.";
+    const DEFAULT_DESCRIPTION = "BENTOUL CREATION : découvre des cours, suis des leçons, partage tes impressions et rejoins notre communauté.";
     const DEFAULT_OG_IMAGE = SITE_URL + "/images/home.jpg";
 
     function truncateText(text, maxLength = 160) {
@@ -1880,6 +3188,13 @@
       }
 
       return url;
+    }
+
+    function absoluteImageURL(url) {
+      const raw = String(url || "").trim();
+      if (!raw) return DEFAULT_OG_IMAGE;
+      if (/^https?:\/\//i.test(raw)) return socialImageURL(raw);
+      return SITE_URL + (raw.charAt(0) === "/" ? raw : "/" + raw);
     }
 
     function isoDate(text) {
@@ -1920,20 +3235,25 @@
       if (page === "auth" || page === "profile") {
         meta.description = page === "profile"
           ? "Gère ton compte BENTOUL CREATION, consulte tes crédits et ton code de parrainage."
-          : "Connecte-toi ou crée ton compte BENTOUL CREATION pour débloquer les épisodes.";
+          : "Connecte-toi ou crée ton compte BENTOUL CREATION pour débloquer les leçons.";
         meta.robots = "noindex, follow";
       }
 
+      if (page === "admin") {
+        meta.description = "Tableau de bord administrateur BENTOUL CREATION : visites, visiteurs, pays et pages consultées.";
+        meta.robots = "noindex, nofollow";
+      }
+
       if (page === "series") {
-        meta.description = "Découvre toutes les séries BENTOUL CREATION et choisis l'histoire que tu veux suivre.";
+        meta.description = "Découvre tous les cours BENTOUL CREATION et choisis celui que tu veux suivre.";
       }
 
       if (page === "all-episodes") {
-        meta.description = "Parcours tous les épisodes BENTOUL CREATION, gratuits ou à débloquer avec tes crédits.";
+        meta.description = "Parcours toutes les leçons BENTOUL CREATION, gratuites ou à débloquer avec tes crédits.";
         meta.jsonLd = {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          "name": "Tous les épisodes",
+          "name": "Toutes les leçons",
           "description": meta.description,
           "url": url,
           "inLanguage": "fr",
@@ -1945,14 +3265,89 @@
         };
       }
 
+      if (page === "blog") {
+        meta.description = "Astuces Android, stockage et cloud : des conseils simples et concrets pour mieux utiliser ton téléphone au quotidien.";
+        meta.image = SITE_URL + "/images/blog-securite-android.jpg";
+        meta.imageWidth = 1200;
+        meta.imageHeight = 630;
+        meta.jsonLd = {
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          "name": "Blog BENTOUL CREATION",
+          "description": meta.description,
+          "url": url,
+          "inLanguage": "fr",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "BENTOUL CREATION",
+            "url": SITE_URL + "/"
+          },
+          "blogPost": mergedBlogArticles().map(article => ({
+            "@type": "BlogPosting",
+            "headline": article.title,
+            "url": blogArticleURL(article),
+            "datePublished": article.date,
+            "image": absoluteImageURL(article.image)
+          }))
+        };
+      }
+
+      if (page === "blog-article" && currentBlogArticle) {
+        const article = currentBlogArticle;
+        const image = absoluteImageURL(article.image);
+
+        meta.title = article.title + " | Blog BENTOUL CREATION";
+        meta.description = article.description;
+        meta.url = blogArticleURL(article);
+        meta.image = image;
+        meta.imageWidth = 1200;
+        meta.imageHeight = 630;
+        meta.type = "article";
+        meta.jsonLd = {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BlogPosting",
+              "headline": article.title,
+              "description": article.description,
+              "image": [image],
+              "url": meta.url,
+              "mainEntityOfPage": { "@type": "WebPage", "@id": meta.url },
+              "datePublished": article.date,
+              "dateModified": article.date,
+              "articleSection": article.category,
+              "inLanguage": "fr",
+              "author": {
+                "@type": "Organization",
+                "name": "BENTOUL CREATION",
+                "url": SITE_URL + "/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "BENTOUL CREATION",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": SITE_URL + "/images/logo.png"
+                }
+              }
+            },
+            breadcrumbLD([
+              { name: "Accueil", url: SITE_URL + "/" },
+              { name: "Blog", url: SITE_URL + "/blog/" },
+              { name: article.title, url: meta.url }
+            ])
+          ]
+        };
+      }
+
       if (page === "episodes" && currentSeries) {
         const title = seriesTitle(currentSeries);
         const image = socialImageURL(imageURL(currentSeries));
-        const seriesUrl = SITE_URL + "/serie/" + encodeURIComponent(seriesSlug(currentSeries)) + "/";
+        const seriesUrl = SITE_URL + "/cours/" + encodeURIComponent(seriesSlug(currentSeries)) + "/";
         const description = truncateText(rawContent(currentSeries), 160)
-          || `Découvre les épisodes de la série ${title} sur BENTOUL CREATION.`;
+          || `Découvre les leçons du cours ${title} sur BENTOUL CREATION.`;
 
-        meta.title = title + " — Séries | BENTOUL CREATION";
+        meta.title = title + " — Cours | BENTOUL CREATION";
         meta.description = description;
         meta.image = image;
         meta.jsonLd = {
@@ -1973,7 +3368,7 @@
             },
             breadcrumbLD([
               { name: "Accueil", url: SITE_URL + "/" },
-              { name: "Séries", url: SITE_URL + "/serie" },
+              { name: "Cours", url: SITE_URL + "/cours" },
               { name: title, url: seriesUrl }
             ])
           ]
@@ -1990,7 +3385,7 @@
         const image = socialImageURL(imageURL(currentEpisode));
         const contentText = truncateText(rawContent(currentEpisode), 160);
         const description = contentText
-          || `Épisode${number ? " " + number : ""}${seriesName ? " de la série " + seriesName : ""}. Découvre-le sur BENTOUL CREATION.`;
+          || `Leçon${number ? " " + number : ""}${seriesName ? " du cours " + seriesName : ""}. Découvre-la sur BENTOUL CREATION.`;
 
         meta.title = title + (seriesName ? " — " + seriesName : "") + " | BENTOUL CREATION";
         meta.description = description;
@@ -2025,11 +3420,11 @@
 
         const crumbs = [
           { name: "Accueil", url: SITE_URL + "/" },
-          { name: "Séries", url: SITE_URL + "/serie" }
+          { name: "Cours", url: SITE_URL + "/cours" }
         ];
 
         if (parent) {
-          const seriesUrl = SITE_URL + "/serie/" + encodeURIComponent(seriesSlug(parent)) + "/";
+          const seriesUrl = SITE_URL + "/cours/" + encodeURIComponent(seriesSlug(parent)) + "/";
           article.isPartOf = {
             "@type": "CreativeWorkSeries",
             "name": seriesName,
@@ -2096,7 +3491,10 @@
       setMetaContent("name", "twitter:image", meta.image);
       setMetaContent("name", "twitter:image:alt", meta.title);
 
-      if (meta.image.indexOf("=w1200-h630-p-k-no-nu") !== -1) {
+      if (meta.imageWidth && meta.imageHeight) {
+        setMetaContent("property", "og:image:width", String(meta.imageWidth));
+        setMetaContent("property", "og:image:height", String(meta.imageHeight));
+      } else if (meta.image.indexOf("=w1200-h630-p-k-no-nu") !== -1) {
         setMetaContent("property", "og:image:width", "1200");
         setMetaContent("property", "og:image:height", "630");
       } else {
@@ -2130,16 +3528,35 @@
 
       if (first === "accueil" || first === "home") return { page: "home" };
 
-      if (first === "serie" || first === "series") {
+      if (
+        first === "cours" ||
+        first === "course" ||
+        first === "courses" ||
+        first === "serie" ||
+        first === "series"
+      ) {
         return segments[1]
           ? { page: "series-detail", slug: segments[1] }
           : { page: "series" };
       }
 
-      if (first === "episode" || first === "episodes") {
+      if (
+        first === "lesson" ||
+        first === "lessons" ||
+        first === "lecon" ||
+        first === "lecons" ||
+        first === "episode" ||
+        first === "episodes"
+      ) {
         return segments[1]
           ? { page: "episode", slug: segments[1] }
           : { page: "all-episodes" };
+      }
+
+      if (first === "blog") {
+        return segments[1]
+          ? { page: "blog-article", slug: segments[1] }
+          : { page: "blog" };
       }
 
       if (
@@ -2150,6 +3567,10 @@
         first === "connexion"
       ) {
         return { page: "compte" };
+      }
+
+      if (first === "admin" || first === "administration") {
+        return { page: "admin" };
       }
 
       return { page: "home" };
@@ -2181,8 +3602,23 @@
         return;
       }
 
+      if (route.page === "blog") {
+        window.navigateTo("blog", { history: historyMode });
+        return;
+      }
+
+      if (route.page === "blog-article") {
+        await openBlogArticle(route.slug, { history: historyMode });
+        return;
+      }
+
       if (route.page === "compte") {
         window.navigateTo(currentUser ? "profile" : "auth", { history: historyMode });
+        return;
+      }
+
+      if (route.page === "admin") {
+        window.navigateTo("admin", { history: historyMode });
         return;
       }
 
@@ -2220,7 +3656,7 @@
         const series = findSeriesBySlug(route.slug);
 
         if (!series) {
-          window.showMessage("Cette série est introuvable.", true);
+          window.showMessage("Ce cours est introuvable.", true);
           window.navigateTo("series", { history: "replace" });
           return;
         }
@@ -2247,7 +3683,7 @@
         episode = findEpisodeBySlug(route.slug);
 
         if (!episode) {
-          window.showMessage("Cet épisode est introuvable ou indisponible.", true);
+          window.showMessage("Cette leçon est introuvable ou indisponible.", true);
           window.navigateTo("all-episodes", { history: "replace" });
           return;
         }
@@ -2259,8 +3695,17 @@
     window.navigateTo = function(page, options = {}) {
       if (page === "auth" && currentUser) page = "profile";
 
+      if (page === "admin" && !isAdminUser(currentUser)) {
+        window.showMessage("Accès réservé aux administrateurs.", true);
+        page = "home";
+      }
+
+      if (page === "blog-article" && !currentBlogArticle) page = "blog";
+
       const target = $("#page-" + page);
       if (!target) return;
+
+      const activePage = page === "blog-article" ? "blog" : page;
 
       document.querySelectorAll(".page").forEach(section => {
         section.classList.toggle("active", section === target);
@@ -2269,13 +3714,22 @@
       document.querySelectorAll("[data-page]").forEach(button => {
         button.classList.toggle(
           "active",
-          button.dataset.page === page
+          button.dataset.page === activePage
         );
       });
 
       closeSidebar();
 
       if (page === "series" && !seriesList.length) loadSeries();
+
+      if (page === "blog") {
+        currentBlogArticle = null;
+        renderBlogList();
+      }
+
+      if (page === "blog-article") {
+        renderBlogArticle(currentBlogArticle);
+      }
 
       if (page === "all-episodes") {
         if (allEpisodesList.length) {
@@ -2291,6 +3745,16 @@
       }
 
       if (page === "profile") window.renderProfile();
+
+      if (page === "admin") loadAdminStats();
+
+      try {
+        window.dispatchEvent(
+          new CustomEvent("bentoul:navigate", { detail: { page } })
+        );
+      } catch {
+        // Le suivi des visites ne doit jamais bloquer la navigation.
+      }
 
       const historyMode = options.history === undefined ? "push" : options.history;
 
@@ -2333,6 +3797,33 @@
       window.navigateTo(button.dataset.page);
     });
 
+    document.addEventListener("click", event => {
+      const copyButton = event.target.closest("[data-copy-link]");
+
+      if (copyButton) {
+        event.preventDefault();
+        copyBlogLink(copyButton);
+        return;
+      }
+
+      const link = event.target.closest("[data-blog-slug]");
+      if (!link) return;
+
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      openBlogArticle(link.dataset.blogSlug);
+    });
+
     window.addEventListener("popstate", () => {
       applyRoute("none").catch(error => {
         window.showMessage(error.message || "Navigation impossible.", true);
@@ -2372,15 +3863,403 @@
 
     window.updateAuthUI = function(user) {
       currentUser = user || null;
+
       document.querySelectorAll("[data-guest-only]").forEach(element => {
         element.hidden = !!currentUser;
       });
+
       document.querySelectorAll("[data-user-only]").forEach(element => {
         element.hidden = !currentUser;
       });
+
+      const admin = isAdminUser(currentUser);
+
+      document.querySelectorAll("[data-admin-only]").forEach(element => {
+        element.hidden = !admin;
+      });
+
       document.body.classList.toggle("user-connected", !!currentUser);
+      document.body.classList.toggle("is-admin", admin);
+
+      if (
+        !admin &&
+        typeof window.navigateTo === "function" &&
+        document.querySelector("#page-admin.active")
+      ) {
+        window.navigateTo("home", { history: "replace" });
+      }
+
       updateHeaderCredits(currentUser);
     };
+
+    /* =========================
+       TABLEAU DE BORD ADMIN (STATISTIQUES)
+    ========================= */
+
+    let adminStatsRequestId = 0;
+
+    function parseVisitDate(text) {
+      const match = String(text || "").match(
+        /^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2}):(\d{2}))?/
+      );
+
+      if (!match) return null;
+
+      const date = new Date(
+        Number(match[3]),
+        Number(match[2]) - 1,
+        Number(match[1]),
+        Number(match[4] || 0),
+        Number(match[5] || 0),
+        Number(match[6] || 0)
+      );
+
+      return Number.isNaN(date.getTime()) ? null : date;
+    }
+
+    function formatAdminCount(number) {
+      return Number(number || 0).toLocaleString("fr-FR");
+    }
+
+    function groupRows(rows, keyOf) {
+      const groups = new Map();
+
+      rows.forEach(row => {
+        const key = keyOf(row) || "Inconnu";
+        const current = groups.get(key) || {
+          label: key,
+          visits: 0,
+          visitors: new Set()
+        };
+
+        current.visits += 1;
+        if (row.visitorId) current.visitors.add(row.visitorId);
+        groups.set(key, current);
+      });
+
+      return Array.from(groups.values())
+        .map(item => ({
+          label: item.label,
+          visits: item.visits,
+          visitors: item.visitors.size
+        }))
+        .sort((a, b) => b.visits - a.visits || a.label.localeCompare(b.label, "fr"));
+    }
+
+    function fillAdminTable(tableBody, rows, emptyMessage) {
+      if (!tableBody) return;
+      tableBody.replaceChildren();
+
+      if (!rows.length) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 3;
+        cell.className = "admin-empty";
+        cell.textContent = emptyMessage;
+        row.append(cell);
+        tableBody.append(row);
+        return;
+      }
+
+      rows.forEach(values => {
+        const row = document.createElement("tr");
+
+        values.forEach(text => {
+          const cell = document.createElement("td");
+          cell.textContent = String(text ?? "");
+          row.append(cell);
+        });
+
+        tableBody.append(row);
+      });
+    }
+
+    function renderAdminChart(days) {
+      const chart = $("#admin-chart");
+      if (!chart) return;
+      chart.replaceChildren();
+
+      if (!days.length) {
+        const empty = document.createElement("p");
+        empty.className = "admin-empty";
+        empty.textContent = "Aucune visite sur cette période.";
+        chart.append(empty);
+        return;
+      }
+
+      const max = Math.max(1, ...days.map(day => day.visits));
+
+      days.forEach(day => {
+        const row = document.createElement("div");
+        row.className = "admin-chart-row";
+
+        const label = document.createElement("span");
+        label.textContent = day.label;
+
+        const track = document.createElement("div");
+        track.className = "admin-bar-track";
+        track.setAttribute(
+          "aria-label",
+          `${day.visits} visite(s) le ${day.fullLabel}`
+        );
+
+        const bar = document.createElement("div");
+        bar.className = "admin-bar";
+        bar.style.width = `${Math.max(2, (day.visits / max) * 100)}%`;
+        track.append(bar);
+
+        const total = document.createElement("span");
+        total.textContent = String(day.visits);
+
+        row.append(label, track, total);
+        chart.append(row);
+      });
+    }
+
+    function buildAdminStats(rows, period, episodeTitles) {
+      const days = period === "all"
+        ? Infinity
+        : Math.max(1, Number(period) || 30);
+      const cutoff = days === Infinity ? 0 : Date.now() - days * 86400000;
+
+      const filtered = rows
+        .map(row => ({ ...row, _date: parseVisitDate(row.date) }))
+        .filter(row => row._date && row._date.getTime() >= cutoff);
+
+      // Le blog est exclu des statistiques : un visiteur ayant consulté la
+      // liste des articles ou un article n'est pas compté dans le tableau de bord.
+      const BLOG_ROUTE_IDS = new Set(["blog", "blog-article"]);
+
+      const isBlogRow = row => {
+        if (row.eventType !== "Vue Page/Tab") return false;
+
+        const targetId = String(row.targetId || "").trim().toLowerCase();
+        const targetTitle = String(row.targetTitle || "").trim().toLowerCase();
+
+        return BLOG_ROUTE_IDS.has(targetId) ||
+          targetTitle === "blog" ||
+          targetTitle === "article de blog";
+      };
+
+      const blogVisitors = new Set();
+      filtered.forEach(row => {
+        const id = String(row.visitorId || "").trim();
+        if (id && id !== "Anonyme" && isBlogRow(row)) blogVisitors.add(id);
+      });
+
+      const counted = filtered.filter(row => {
+        if (isBlogRow(row)) return false;
+
+        const id = String(row.visitorId || "").trim();
+        return !id || !blogVisitors.has(id);
+      });
+
+      const visits = counted.filter(row => row.eventType === "Visite Site");
+      const visitRows = visits.length ? visits : counted;
+
+      // Le classeur de statistiques est partagé avec d'autres applications :
+      // on ne garde que les pages et épisodes de ce site.
+      const routeIds = new Set([
+        "home", "series", "all-episodes", "episodes",
+        "episode", "auth", "profile", "admin"
+      ]);
+      const knownTitles = episodeTitles instanceof Set ? episodeTitles : null;
+
+      const pages = counted.filter(row => {
+        if (row.eventType === "Vue Page/Tab") {
+          return !row.targetId || routeIds.has(String(row.targetId));
+        }
+
+        if (row.eventType === "Lecture Episode" && row.targetId === "episode_view") {
+          if (!knownTitles || !knownTitles.size) return true;
+          return knownTitles.has(String(row.targetTitle || "").trim());
+        }
+
+        return false;
+      });
+
+      const uniqueVisitors = new Set(
+        visitRows.map(row => row.visitorId).filter(Boolean)
+      );
+
+      const countries = groupRows(visitRows, row => row.pays || "Inconnu");
+
+      const pageGroups = groupRows(
+        pages,
+        row => `${row.targetTitle || row.targetId || "Page inconnue"}|||${row.eventType || "Vue"}`
+      );
+
+      const deviceGroups = groupRows(
+        visitRows,
+        row => `${row.device || "Appareil inconnu"}|||${row.browser || "Navigateur inconnu"}`
+      );
+
+      // Activité : 14 derniers jours maximum, en partant d'aujourd'hui.
+      const chartLength = days === Infinity ? 14 : Math.min(days, 14);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const visitsByDay = new Map();
+
+      visitRows.forEach(row => {
+        if (!row._date) return;
+
+        const key = [
+          row._date.getFullYear(),
+          row._date.getMonth(),
+          row._date.getDate()
+        ].join("-");
+
+        visitsByDay.set(key, (visitsByDay.get(key) || 0) + 1);
+      });
+
+      const chartDays = [];
+
+      for (let offset = chartLength - 1; offset >= 0; offset--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - offset);
+
+        const key = [
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        ].join("-");
+
+        chartDays.push({
+          key,
+          label: date.toLocaleDateString("fr-FR", {
+            day: "2-digit",
+            month: "2-digit"
+          }),
+          fullLabel: date.toLocaleDateString("fr-FR", {
+            weekday: "long",
+            day: "numeric",
+            month: "long"
+          }),
+          visits: visitsByDay.get(key) || 0
+        });
+      }
+
+      return {
+        events: counted.length,
+        visits: visits.length,
+        uniqueVisitors: uniqueVisitors.size,
+        countries,
+        pages: pageGroups.map(item => {
+          const [label, type] = item.label.split("|||");
+          return { ...item, label, type };
+        }),
+        devices: deviceGroups.map(item => {
+          const [device, browser] = item.label.split("|||");
+          return { ...item, device, browser };
+        }),
+        pageViews: pages.length,
+        chartDays
+      };
+    }
+
+    function renderAdminStats(rows, period, episodeTitles) {
+      const stats = buildAdminStats(rows, period, episodeTitles);
+
+      const visitsEl = $("#admin-visits");
+      if (visitsEl) visitsEl.textContent = formatAdminCount(stats.visits);
+
+      const visitorsEl = $("#admin-visitors");
+      if (visitorsEl) visitorsEl.textContent = formatAdminCount(stats.uniqueVisitors);
+
+      const countriesEl = $("#admin-countries-count");
+      if (countriesEl) countriesEl.textContent = formatAdminCount(stats.countries.length);
+
+      const pagesEl = $("#admin-pages-count");
+      if (pagesEl) pagesEl.textContent = formatAdminCount(stats.pageViews);
+
+      renderAdminChart(stats.chartDays);
+
+      fillAdminTable(
+        $("#admin-countries-body"),
+        stats.countries.map(item => [
+          item.label,
+          formatAdminCount(item.visits),
+          formatAdminCount(item.visitors)
+        ]),
+        "Aucune origine enregistrée."
+      );
+
+      fillAdminTable(
+        $("#admin-pages-body"),
+        stats.pages.map(item => [
+          item.label,
+          item.type,
+          formatAdminCount(item.visits)
+        ]),
+        "Aucune page consultée sur cette période."
+      );
+
+      fillAdminTable(
+        $("#admin-devices-body"),
+        stats.devices.map(item => [
+          item.device,
+          item.browser,
+          formatAdminCount(item.visits)
+        ]),
+        "Aucun appareil enregistré."
+      );
+
+      const status = $("#admin-status");
+      if (status) {
+        status.classList.remove("error");
+        status.textContent = `Mise à jour : ${new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" })} • ${formatAdminCount(stats.events)} événement(s) sur la période.`;
+      }
+    }
+
+    async function loadAdminStats() {
+      if (!isAdminUser(currentUser)) return;
+
+      const status = $("#admin-status");
+      const periodSelect = $("#admin-period");
+      const period = periodSelect ? periodSelect.value : "30";
+      const requestId = ++adminStatsRequestId;
+
+      if (status) {
+        status.classList.remove("error");
+        status.textContent = "Chargement des statistiques…";
+      }
+
+      try {
+        const [data, episodesData] = await Promise.all([
+          getData("getStats"),
+          getData("getEpisodes").catch(() => [])
+        ]);
+
+        if (requestId !== adminStatsRequestId) return;
+
+        const rows = Array.isArray(data)
+          ? data
+          : (Array.isArray(data?.data) ? data.data : []);
+        const episodes = Array.isArray(episodesData)
+          ? episodesData
+          : (Array.isArray(episodesData?.data) ? episodesData.data : []);
+        const episodeTitles = new Set(
+          episodes
+            .map(episode => value(episode, "titre", "Titre", "title", "Title"))
+            .filter(Boolean)
+            .map(titre => String(titre).trim())
+            .filter(Boolean)
+        );
+
+        renderAdminStats(rows, period, episodeTitles);
+      } catch (error) {
+        if (requestId !== adminStatsRequestId) return;
+
+        if (status) {
+          status.classList.add("error");
+          status.textContent = "Impossible de charger les statistiques : " + error.message;
+        }
+      }
+    }
+
+    $("#admin-period")?.addEventListener("change", loadAdminStats);
+    $("#admin-refresh")?.addEventListener("click", loadAdminStats);
 
     /* =========================
        LIKES, DISLIKES, PARTAGES (ICÔNES AWESOME)
@@ -2629,7 +4508,7 @@
       const container = $("#series-container");
       if (!container) return;
 
-      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des séries...</p>';
+      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des cours...</p>';
 
       try {
         const [resultSeries, resultEpisodes] = await Promise.all([
@@ -2646,7 +4525,7 @@
         episodeList = allEpisodesList.slice();
 
         if (!seriesList.length) {
-          container.innerHTML = "<p>Aucune série disponible actuellement.</p>";
+          container.innerHTML = "<p>Aucun cours disponible actuellement.</p>";
           return;
         }
 
@@ -2662,7 +4541,7 @@
           ).length;
 
           const episodeBadgeText = countEpisodes > 0 
-            ? `<span class="badge-episodes"><i class="fa-solid fa-list-ol"></i> ${countEpisodes} ép.</span>` 
+            ? `<span class="badge-episodes"><i class="fa-solid fa-list-ol"></i> ${countEpisodes} leç.</span>` 
             : "";
 
           return `
@@ -2688,8 +4567,8 @@
                 <button type="button"
                   class="arrow-action-btn open-series"
                   data-id="${escapeHTML(id)}"
-                  title="Voir les épisodes"
-                  aria-label="Voir les épisodes">
+                  title="Voir les leçons"
+                  aria-label="Voir les leçons">
                   <i class="fa-solid fa-arrow-right"></i>
                 </button>
               </div>
@@ -2735,20 +4614,57 @@
       const alreadyBought = String(value(episode, "achete", "purchased")) === "true";
       const creditCost = Number(value(episode, "coutCredits", "creditCost")) || (locked ? 1 : 0);
       const cardDescription = locked
-        ? `Épisode verrouillé. Débloque-le pour ${creditCost} crédit${creditCost > 1 ? "s" : ""}.`
-        : (textPreview || (free ? "Épisode gratuit." : "Épisode débloqué sur ton compte."));
+        ? `Leçon verrouillée. Débloque-la pour ${creditCost} crédit${creditCost > 1 ? "s" : ""}.`
+        : (textPreview || (free ? "Leçon gratuite." : "Leçon débloquée sur ton compte."));
 
       const parentSeries = options.showSeries ? seriesForEpisode(episode) : null;
       const parentTitle = parentSeries ? seriesTitle(parentSeries) : "";
 
+      const badgeHTML = locked
+        ? `<span class="episode-lock-badge"><i class="fa-solid fa-lock"></i> ${creditCost} crédit</span>`
+        : (free
+          ? '<span class="episode-free-badge"><i class="fa-solid fa-unlock"></i> Gratuit</span>'
+          : (alreadyBought ? '<span class="episode-free-badge"><i class="fa-solid fa-check"></i> Débloqué</span>' : ""));
+
+      const openButtonHTML = `
+        <button type="button"
+          class="arrow-action-btn open-episode"
+          data-id="${escapeHTML(episodeId)}"
+          data-locked="${locked ? "true" : "false"}"
+          title="${locked ? "Débloquer cette leçon" : "Ouvrir la leçon"}"
+          aria-label="${locked ? "Débloquer cette leçon" : "Ouvrir la leçon"}">
+          <i class="fa-solid ${locked ? "fa-lock" : "fa-arrow-right"}"></i>
+        </button>
+      `;
+
+      if (options.layout === "row") {
+        return `
+          <article class="content-card episode-row">
+            <div class="episode-thumb">
+              ${badgeHTML}
+              <img src="${escapeHTML(image)}"
+                alt="${escapeHTML(title)}"
+                loading="lazy"
+                referrerpolicy="no-referrer">
+            </div>
+
+            <div class="episode-row-body">
+              ${parentTitle ? `<span class="episode-series-badge"><i class="fa-solid fa-film"></i> ${escapeHTML(parentTitle)}</span>` : ""}
+              ${number ? `<span class="episode-number-badge">Leçon ${escapeHTML(number)}</span>` : ""}
+              <h3>${escapeHTML(title)}</h3>
+              <p class="card-description">${escapeHTML(cardDescription)}</p>
+
+              ${interactionBar(episode, "episode")}
+              ${openButtonHTML}
+            </div>
+          </article>
+        `;
+      }
+
       return `
         <article class="content-card">
           <div class="card-media-wrapper">
-            ${locked
-              ? `<span class="episode-lock-badge"><i class="fa-solid fa-lock"></i> ${creditCost} crédit</span>`
-              : (free
-                ? '<span class="episode-free-badge"><i class="fa-solid fa-unlock"></i> Gratuit</span>'
-                : (alreadyBought ? '<span class="episode-free-badge"><i class="fa-solid fa-check"></i> Débloqué</span>' : ""))}
+            ${badgeHTML}
             <img class="card-image"
               src="${escapeHTML(image)}"
               alt="${escapeHTML(title)}"
@@ -2757,7 +4673,7 @@
 
             <div class="card-title-overlay">
               ${parentTitle ? `<span class="episode-series-badge"><i class="fa-solid fa-film"></i> ${escapeHTML(parentTitle)}</span>` : ""}
-              ${number ? `<span class="episode-number-badge">Épisode ${escapeHTML(number)}</span>` : ""}
+              ${number ? `<span class="episode-number-badge">Leçon ${escapeHTML(number)}</span>` : ""}
               <h3>${escapeHTML(title)}</h3>
             </div>
           </div>
@@ -2766,15 +4682,7 @@
             <p class="card-description">${escapeHTML(cardDescription)}</p>
 
             ${interactionBar(episode, "episode")}
-
-            <button type="button"
-              class="arrow-action-btn open-episode"
-              data-id="${escapeHTML(episodeId)}"
-              data-locked="${locked ? "true" : "false"}"
-              title="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}"
-              aria-label="${locked ? "Débloquer cet épisode" : "Ouvrir l'épisode"}">
-              <i class="fa-solid ${locked ? "fa-lock" : "fa-arrow-right"}"></i>
-            </button>
+            ${openButtonHTML}
           </div>
         </article>
       `;
@@ -2839,12 +4747,12 @@
       if (!container) return;
 
       if (!allEpisodesList.length) {
-        container.innerHTML = "<p>Aucun épisode disponible actuellement.</p>";
+        container.innerHTML = "<p>Aucune leçon disponible actuellement.</p>";
         return;
       }
 
       container.innerHTML = allEpisodesList
-        .map(episode => episodeCardHTML(episode, { showSeries: true }))
+        .map(episode => episodeCardHTML(episode, { showSeries: true, layout: "row" }))
         .join("");
 
       bindEpisodeCards(container);
@@ -2889,20 +4797,20 @@
       );
 
       if (!currentSeries) {
-        window.showMessage("Série introuvable.", true);
+        window.showMessage("Cours introuvable.", true);
         return;
       }
 
       const seriesTitleText = seriesTitle(currentSeries);
       const titleHeader = $("#episodes-title-header");
       if (titleHeader) {
-        titleHeader.textContent = "Épisodes de : " + seriesTitleText;
+        titleHeader.textContent = "Leçons de : " + seriesTitleText;
       }
 
       window.navigateTo("episodes", options);
 
       const container = $("#episodes-container");
-      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des épisodes...</p>';
+      container.innerHTML = '<p class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Chargement des leçons...</p>';
 
       try {
         const result = await getData("getEpisodes", {
@@ -2922,12 +4830,12 @@
         mergeEpisodesIntoAll(episodeList);
 
         if (!currentSeriesEpisodes.length) {
-          container.innerHTML = "<p>Aucun épisode disponible pour cette série.</p>";
+          container.innerHTML = "<p>Aucune leçon disponible pour ce cours.</p>";
           return;
         }
 
         container.innerHTML = currentSeriesEpisodes
-          .map(episode => episodeCardHTML(episode))
+          .map(episode => episodeCardHTML(episode, { layout: "row" }))
           .join("");
 
         bindEpisodeCards(container);
@@ -2948,14 +4856,14 @@
 
     async function purchaseEpisodeAndOpen(id, options = {}) {
       if (!currentUser) {
-        window.showMessage("Connecte-toi pour débloquer cet épisode.", true);
+        window.showMessage("Connecte-toi pour débloquer cette leçon.", true);
         window.navigateTo("auth");
         return;
       }
 
       const episode = findEpisodeById(id);
       if (!episode) {
-        window.showMessage("Épisode introuvable.", true);
+        window.showMessage("Leçon introuvable.", true);
         return;
       }
 
@@ -2981,7 +4889,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
         });
 
         if (result.status !== "success") {
-          throw new Error(result.message || "Impossible de débloquer cet épisode.");
+          throw new Error(result.message || "Impossible de débloquer cette leçon.");
         }
 
         if (result.user) {
@@ -3010,10 +4918,10 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
         const unlockedEpisode = findEpisodeById(id);
         if (!unlockedEpisode || isEpisodeLocked(unlockedEpisode) || !rawContent(unlockedEpisode)) {
-          throw new Error("L'achat a été envoyé, mais le serveur n'a pas confirmé le contenu débloqué. Actualise la liste des épisodes.");
+          throw new Error("L'achat a été envoyé, mais le serveur n'a pas confirmé le contenu débloqué. Actualise la liste des leçons.");
         }
 
-        window.showMessage(result.message || "Épisode débloqué avec succès.");
+        window.showMessage(result.message || "Leçon débloquée avec succès.");
         await openEpisode(id, options);
       } catch (error) {
         window.showMessage(error.message || "Échec du déblocage.", true);
@@ -3025,7 +4933,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
       currentEpisode = findEpisodeById(id);
 
       if (!currentEpisode) {
-        window.showMessage("Épisode introuvable.", true);
+        window.showMessage("Leçon introuvable.", true);
         return;
       }
 
@@ -3080,7 +4988,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
         ${nextEpisode ? `
           <div class="next-episode-container">
             <button type="button" class="btn-primary" id="btn-next-episode" data-next-id="${escapeHTML(episodeIdOf(nextEpisode))}">
-              Épisode suivant (${escapeHTML(episodeTitle(nextEpisode))}) <i class="fa-solid fa-forward"></i>
+              Leçon suivante (${escapeHTML(episodeTitle(nextEpisode))}) <i class="fa-solid fa-forward"></i>
             </button>
           </div>
         ` : ""}
@@ -3195,7 +5103,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
       }
 
       if (!currentEpisode) {
-        window.showMessage("Aucun épisode sélectionné.", true);
+        window.showMessage("Aucune leçon sélectionnée.", true);
         return;
       }
 
@@ -3218,7 +5126,8 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
           text
         });
 
-        if (result.status !== "success") {
+        if (result.status !== "success") { 
+          
           throw new Error(result.message || "Commentaire non enregistré.");
         }
 
@@ -3262,6 +5171,16 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
         }
 
         currentUser = result.user;
+
+        if (
+          String(value(currentUser, "username", "Username"))
+            .trim()
+            .toLowerCase() === ADMIN_ACCOUNT.username
+        ) {
+          currentUser.role = "admin";
+          currentUser.isAdmin = true;
+        }
+
         sessionStorage.setItem("bentoulUser", JSON.stringify(currentUser));
         window.updateAuthUI(currentUser);
 
@@ -3492,6 +5411,21 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
     updateInstallUI();
 
+    function syncFixedBars() {
+      const footer = document.getElementById("app-footer");
+
+      if (footer && footer.offsetHeight) {
+        document.documentElement.style.setProperty(
+          "--footer-height",
+          footer.offsetHeight + "px"
+        );
+      }
+    }
+
+    window.addEventListener("resize", syncFixedBars);
+    window.addEventListener("orientationchange", syncFixedBars);
+    syncFixedBars();
+
     /* =========================
        INITIALISATION
     ========================= */
@@ -3505,6 +5439,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
       try {
         refreshCurrentUser().catch(() => {});
+        ensureAdminAccount().catch(() => {});
         await applyRoute("replace");
       } catch (error) {
         window.showMessage(error.message || "Chargement impossible.", true);

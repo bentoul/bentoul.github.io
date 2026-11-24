@@ -1,17 +1,29 @@
 /**
  * BENTOUL CREATION — visite.js
- * Gestion et envoi des statistiques de visite vers Google Sheets (doPost -> action: "analytics")
-id pour bloquer
-
-VIS_vrdwmnsomvpaoo6y
-VIS_jftrhvonmvq1nc9x
-VIS_h5b8o78lmvoa6bof
-*/
+ * Envoi des statistiques de visite vers Google Sheets (action: "getStats" en lecture,
+ * type "analytics" en écriture).
+ *
+ * Données suivies : identifiant visiteur, pays, page / onglet consulté,
+ * appareil, système et navigateur.
+ */
 (function () {
   "use strict";
 
   const STORAGE_KEY_VISITOR = "bentoul_visitor_id";
   const STORAGE_KEY_COUNTRY = "bentoul_visitor_country";
+
+  const PAGE_LABELS = {
+    home: "Accueil",
+    series: "Catalogue Cours",
+    "all-episodes": "Toutes les leçons",
+    episodes: "Leçons d'un cours",
+    episode: "Détail d'une leçon",
+    blog: "Blog",
+    "blog-article": "Article de blog",
+    auth: "Page Connexion/Inscription",
+    profile: "Mon Profil",
+    admin: "Administration"
+  };
 
   // 1. Identifiant unique et persistant du visiteur
   function getVisitorId() {
@@ -23,35 +35,44 @@ VIS_h5b8o78lmvoa6bof
     return id;
   }
 
-  // 2. Détection du Pays (mise en cache locale pour éviter les requêtes répétitives)
-  async function detectCountry() {
-    let cachedCountry = sessionStorage.getItem(STORAGE_KEY_COUNTRY);
-    if (cachedCountry) return cachedCountry;
+  // 2. Détection du pays (une seule requête par session, même si plusieurs pages sont vues)
+  let countryPromise = null;
 
-    try {
-      // Service rapide, gratuit et sans clé d'API
-      const response = await fetch("https://ipapi.co/json/", { cache: "force-cache" });
-      if (response.ok) {
-        const data = await response.json();
-        const country = data.country_name || data.country || "Inconnu";
-        sessionStorage.setItem(STORAGE_KEY_COUNTRY, country);
-        return country;
-      }
-    } catch (e) {
-      // Service de secours
+  function detectCountry() {
+    if (countryPromise) return countryPromise;
+
+    countryPromise = (async () => {
+      const cached = sessionStorage.getItem(STORAGE_KEY_COUNTRY);
+      if (cached) return cached;
+
       try {
-        const fallback = await fetch("https://ipwhois.app/json/");
-        if (fallback.ok) {
-          const fbData = await fallback.json();
-          const country = fbData.country || "Inconnu";
+        const response = await fetch("https://ipapi.co/json/", { cache: "force-cache" });
+        if (response.ok) {
+          const data = await response.json();
+          const country = data.country_name || data.country || "Inconnu";
           sessionStorage.setItem(STORAGE_KEY_COUNTRY, country);
           return country;
         }
-      } catch (err) {
-        // En cas d'échec ou d'adblocker
+      } catch (error) {
+        // Service principal indisponible (bloqueur, réseau, etc.) : essayer le secours.
       }
-    }
-    return "Inconnu";
+
+      try {
+        const fallback = await fetch("https://ipwhois.app/json/");
+        if (fallback.ok) {
+          const data = await fallback.json();
+          const country = data.country || "Inconnu";
+          sessionStorage.setItem(STORAGE_KEY_COUNTRY, country);
+          return country;
+        }
+      } catch (error) {
+        // Aucun service disponible : la visite reste comptée avec le pays « Inconnu ».
+      }
+
+      return "Inconnu";
+    })();
+
+    return countryPromise;
   }
 
   // 3. Détection de l'appareil (Mobile / Tablette / Desktop)
@@ -66,7 +87,7 @@ VIS_h5b8o78lmvoa6bof
     return "Ordinateur (PC)";
   }
 
-  // 4. Détection du Système d'exploitation (OS)
+  // 4. Détection du système d'exploitation
   function detectOS() {
     const ua = navigator.userAgent;
     if (/Windows NT 10.0/i.test(ua)) return "Windows 10/11";
@@ -79,7 +100,7 @@ VIS_h5b8o78lmvoa6bof
     return "Autre OS";
   }
 
-  // 5. Détection du Navigateur
+  // 5. Détection du navigateur
   function detectBrowser() {
     const ua = navigator.userAgent;
     if (/Edg\//i.test(ua)) return "Microsoft Edge";
@@ -90,7 +111,7 @@ VIS_h5b8o78lmvoa6bof
     return "Autre navigateur";
   }
 
-  // 6. Envoi de l'événement vers ton Apps Script existant
+  // 6. Envoi de l'événement vers l'API Apps Script
   let lastTrackedKey = "";
 
   async function trackVisit(options = {}) {
@@ -98,92 +119,115 @@ VIS_h5b8o78lmvoa6bof
     const targetTitle = options.targetTitle || document.title || "Page d'accueil";
     const targetId = options.targetId || "home";
 
-    // Évite l'enregistrement multiple de la même page dans un intervalle court
+    // Évite d'enregistrer deux fois le même événement d'affilée.
     const trackKey = `${eventType}_${targetId}_${targetTitle}`;
     if (trackKey === lastTrackedKey) return;
     lastTrackedKey = trackKey;
 
-    const visitorId = getVisitorId();
-    const pays = await detectCountry();
-    const device = detectDevice();
-    const os = detectOS();
-    const browser = detectBrowser();
-
-    const payload = {
-      type: "analytics", // reconnu par ton doPost()
-      visitorId: visitorId,
-      pays: pays,
-      eventType: eventType,
-      targetTitle: targetTitle,
-      targetId: targetId,
-      device: device,
-      os: os,
-      browser: browser
-    };
-
     try {
+      const pays = await detectCountry();
+
+      const payload = {
+        type: "analytics", // reconnu par le doPost() de l'Apps Script
+        visitorId: getVisitorId(),
+        pays,
+        eventType,
+        targetTitle,
+        targetId,
+        device: detectDevice(),
+        os: detectOS(),
+        browser: detectBrowser()
+      };
+
       if (typeof window.apiRequest === "function") {
         await window.apiRequest(payload, "POST");
       }
-    } catch (err) {
-      console.warn("Échec d'envoi statistique:", err.message);
+    } catch (error) {
+      console.warn("Échec d'envoi statistique :", error.message);
     }
   }
 
-  // 7. Surveillance automatique de l'interface (Navigation & Tabs)
-  function initStatsObserver() {
-    // Intercepter navigateTo sans écraser son comportement
+  // 7. Enregistrement des navigations de l'application.
+  //    L'application principale envoie l'événement "bentoul:navigate" ;
+  //    un filet de sécurité surveille aussi window.navigateTo si l'événement n'existe pas.
+  function trackPage(page) {
+    if (!page) return;
+
+    trackVisit({
+      eventType: "Vue Page/Tab",
+      targetTitle: PAGE_LABELS[page] || "Page : " + page,
+      targetId: page
+    });
+  }
+
+  function installNavigationFallback() {
+    if (window.__bentoulTracksNavigationEvents) return;
+    if (typeof window.navigateTo !== "function" || window.navigateTo.__bentoulTracked) return;
+
     const originalNavigateTo = window.navigateTo;
-    if (typeof originalNavigateTo === "function") {
-      window.navigateTo = function (page) {
-        originalNavigateTo.apply(this, arguments);
 
-        // Tracker la page ou l'onglet affiché
-        let title = "Page : " + page;
-        if (page === "home") title = "Accueil";
-        else if (page === "series") title = "Catalogue Séries";
-        else if (page === "auth") title = "Page Connexion/Inscription";
-        else if (page === "profile") title = "Mon Profil";
+    window.navigateTo = function (page) {
+      const result = originalNavigateTo.apply(this, arguments);
+      trackPage(page);
+      return result;
+    };
 
-        trackVisit({
-          eventType: "Vue Page/Tab",
-          targetTitle: title,
-          targetId: page
-        });
-      };
-    }
-
-    // Tracker l'ouverture initiale de la page après chargement
-    window.addEventListener("DOMContentLoaded", () => {
-      setTimeout(() => {
-        trackVisit({
-          eventType: "Visite Site",
-          targetTitle: "Ouverture du site",
-          targetId: "root"
-        });
-      }, 1200);
-    });
-
-    // Observer si un épisode s'ouvre pour enregistrer le titre exact de l'épisode
-    const detailObserver = new MutationObserver(() => {
-      const detailContainer = document.querySelector("#episode-detail h2");
-      if (detailContainer && detailContainer.textContent.trim()) {
-        const episodeName = detailContainer.textContent.trim();
-        trackVisit({
-          eventType: "Lecture Episode",
-          targetTitle: episodeName,
-          targetId: "episode_view"
-        });
-      }
-    });
-
-    const episodeTarget = document.getElementById("episode-detail");
-    if (episodeTarget) {
-      detailObserver.observe(episodeTarget, { childList: true, subtree: true });
-    }
+    window.navigateTo.__bentoulTracked = true;
   }
 
-  // Initialisation immédiate
-  window.BentoulTracker = { trackVisit };
-  initStatsObserver();
+  // 8. Observation de l'épisode réellement lu
+  let lastEpisodeTitle = "";
+
+  function observeEpisodeDetail() {
+    const target = document.getElementById("episode-detail");
+    if (!target) return;
+
+    const observer = new MutationObserver(() => {
+      const heading = target.querySelector("h2");
+      const episodeName = heading ? heading.textContent.trim() : "";
+
+      if (!episodeName || episodeName === lastEpisodeTitle) return;
+
+      lastEpisodeTitle = episodeName;
+      trackVisit({
+        eventType: "Lecture Episode",
+        targetTitle: episodeName,
+        targetId: "episode_view"
+      });
+    });
+
+    observer.observe(target, { childList: true, subtree: true });
+  }
+
+  function start() {
+    installNavigationFallback();
+    observeEpisodeDetail();
+  }
+
+  function scheduleInitialVisit() {
+    setTimeout(() => {
+      trackVisit({
+        eventType: "Visite Site",
+        targetTitle: "Ouverture du site",
+        targetId: "root"
+      });
+    }, 1200);
+  }
+
+  // Écoute des navigations de l'application (page, onglet, série, épisode, admin).
+  window.addEventListener("bentoul:navigate", function (event) {
+    trackPage(event && event.detail ? event.detail.page : "");
+  });
+
+  window.BentoulTracker = { trackVisit, trackPage };
+
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", function () {
+      start();
+      scheduleInitialVisit();
+    });
+  } else {
+    start();
+    scheduleInitialVisit();
+  }
 })();

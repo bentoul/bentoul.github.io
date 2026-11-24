@@ -1,6 +1,6 @@
-const CACHE_NAME = "bentoul-creation-v2";
+const CACHE_NAME = "bentoul-creation-v9";
 
-const APP_ROUTE = /^\/(?:accueil|home|serie|series|episode|episodes|compte|profil|profile|auth|connexion)(?:\/|$)/i;
+const APP_ROUTE = /^\/(?:accueil|home|cours|course|courses|serie|series|lesson|lessons|lecon|lecons|episode|episodes|compte|profil|profile|auth|connexion|admin|administration)(?:\/|$)/i;
 
 const APP_SHELL = [
   "/",
@@ -9,6 +9,9 @@ const APP_SHELL = [
   "/js/visite.js",
   "/images/logo.png",
   "/images/home.jpg",
+  "/images/blog-securite-android.jpg",
+  "/images/blog-stockage-android.jpg",
+  "/images/blog-google-drive.jpg",
   "/images/pwa-192.png",
   "/images/pwa-512.png",
   "/images/pwa-maskable-512.png",
@@ -41,17 +44,6 @@ self.addEventListener("activate", event => {
   );
 });
 
-async function refreshShell(cache) {
-  try {
-    const response = await fetch("/index.html", { cache: "no-store" });
-    if (response && response.ok) {
-      await cache.put("/index.html", response.clone());
-    }
-  } catch {
-    // Le shell en cache reste utilisé si le réseau est indisponible.
-  }
-}
-
 async function handleNavigation(event) {
   const url = new URL(event.request.url);
   const cache = await caches.open(CACHE_NAME);
@@ -60,13 +52,22 @@ async function handleNavigation(event) {
     url.pathname === "/index.html" ||
     APP_ROUTE.test(url.pathname);
 
+  // Réseau d'abord : les mises à jour du site sont visibles dès le chargement.
+  // Le cache ne sert que si le réseau est indisponible.
   if (isShellRoute) {
-    const cachedShell = await cache.match("/index.html");
+    try {
+      const response = await fetch(event.request);
 
-    if (cachedShell) {
-      event.waitUntil(refreshShell(cache));
-      return cachedShell;
+      if (response && response.ok) {
+        await cache.put("/index.html", response.clone());
+        return response;
+      }
+    } catch {
+      // Passage au cache hors ligne.
     }
+
+    const cachedShell = await cache.match("/index.html");
+    if (cachedShell) return cachedShell;
   }
 
   try {

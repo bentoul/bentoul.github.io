@@ -20,15 +20,43 @@ body{
     display:flex;flex-direction:column;min-height:0
 }
 h2{font-size:21px;margin:0 0 15px}
-.setting{display:flex;flex-wrap:nowrap;gap:8px;margin-bottom:12px;flex-shrink:0}
-.setting select,.setting input{
-    min-width:0;width:100%;height:42px;padding:0 10px;
-    border:1px solid #d5dce8;border-radius:8px;background:#fff;outline:none
+.setting{
+    display:flex;flex-wrap:nowrap;gap:8px;margin-bottom:12px;flex-shrink:0;
+    overflow-x:auto;overflow-y:hidden;padding-bottom:3px;
+    scrollbar-width:thin;-webkit-overflow-scrolling:touch
 }
-.setting select:focus,.setting input:focus{border-color:#2563eb}
-#serie,#episode{flex:1}
-#NomSerie,#titre{flex:1.3}
-#statut{flex:.8}
+.setting::-webkit-scrollbar{height:6px}
+.setting::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:3px}
+.setting select,.setting input,.setting textarea{
+    flex:0 0 auto;width:auto;min-width:0;height:42px;padding:0 10px;
+    border:1px solid #d5dce8;border-radius:8px;background:#fff;outline:none;
+    font:inherit;color:inherit
+}
+.setting textarea{height:42px;padding:8px 10px;resize:none;line-height:1.3}
+.setting select:focus,.setting input:focus,.setting textarea:focus{border-color:#2563eb}
+#serie,#episode{width:210px}
+#NomSerie,#titre{width:230px}
+#statut{width:140px}
+
+.mode-switch{display:flex;gap:6px;margin-bottom:10px;flex-shrink:0}
+.mode-btn{
+    height:36px;padding:0 18px;border:1px solid #d5dce8;border-radius:8px;
+    background:#fff;color:#172033;font:inherit;font-weight:bold;cursor:pointer
+}
+.mode-btn.is-active{background:#2563eb;border-color:#2563eb;color:#fff}
+#blogPost{width:210px}
+#blogTitre{width:240px}
+#blogSlug{width:200px}
+#blogCategorie{width:170px}
+#blogImage{width:260px}
+#blogDescription{width:280px}
+#blogStatut{width:140px}
+#blogImageBtn{
+    height:42px;padding:0 12px;border:1px solid #d5dce8;border-radius:8px;
+    background:#f8fafc;color:#172033;font:inherit;font-weight:bold;cursor:pointer;
+    flex:0 0 auto;white-space:nowrap
+}
+#blogImageBtn:hover{background:#dbeafe}
 
 .toolbar{
     display:flex;flex-wrap:wrap;gap:5px;padding:9px;background:#fff;
@@ -84,12 +112,9 @@ h2{font-size:21px;margin:0 0 15px}
 
 @media(max-width:700px){
     body{padding:10px}
-    .setting{flex-wrap:wrap;margin-bottom:8px}
-    .setting #serie,
-    .setting #episode,
-    .setting #NomSerie,
-    .setting #titre,
-    .setting #statut{flex:1 1 calc(50% - 8px)}
+    .setting{flex-wrap:nowrap;overflow-x:auto;margin-bottom:8px}
+    .mode-switch{margin-bottom:8px}
+    .mode-btn{flex:1}
     .toolbar{flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:6px}
     .toolbar>*{flex:0 0 auto}
     .editor{padding:14px}
@@ -104,28 +129,70 @@ h2{font-size:21px;margin:0 0 15px}
 
     <div id="message" role="status" aria-live="polite"></div>
 
-    <div class="setting">
-        <select id="serie" aria-label="Sélectionner une série">
-            <option value="">➕ Nouvelle série</option>
+    <div class="mode-switch" id="modeSwitch" role="tablist" aria-label="Espace de publication">
+        <button type="button" class="mode-btn is-active" data-editor-mode="cours"
+                role="tab" aria-selected="true">Cours &amp; leçons</button>
+        <button type="button" class="mode-btn" data-editor-mode="blog"
+                role="tab" aria-selected="false">Blog</button>
+    </div>
+
+    <div class="setting" id="coursControls">
+        <select id="serie" aria-label="Sélectionner un cours">
+            <option value="">➕ Nouveau cours</option>
         </select>
 
         <input type="text" id="NomSerie"
-               placeholder="Nom de la série"
-               aria-label="Nom de la série">
+               placeholder="Nom du cours"
+               aria-label="Nom du cours">
 
-        <select id="episode" aria-label="Sélectionner un épisode" disabled>
-            <option value="">Sélectionne d'abord une série</option>
+        <select id="episode" aria-label="Sélectionner une leçon" disabled>
+            <option value="">Sélectionne d'abord un cours</option>
         </select>
 
         <input type="text" id="titre"
                class="hidden"
-               placeholder="Titre de l'épisode"
-               aria-label="Titre de l'épisode">
+               placeholder="Titre de la leçon"
+               aria-label="Titre de la leçon">
 
         <select id="statut" aria-label="Statut du contenu">
             <option value="Publié">Publié</option>
             <option value="Brouillon">Brouillon</option>
         </select>
+    </div>
+
+    <div class="setting blog-setting hidden" id="blogControls">
+        <select id="blogPost" aria-label="Sélectionner un article">
+            <option value="">Nouvel article</option>
+        </select>
+
+        <input type="text" id="blogTitre"
+               placeholder="Titre de l'article"
+               aria-label="Titre de l'article">
+
+        <input type="text" id="blogSlug"
+               placeholder="Lien (ex: securiser-android)"
+               aria-label="Lien de l'article">
+
+        <input type="text" id="blogCategorie"
+               placeholder="Catégorie"
+               aria-label="Catégorie de l'article">
+
+        <input type="text" id="blogImage"
+               placeholder="Image de couverture (URL)"
+               aria-label="Image de couverture">
+
+        <button type="button" id="blogImageBtn">Téléverser</button>
+
+        <textarea id="blogDescription"
+                  placeholder="Description pour le partage (SEO)"
+                  aria-label="Description pour le partage"></textarea>
+
+        <select id="blogStatut" aria-label="Statut de l'article">
+            <option value="Publié">Publié</option>
+            <option value="Brouillon">Brouillon</option>
+        </select>
+
+        <input type="file" id="blogImageFile" accept="image/*" hidden>
     </div>
 
     <div class="toolbar" id="richToolbar">
@@ -369,15 +436,18 @@ h2{font-size:21px;margin:0 0 15px}
 <script>
 "use strict";
 
-const API_URL = "https://script.google.com/macros/s/AKfycbyzhytA2z1Ln98MoybT00uwgjVlIUh5qPPpnQjwxXLJYkq6STke9QZ6VQgYMCNEEFGF/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbyEcCUhUXEKsS_o_kHEop6-P2Cy7oD0GjHBn2MXJpWW2I17GvsbkiDiX3oTWgGD-s01/exec";
 const $ = id => document.getElementById(id);
 
 let seriesData = [];
 let episodesData = [];
+let blogPostsData = [];
 let currentSeriesId = "";
 let currentEpisodeId = "";
+let currentBlogPostId = "";
 let currentImageData = "";
 let currentMode = "serie"; // "serie" ou "episode"
+let editorMode = "cours"; // "cours" ou "blog"
 
 
 
@@ -403,6 +473,14 @@ $("message").addEventListener("keydown", event => {
 });
 /* MISE À JOUR DE L'AFFICHAGE DU MODE */
 function updateUI(){
+    if(editorMode === "blog"){
+        $("editor").setAttribute("aria-label", "Contenu de l'article");
+        $("saveBtn").textContent = currentBlogPostId
+            ? "💾 Mettre à jour l'article"
+            : "💾 Publier l'article";
+        return;
+    }
+
     const isSerie = currentMode === "serie";
 
     $("NomSerie").classList.toggle("hidden", !isSerie);
@@ -410,14 +488,14 @@ function updateUI(){
 
     $("editor").setAttribute(
         "aria-label",
-        isSerie ? "Description de la série" : "Contenu de l'épisode"
+        isSerie ? "Description du cours" : "Contenu de la leçon"
     );
 
     // Ajuster le libellé du bouton selon l'action
     if(isSerie){
-        $("saveBtn").textContent = currentSeriesId ? "💾 Mettre à jour la série" : "💾 Créer la série";
+        $("saveBtn").textContent = currentSeriesId ? "💾 Mettre à jour le cours" : "💾 Créer le cours";
     } else {
-        $("saveBtn").textContent = currentEpisodeId ? "💾 Mettre à jour l'épisode" : "💾 Créer l'épisode";
+        $("saveBtn").textContent = currentEpisodeId ? "💾 Mettre à jour la leçon" : "💾 Créer la leçon";
     }
 }
 
@@ -471,19 +549,19 @@ async function loadSeries(){
     const prevSeriesId = $("serie").value || currentSeriesId;
 
     try{
-        message("Chargement des séries...");
+        message("Chargement des cours...");
 
         // On passe includeDrafts=true pour voir et modifier même les brouillons
         const data = await apiGet("getSeries", { includeDrafts: "true" });
         seriesData = Array.isArray(data) ? data : [];
 
-        $("serie").innerHTML = '<option value="">➕ Nouvelle série</option>';
+        $("serie").innerHTML = '<option value="">➕ Nouveau cours</option>';
 
         seriesData.forEach(serie=>{
             const option = document.createElement("option");
             option.value = serie.id;
             const statutTxt = serie.statut === "Brouillon" ? " [Brouillon]" : "";
-            option.textContent = (serie.titre || "Série sans titre") + statutTxt;
+            option.textContent = (serie.titre || "Cours sans titre") + statutTxt;
             $("serie").appendChild(option);
         });
 
@@ -498,14 +576,14 @@ async function loadSeries(){
             currentEpisodeId = "";
             episodesData = [];
             $("episode").disabled = true;
-            $("episode").innerHTML = '<option value="">Sélectionne d\'abord une série</option>';
+            $("episode").innerHTML = '<option value="">Sélectionne d\'abord un cours</option>';
         }
 
         clearMessage();
         return serie || null;
 
     }catch(error){
-        message("Impossible de charger les séries : "+error.message,"error");
+        message("Impossible de charger les cours : "+error.message,"error");
         throw error;
     }
 }
@@ -514,10 +592,10 @@ async function loadSeries(){
 async function loadEpisodes(seriesId){
     episodesData = [];
     $("episode").disabled = true;
-    $("episode").innerHTML = '<option value="">Chargement des épisodes...</option>';
+    $("episode").innerHTML = '<option value="">Chargement des leçons...</option>';
 
     if(!seriesId){
-        $("episode").innerHTML = '<option value="">Sélectionne d\'abord une série</option>';
+        $("episode").innerHTML = '<option value="">Sélectionne d\'abord un cours</option>';
         return [];
     }
 
@@ -532,21 +610,21 @@ async function loadEpisodes(seriesId){
             return String(linkedId) === String(seriesId);
         });
 
-        // Options dans le menu des épisodes
+        // Options dans le menu des leçons
         $("episode").innerHTML = `
-            <option value="SERIE_EDIT">📝 Modifier les infos de la série</option>
-            <option value="NEW_EPISODE">➕ Nouvel épisode</option>
+            <option value="SERIE_EDIT">📝 Modifier les infos du cours</option>
+            <option value="NEW_EPISODE">➕ Nouvelle leçon</option>
         `;
 
         if(episodesData.length > 0){
             const group = document.createElement("optgroup");
-            group.label = "Épisodes existants :";
+            group.label = "Leçons existantes :";
 
             episodesData.forEach(episode=>{
                 const option = document.createElement("option");
                 option.value = episode.id;
                 const statutTxt = episode.statut === "Brouillon" ? " [Brouillon]" : "";
-                option.textContent = "🎬 " + (episode.titre || "Épisode sans titre") + statutTxt;
+                option.textContent = "🎬 " + (episode.titre || "Leçon sans titre") + statutTxt;
                 group.appendChild(option);
             });
 
@@ -557,11 +635,161 @@ async function loadEpisodes(seriesId){
         return episodesData;
 
     }catch(error){
-        $("episode").innerHTML = '<option value="SERIE_EDIT">📝 Modifier les infos de la série</option>';
-        message("Erreur chargement des épisodes : "+error.message,"error");
+        $("episode").innerHTML = '<option value="SERIE_EDIT">📝 Modifier les infos du cours</option>';
+        message("Erreur chargement des leçons : "+error.message,"error");
         return [];
     }finally{
         $("episode").disabled = false;
+    }
+}
+
+/* CHARGER LES ARTICLES DU BLOG */
+async function loadBlogPosts(){
+    const prevId = $("blogPost").value || currentBlogPostId;
+
+    try{
+        message("Chargement des articles...");
+
+        const data = await apiGet("getBlogPosts", { includeDrafts: "true" });
+        blogPostsData = Array.isArray(data) ? data : [];
+
+        $("blogPost").innerHTML = '<option value="">Nouvel article</option>';
+
+        blogPostsData.forEach(post=>{
+            const option = document.createElement("option");
+            option.value = post.id;
+            const statutTxt = post.statut === "Brouillon" ? " [Brouillon]" : "";
+            option.textContent = (post.titre || "Article sans titre") + statutTxt;
+            $("blogPost").appendChild(option);
+        });
+
+        const post = blogPostsData.find(item => String(item.id) === String(prevId));
+
+        if(post){
+            afficherBlogPost(post.id);
+        } else {
+            nouveauBlogPost();
+        }
+
+        clearMessage();
+        return blogPostsData;
+
+    }catch(error){
+        message("Impossible de charger les articles : " + error.message, "error");
+        return [];
+    }
+}
+
+/* AFFICHER UN ARTICLE DANS L'ÉDITEUR */
+function afficherBlogPost(postId){
+    const post = blogPostsData.find(item => String(item.id) === String(postId));
+
+    if(!post){
+        message("Article introuvable.","error");
+        return;
+    }
+
+    currentBlogPostId = String(post.id || "");
+    currentImageData = post.image || "";
+    editorMode = "blog";
+
+    $("blogPost").value = post.id;
+    $("blogTitre").value = post.titre || "";
+    $("blogSlug").value = post.slug || "";
+    $("blogCategorie").value = post.categorie || "";
+    $("blogImage").value = post.image || "";
+    $("blogDescription").value = post.description || "";
+    $("editor").innerHTML = post.contenu || "";
+    $("blogStatut").value = post.statut === "Brouillon" ? "Brouillon" : "Publié";
+
+    updateUI();
+    clearMessage();
+}
+
+/* PRÉPARER UN NOUVEL ARTICLE */
+function nouveauBlogPost(){
+    currentBlogPostId = "";
+    currentImageData = "";
+    editorMode = "blog";
+
+    $("blogPost").value = "";
+    $("blogTitre").value = "";
+    $("blogSlug").value = "";
+    $("blogCategorie").value = "";
+    $("blogImage").value = "";
+    $("blogDescription").value = "";
+    $("editor").innerHTML = "";
+    $("blogStatut").value = "Publié";
+
+    updateUI();
+}
+
+/* ENREGISTRER OU METTRE À JOUR UN ARTICLE */
+async function saveBlogArticle(){
+    clearMessage();
+
+    const titre = $("blogTitre").value.trim();
+    const slug = $("blogSlug").value.trim();
+    const categorie = $("blogCategorie").value.trim();
+    const description = $("blogDescription").value.trim();
+    const imageField = $("blogImage").value.trim();
+    const statut = $("blogStatut").value;
+
+    const rawContenu = htmlViewActive
+        ? $("htmlSource").value
+        : $("editor").innerHTML;
+    const contenu = htmlViewActive ? rawContenu : normalizeLegacyFonts(rawContenu);
+
+    if(!titre){
+        message("Veuillez entrer le titre de l'article.","error");
+        $("blogTitre").focus();
+        return;
+    }
+
+    if(!contenu.trim()){
+        message("Le contenu de l'article est vide.","error");
+        $("editor").focus();
+        return;
+    }
+
+    const firstImg = extractFirstImage(contenu);
+    const finalImage = imageField || currentImageData || firstImg || "";
+
+    try{
+        $("saveBtn").disabled = true;
+        $("saveBtn").textContent = "Enregistrement...";
+
+        const payload = {
+            type: "saveBlogPost",
+            titre: titre,
+            slug: slug,
+            description: description,
+            categorie: categorie,
+            image: finalImage,
+            contenu: contenu,
+            statut: statut
+        };
+
+        if(currentBlogPostId) payload.id = currentBlogPostId;
+
+        const result = await apiPost(payload);
+        const wasUpdate = Boolean(payload.id);
+
+        currentBlogPostId = currentBlogPostId || result.id || "";
+
+        await loadBlogPosts();
+
+        message(
+            result.message || (wasUpdate ? "Article mis à jour." : "Article publié."),
+            "success"
+        );
+
+    }catch(error){
+        message("Erreur : " + error.message, "error");
+
+    }finally{
+        $("saveBtn").disabled = false;
+        updateUI();
     }
 }
 
@@ -570,7 +798,7 @@ async function afficherSerie(seriesId){
     const serie = seriesData.find(item => String(item.id) === String(seriesId));
 
     if(!serie){
-        message("Série introuvable.","error");
+        message("Cours introuvable.","error");
         return;
     }
 
@@ -595,7 +823,7 @@ function afficherEpisode(episodeId){
     const episode = episodesData.find(item => String(item.id) === String(episodeId));
 
     if(!episode){
-        message("Épisode introuvable.","error");
+        message("Leçon introuvable.","error");
         return;
     }
 
@@ -643,7 +871,7 @@ $("serie").addEventListener("change", async function(){
         $("editor").innerHTML = "";
         $("statut").value = "Publié";
         $("episode").disabled = true;
-        $("episode").innerHTML = '<option value="">Sélectionne d\'abord une série</option>';
+        $("episode").innerHTML = '<option value="">Sélectionne d\'abord un cours</option>';
 
         updateUI();
         $("NomSerie").focus();
@@ -720,6 +948,10 @@ function normalizeLegacyFonts(html){
 
 /* ENREGISTRER OU METTRE À JOUR UNE SÉRIE OU UN ÉPISODE */
 async function saveContent(){
+    if(editorMode === "blog"){
+        return saveBlogArticle();
+    }
+
     clearMessage();
 
     const nomSerie = $("NomSerie").value.trim();
@@ -745,7 +977,7 @@ async function saveContent(){
         ===================================== */
         if(currentMode === "serie"){
             if(!nomSerie){
-                message("Veuillez entrer le nom de la série.","error");
+                message("Veuillez entrer le nom du cours.","error");
                 $("NomSerie").focus();
                 return;
             }
@@ -777,7 +1009,7 @@ async function saveContent(){
             }
 
             updateUI();
-            message(result.message || (payload.id ? "Série mise à jour avec succès !" : "Série créée avec succès !"), "success");
+            message(result.message || (payload.id ? "Cours mis à jour avec succès !" : "Cours créé avec succès !"), "success");
             return;
         }
 
@@ -785,11 +1017,11 @@ async function saveContent(){
            CAS 2 : CRÉER OU METTRE À JOUR UN ÉPISODE
         ===================================== */
         if(!currentSeriesId){
-            throw new Error("Sélectionne d'abord une série avant d'enregistrer un épisode.");
+            throw new Error("Sélectionne d'abord un cours avant d'enregistrer une leçon.");
         }
 
         if(!titreEpisode){
-            message("Veuillez entrer le titre de l'épisode.","error");
+            message("Veuillez entrer le titre de la leçon.","error");
             $("titre").focus();
             return;
         }
@@ -820,7 +1052,7 @@ async function saveContent(){
         }
 
         updateUI();
-        message(result.message || (episodePayload.id ? "Épisode mis à jour avec succès !" : "Épisode créé avec succès !"), "success");
+        message(result.message || (episodePayload.id ? "Leçon mise à jour avec succès !" : "Leçon créée avec succès !"), "success");
 
     }catch(error){
         message("Erreur : "+error.message,"error");
@@ -1303,6 +1535,126 @@ $("redoBtn").addEventListener("click",()=>{
     document.execCommand("redo",false,null);
 });
 
+/* BASCULER ENTRE COURS ET BLOG */
+document.querySelectorAll("[data-editor-mode]").forEach(button=>{
+    button.addEventListener("click",()=>{
+        const mode = button.dataset.editorMode;
+        if(mode === editorMode) return;
+
+        document.querySelectorAll("[data-editor-mode]").forEach(btn=>{
+            const active = btn === button;
+            btn.classList.toggle("is-active", active);
+            btn.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        $("coursControls").classList.toggle("hidden", mode !== "cours");
+        $("blogControls").classList.toggle("hidden", mode !== "blog");
+        clearMessage();
+
+        if(mode === "blog"){
+            editorMode = "blog";
+
+            const current = blogPostsData.find(
+                item => String(item.id) === String(currentBlogPostId)
+            );
+
+            if(current){
+                afficherBlogPost(current.id);
+            } else {
+                nouveauBlogPost();
+                if(!blogPostsData.length) loadBlogPosts();
+            }
+            return;
+        }
+
+        editorMode = "cours";
+
+        if(currentSeriesId){
+            afficherSerie(currentSeriesId);
+            return;
+        }
+
+        currentMode = "serie";
+        currentEpisodeId = "";
+        currentImageData = "";
+        $("NomSerie").value = "";
+        $("editor").innerHTML = "";
+        $("statut").value = "Publié";
+        $("episode").disabled = true;
+        $("episode").innerHTML = '<option value="">Sélectionne d\'abord un cours</option>';
+        updateUI();
+    });
+});
+
+/* CHANGEMENT D'ARTICLE */
+$("blogPost").addEventListener("change", function(){
+    clearMessage();
+
+    if(!this.value){
+        nouveauBlogPost();
+        return;
+    }
+
+    afficherBlogPost(this.value);
+});
+
+/* IMAGE DE COUVERTURE DU BLOG */
+$("blogImageBtn").addEventListener("click",()=>{
+    $("blogImageFile").click();
+});
+
+$("blogImageFile").addEventListener("change",function(){
+    const file = this.files[0];
+    if(!file) return;
+
+    if(!file.type.startsWith("image/")){
+        message("Choisis un fichier image.","error");
+        this.value = "";
+        return;
+    }
+
+    if(file.size > 8 * 1024 * 1024){
+        message("Image trop volumineuse. Choisis une image de moins de 8 Mo.","error");
+        this.value = "";
+        return;
+    }
+
+    message("Téléversement de l'image de couverture...","info");
+
+    const reader = new FileReader();
+
+    reader.onload = async ()=>{
+        try{
+            const result = await apiPost({
+                type: "uploadImage",
+                image: reader.result,
+                prefix: "Blog"
+            });
+
+            const driveUrl = result.imageUrl || result.url;
+
+            if(!driveUrl){
+                throw new Error("L'URL de l'image n'a pas été renvoyée par le serveur.");
+            }
+
+            currentImageData = driveUrl;
+            $("blogImage").value = driveUrl;
+
+            message("Image de couverture téléversée sur Google Drive.","success");
+
+        }catch(error){
+            message("Erreur lors du téléversement : " + error.message, "error");
+        }
+    };
+
+    reader.onerror = ()=>{
+        message("Impossible de lire cette image.","error");
+    };
+
+    reader.readAsDataURL(file);
+    this.value = "";
+});
+
 /* IMAGE : TÉLÉVERSEMENT DIRECT GOOGLE DRIVE */
 $("imageBtn").addEventListener("click",()=>{
     $("imageFile").click();
@@ -1333,7 +1685,9 @@ $("imageFile").addEventListener("change",function(){
             const result = await apiPost({
                 type: "uploadImage",
                 image: reader.result,
-                prefix: currentMode === "serie" ? "Serie" : "Episode"
+                prefix: editorMode === "blog"
+                    ? "Blog"
+                    : (currentMode === "serie" ? "Serie" : "Episode")
             });
 
             const driveUrl = result.imageUrl || result.url;
@@ -1367,6 +1721,12 @@ $("saveBtn").addEventListener("click",saveContent);
 
 $("refreshBtn").addEventListener("click",async()=>{
     try{
+        if(editorMode === "blog"){
+            await loadBlogPosts();
+            clearMessage();
+            return;
+        }
+
         const selSeriesId = $("serie").value;
         const selEpId = $("episode").value;
 
