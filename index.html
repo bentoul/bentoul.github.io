@@ -50,7 +50,7 @@
   <link rel="icon" type="image/png" href="/images/logo.png">
   <link rel="shortcut icon" href="/images/logo.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-  <link rel="preload" as="image" href="/images/home.jpg">
+  <link rel="preload" as="image" href="/images/hero-accueil-betoul.jpg">
 
   <!-- Open Graph : aperçu lors du partage sur Facebook, WhatsApp et autres réseaux -->
   <meta property="og:type" content="website">
@@ -410,31 +410,332 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .welcome-card {
-      padding: 28px 22px;
-      color: white;
+    #page-home {
+      padding: 2px 12px 0;
+    }
+
+    .home-hero {
+      position: relative;
+      min-height: clamp(240px, 46vw, 380px);
+      padding: clamp(20px, 4.5vw, 34px);
+      overflow: hidden;
       background:
-        linear-gradient(100deg, rgba(15, 23, 42, .94), rgba(17, 24, 39, .70)),
-        url("/images/home.jpg") center / cover no-repeat,
-        linear-gradient(145deg, #172554, #111827);
-      border-radius: 22px;
-      background-color: #172554;
+        linear-gradient(180deg, rgba(9, 14, 22, .16), rgba(9, 14, 22, .04)),
+        #343a3e url("/images/hero-accueil-betoul.jpg") center / cover no-repeat;
+      border-radius: 12px;
+      display: flex;
     }
 
-    .welcome-icon {
-      font-size: 28px;
-      color: #93c5fd;
+    .home-hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
     }
 
-    .welcome-card h1 {
-      margin: 14px 0 10px;
-      font-size: clamp(25px, 5vw, 38px);
+    .home-hero h1 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: clamp(38px, 9vw, 84px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      text-shadow:
+        -2px -2px 0 #0d0d0d,
+        2px -2px 0 #0d0d0d,
+        -2px 2px 0 #0d0d0d,
+        2px 2px 0 #0d0d0d,
+        0 8px 20px #00000080;
     }
 
-    .welcome-card p {
-      max-width: 500px;
-      color: #dbeafe;
-      line-height: 1.7;
+    .home-hero p {
+      margin: 0 auto;
+      max-width: 540px;
+      color: #fff;
+      font-size: clamp(17px, 3.9vw, 30px);
+      font-weight: 800;
+      line-height: 1.28;
+      text-shadow: 0 3px 10px #000000a6;
+    }
+
+    .home-hero-cta {
+      align-self: flex-start;
+      margin-top: clamp(18px, 4vw, 30px);
+      padding: 13px 24px;
+      color: #fff;
+      background: #000;
+      border-radius: 4px;
+      font-size: clamp(15px, 3vw, 21px);
+      font-weight: 900;
+      text-decoration: none;
+      box-shadow: 0 5px 16px #0000004d;
+    }
+
+    .home-hero-cta:hover {
+      background: #151515;
+    }
+
+    .home-hero-cta:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 3px;
+    }
+
+    .home-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(6px, 1.5vw, 12px);
+      margin-top: clamp(10px, 2vw, 16px);
+    }
+
+    .home-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: clamp(124px, 26vw, 178px);
+      padding: clamp(12px, 2.6vw, 20px) clamp(8px, 1.8vw, 14px) clamp(10px, 2vw, 14px);
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .home-card:hover {
+      border-color: #93c5fd;
+    }
+
+    .home-card:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+    }
+
+    .home-card h2 {
+      margin: 0 0 clamp(7px, 1.6vw, 12px);
+      font-size: clamp(13px, 3.3vw, 22px);
+      font-weight: 900;
+      line-height: 1.1;
+      text-transform: uppercase;
+      letter-spacing: .2px;
+    }
+
+    .home-card p {
+      margin: 0;
+      font-size: clamp(10px, 2.45vw, 13px);
+      line-height: 1.45;
+    }
+
+    .home-card-icon {
+      margin-top: auto;
+      padding-top: clamp(8px, 1.8vw, 12px);
+      align-self: flex-end;
+      color: #0f172a;
+      font-size: clamp(16px, 3.6vw, 21px);
+      line-height: 1;
+    }
+
+    .home-card-arrow .home-card-icon {
+      color: var(--primary);
+    }
+
+    .home-card-main {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      min-width: 0;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .home-card-main:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    .home-share-btn {
+      margin-top: auto;
+      padding: clamp(8px, 1.8vw, 12px) 4px 0;
+      align-self: flex-end;
+      color: #0f172a;
+      background: transparent;
+      border: 0;
+      font: inherit;
+      font-size: clamp(16px, 3.6vw, 21px);
+      line-height: 1;
+      cursor: pointer;
+      transition: color .15s ease, transform .15s ease;
+    }
+
+    .home-share-btn:hover {
+      color: var(--primary);
+      transform: scale(1.08);
+    }
+
+    .home-share-btn:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    .home-card-latest .home-latest-label {
+      margin: 0 0 3px;
+      color: var(--text-muted);
+      font-size: clamp(9px, 2vw, 11px);
+      font-weight: 700;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+    }
+
+    .home-card-latest .home-latest-title {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin: 0;
+      font-size: clamp(10px, 2.45vw, 13px);
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .home-card-latest .home-latest-title.is-soon {
+      display: block;
+      color: #64748b;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+
+    .app-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(9, 14, 22, .55);
+    }
+
+    .app-modal-card {
+      position: relative;
+      width: min(420px, 100%);
+      padding: 30px 22px 22px;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(9, 14, 22, .35);
+      text-align: center;
+    }
+
+    .app-modal-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 14px;
+      color: var(--primary);
+      background: #e8f1ff;
+      border-radius: 50%;
+      font-size: 24px;
+    }
+
+    .app-modal-card h2 {
+      margin: 0 0 10px;
+      font-size: clamp(20px, 5vw, 24px);
+      font-weight: 900;
+    }
+
+    .app-modal-card p {
+      margin: 0 0 20px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .app-modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      color: #475569;
+      background: #f1f5f9;
+      border: 0;
+      border-radius: 50%;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .app-modal-close:hover {
+      background: #e2e8f0;
+    }
+
+    .app-modal-close:focus-visible,
+    .app-modal-btn:focus-visible {
+      outline: 3px solid #93c5fd;
+      outline-offset: 2px;
+    }
+
+    .app-modal-btn {
+      width: 100%;
+      padding: 12px 18px;
+      color: #fff;
+      background: var(--primary);
+      border: 0;
+      border-radius: 8px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .app-modal-btn:hover {
+      filter: brightness(.95);
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .home-section-title {
+      margin: clamp(22px, 4.5vw, 34px) 0 clamp(14px, 2.6vw, 20px);
+      font-size: clamp(19px, 4.7vw, 27px);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -.2px;
+    }
+
+    .home-ad {
+      position: relative;
+      height: clamp(52px, 10vw, 90px);
+      margin: 22px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+    }
+
+    .home-ad span {
+      color: #cbd5e1;
+      font-size: clamp(13px, 2.6vw, 16px);
+    }
+
+    .home-ad iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: transparent;
     }
 
     .panel {
@@ -852,6 +1153,38 @@
     .blog-article-meta i {
       margin-right: 4px;
       color: var(--primary);
+    }
+
+    .view-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .view-count i {
+      margin-right: 0;
+      color: var(--primary);
+      font-size: 11px;
+    }
+
+    .card-views {
+      margin: 0 0 8px;
+    }
+
+    .episode-views {
+      margin: 0 0 12px;
+    }
+
+    #episodes-title-header .view-count {
+      margin-left: 8px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: middle;
     }
 
     .blog-article-cover {
@@ -1765,8 +2098,13 @@
         font-size: 10px;
       }
 
-      .welcome-card {
-        padding: 22px 16px;
+      .home-hero {
+        min-height: 230px;
+        padding: 16px 12px;
+      }
+
+      .home-card {
+        padding: 10px 6px 8px;
       }
 
       .section-heading {
@@ -1851,12 +2189,76 @@
   <main id="app-content">
 
     <section class="page active" id="page-home" aria-labelledby="home-title">
-      <div class="welcome-card">
-        <span class="welcome-icon"><i class="fa-solid fa-sparkles"></i></span>
-        <h1 id="home-title">BENTOUL CREATION</h1>
-        <p>Découvre nos cours, nos leçons et partage tes impressions.</p>
-        <a class="btn-primary" href="/cours" data-page="series">
-          <i class="fa-solid fa-compass"></i> Découvrir les cours
+      <div class="home-hero">
+        <div class="home-hero-content">
+          <h1 id="home-title">BENTOUL</h1>
+          <p>Découvre nos cours,<br>nos leçons et partage<br>tes impressions.</p>
+          <a class="home-hero-cta" href="/cours" data-page="series">Découvrir nos cours</a>
+        </div>
+      </div>
+
+      <div class="home-cards">
+        <div class="home-card">
+          <a class="home-card-main" href="/blog" data-page="blog">
+            <h2>Astuces</h2>
+            <p>Nous partageons une astuce par jour sur Android ou PC.</p>
+          </a>
+          <button type="button" class="home-share-btn" data-home-share
+            data-share-title="Astuces"
+            data-share-desc="Nous partageons une astuce par jour sur Android ou PC."
+            data-share-path="/blog"
+            aria-label="Partager Astuces">
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="home-card">
+          <a class="home-card-main" href="/cours" data-page="series">
+            <h2>Cours</h2>
+            <p>Cours informatique pour débutant, tous les jours.</p>
+          </a>
+          <button type="button" class="home-share-btn" data-home-share
+            data-share-title="Cours"
+            data-share-desc="Cours informatique pour débutant, tous les jours."
+            data-share-path="/cours"
+            aria-label="Partager Cours">
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="home-card">
+          <a class="home-card-main" href="/lesson" data-langue-inf aria-haspopup="dialog">
+            <h2>Langue INF</h2>
+            <p>Des mots informatiques que tu trouves souvent.</p>
+          </a>
+          <button type="button" class="home-share-btn" data-home-share
+            data-share-title="Langue INF"
+            data-share-desc="Des mots informatiques que tu trouves souvent."
+            data-share-path="/lesson"
+            aria-label="Partager Langue INF">
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <h2 class="home-section-title">Dernières astuces, cours et langue INF</h2>
+
+      <div class="home-cards">
+        <a class="home-card home-card-arrow home-card-latest" href="/blog" data-home-latest-card="blog" data-page="blog">
+          <h2>Astuces</h2>
+          <p class="home-latest-label" data-home-latest-label>Dernier article</p>
+          <p class="home-latest-title" data-home-latest-title>Chargement…</p>
+          <span class="home-card-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a class="home-card home-card-arrow home-card-latest" href="/cours" data-home-latest-card="cours" data-page="series">
+          <h2>Cours</h2>
+          <p class="home-latest-label" data-home-latest-label>Dernier cours</p>
+          <p class="home-latest-title" data-home-latest-title>Chargement…</p>
+          <span class="home-card-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+        </a>
+        <a class="home-card home-card-arrow home-card-latest" href="/lesson" data-langue-inf aria-haspopup="dialog">
+          <h2>Langue INF</h2>
+          <p class="home-latest-label">À venir</p>
+          <p class="home-latest-title is-soon">DISPONIBLE BIENTÔT</p>
+          <span class="home-card-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
         </a>
       </div>
 
@@ -1870,9 +2272,9 @@
         </button>
       </div>
 
-      <div class="ad-slot">
-        <span class="ad-label">Publicité</span>
-        <iframe src="/ad-frame.html" title="Publicité" width="300" height="250"
+      <div class="home-ad" role="complementary" aria-label="Espace publicité">
+        <span>Espace publicité</span>
+        <iframe src="/ad-frame.html" title="Publicité"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"></iframe>
       </div>
@@ -2149,13 +2551,26 @@
     </a>
   </footer>
 
+  <div class="app-modal" id="home-soon-modal" hidden>
+    <div class="app-modal-card" role="dialog" aria-modal="true"
+      aria-labelledby="home-soon-title" aria-describedby="home-soon-text">
+      <button type="button" class="app-modal-close" data-modal-close aria-label="Fermer">
+        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+      </button>
+      <div class="app-modal-icon" aria-hidden="true"><i class="fa-solid fa-language"></i></div>
+      <h2 id="home-soon-title">Langue INF</h2>
+      <p id="home-soon-text">Pas encore disponible pour le moment, reviens bientôt !</p>
+      <button type="button" class="app-modal-btn" data-modal-close>Compris</button>
+    </div>
+  </div>
+
   <!-- SCRIPT ANALYTICS & STATISTIQUES DE VISITE -->
   <script src="/js/visite.js"></script>
 
   <script>
   "use strict";
 
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby0YxVs92Yrg9Y1cx7I89py6X75IGX8vsuz3PzE24T-LGD9vd8nn0Gz0NSh_Trg1m4/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyI0NouLH_dN49VjiBDCmG2Uhv07vu45TmiT6rKHyjBgXzrziR7MDESXbw6BxtKH3pv/exec";
 
   // Compte administrateur créé automatiquement dans la base au premier chargement.
   // L'accès ADM est aussi reconnu côté client via le nom d'utilisateur ci-dessous.
@@ -2308,6 +2723,146 @@
     let blogPostsLoaded = false;
     let blogPostsPromise = null;
 
+    const VIEWED_STORAGE_KEY = "bentoul_views_sent_v1";
+    const VISITOR_STORAGE_KEY = "bentoul_visitor_id";
+
+    function viewsCount(item) {
+      return Math.max(0, Number(value(item, "vues", "views", "Vues", "Views")) || 0);
+    }
+
+    function viewsLabel(total) {
+      const count = Math.max(0, Number(total) || 0);
+      return count + (count === 1 ? " vue" : " vues");
+    }
+
+    function viewsHTML(item, type, contentId) {
+      return `<span class="view-count" data-views-type="${escapeHTML(type)}" data-views-id="${escapeHTML(contentId)}"><i class="fa-regular fa-eye" aria-hidden="true"></i>${viewsLabel(viewsCount(item))}</span>`;
+    }
+
+    function viewVisitorId() {
+      try {
+        let id = localStorage.getItem(VISITOR_STORAGE_KEY);
+        if (!id) {
+          id = "VIS_" + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+          localStorage.setItem(VISITOR_STORAGE_KEY, id);
+        }
+        return id;
+      } catch {
+        return "";
+      }
+    }
+
+    function viewAlreadySent(key) {
+      try {
+        const sent = JSON.parse(localStorage.getItem(VIEWED_STORAGE_KEY) || "[]");
+        return Array.isArray(sent) && sent.indexOf(key) !== -1;
+      } catch {
+        return false;
+      }
+    }
+
+    function rememberSentView(key) {
+      try {
+        const sent = JSON.parse(localStorage.getItem(VIEWED_STORAGE_KEY) || "[]");
+        const list = Array.isArray(sent) ? sent : [];
+        if (list.indexOf(key) === -1) list.push(key);
+        localStorage.setItem(
+          VIEWED_STORAGE_KEY,
+          JSON.stringify(list.slice(-300))
+        );
+      } catch {
+        // Le stockage local peut être indisponible : le serveur reste la référence.
+      }
+    }
+
+    function updateLocalViewItem(type, contentId, total) {
+      const count = Math.max(0, Number(total) || 0);
+      const id = String(contentId || "");
+      if (!id || !Number.isFinite(count)) return;
+
+      const apply = item => {
+        if (item) item.vues = count;
+      };
+
+      if (type === "blog") {
+        const slug = id.toLowerCase();
+        blogPosts.forEach(item => {
+          if (String(item.slug || "").toLowerCase() === slug) apply(item);
+        });
+        FALLBACK_BLOG_ARTICLES.forEach(item => {
+          if (String(item.slug || "").toLowerCase() === slug) apply(item);
+        });
+        return;
+      }
+
+      const list = type === "series"
+        ? seriesList
+        : allEpisodesList.concat(episodeList);
+
+      list.forEach(item => {
+        const itemId = type === "series" ? seriesIdOf(item) : episodeIdOf(item);
+        if (String(itemId) === id) apply(item);
+      });
+    }
+
+    function updateViewCountsInUI(type, contentId, total) {
+      if (total === undefined || total === null) return;
+
+      const id = String(contentId || "");
+      const safeId = window.CSS && CSS.escape
+        ? CSS.escape(id)
+        : id.replace(/"/g, '\\"');
+      const selector =
+        '[data-views-type="' + String(type) + '"]' +
+        '[data-views-id="' + safeId + '"]';
+
+      let nodes = [];
+      try {
+        nodes = document.querySelectorAll(selector);
+      } catch {
+        nodes = [];
+      }
+
+      nodes.forEach(node => {
+        node.innerHTML =
+          '<i class="fa-regular fa-eye" aria-hidden="true"></i>' +
+          viewsLabel(total);
+      });
+    }
+
+    async function trackContentView(type, contentId, fallbackTitle) {
+      const id = String(contentId || "").trim();
+      if (!id) return;
+
+      const userId = currentUser ? String(currentUserId() || "") : "";
+      const visitorId = viewVisitorId();
+      const identity = userId ? "USR_" + userId : visitorId;
+      if (!identity) return;
+
+      const localKey =
+        type + "|" + id.toLowerCase() + "|" + identity;
+      if (viewAlreadySent(localKey)) return;
+
+      try {
+        const result = await api({
+          type: "view",
+          contentType: type,
+          contentId: id,
+          userId: userId,
+          visitorId: visitorId,
+          titre: String(fallbackTitle || "")
+        });
+
+        if (!result || result.status !== "success") return;
+
+        rememberSentView(localKey);
+        updateLocalViewItem(type, id, result.vues);
+        updateViewCountsInUI(type, id, result.vues);
+      } catch {
+        // Une vue non enregistrée ne doit jamais bloquer la lecture.
+      }
+    }
+
     function blogSlugify(value) {
       return String(value || "")
         .normalize("NFD")
@@ -2371,7 +2926,8 @@
         imageAlt: String(post.imageAlt || title),
         content: content,
         author: String(post.auteur || post.author || "BENTOUL CREATION").trim() || "BENTOUL CREATION",
-        status: String(post.statut || "Publié")
+        status: String(post.statut || "Publié"),
+        views: Math.max(0, Number(post.vues || post.views || 0) || 0)
       };
     }
 
@@ -2478,6 +3034,7 @@
             <div class="blog-card-meta">
               <span><i class="fa-regular fa-calendar"></i>${escapeHTML(article.dateLabel)}</span>
               <span><i class="fa-regular fa-clock"></i>${escapeHTML(article.readingTime)}</span>
+              ${viewsHTML(article, "blog", article.slug)}
             </div>
             <span class="blog-card-cta">Lire l'article <i class="fa-solid fa-arrow-right"></i></span>
           </div>
@@ -2530,6 +3087,7 @@
             <span><i class="fa-regular fa-calendar"></i>${escapeHTML(article.dateLabel)}</span>
             <span><i class="fa-regular fa-clock"></i>${escapeHTML(article.readingTime)}</span>
             <span><i class="fa-solid fa-user-shield"></i>${escapeHTML(article.author || "BENTOUL CREATION")}</span>
+            ${viewsHTML(article, "blog", article.slug)}
           </div>
         </div>
         <img class="blog-article-cover" src="${escapeHTML(article.image)}" alt="${escapeHTML(article.imageAlt)}">
@@ -2580,6 +3138,7 @@
       }
 
       currentBlogArticle = article;
+      trackContentView("blog", article.slug, article.title);
       window.navigateTo("blog-article", options);
     }
 
@@ -3720,11 +4279,17 @@
 
       closeSidebar();
 
-      if (page === "series" && !seriesList.length) loadSeries();
+      if (page === "series" && !document.querySelector("#series-container .content-card")) {
+        loadSeries();
+      }
 
       if (page === "blog") {
         currentBlogArticle = null;
         renderBlogList();
+      }
+
+      if (page === "home") {
+        loadHomeLatest();
       }
 
       if (page === "blog-article") {
@@ -3822,6 +4387,41 @@
 
       event.preventDefault();
       openBlogArticle(link.dataset.blogSlug);
+    });
+
+    document.addEventListener("click", event => {
+      const shareButton = event.target.closest("[data-home-share]");
+      if (!shareButton) return;
+
+      event.preventDefault();
+      shareHomeCategory(shareButton);
+    });
+
+    document.addEventListener("click", event => {
+      const trigger = event.target.closest("[data-langue-inf]");
+      if (!trigger) return;
+
+      event.preventDefault();
+      openHomeSoonModal(trigger);
+    });
+
+    document.addEventListener("click", event => {
+      const card = event.target.closest("[data-home-series]");
+      if (!card) return;
+
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+      openSeries(card.getAttribute("data-home-series"));
     });
 
     window.addEventListener("popstate", () => {
@@ -4416,6 +5016,111 @@
       return base + "episode/" + encodeURIComponent(slug);
     }
 
+    async function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch {
+          // Le presse-papiers est bloqué : on tente l'ancienne méthode.
+        }
+      }
+
+      const field = document.createElement("textarea");
+      field.value = text;
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+
+      let copied = false;
+      try {
+        copied = document.execCommand("copy");
+      } catch {
+        copied = false;
+      }
+
+      field.remove();
+      return copied;
+    }
+
+    async function shareHomeCategory(button) {
+      const title = String(button.dataset.shareTitle || "").trim();
+      const description = String(button.dataset.shareDesc || "").trim();
+      const path = String(button.dataset.sharePath || "/");
+      const shareUrl = SITE_URL.replace(/\/+$/, "") + path;
+
+      // Titre, description puis lien direct de l'onglet, séparés par un double saut de ligne.
+      const shareText =
+        title + "\n\n" +
+        description + "\n\n" +
+        "Lire la suite ici : " + shareUrl;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, text: shareText });
+          return;
+        } catch (error) {
+          if (error && error.name === "AbortError") return;
+        }
+      }
+
+      const copied = await copyTextToClipboard(shareText);
+      window.showMessage(
+        copied
+          ? "Titre, description et lien copiés."
+          : "Copie impossible. Lien : " + shareUrl,
+        !copied
+      );
+    }
+
+    /* =========================
+       MODAL « BIENTÔT DISPONIBLE »
+    ========================= */
+
+    const homeSoonModal = $("#home-soon-modal");
+    let homeSoonReturnFocus = null;
+
+    function openHomeSoonModal(trigger) {
+      if (!homeSoonModal) return;
+
+      homeSoonReturnFocus = trigger || document.activeElement;
+      homeSoonModal.hidden = false;
+      document.body.classList.add("modal-open");
+
+      const closeButton = homeSoonModal.querySelector(".app-modal-close");
+      if (closeButton) closeButton.focus();
+    }
+
+    function closeHomeSoonModal() {
+      if (!homeSoonModal || homeSoonModal.hidden) return;
+
+      homeSoonModal.hidden = true;
+      document.body.classList.remove("modal-open");
+
+      if (homeSoonReturnFocus && typeof homeSoonReturnFocus.focus === "function") {
+        homeSoonReturnFocus.focus();
+      }
+      homeSoonReturnFocus = null;
+    }
+
+    if (homeSoonModal) {
+      homeSoonModal.addEventListener("click", event => {
+        if (
+          event.target === homeSoonModal ||
+          event.target.closest("[data-modal-close]")
+        ) {
+          closeHomeSoonModal();
+        }
+      });
+
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !homeSoonModal.hidden) {
+          closeHomeSoonModal();
+        }
+      });
+    }
+
     async function shareContent(item, type, contentId, button) {
       const title = type === "series" ? seriesTitle(item) : episodeTitle(item);
       const textSummary = cleanText(rawContent(item));
@@ -4504,6 +5209,142 @@
       return seriesList;
     }
 
+    /* =========================
+       DERNIERS CONTENUS (ACCUEIL)
+    ========================= */
+
+    let homeLatestDone = false;
+    let homeLatestPromise = null;
+
+    function homeLatestBlogArticle() {
+      const articles = mergedBlogArticles();
+      if (!articles.length) return null;
+
+      return articles.slice().sort((a, b) =>
+        String(b.date || "").localeCompare(String(a.date || ""))
+      )[0] || null;
+    }
+
+    function homeSeriesTime(series) {
+      const raw = String(value(series,
+        "date", "Date", "dateCreation", "DateCreation"
+      ) || "");
+      const match = raw.match(
+        /^(\d{2})\/(\d{2})\/(\d{4})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?/
+      );
+
+      if (match) {
+        return new Date(
+          Number(match[3]),
+          Number(match[2]) - 1,
+          Number(match[1]),
+          Number(match[4] || 0),
+          Number(match[5] || 0),
+          Number(match[6] || 0)
+        ).getTime();
+      }
+
+      const parsed = Date.parse(raw);
+      return Number.isFinite(parsed) ? parsed : 0;
+    }
+
+    function homeLatestSeries() {
+      if (!seriesList.length) return null;
+
+      return seriesList.slice().sort(
+        (a, b) => homeSeriesTime(b) - homeSeriesTime(a)
+      )[0] || null;
+    }
+
+    function setHomeLatestCard(kind, data) {
+      const card = document.querySelector(
+        '[data-home-latest-card="' + kind + '"]'
+      );
+      if (!card) return;
+
+      const label = card.querySelector("[data-home-latest-label]");
+      const title = card.querySelector("[data-home-latest-title]");
+      const upcoming = !data || !data.title;
+
+      if (label) {
+        label.hidden = upcoming;
+        if (!upcoming && data.label) label.textContent = data.label;
+      }
+
+      if (title) {
+        title.textContent = upcoming ? "DISPONIBLE BIENTÔT" : data.title;
+        title.classList.toggle("is-soon", upcoming);
+      }
+
+      card.removeAttribute("data-blog-slug");
+      card.removeAttribute("data-home-series");
+
+      if (upcoming) {
+        card.href = kind === "blog" ? "/blog" : "/cours";
+        card.setAttribute("data-page", kind === "blog" ? "blog" : "series");
+        return;
+      }
+
+      card.href = data.url;
+      card.removeAttribute("data-page");
+
+      if (kind === "blog") {
+        card.setAttribute("data-blog-slug", data.slug);
+      } else if (kind === "cours") {
+        card.setAttribute("data-home-series", data.seriesId);
+      }
+    }
+
+    function renderHomeLatest() {
+      const article = homeLatestBlogArticle();
+      if (article) {
+        setHomeLatestCard("blog", {
+          label: "Dernier article · " + viewsLabel(article.views),
+          title: article.title,
+          slug: article.slug,
+          url: blogArticlePath(article)
+        });
+      } else if (homeLatestDone) {
+        setHomeLatestCard("blog", null);
+      }
+
+      const series = homeLatestSeries();
+      if (series) {
+        setHomeLatestCard("cours", {
+          label: "Dernier cours · " + viewsLabel(viewsCount(series)),
+          title: seriesTitle(series),
+          seriesId: seriesIdOf(series),
+          url: "/cours/" + encodeURIComponent(seriesSlug(series))
+        });
+      } else if (homeLatestDone) {
+        setHomeLatestCard("cours", null);
+      }
+    }
+
+    function loadHomeLatest() {
+      renderHomeLatest();
+
+      if (homeLatestPromise) return homeLatestPromise;
+
+      if (homeLatestDone && blogPostsLoaded && seriesList.length) {
+        return Promise.resolve();
+      }
+
+      const tasks = [loadBlogPosts().catch(() => null)];
+      if (!seriesList.length) tasks.push(loadSeriesList().catch(() => null));
+
+      homeLatestPromise = Promise.allSettled(tasks)
+        .then(() => {
+          homeLatestDone = true;
+          renderHomeLatest();
+        })
+        .finally(() => {
+          homeLatestPromise = null;
+        });
+
+      return homeLatestPromise;
+    }
+
     async function loadSeries() {
       const container = $("#series-container");
       if (!container) return;
@@ -4562,6 +5403,7 @@
 
               <div class="card-body">
                 <p class="card-description">${escapeHTML(textPreview)}</p>
+                <div class="card-views">${viewsHTML(series, "series", id)}</div>
                 ${interactionBar(series, "series")}
 
                 <button type="button"
@@ -4654,6 +5496,7 @@
               <h3>${escapeHTML(title)}</h3>
               <p class="card-description">${escapeHTML(cardDescription)}</p>
 
+              <div class="card-views">${viewsHTML(episode, "episode", episodeId)}</div>
               ${interactionBar(episode, "episode")}
               ${openButtonHTML}
             </div>
@@ -4681,6 +5524,7 @@
           <div class="card-body">
             <p class="card-description">${escapeHTML(cardDescription)}</p>
 
+            <div class="card-views">${viewsHTML(episode, "episode", episodeId)}</div>
             ${interactionBar(episode, "episode")}
             ${openButtonHTML}
           </div>
@@ -4802,10 +5646,15 @@
       }
 
       const seriesTitleText = seriesTitle(currentSeries);
+      const seriesId = seriesIdOf(currentSeries);
       const titleHeader = $("#episodes-title-header");
       if (titleHeader) {
-        titleHeader.textContent = "Leçons de : " + seriesTitleText;
+        titleHeader.innerHTML =
+          "Leçons de : " + escapeHTML(seriesTitleText) +
+          " " + viewsHTML(currentSeries, "series", seriesId);
       }
+
+      trackContentView("series", seriesId, seriesTitleText);
 
       window.navigateTo("episodes", options);
 
@@ -4947,6 +5796,8 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
       const title = episodeTitle(currentEpisode);
       const htmlContent = sanitizeHTML(rawContent(currentEpisode));
 
+      trackContentView("episode", episodeIdOf(currentEpisode), title);
+
       const rawVideo = String(value(
         currentEpisode, "video", "Video",
         "videoUrl", "VideoURL", "lien", "Lien"
@@ -4973,6 +5824,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
       $("#episode-detail").innerHTML = `
         <h2>${escapeHTML(title)}</h2>
+        <p class="episode-views">${viewsHTML(currentEpisode, "episode", episodeIdOf(currentEpisode))}</p>
 
         <div class="episode-content">${htmlContent}</div>
 
@@ -5432,6 +6284,7 @@ Solde actuel : ${balance} crédit${balance > 1 ? "s" : ""}.`);
 
     window.loadSeries = loadSeries;
     window.updateAuthUI(currentUser);
+    loadHomeLatest();
 
     (async function initAppContent() {
       consumeRouteParam();
