@@ -1,7 +1,7 @@
 
 window.APP_CONFIG = {
   APP_NAME: "BENTOUL CREATION",
-  API_URL: "https://script.google.com/macros/s/AKfycbzOyxfS9zCr-czSm3wSuXTiiyuImxuPys2HrTambNkY9NuFyS8XpbI5JZON58pu_Cdz/exec"
+  API_URL: "https://script.google.com/macros/s/AKfycbyI0NouLH_dN49VjiBDCmG2Uhv07vu45TmiT6rKHyjBgXzrziR7MDESXbw6BxtKH3pv/exec"
 };
 
 window.apiRequest = async function (payload, method = "POST") {

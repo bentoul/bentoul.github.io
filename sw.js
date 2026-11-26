@@ -1,4 +1,4 @@
-const CACHE_NAME = "bentoul-creation-v9";
+const CACHE_NAME = "bentoul-creation-v11";
 
 const APP_ROUTE = /^\/(?:accueil|home|cours|course|courses|serie|series|lesson|lessons|lecon|lecons|episode|episodes|compte|profil|profile|auth|connexion|admin|administration)(?:\/|$)/i;
 
@@ -9,6 +9,7 @@ const APP_SHELL = [
   "/js/visite.js",
   "/images/logo.png",
   "/images/home.jpg",
+  "/images/hero-accueil-betoul.jpg",
   "/images/blog-securite-android.jpg",
   "/images/blog-stockage-android.jpg",
   "/images/blog-google-drive.jpg",

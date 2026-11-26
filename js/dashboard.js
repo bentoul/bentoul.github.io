@@ -1,7 +1,7 @@
 /* Dashboard Bentoul - logique de l'administration ----------------------- */
 
 // Même Web App que le site principal et que l'application Android.
-const API = "https://script.google.com/macros/s/AKfycbz7OXzg92XhseNWBL5qrBVmJLea8IJXsL26mIkbl_gkup05D24D-nwC9AxCA90X5c5w/exec";
+const API = "https://script.google.com/macros/s/AKfycbyI0NouLH_dN49VjiBDCmG2Uhv07vu45TmiT6rKHyjBgXzrziR7MDESXbw6BxtKH3pv/exec";
 const $ = (selector) => document.querySelector(selector);
 
 // Champs utilisés par chaque collection du dashboard.
